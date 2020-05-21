@@ -7,6 +7,7 @@ Likewise, the app will support the upload of an image file of the object that th
 The app will also support the ability for users to create and manage their own accounts/profiles by storing basic user information.  
     
 In summary, the app will support the following actions for users:
+
     1. Account creation/maintenance/deletion 
     2. Creation/editing/deletion of postings of items the user wants to put up for exchange
     3. Ability to search the application for goods that they are interested in
