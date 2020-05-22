@@ -26,7 +26,7 @@ In summary, the app will support the following actions for users:
     1. Admin module
     2. User reviews for satisfaction
     3. Notification centre for receiving responses/offer
-    4. User posts/offers page
+    4. User posts/offers page (personal user account page)
     5. Third party login (ex. via Google, Facebook, etc)
 
 #### Stretch Requirements
