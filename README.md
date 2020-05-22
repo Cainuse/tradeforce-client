@@ -44,7 +44,7 @@ In summary, the app will support the following actions for users:
         2. User Profile
         3. Item Posting
         4. Item Search Pages
-    *Note: Please refer to https://github.com/Cainuse/tradeforce-client/blob/master/prototype-sketch/Prototype-sketches.pdf for more detail
+    *Note: Please refer to the [prototype sketch](https://github.com/Cainuse/tradeforce-client/blob/master/prototype-sketch/Prototype-sketches.pdf) for more detail
 
 ##### MVP Requirement #4: "User create posting"
     1. Ability to upload/replace/remove image file of item
