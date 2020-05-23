@@ -16,7 +16,7 @@ In summary, the app will support the following actions for users:
 ### Project Task Requirements
 
 #### Minimal Requirements / MVP
-    1. User Interface
+    1. User Interface being responsive
     2. User sign-in & User profiles
     3. User search postings
     4. User create/edit/delete postings (edit and deletion is limited to postings that they themselves have created)
