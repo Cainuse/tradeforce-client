@@ -7,14 +7,18 @@ import MenuIcon from "@material-ui/icons/Menu";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
+import Divider from "@material-ui/core/Divider";
 import { makeStyles } from "@material-ui/core/styles";
 import tomato from "../../images/tomato.jpg";
 
 // Item Details page for in-depth view of offered items
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     fontFamily: "Montserrat",
+    "& > *": {
+      margin: theme.spacing(1),
+    },
   },
   button: {
     backgroundColor: "#1d588f",
@@ -37,7 +41,7 @@ const useStyles = makeStyles({
     fontSize: "1rem",
   },
   img: {
-    height: "25rem",
+    width: "100%",
   },
   description: {
     fontWeight: 400,
@@ -45,7 +49,11 @@ const useStyles = makeStyles({
   textBody: {
     fontWeight: 300,
   },
-});
+  content: {
+    margin: 0,
+    padding: 0,
+  },
+}));
 
 export default function ItemDetails() {
   const classes = useStyles();
@@ -60,38 +68,39 @@ export default function ItemDetails() {
           </IconButton>
         </ToolBar>
       </AppBar>
+      <div className={classes.root}>
+        <Button>Back to Search</Button>
+      </div>
       <Container className={classes.root}>
         <Paper elevation={0} className={classes.header}>
           <h4 className={classes.subtitle}>May 20</h4>
           <h2 className={classes.title}>Freshly Picked Tomatoes</h2>
           <h4 className={classes.subtitle}>0.5 km</h4>
         </Paper>
-        <Paper elevation={0}>
-          <Grid container spacing={2}>
-            <Grid item xs={6}>
-              <img className={classes.img} src={tomato} alt="tomato"></img>
-            </Grid>
-            <Grid item xs={6}>
-              <Grid container alignItems="center" direction="column">
-                <Button variant="contained" className={classes.button}>
-                  Make Offer
-                </Button>
-                <h3>cool thing</h3>
-              </Grid>
-            </Grid>
-            <Grid item xs={12}>
-              <h3 className={classes.description}>Description</h3>
-              <p className={classes.textBody}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Phasellus eu est volutpat, luctus mauris id, bibendum sem.
-                Mauris ultrices diam eu metus mattis, ut sodales tellus rhoncus.
-                Nunc eleifend rutrum tortor, sit amet mattis mi euismod ac.
-                Mauris diam ante, tincidunt in mauris et, ullamcorper fermentum
-                urna.
-              </p>
+        <Grid container spacing={2} className={classes.content}>
+          <Grid item xs={6}>
+            <img className={classes.img} src={tomato} alt="tomato"></img>
+          </Grid>
+          <Grid item xs={6}>
+            <Grid container alignItems="center" direction="column">
+              <Button variant="contained" className={classes.button}>
+                Make Offer
+              </Button>
+              <h3>cool thing</h3>
             </Grid>
           </Grid>
-        </Paper>
+          <Grid item xs={12}>
+            <h3 className={classes.description}>Description</h3>
+            <p className={classes.textBody}>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
+              eu est volutpat, luctus mauris id, bibendum sem. Mauris ultrices
+              diam eu metus mattis, ut sodales tellus rhoncus. Nunc eleifend
+              rutrum tortor, sit amet mattis mi euismod ac. Mauris diam ante,
+              tincidunt in mauris et, ullamcorper fermentum urna.
+            </p>
+          </Grid>
+        </Grid>
+        <Divider />
       </Container>
     </div>
   );
