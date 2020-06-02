@@ -8,6 +8,7 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
+import Rating from "@material-ui/lab/Rating";
 import { makeStyles } from "@material-ui/core/styles";
 import tomato from "../../images/tomato.jpg";
 
@@ -78,10 +79,10 @@ export default function ItemDetails() {
           <h4 className={classes.subtitle}>0.5 km</h4>
         </Paper>
         <Grid container spacing={2} className={classes.content}>
-          <Grid item xs={6}>
+          <Grid item xs={7}>
             <img className={classes.img} src={tomato} alt="tomato"></img>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={4}>
             <Grid container alignItems="center" direction="column">
               <Button variant="contained" className={classes.button}>
                 Make Offer
@@ -101,6 +102,17 @@ export default function ItemDetails() {
           </Grid>
         </Grid>
         <Divider />
+        <Container>
+          <Paper>
+            <span>iamironman</span>
+            <Rating
+              name="half-rating-read"
+              defaultValue={4.5}
+              precision={0.5}
+              readOnly
+            />
+          </Paper>
+        </Container>
       </Container>
     </div>
   );
