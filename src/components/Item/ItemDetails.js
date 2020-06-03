@@ -109,7 +109,7 @@ export default function ItemDetails() {
         </ToolBar>
       </AppBar>
       <div className={classes.root}>
-        <Button>Back to Search</Button>
+        <Button>&lt; Back to Search</Button>
       </div>
       <Container className={classes.root}>
         <Paper elevation={0} className={classes.header}>
