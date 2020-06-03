@@ -9,10 +9,23 @@ import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
 import Rating from "@material-ui/lab/Rating";
+import Chip from "@material-ui/core/Chip";
 import { makeStyles } from "@material-ui/core/styles";
 import tomato from "../../images/tomato.jpg";
+import { Box } from "@material-ui/core";
+import Link from "@material-ui/core/Link";
+import Typography from "@material-ui/core/Typography";
 
 // Item Details page for in-depth view of offered items
+
+const tags = [
+  "selectedtag1",
+  "selectedtag2",
+  "selectedtag3",
+  "selectedtag4",
+  "selectedtag5",
+  "selectedtag6",
+];
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,20 +39,20 @@ const useStyles = makeStyles((theme) => ({
     color: "white",
     fontWeight: 300,
     margin: "0 auto",
+    padding: "1rem 1.5rem",
   },
   header: {
     margin: "2rem 0",
   },
   title: {
-    fontSize: "2rem",
     margin: 0,
+    fontWeight: 500,
     color: "#1d588f",
   },
   subtitle: {
     fontWeight: 300,
     color: "#4b4b4b",
     margin: "0.3rem 0",
-    fontSize: "1rem",
   },
   img: {
     width: "100%",
@@ -54,7 +67,39 @@ const useStyles = makeStyles((theme) => ({
     margin: 0,
     padding: 0,
   },
+  sellerName: {
+    textDecoration: "underline",
+    textDecorationColor: "#1d588f",
+    marginRight: "8px",
+  },
+  tags: {
+    display: "flex",
+    justifyContent: "center",
+    flexWrap: "wrap",
+    "& > *": {
+      margin: theme.spacing(0.5),
+    },
+  },
+  wishlist: {
+    listStyle: "none",
+    "& > *": {
+      fontWeight: 300,
+      marginTop: theme.spacing(1),
+      fontSize: "1.25rem",
+    },
+  },
+  detailTitle: {
+    fontWeight: 500,
+    color: "#1d588f",
+    fontSize: "1.4rem",
+  },
+  qtyVal: {
+    fontWeight: 300,
+    color: "black",
+  },
 }));
+
+const preventDefault = (event) => event.preventDefault();
 
 export default function ItemDetails() {
   const classes = useStyles();
@@ -74,9 +119,15 @@ export default function ItemDetails() {
       </div>
       <Container className={classes.root}>
         <Paper elevation={0} className={classes.header}>
-          <h4 className={classes.subtitle}>May 20</h4>
-          <h2 className={classes.title}>Freshly Picked Tomatoes</h2>
-          <h4 className={classes.subtitle}>0.5 km</h4>
+          <Typography className={classes.subtitle} variant="subtitle1">
+            May 20
+          </Typography>
+          <Typography className={classes.title} variant="h3">
+            Freshly Picked Tomatoes
+          </Typography>
+          <Typography className={classes.subtitle} variant="subtitle1">
+            0.5 km
+          </Typography>
         </Paper>
         <Grid container spacing={2} className={classes.content}>
           <Grid item xs={7}>
@@ -84,35 +135,60 @@ export default function ItemDetails() {
           </Grid>
           <Grid item xs={4}>
             <Grid container alignItems="center" direction="column">
-              <Button variant="contained" className={classes.button}>
+              <Button variant="contained" color="primary">
                 Make Offer
               </Button>
-              <h3>cool thing</h3>
+              <Box my={3} width="70%">
+                <p className={classes.detailTitle}>
+                  Quantity: <span className={classes.qtyVal}>3 available</span>
+                </p>
+                <p className={classes.detailTitle}>Looking to trade for:</p>
+                <ul className={classes.wishlist}>
+                  <li>Toilet Paper</li>
+                  <li>Hand Sanitizer</li>
+                  <li>Active Dry Yeast</li>
+                  <li>Sourdough Starter</li>
+                </ul>
+              </Box>
+              <div className={classes.tags}>
+                {tags.map((val, idx) => (
+                  <Chip label={val} key={idx} spacing={2} />
+                ))}
+              </div>
             </Grid>
           </Grid>
           <Grid item xs={12}>
-            <h3 className={classes.description}>Description</h3>
-            <p className={classes.textBody}>
+            <Typography className={classes.description} variant="h6">
+              Description
+            </Typography>
+            <Typography className={classes.textBody} variant="body1">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
               eu est volutpat, luctus mauris id, bibendum sem. Mauris ultrices
               diam eu metus mattis, ut sodales tellus rhoncus. Nunc eleifend
               rutrum tortor, sit amet mattis mi euismod ac. Mauris diam ante,
               tincidunt in mauris et, ullamcorper fermentum urna.
-            </p>
+            </Typography>
           </Grid>
         </Grid>
         <Divider />
-        <Container>
-          <Paper>
-            <span>iamironman</span>
-            <Rating
-              name="half-rating-read"
-              defaultValue={4.5}
-              precision={0.5}
-              readOnly
-            />
-          </Paper>
-        </Container>
+        <Box display="flex" justify="space-around" alignItems="center" m={1}>
+          <Link
+            href=""
+            onClick={preventDefault}
+            color="inherit"
+            variant="h6"
+            className={classes.sellerName}
+          >
+            iamironman
+          </Link>
+          <Typography variant="h6">Reviews</Typography>
+          <Rating
+            name="half-rating-read"
+            defaultValue={4.5}
+            precision={0.5}
+            readOnly
+          />
+        </Box>
       </Container>
     </div>
   );
