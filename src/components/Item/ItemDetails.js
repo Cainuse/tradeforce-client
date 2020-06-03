@@ -8,14 +8,13 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
-import Rating from "@material-ui/lab/Rating";
 import Chip from "@material-ui/core/Chip";
 import { makeStyles } from "@material-ui/core/styles";
 import tomato from "../../images/tomato.jpg";
 import { Box } from "@material-ui/core";
-import Link from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
-import Review from "./Review";
+
+import ReviewSection from "./ReviewSection";
 
 // Item Details page for in-depth view of offered items
 
@@ -31,9 +30,6 @@ const tags = [
 const useStyles = makeStyles((theme) => ({
   root: {
     fontFamily: "Montserrat",
-    "& > *": {
-      margin: theme.spacing(1),
-    },
   },
   button: {
     backgroundColor: "#1d588f",
@@ -43,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
     padding: "1rem 1.5rem",
   },
   header: {
-    margin: "2rem 0",
+    margin: "1rem 0",
   },
   title: {
     margin: 0,
@@ -67,10 +63,6 @@ const useStyles = makeStyles((theme) => ({
   content: {
     margin: 0,
     padding: 0,
-  },
-  sellerName: {
-    textDecoration: "underline",
-    textDecorationColor: "#1d588f",
   },
   tags: {
     display: "flex",
@@ -97,14 +89,11 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 300,
     color: "black",
   },
-  reviewHeader: {
-    "& > *": {
-      marginRight: theme.spacing(1),
-    },
+  divider: {
+    marginTop: theme.spacing(3),
+    marginBottom: theme.spacing(3),
   },
 }));
-
-const preventDefault = (event) => event.preventDefault();
 
 export default function ItemDetails() {
   const classes = useStyles();
@@ -175,37 +164,8 @@ export default function ItemDetails() {
             </Typography>
           </Grid>
         </Grid>
-        <Divider />
-        <Box
-          display="flex"
-          alignItems="center"
-          className={classes.reviewHeader}
-        >
-          <Link
-            href=""
-            onClick={preventDefault}
-            color="inherit"
-            variant="h6"
-            className={classes.sellerName}
-          >
-            iamironman
-          </Link>
-          <Typography variant="h6">Reviews</Typography>
-          <Rating
-            name="half-rating-read"
-            defaultValue={4.5}
-            precision={0.5}
-            readOnly
-          />
-        </Box>
-        <Grid container alignContent="center" spacing={2}>
-          <Grid item xs={12}>
-            <Review />
-          </Grid>
-          <Grid item>
-            <Review />
-          </Grid>
-        </Grid>
+        <Divider className={classes.divider} />
+        <ReviewSection />
       </Container>
     </div>
   );

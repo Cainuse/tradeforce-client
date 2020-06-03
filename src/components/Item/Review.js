@@ -4,7 +4,7 @@ import Rating from "@material-ui/lab/Rating";
 
 export default function Review() {
   return (
-    <Box xs={12} bgcolor="#EBEEF1" p={2}>
+    <Box bgcolor="#EBEEF1" p={2} display="block" width="95%">
       <Box display="flex">
         <Box
           color="primary.main"
