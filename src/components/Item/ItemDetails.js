@@ -15,6 +15,7 @@ import tomato from "../../images/tomato.jpg";
 import { Box } from "@material-ui/core";
 import Link from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
+import Review from "./Review";
 
 // Item Details page for in-depth view of offered items
 
@@ -70,7 +71,6 @@ const useStyles = makeStyles((theme) => ({
   sellerName: {
     textDecoration: "underline",
     textDecorationColor: "#1d588f",
-    marginRight: "8px",
   },
   tags: {
     display: "flex",
@@ -96,6 +96,11 @@ const useStyles = makeStyles((theme) => ({
   qtyVal: {
     fontWeight: 300,
     color: "black",
+  },
+  reviewHeader: {
+    "& > *": {
+      marginRight: theme.spacing(1),
+    },
   },
 }));
 
@@ -171,7 +176,11 @@ export default function ItemDetails() {
           </Grid>
         </Grid>
         <Divider />
-        <Box display="flex" justify="space-around" alignItems="center" m={1}>
+        <Box
+          display="flex"
+          alignItems="center"
+          className={classes.reviewHeader}
+        >
           <Link
             href=""
             onClick={preventDefault}
@@ -189,6 +198,14 @@ export default function ItemDetails() {
             readOnly
           />
         </Box>
+        <Grid container alignContent="center" spacing={2}>
+          <Grid item xs={12}>
+            <Review />
+          </Grid>
+          <Grid item>
+            <Review />
+          </Grid>
+        </Grid>
       </Container>
     </div>
   );
