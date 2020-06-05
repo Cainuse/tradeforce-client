@@ -5,7 +5,6 @@ import NavBar from "./navBar/NavBar";
 import ItemPreview from "./Item/ItemPreview";
 import ItemPage from "./Item/ItemPage";
 import Grid from "@material-ui/core/Grid";
-import { spacing } from "@material-ui/system";
 
 const theme = createMuiTheme({
   palette: {
