@@ -1,14 +1,28 @@
 import React from "react";
-import Button from "@material-ui/core/Button";
+import { createMuiTheme , ThemeProvider } from '@material-ui/core/styles';
+import NavBar from "./navBar/NavBar";
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: "#1D588F"
+    }
+  },
+  typography: {
+    fontFamily: [
+      'Roboto',
+      'Montserrat',
+    ].join(','),
+  }
+});
 
 const App = () => {
   return (
-    <div>
-      <Button variant="contained" color="primary">
-        If you can see this button, it means Material-UI has been installed
-        successfully
-      </Button>
-    </div>
+    <ThemeProvider theme={theme}>
+      <div>
+        <NavBar />
+      </div>
+    </ThemeProvider>
   );
 };
 
