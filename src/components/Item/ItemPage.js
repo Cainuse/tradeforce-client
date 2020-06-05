@@ -1,14 +1,11 @@
 import React from "react";
 import Container from "@material-ui/core/Container";
-import AppBar from "@material-ui/core/AppBar";
-import ToolBar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
 import { makeStyles } from "@material-ui/core/styles";
 
+import NavBar from "../navBar/NavBar";
 import ReviewSection from "./ReviewSection";
 import ItemDescription from "./ItemDescription";
 import ItemHeader from "./ItemHeader";
@@ -89,14 +86,7 @@ export default function ItemPage() {
 
   return (
     <div>
-      {/* TODO: replace with nav component */}
-      <AppBar position="static">
-        <ToolBar variant="dense">
-          <IconButton edge="start" color="inherit">
-            <MenuIcon />
-          </IconButton>
-        </ToolBar>
-      </AppBar>
+      <NavBar />
       <div className={classes.root}>
         <Button>&lt; Back to Search</Button>
       </div>
