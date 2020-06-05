@@ -5,7 +5,6 @@ import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
 import { makeStyles } from "@material-ui/core/styles";
 
-import NavBar from "../navBar/NavBar";
 import ReviewSection from "./ReviewSection";
 import ItemDescription from "./ItemDescription";
 import ItemHeader from "./ItemHeader";
@@ -86,7 +85,6 @@ export default function ItemPage() {
 
   return (
     <div>
-      <NavBar />
       <div className={classes.root}>
         <Button>&lt; Back to Search</Button>
       </div>

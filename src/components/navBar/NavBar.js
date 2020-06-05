@@ -1,12 +1,11 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import {Logo} from '../Logo';
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import IconButton from "@material-ui/core/IconButton";
+import MenuIcon from "@material-ui/icons/Menu";
+import { Logo } from "../Logo";
 import { ActionItems } from "./actionBtns/ActionButtons";
-
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   menuIcon: {
-    fontSize: "2rem"
+    fontSize: "2rem",
   },
   appBar: {
     background: theme.palette.primary,
@@ -38,11 +37,16 @@ export default function NavBar() {
     <div className={classes.root}>
       <AppBar position="static" className={classes.appBar}>
         <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <MenuIcon className={classes.menuIcon}/>
+          <IconButton
+            edge="start"
+            className={classes.menuButton}
+            color="inherit"
+            aria-label="menu"
+          >
+            <MenuIcon className={classes.menuIcon} />
           </IconButton>
-          <Logo className={classes.logo}/>
-          <ActionItems isLoggedIn={true}/>
+          <Logo className={classes.logo} />
+          <ActionItems isLoggedIn={true} />
         </Toolbar>
       </AppBar>
     </div>
