@@ -1,14 +1,64 @@
 import React from "react";
-import Button from "@material-ui/core/Button";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+import NavBar from "./navBar/NavBar";
+import ItemPreview from "./Item/ItemPreview";
+import ItemPage from "./Item/ItemPage";
+import Grid from "@material-ui/core/Grid";
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: "#1D588F",
+    },
+  },
+  typography: {
+    fontFamily: ["Roboto", "Montserrat"].join(","),
+  },
+});
 
 const App = () => {
   return (
-    <div>
-      <Button variant="contained" color="primary">
-        If you can see this button, it means Material-UI has been installed
-        successfully
-      </Button>
-    </div>
+    <Router>
+      <ThemeProvider theme={theme}>
+        <div>
+          <NavBar />
+          <Switch>
+            <Route exact path="/">
+              <Grid container direction={"horizontal"}>
+                <Grid item xs={3}>
+                  <ItemPreview title="default item" datePosted={new Date()} />
+                </Grid>
+                <Grid item xs={3}>
+                  <ItemPreview title="default item" datePosted={new Date()} />
+                </Grid>
+                <Grid item xs={3}>
+                  <ItemPreview title="default item" datePosted={new Date()} />
+                </Grid>
+                <Grid item xs={3}>
+                  <ItemPreview title="default item" datePosted={new Date()} />
+                </Grid>
+                <Grid item xs={3}>
+                  <ItemPreview title="default item" datePosted={new Date()} />
+                </Grid>
+                <Grid item xs={3}>
+                  <ItemPreview title="default item" datePosted={new Date()} />
+                </Grid>
+                <Grid item xs={3}>
+                  <ItemPreview title="default item" datePosted={new Date()} />
+                </Grid>
+                <Grid item xs={3}>
+                  <ItemPreview title="default item" datePosted={new Date()} />
+                </Grid>
+              </Grid>
+            </Route>
+            <Route exact path="/testItem">
+              <ItemPage />
+            </Route>
+          </Switch>
+        </div>
+      </ThemeProvider>
+    </Router>
   );
 };
 
