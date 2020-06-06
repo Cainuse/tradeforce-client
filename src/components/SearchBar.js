@@ -32,7 +32,6 @@ class SearchBar extends Component {
   };
 
   handleClick = (event) => {
-    console.log("hi");
     this.setState({ anchorEl: event.currentTarget });
   };
 
