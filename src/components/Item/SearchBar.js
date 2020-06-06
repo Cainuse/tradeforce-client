@@ -12,15 +12,21 @@ const useStyles = (theme) => ({
   inputForm: {
     top: "10%",
     left: "10px",
+    color: "white"
+
   },
   textField: {
     width: "50%",
+    backgroundColor:"white"
   },
   iconButton: {
     top: "10px",
+    color: "white"
   },
   searchOption: {
     top: "10px",
+    color: "white"
+
   },
 });
 
