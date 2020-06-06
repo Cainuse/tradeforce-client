@@ -1,24 +1,20 @@
 import React, { Component } from "react";
 import Paper from "@material-ui/core/Paper";
 import { withStyles } from "@material-ui/core/styles";
-import Image from "../images/tomato.jpg";
 
-const useStyles = () => ({
+const useStyles = (theme) => ({
   card: {
-    backgroundColor: "clear",
+    display: "flex",
     width: "10ch",
     height: "10ch",
+    alignItems: "center",
+    flexDirection: "column"
   },
   image: {
     width: "100%",
     height: "100%",
     borderRadius: "100%",
-  },
-  wrapper: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "centre",
-  },
+  }
 });
 
 class CategoryCard extends Component {
@@ -27,9 +23,9 @@ class CategoryCard extends Component {
     return (
       <div className={classes.wrapper}>
         <Paper elevation={0} className={classes.card}>
-          <img src={Image} alt="Tomato" className={classes.image} />
+          <img src={this.props.image} alt={this.props.imageName} className={classes.image} />
+          <h4>{this.props.imageName}</h4>
         </Paper>
-        <h5>Hobbies</h5>
       </div>
     );
   }
