@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+import { createMuiTheme, makeStyles, ThemeProvider } from "@material-ui/core/styles";
 import NavBar from "./navBar/NavBar";
 import ItemPreview from "./Item/ItemPreview";
 import ItemPage from "./Item/ItemPage";
@@ -11,17 +11,27 @@ const theme = createMuiTheme({
     primary: {
       main: "#1D588F",
     },
+    secondary: {
+      main: "#FFFFFF",
+    }
   },
   typography: {
     fontFamily: ["Roboto", "Montserrat"].join(","),
   },
 });
 
+const useStyles = makeStyles(() => ({
+  root: {
+    height: "100vh",
+  }
+}))
+
 const App = () => {
+  const classes = useStyles();
   return (
     <Router>
       <ThemeProvider theme={theme}>
-        <div>
+        <div className={classes.root}>
           <NavBar />
           <Switch>
             <Route exact path="/">

@@ -9,9 +9,7 @@ import { ActionItems } from "./actionBtns/ActionButtons";
 import SearchBar from "../Item/SearchBar";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
+  root: {},
   menuButton: {
     marginRight: theme.spacing(2),
   },
@@ -22,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "2rem",
   },
   appBar: {
-    background: theme.palette.primary,
+    background: theme.palette.primary.main,
   },
   loginBtn: {
     fontSize: "1.2rem",
