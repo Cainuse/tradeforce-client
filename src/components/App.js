@@ -5,6 +5,7 @@ import NavBar from "./navBar/NavBar";
 import ItemPreview from "./Item/ItemPreview";
 import ItemPage from "./Item/ItemPage";
 import Grid from "@material-ui/core/Grid";
+import NavFlyout from "./navBar/NavFlyout";
 
 const theme = createMuiTheme({
   palette: {
@@ -32,6 +33,7 @@ const App = () => {
     <Router>
       <ThemeProvider theme={theme}>
         <div className={classes.root}>
+          <NavBar />
           <Switch>
             <Route exact path="/">
               <Grid container direction={"row"}>
@@ -65,11 +67,15 @@ const App = () => {
               <ItemPage />
             </Route>
           </Switch>
-          <NavBar />
+          <div className={classes.flyoutRoot}>
+            <NavFlyout />
+          </div>
         </div>
       </ThemeProvider>
     </Router>
   );
 };
+
+
 
 export default App;

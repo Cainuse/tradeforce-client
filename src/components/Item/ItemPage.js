@@ -78,13 +78,17 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
     marginBottom: theme.spacing(3),
   },
+  itemPage: {
+    position: "absolute",
+    top: "70px",
+  }
 }));
 
 export default function ItemPage() {
   const classes = useStyles();
 
   return (
-    <div>
+    <div className={classes.itemPage}>
       <div className={classes.root}>
         <Button>&lt; Back to Search</Button>
       </div>

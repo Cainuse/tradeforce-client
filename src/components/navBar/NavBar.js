@@ -7,17 +7,12 @@ import MenuIcon from "@material-ui/icons/Menu";
 import { Logo } from "../Logo";
 import { ActionItems } from "./actionBtns/ActionButtons";
 import SearchBar from "../Item/SearchBar";
-import { NavFlyout } from "./NavFlyout";
+import { clickMenuBtn } from "../../actions";
+import { connect } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    position: "fixed",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    zIndex: 100000,
-  },
+  navBarRoot: {
+    },
   menuButton: {
     marginRight: theme.spacing(2),
   },
@@ -35,35 +30,36 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "100",
     textTransform: "lowercase",
   },
+  flyoutRoot: {
+    visibility: "hidden",
+  }
 }));
 
 class NavBar extends React.Component {
-  constructor(props) {
-    super(props);
 
-    this.state = {
-      flyoutIsOpen: false,
-    };
+  handleMenuClick = event => {
+    event.preventDefault();
+    this.props.clickMenuBtn();
   }
 
-
   render() {
-    return <CreateNavBar />
+    return <CreateNavBar handleMenuClick={this.handleMenuClick}/>
   }
 }
 
-function CreateNavBar() {
+function CreateNavBar(props) {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-      <AppBar position="static" className={classes.appBar}>
+    <div className={classes.navBarRoot}>
+      <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <IconButton
             edge="start"
             className={classes.menuButton}
             color="inherit"
             aria-label="menu"
+            onClick={props.handleMenuClick}
           >
             <MenuIcon className={classes.menuIcon} />
           </IconButton>
@@ -72,9 +68,18 @@ function CreateNavBar() {
           <ActionItems isLoggedIn={true} />
         </Toolbar>
       </AppBar>
-      <NavFlyout isOpen={true}/>
     </div>
   );
 }
 
-export default NavBar;
+function mapDispatchToProps(dispatch) {
+  return {
+    clickMenuBtn: () => dispatch(clickMenuBtn()),
+  };
+}
+
+export default connect(
+  null,
+  mapDispatchToProps
+)
+(NavBar);
