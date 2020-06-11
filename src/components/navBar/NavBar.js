@@ -7,9 +7,17 @@ import MenuIcon from "@material-ui/icons/Menu";
 import { Logo } from "../Logo";
 import { ActionItems } from "./actionBtns/ActionButtons";
 import SearchBar from "../Item/SearchBar";
+import { NavFlyout } from "./NavFlyout";
 
 const useStyles = makeStyles((theme) => ({
-  root: {},
+  root: {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: 100000,
+  },
   menuButton: {
     marginRight: theme.spacing(2),
   },
@@ -29,7 +37,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function NavBar() {
+class NavBar extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      flyoutIsOpen: false,
+    };
+  }
+
+
+  render() {
+    return <CreateNavBar />
+  }
+}
+
+function CreateNavBar() {
   const classes = useStyles();
 
   return (
@@ -49,6 +72,9 @@ export default function NavBar() {
           <ActionItems isLoggedIn={true} />
         </Toolbar>
       </AppBar>
+      <NavFlyout isOpen={true}/>
     </div>
   );
 }
+
+export default NavBar;
