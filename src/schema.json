@@ -1,0 +1,48 @@
+{
+  "Posting": {
+    "id": 0,
+    "title": "Something",
+    "dateOfPost": "2020-06-06",
+    "description": "Sexist game console",
+    "category": "electronics",
+    "condition": "not bad",
+    "quantity": 1,
+    "tags": ["tag1", "tag2"],
+    "requestedItems": ["Gameboy", "ps5"],
+    "img-src": ["img.jpg", "img2.jpg"],
+    "ownerId": "2131254",
+    "postalCode": "V73P6G1",
+    "offerings": [
+      {
+        "offerer": {
+          "id": 100,
+          "userName": "great guy",
+          "email": "greatguyguranteed@hotmale.com"
+        },
+        "offeredItems": [
+          {
+            "id": 2,
+            "name": "Gameboy",
+            "quantity": 1,
+            "img-src": "img.jpg",
+            "description": "Sexist game console",
+            "condition": "not bad",
+            "category": "electronics"
+          },
+          {
+            "id": 0,
+            "title": "Something"
+          }
+        ],
+        "comments": "I have an offer here! https://tradeforce.com/postings/321512312"
+      }
+    ]
+  },
+  "User": {
+    "id": 100,
+    "userName": "great guy",
+    "email": "greatguyguranteed@hotmale.com",
+    "password": "great guy indeed 2020!!!",
+    "postalCode": "V73P6G1"
+  }
+}
