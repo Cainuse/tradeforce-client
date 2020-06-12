@@ -1,11 +1,11 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { createMuiTheme, makeStyles, ThemeProvider } from "@material-ui/core/styles";
-import NavBar from "./navBar/NavBar";
+import NavBar from "./Navigation/NavBar/NavBar";
 import ItemPreview from "./Item/ItemPreview";
 import ItemPage from "./Item/ItemPage";
 import Grid from "@material-ui/core/Grid";
-import NavFlyout from "./navBar/NavFlyout";
+import NavFlyout from "./Navigation/NavFlyout";
 
 const theme = createMuiTheme({
   palette: {

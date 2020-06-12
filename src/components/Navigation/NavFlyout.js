@@ -2,11 +2,14 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Link from "@material-ui/core/Link"
 import { connect } from "react-redux";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from '@material-ui/icons/Close';
+import { closeFlyout } from "../../redux/actions/flyoutActions";
 
 const flyoutStyles = makeStyles(theme => ({
       flyoutTranslateX: {
         width: "200px",
-        height: "80%",
+        height: "100%",
         backgroundColor: theme.palette.primary.main,
         border: "none",
         padding: "100px 50px",
@@ -15,7 +18,7 @@ const flyoutStyles = makeStyles(theme => ({
       },
       flyoutTranslateXLeft: {
         width: "200px",
-        height: "80%",
+        height: "100%",
         backgroundColor: theme.palette.primary.main,
         border: "none",
         padding: "100px 50px",
@@ -29,15 +32,15 @@ const flyoutStyles = makeStyles(theme => ({
         paddingBottom: "30px",
       },
       canvasBgTransparent: {
-        position: "absolute",
+        position: "fixed",
         opacity: 0,
         height: "100%",
         width: "100%",
         backgroundColor: "rgba(0,0,0,.7)",
       },
       canvasBgOpaque: {
-        position: "absolute",
-        opacity: 0,
+        position: "fixed",
+        opacity: 1,
         height: "100%",
         width: "100%",
         backgroundColor: "rgba(0,0,0,.7)",
@@ -47,21 +50,33 @@ const flyoutStyles = makeStyles(theme => ({
         height: "100%",
         visibility: "visible",
         position: "fixed",
-        top: "50px",
+        top: "0",
       },
       navFlyoutHidden: {
         height: "100%",
         visibility: "hidden",
         position: "fixed",
-        top: "50px",
+        top: "0",
       },
       linkContainer: {
         display: "flex",
         width: "100%",
         flexDirection: "column",
+        marginTop: "70px",
       },
+      closeBtn: {
+        left: "300px",
+      },
+      closeBtnIcon: {
+        color: theme.palette.secondary.main,
+        edge: "end",
+        fontSize: "2.5rem",
+        fontWeight: "100",
+      }
   }),
 );
+
+/** Helpers **/
 
 const FlyoutLinks = (props) => {
   return (
@@ -88,6 +103,8 @@ const FlyoutLinks = (props) => {
   )
 }
 
+//------------------------------------- Open Flyout Components --------------------------------------//
+
 const OpenFlyout = (props) => {
   return (
     <div className={props.classes.flyoutTranslateX} color="primary">
@@ -95,6 +112,23 @@ const OpenFlyout = (props) => {
     </div>
   )
 }
+
+const CreateOpaqueBg = (props) => {
+  return (
+    <div className={props.classes.canvasBgOpaque}>
+      <IconButton
+        edge="end"
+        className={props.classes.closeBtn}
+        color="inherit"
+        aria-label="close"
+        onClick={props.closeFlyout}>
+        <CloseIcon className={props.classes.closeBtnIcon} />
+      </IconButton>
+    </div>
+  )
+}
+
+//------------------------------------- Closed Flyout Components --------------------------------------//
 
 const ClosedFlyout = (props) => {
   return (
@@ -111,8 +145,10 @@ const CreateNavFlyout = (props) => {
   if (props.isFlyoutOpen) {
     return (
       <div className={classes.navFlyout}>
-        <div className={classes.canvasBgOpaque}> </div>
-        <OpenFlyout classes={classes} preventDefault={preventDefault} />
+        <CreateOpaqueBg classes={classes}
+                        closeFlyout={props.closeFlyout} />
+        <OpenFlyout classes={classes}
+                    preventDefault={preventDefault} />
       </div>
     )
   } else {
@@ -125,16 +161,32 @@ const CreateNavFlyout = (props) => {
   }
 }
 
+
+/**
+ * MAIN: NavFlyout class
+ **/
+
 class NavFlyout extends React.Component {
+  handleCloseFlyout = event => {
+    event.preventDefault();
+    this.props.closeFlyout();
+  }
+
   render() {
-    return <CreateNavFlyout isFlyoutOpen={this.props.flyoutIsOpen}/>;
+    return <CreateNavFlyout isFlyoutOpen={this.props.flyoutIsOpen}
+                            closeFlyout={this.handleCloseFlyout}/>;
   }
 }
+
 
 const mapStateToProps = state => ({
   flyoutIsOpen: state.flyoutIsOpen,
 })
 
-export default connect(mapStateToProps)(NavFlyout);
+const mapDispatchToProps = dispatch => ({
+  closeFlyout: () => dispatch(closeFlyout()),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavFlyout);
 
 
