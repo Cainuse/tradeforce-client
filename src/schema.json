@@ -9,7 +9,7 @@
     "quantity": 1,
     "tags": ["tag1", "tag2"],
     "requestedItems": ["Gameboy", "ps5"],
-    "img-src": "img.jpg",
+    "img-src": ["img.jpg", "img2.jpg"],
     "ownerId": "2131254",
     "postalCode": "V73P6G1",
     "offerings": [
