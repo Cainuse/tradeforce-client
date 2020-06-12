@@ -2,13 +2,10 @@ import React from "react";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
-import clsx from "clsx";
-import PropTypes from "prop-types";
-import { makeStyles, withStyles } from "@material-ui/core/styles";
-import StepConnector from "@material-ui/core/StepConnector";
-import Check from "@material-ui/icons/Check";
+import { withStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Button from "@material-ui/core/Button";
+import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import Paper from "@material-ui/core/Paper";
 
@@ -25,6 +22,7 @@ const useStyles = (theme) => ({
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
+    outline: "none",
   },
 });
 
@@ -73,32 +71,41 @@ class AddPosting extends React.Component {
           open={this.state.open}
           onClose={this.handleClose}
           className={classes.modal}
+          closeAfterTransition
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 500,
+          }}
         >
-          <Paper className={classes.paper}>
-            <div>Modal Stuff</div>
-            <Stepper activeStep={this.state.activeStep}>
-              {steps.map((label) => (
-                <Step key={label}>
-                  <StepLabel>{label}</StepLabel>
-                </Step>
-              ))}
-            </Stepper>
-            <div>
-              <Button
-                disabled={this.state.activeStep === 0}
-                onClick={this.handleBack}
-              >
-                Back
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={this.handleNext}
-              >
-                {this.state.activeStep === steps.length - 1 ? "Finish" : "Next"}
-              </Button>
-            </div>
-          </Paper>
+          <Fade in={this.state.open}>
+            <Paper className={classes.paper}>
+              <div>Modal Stuff</div>
+              <Stepper activeStep={this.state.activeStep}>
+                {steps.map((label) => (
+                  <Step key={label}>
+                    <StepLabel>{label}</StepLabel>
+                  </Step>
+                ))}
+              </Stepper>
+              <div>
+                <Button
+                  disabled={this.state.activeStep === 0}
+                  onClick={this.handleBack}
+                >
+                  Back
+                </Button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={this.handleNext}
+                >
+                  {this.state.activeStep === steps.length - 1
+                    ? "Finish"
+                    : "Next"}
+                </Button>
+              </div>
+            </Paper>
+          </Fade>
         </Modal>
       </div>
     );
