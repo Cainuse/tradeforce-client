@@ -1,25 +1,17 @@
 import React from "react";
-import Stepper from "@material-ui/core/Stepper";
-import Step from "@material-ui/core/Step";
-import StepLabel from "@material-ui/core/StepLabel";
 import { withStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Button from "@material-ui/core/Button";
-import Backdrop from "@material-ui/core/Backdrop";
 import Paper from "@material-ui/core/Paper";
-import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
 
+import DisplayStepper from "./DisplayStepper";
 import Step1 from "./Step1";
 import Step2 from "./Step2";
 import Step3 from "./Step3";
 import FinalStep from "./FinalStep";
 
-const steps = [
-  "Add Posting Details",
-  "Upload Photos",
-  "Add What You're Looking For",
-  "Confirm Posting",
-];
+const steps = ["Item Details", "Images", "Requested Items", "Review"];
 
 const useStyles = (theme) => ({
   modal: {
@@ -33,11 +25,9 @@ const useStyles = (theme) => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
     outline: "none",
-    // height: "450px",
     position: "relative",
   },
   modalHeader: {
-    borderBottom: `1px solid ${theme.palette.primary.main}`,
     fontSize: "1.5rem",
     fontWeight: 400,
     marginBottom: theme.spacing(1),
@@ -46,6 +36,7 @@ const useStyles = (theme) => ({
     display: "inline-block",
     width: "100%",
     minHeight: "270px",
+    marginBottom: theme.spacing(3),
   },
   header: {
     display: "inline-block",
@@ -121,6 +112,34 @@ class AddPosting extends React.Component {
     this.setState({ open: false });
   };
 
+  getActiveStepDisplay = () => {
+    switch (this.state.activeStep) {
+      case 0:
+        return (
+          <Step1
+            change={this.handleInputChange}
+            addTag={this.handleAddtoList}
+            state={this.state}
+            deleteTag={this.handleRemoveFromList}
+          />
+        );
+      case 1:
+        return <Step2 change={this.handleInputChange} />;
+      case 2:
+        return (
+          <Step3
+            addRequest={this.handleAddtoList}
+            deleteRequest={this.handleRemoveFromList}
+            requests={this.state.requestedItems}
+          />
+        );
+      case 3:
+        return <FinalStep change={this.handleInputChange} />;
+      default:
+        return null;
+    }
+  };
+
   render() {
     const { classes } = this.props;
     return (
@@ -134,69 +153,26 @@ class AddPosting extends React.Component {
           className={classes.modal}
         >
           <Paper className={classes.paper}>
-            <Grid container direction="column">
-              <Grid item className={classes.modalHeader}>
-                Create New Posting
-              </Grid>
-              <Grid item>
-                <form
-                  className={classes.form}
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                  }}
-                >
-                  {this.state.activeStep === 0 && (
-                    <Step1
-                      change={this.handleInputChange}
-                      addTag={this.handleAddtoList}
-                      tags={this.state.tags}
-                      deleteTag={this.handleRemoveFromList}
-                    />
-                  )}
-                  {this.state.activeStep === 1 && (
-                    <Step2 change={this.handleInputChange} />
-                  )}
-                  {this.state.activeStep === 2 && (
-                    <Step3
-                      addRequest={this.handleAddtoList}
-                      deleteRequest={this.handleRemoveFromList}
-                      requests={this.state.requestedItems}
-                    />
-                  )}
-                  {this.state.activeStep === 3 && (
-                    <FinalStep change={this.handleInputChange} />
-                  )}
-                </form>
-              </Grid>
-              <Grid item>
-                <div className={classes.stepper}>
-                  <Stepper activeStep={this.state.activeStep}>
-                    {steps.map((label) => (
-                      <Step key={label}>
-                        <StepLabel>{label}</StepLabel>
-                      </Step>
-                    ))}
-                  </Stepper>
-                  <div className={classes.buttonContainer}>
-                    <Button
-                      disabled={this.state.activeStep === 0}
-                      onClick={this.handleBack}
-                    >
-                      Back
-                    </Button>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={this.handleNext}
-                    >
-                      {this.state.activeStep === steps.length - 1
-                        ? "Submit"
-                        : "Next"}
-                    </Button>
-                  </div>
-                </div>
-              </Grid>
-            </Grid>
+            <Typography align="center" variant="h4">
+              Create A Posting
+            </Typography>
+            <DisplayStepper activeStep={this.state.activeStep} />
+            <div className={classes.form}>{this.getActiveStepDisplay()}</div>
+            <div className={classes.buttonContainer}>
+              <Button
+                disabled={this.state.activeStep === 0}
+                onClick={this.handleBack}
+              >
+                Back
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={this.handleNext}
+              >
+                {this.state.activeStep === steps.length - 1 ? "Submit" : "Next"}
+              </Button>
+            </div>
           </Paper>
         </Modal>
       </div>
