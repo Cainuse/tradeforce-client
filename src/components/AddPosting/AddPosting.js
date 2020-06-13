@@ -6,10 +6,19 @@ import { withStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Button from "@material-ui/core/Button";
 import Backdrop from "@material-ui/core/Backdrop";
-import Fade from "@material-ui/core/Fade";
 import Paper from "@material-ui/core/Paper";
+import Grid from "@material-ui/core/Grid";
 
-const steps = ["step1", "step2", "step3", "step4", "step5"];
+import Step1 from "./Step1";
+import Step2 from "./Step2";
+import Step3 from "./Step3";
+import FinalStep from "./FinalStep";
+
+const steps = [
+  "Add Posting Details",
+  "Upload Photos",
+  "Add What You're Looking For",
+];
 
 const useStyles = (theme) => ({
   modal: {
@@ -18,11 +27,32 @@ const useStyles = (theme) => ({
     justifyContent: "center",
   },
   paper: {
-    width: "75%",
+    width: "50%",
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
     outline: "none",
+    height: "450px",
+    position: "relative",
+  },
+  modalHeader: {
+    borderBottom: `1px solid ${theme.palette.primary.main}`,
+    fontSize: "1.5rem",
+    fontWeight: 400,
+    marginBottom: theme.spacing(1),
+  },
+  form: {
+    display: "inline-block",
+    width: "100%",
+    height: "300px",
+  },
+  header: {
+    display: "inline-block",
+    width: "100%",
+  },
+  buttonContainer: {
+    display: "flex",
+    justifyContent: "space-between",
   },
 });
 
@@ -31,9 +61,21 @@ class AddPosting extends React.Component {
     super(props);
     this.state = {
       activeStep: 0,
-      open: false,
+      open: true,
+      title: "",
+      description: "",
+      category: "",
+      condition: "",
+      tags: [],
+      images: [],
     };
   }
+
+  handleInputChange = (e) => {
+    let { name, value } = e.target;
+
+    this.setState({ [name]: value });
+  };
 
   setActiveStep = (step) => {
     console.log("setActiveStep: ", step);
@@ -77,35 +119,57 @@ class AddPosting extends React.Component {
             timeout: 500,
           }}
         >
-          <Fade in={this.state.open}>
-            <Paper className={classes.paper}>
-              <div>Modal Stuff</div>
-              <Stepper activeStep={this.state.activeStep}>
-                {steps.map((label) => (
-                  <Step key={label}>
-                    <StepLabel>{label}</StepLabel>
-                  </Step>
-                ))}
-              </Stepper>
-              <div>
-                <Button
-                  disabled={this.state.activeStep === 0}
-                  onClick={this.handleBack}
-                >
-                  Back
-                </Button>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={this.handleNext}
-                >
-                  {this.state.activeStep === steps.length - 1
-                    ? "Finish"
-                    : "Next"}
-                </Button>
-              </div>
-            </Paper>
-          </Fade>
+          <Paper className={classes.paper}>
+            <Grid container direction="column">
+              <Grid item className={classes.modalHeader}>
+                Create New Posting
+              </Grid>
+              <Grid item>
+                <form className={classes.form}>
+                  {this.state.activeStep === 0 && (
+                    <Step1 change={this.handleInputChange} />
+                  )}
+                  {this.state.activeStep === 1 && (
+                    <Step2 change={this.handleInputChange} />
+                  )}
+                  {this.state.activeStep === 2 && (
+                    <Step3 change={this.handleInputChange} />
+                  )}
+                  {this.state.activeStep === 3 && (
+                    <FinalStep change={this.handleInputChange} />
+                  )}
+                </form>
+              </Grid>
+              <Grid item>
+                <div className={classes.stepper}>
+                  <Stepper activeStep={this.state.activeStep}>
+                    {steps.map((label) => (
+                      <Step key={label}>
+                        <StepLabel>{label}</StepLabel>
+                      </Step>
+                    ))}
+                  </Stepper>
+                  <div className={classes.buttonContainer}>
+                    <Button
+                      disabled={this.state.activeStep === 0}
+                      onClick={this.handleBack}
+                    >
+                      Back
+                    </Button>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={this.handleNext}
+                    >
+                      {this.state.activeStep === steps.length - 1
+                        ? "Submit"
+                        : "Next"}
+                    </Button>
+                  </div>
+                </div>
+              </Grid>
+            </Grid>
+          </Paper>
         </Modal>
       </div>
     );
