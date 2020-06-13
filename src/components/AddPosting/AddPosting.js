@@ -32,7 +32,7 @@ const useStyles = (theme) => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
     outline: "none",
-    height: "450px",
+    // height: "450px",
     position: "relative",
   },
   modalHeader: {
@@ -44,7 +44,7 @@ const useStyles = (theme) => ({
   form: {
     display: "inline-block",
     width: "100%",
-    height: "300px",
+    minHeight: "270px",
   },
   header: {
     display: "inline-block",
@@ -75,6 +75,18 @@ class AddPosting extends React.Component {
     let { name, value } = e.target;
 
     this.setState({ [name]: value });
+  };
+
+  addTag = (e) => {
+    if (e.key === "Enter") {
+      this.setState({ tags: [...this.state.tags, e.target.value] });
+      e.target.value = "";
+    }
+  };
+
+  deleteTag = (idx) => {
+    let newTags = this.state.tags.filter((tag, index) => index !== idx);
+    this.setState({ tags: newTags });
   };
 
   setActiveStep = (step) => {
@@ -127,7 +139,12 @@ class AddPosting extends React.Component {
               <Grid item>
                 <form className={classes.form}>
                   {this.state.activeStep === 0 && (
-                    <Step1 change={this.handleInputChange} />
+                    <Step1
+                      change={this.handleInputChange}
+                      addTag={this.addTag}
+                      tags={this.state.tags}
+                      deleteTag={this.deleteTag}
+                    />
                   )}
                   {this.state.activeStep === 1 && (
                     <Step2 change={this.handleInputChange} />

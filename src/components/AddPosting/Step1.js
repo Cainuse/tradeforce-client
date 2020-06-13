@@ -1,8 +1,9 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
+import Chip from "@material-ui/core/Chip";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   form: {
     height: "80%",
   },
@@ -13,6 +14,27 @@ const useStyles = makeStyles(() => ({
   },
   textfieldDropdown: {
     width: "49%",
+  },
+  tagContainer: {
+    display: "flex",
+    alignItems: "flex-start",
+    flexWrap: "wrap",
+    width: "100%",
+    border: "1px solid rgb(214, 216, 218)",
+    borderRadius: "6px",
+    "&:focus-within": {
+      border: "1px solid #0052cc",
+    },
+  },
+  tagInput: {
+    flex: 1,
+    border: "none",
+    "&:focus": {
+      outline: "transparent",
+    },
+  },
+  tags: {
+    margin: theme.spacing(0.5),
   },
 }));
 
@@ -75,7 +97,7 @@ const conditions = [
 ];
 
 const Step1 = (props) => {
-  const { change } = props;
+  const { change, tags, addTag, deleteTag } = props;
 
   const classes = useStyles();
 
@@ -87,10 +109,11 @@ const Step1 = (props) => {
           label="Title"
           className={classes.textfield}
           fullWidth
-          margin="normal"
+          margin="dense"
           variant="outlined"
           name="title"
           onChange={change}
+          defaultValue=""
         />
         <TextField
           required
@@ -99,7 +122,7 @@ const Step1 = (props) => {
           label="Description"
           className={classes.textfield}
           fullWidth
-          margin="normal"
+          margin="dense"
           variant="outlined"
           name="description"
           onChange={change}
@@ -110,7 +133,7 @@ const Step1 = (props) => {
             id="outlined-select-category-native"
             select
             label="Category"
-            margin="normal"
+            margin="dense"
             SelectProps={{
               native: true,
             }}
@@ -130,7 +153,7 @@ const Step1 = (props) => {
             id="outlined-select-condition-native"
             select
             label="Condition"
-            margin="normal"
+            margin="dense"
             SelectProps={{
               native: true,
             }}
@@ -146,6 +169,53 @@ const Step1 = (props) => {
             ))}
           </TextField>
         </div>
+
+        <TextField
+          required
+          label="Tags"
+          className={classes.textfield}
+          fullWidth
+          margin="dense"
+          variant="outlined"
+          name="tags"
+          defaultValue=""
+          onKeyUp={addTag}
+          placeholder={
+            tags.length === 10 ? "Press enter to add tag" : "Tag limit reached"
+          }
+          disabled={tags.length === 10 ? true : false}
+        />
+        {tags.map((tag, idx) => (
+          <Chip
+            key={idx}
+            color="primary"
+            size="small"
+            onDelete={() => {
+              deleteTag(idx);
+            }}
+            label={tag}
+            className={classes.tags}
+          />
+        ))}
+        {/* <div className={classes.tagContainer}>
+          {tags.map((tag, idx) => (
+            <Chip
+              key={idx}
+              color="primary"
+              size="small"
+              onDelete={() => {
+                deleteTag();
+              }}
+              label={tag}
+            />
+          ))}
+          <input
+            type="text"
+            placeholder="Press enter to add tags"
+            onKeyUp={addTag}
+            className={classes.tagInput}
+          />
+        </div> */}
       </div>
     </React.Fragment>
   );
