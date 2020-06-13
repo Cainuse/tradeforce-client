@@ -31,7 +31,7 @@ const MediaCard = ({ title, datePosted }) => {
     const diffTime = Math.abs(today - postedDate);
     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
     if (diffDays < 30) {
-      return diffDays == 0
+      return diffDays === 0
         ? "Posted today"
         : "Posted " + diffDays + " day(s) ago";
     }
