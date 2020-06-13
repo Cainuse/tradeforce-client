@@ -11,8 +11,8 @@ export const modalReducer = (state = initialState.modal, action) => {
       };
     default:
       return {
-        isOpen: false,
-        type: "",
+        isOpen: state.isOpen,
+        type: state.type,
       };
   }
 };
