@@ -18,6 +18,7 @@ const steps = [
   "Add Posting Details",
   "Upload Photos",
   "Add What You're Looking For",
+  "Confirm Posting",
 ];
 
 const useStyles = (theme) => ({
@@ -68,25 +69,31 @@ class AddPosting extends React.Component {
       condition: "",
       tags: [],
       images: [],
+      requestedItems: ["req1"],
+      quantity: 0,
     };
   }
 
   handleInputChange = (e) => {
     let { name, value } = e.target;
+    console.log("change");
 
     this.setState({ [name]: value });
   };
 
-  addTag = (e) => {
+  handleAddtoList = (e) => {
     if (e.key === "Enter") {
-      this.setState({ tags: [...this.state.tags, e.target.value] });
+      e.preventDefault();
+      this.setState({
+        [e.target.name]: [...this.state[e.target.name], e.target.value],
+      });
       e.target.value = "";
     }
   };
 
-  deleteTag = (idx) => {
-    let newTags = this.state.tags.filter((tag, index) => index !== idx);
-    this.setState({ tags: newTags });
+  handleRemoveFromList = (type, idx) => {
+    let newTags = this.state[type].filter((item, index) => index !== idx);
+    this.setState({ [type]: newTags });
   };
 
   setActiveStep = (step) => {
@@ -125,11 +132,6 @@ class AddPosting extends React.Component {
           open={this.state.open}
           onClose={this.handleClose}
           className={classes.modal}
-          closeAfterTransition
-          BackdropComponent={Backdrop}
-          BackdropProps={{
-            timeout: 500,
-          }}
         >
           <Paper className={classes.paper}>
             <Grid container direction="column">
@@ -138,23 +140,33 @@ class AddPosting extends React.Component {
               </Grid>
               <Grid item>
                 <form className={classes.form}>
-                  {this.state.activeStep === 0 && (
+                  <Step3
+                    change={this.handleInputChange}
+                    addTag={this.handleAddtoList}
+                    tags={this.state.requestedItems}
+                    deleteTag={this.handleRemoveFromList}
+                  />
+                  {/* {this.state.activeStep === 0 && (
                     <Step1
                       change={this.handleInputChange}
-                      addTag={this.addTag}
+                      addTag={this.handleAddtoList}
                       tags={this.state.tags}
-                      deleteTag={this.deleteTag}
+                      deleteTag={this.handleRemoveFromList}
                     />
                   )}
                   {this.state.activeStep === 1 && (
                     <Step2 change={this.handleInputChange} />
                   )}
                   {this.state.activeStep === 2 && (
-                    <Step3 change={this.handleInputChange} />
+                    <Step3
+                      addRequest={this.handleAddtoList}
+                      deleteRequest={this.handleRemoveFromList}
+                      requests={this.state.requestedItems}
+                    />
                   )}
                   {this.state.activeStep === 3 && (
                     <FinalStep change={this.handleInputChange} />
-                  )}
+                  )} */}
                 </form>
               </Grid>
               <Grid item>

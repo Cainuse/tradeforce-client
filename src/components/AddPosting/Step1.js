@@ -181,7 +181,7 @@ const Step1 = (props) => {
           defaultValue=""
           onKeyUp={addTag}
           placeholder={
-            tags.length === 10 ? "Press enter to add tag" : "Tag limit reached"
+            tags.length === 10 ? "Tag limit reached" : "Press enter to add tag"
           }
           disabled={tags.length === 10 ? true : false}
         />
@@ -191,7 +191,7 @@ const Step1 = (props) => {
             color="primary"
             size="small"
             onDelete={() => {
-              deleteTag(idx);
+              deleteTag("tags", idx);
             }}
             label={tag}
             className={classes.tags}

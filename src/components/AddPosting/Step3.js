@@ -7,36 +7,24 @@ import Chip from "@material-ui/core/Chip";
 const useStyles = makeStyles(() => ({}));
 
 const Step3 = (props) => {
-  const { addTag, tags, deleteTag } = props;
+  const { change, addTag, tags, deleteTag } = props;
 
   const classes = useStyles();
 
   return (
     <React.Fragment>
-      <TextField
-        required
-        label="Requested Items"
-        className={classes.textfield}
-        fullWidth
-        margin="dense"
-        variant="outlined"
-        name="requestedItems"
-        defaultValue=""
-        onKeyUp={addTag}
-        placeholder="Press enter to add request"
-      />
-      {/* {tags.map((item, idx) => (
-        <Chip
-          key={idx}
-          color="primary"
-          size="small"
-          onDelete={() => {
-            deleteTag("requestedItems", idx);
+      <div className={classes.tagContainer}>
+        <TextField
+          label="requested"
+          name="requestedItems"
+          onKeyUp={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              console.log("enter key");
+            }
           }}
-          label={item}
-          className={classes.tags}
         />
-      ))} */}
+      </div>
     </React.Fragment>
   );
 };
