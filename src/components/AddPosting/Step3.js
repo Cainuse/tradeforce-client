@@ -4,27 +4,41 @@ import Box from "@material-ui/core/Box";
 import TextField from "@material-ui/core/TextField";
 import Chip from "@material-ui/core/Chip";
 
-const useStyles = makeStyles(() => ({}));
+const useStyles = makeStyles(() => ({
+  tag: {
+    fontSize: "20px",
+  },
+}));
 
 const Step3 = (props) => {
-  const { change, addTag, tags, deleteTag } = props;
+  const { change, requests, addRequest, deleteRequest } = props;
 
   const classes = useStyles();
 
   return (
     <React.Fragment>
-      <div className={classes.tagContainer}>
-        <TextField
-          label="requested"
-          name="requestedItems"
-          onKeyUp={(e) => {
-            if (e.key === "Enter") {
-              e.preventDefault();
-              console.log("enter key");
-            }
+      <TextField
+        required
+        label="Tags"
+        className={classes.textfield}
+        fullWidth
+        margin="dense"
+        variant="outlined"
+        name="requestedItems"
+        defaultValue=""
+        onKeyUp={addRequest}
+      />
+      {requests.map((tag, idx) => (
+        <Chip
+          key={idx}
+          color="primary"
+          onDelete={() => {
+            deleteRequest("requestedItems", idx);
           }}
+          label={tag}
+          className={classes.tags}
         />
-      </div>
+      ))}
     </React.Fragment>
   );
 };

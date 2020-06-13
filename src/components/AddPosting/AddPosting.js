@@ -139,14 +139,13 @@ class AddPosting extends React.Component {
                 Create New Posting
               </Grid>
               <Grid item>
-                <form className={classes.form}>
-                  <Step3
-                    change={this.handleInputChange}
-                    addTag={this.handleAddtoList}
-                    tags={this.state.requestedItems}
-                    deleteTag={this.handleRemoveFromList}
-                  />
-                  {/* {this.state.activeStep === 0 && (
+                <form
+                  className={classes.form}
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                  }}
+                >
+                  {this.state.activeStep === 0 && (
                     <Step1
                       change={this.handleInputChange}
                       addTag={this.handleAddtoList}
@@ -166,7 +165,7 @@ class AddPosting extends React.Component {
                   )}
                   {this.state.activeStep === 3 && (
                     <FinalStep change={this.handleInputChange} />
-                  )} */}
+                  )}
                 </form>
               </Grid>
               <Grid item>

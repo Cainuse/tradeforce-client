@@ -197,25 +197,6 @@ const Step1 = (props) => {
             className={classes.tags}
           />
         ))}
-        {/* <div className={classes.tagContainer}>
-          {tags.map((tag, idx) => (
-            <Chip
-              key={idx}
-              color="primary"
-              size="small"
-              onDelete={() => {
-                deleteTag();
-              }}
-              label={tag}
-            />
-          ))}
-          <input
-            type="text"
-            placeholder="Press enter to add tags"
-            onKeyUp={addTag}
-            className={classes.tagInput}
-          />
-        </div> */}
       </div>
     </React.Fragment>
   );
