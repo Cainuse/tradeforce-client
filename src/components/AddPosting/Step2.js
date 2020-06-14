@@ -63,7 +63,7 @@ class Step2 extends React.Component {
   };
 
   render() {
-    const { classes, images, addImage } = this.props;
+    const { classes, images } = this.props;
     return (
       <React.Fragment>
         <div

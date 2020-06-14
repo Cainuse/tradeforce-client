@@ -61,8 +61,8 @@ class AddPosting extends React.Component {
       condition: "",
       tags: [],
       images: [],
-      requestedItems: ["req1"],
-      quantity: 0,
+      requestedItems: [],
+      quantity: 1,
     };
   }
 
@@ -116,6 +116,10 @@ class AddPosting extends React.Component {
     this.setState({ open: false });
   };
 
+  returnToActiveStep = (step) => {
+    this.setState({ activeStep: step });
+  };
+
   getActiveStepDisplay = () => {
     switch (this.state.activeStep) {
       case 0:
@@ -144,7 +148,12 @@ class AddPosting extends React.Component {
           />
         );
       case 3:
-        return <Step4 state={this.state} />;
+        return (
+          <Step4
+            state={this.state}
+            returnToActiveStep={this.returnToActiveStep}
+          />
+        );
       case 4:
         return <FinalStep close={this.handleClose} />;
       default:
