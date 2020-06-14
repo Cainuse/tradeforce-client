@@ -1,9 +1,6 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
-import Box from "@material-ui/core/Box";
-import Button from "@material-ui/core/Button";
 import CloudUploadOutlinedIcon from "@material-ui/icons/CloudUploadOutlined";
-import Typography from "@material-ui/core/Typography";
 
 const useStyles = (theme) => ({
   dropzone: {
@@ -58,6 +55,13 @@ class Step2 extends React.Component {
     this.setState({ highlighted: value });
   };
 
+  processFiles = (files) => {
+    let res = Array.from(files)
+      .filter((file) => file.type === "image/png" || file.type === "image/jpeg")
+      .map((file) => file.name);
+    this.props.addImage(res);
+  };
+
   render() {
     const { classes, images, addImage } = this.props;
     return (
@@ -76,13 +80,7 @@ class Step2 extends React.Component {
           onDrop={(e) => {
             e.preventDefault();
             this.setHighlighted(false);
-            let res = Array.from(e.dataTransfer.files)
-              .filter(
-                (file) =>
-                  file.type === "image/png" || file.type === "image/jpeg"
-              )
-              .map((file) => file.name);
-            addImage(res);
+            this.processFiles(e.dataTransfer.files);
           }}
         >
           <CloudUploadOutlinedIcon className={classes.uploadIcon} />
@@ -94,6 +92,9 @@ class Step2 extends React.Component {
               onDragOver={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
+              }}
+              onChange={(e) => {
+                this.processFiles(e.target.files);
               }}
               className={classes.input}
             />
