@@ -3,8 +3,11 @@ import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import { Box } from "@material-ui/core";
 import Chip from "@material-ui/core/Chip";
+import { connect } from "react-redux";
 
 import tomato from "../../images/tomato.jpg";
+import { openOfferModal } from "../../redux/actions/modalActions";
+
 const tags = [
   "selectedtag1",
   "selectedtag2",
@@ -14,7 +17,7 @@ const tags = [
   "selectedtag6",
 ];
 
-export default function ItemDetail(props) {
+function ItemDetail(props) {
   return (
     <React.Fragment>
       <Grid item xs={7}>
@@ -22,7 +25,13 @@ export default function ItemDetail(props) {
       </Grid>
       <Grid item xs={4}>
         <Grid container alignItems="center" direction="column">
-          <Button variant="contained" color="primary">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => {
+              props.openOfferingModal();
+            }}
+          >
             Make Offer
           </Button>
           <Box my={3} width="70%">
@@ -48,3 +57,9 @@ export default function ItemDetail(props) {
     </React.Fragment>
   );
 }
+
+const mapDispatchToProps = (dispatch) => ({
+  openOfferingModal: () => dispatch(openOfferModal()),
+});
+
+export default connect(null, mapDispatchToProps)(ItemDetail);

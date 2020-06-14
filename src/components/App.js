@@ -37,6 +37,7 @@ const App = () => {
         <div className={classes.root}>
           <NavBar />
           <PathRouter />
+          <Modal />
           <div className={classes.flyoutRoot}>
             <NavFlyout />
           </div>
