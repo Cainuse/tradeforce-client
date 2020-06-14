@@ -1,11 +1,14 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { createMuiTheme, makeStyles, ThemeProvider } from "@material-ui/core/styles";
+import { BrowserRouter as Router } from "react-router-dom";
+import {
+  createMuiTheme,
+  makeStyles,
+  ThemeProvider,
+} from "@material-ui/core/styles";
 import NavBar from "./Navigation/NavBar/NavBar";
-import ItemPreview from "./Item/ItemPreview";
-import ItemPage from "./Item/ItemPage";
-import Grid from "@material-ui/core/Grid";
 import NavFlyout from "./Navigation/NavFlyout";
+import PathRouter from "./PathRouter";
+import ModalContainer from "./ModalContainer";
 
 const theme = createMuiTheme({
   palette: {
@@ -14,7 +17,7 @@ const theme = createMuiTheme({
     },
     secondary: {
       main: "#FFFFFF",
-    }
+    },
   },
   typography: {
     fontFamily: ["Roboto", "Montserrat"].join(","),
@@ -24,8 +27,8 @@ const theme = createMuiTheme({
 const useStyles = makeStyles(() => ({
   root: {
     height: "100vh",
-  }
-}))
+  },
+}));
 
 const App = () => {
   const classes = useStyles();
@@ -34,39 +37,8 @@ const App = () => {
       <ThemeProvider theme={theme}>
         <div className={classes.root}>
           <NavBar />
-          <Switch>
-            <Route exact path="/">
-              <Grid container direction={"row"}>
-                <Grid item xs={3}>
-                  <ItemPreview title="default item" datePosted={new Date()} />
-                </Grid>
-                <Grid item xs={3}>
-                  <ItemPreview title="default item" datePosted={new Date()} />
-                </Grid>
-                <Grid item xs={3}>
-                  <ItemPreview title="default item" datePosted={new Date()} />
-                </Grid>
-                <Grid item xs={3}>
-                  <ItemPreview title="default item" datePosted={new Date()} />
-                </Grid>
-                <Grid item xs={3}>
-                  <ItemPreview title="default item" datePosted={new Date()} />
-                </Grid>
-                <Grid item xs={3}>
-                  <ItemPreview title="default item" datePosted={new Date()} />
-                </Grid>
-                <Grid item xs={3}>
-                  <ItemPreview title="default item" datePosted={new Date()} />
-                </Grid>
-                <Grid item xs={3}>
-                  <ItemPreview title="default item" datePosted={new Date()} />
-                </Grid>
-              </Grid>
-            </Route>
-            <Route exact path="/testItem">
-              <ItemPage />
-            </Route>
-          </Switch>
+          <PathRouter />
+          <ModalContainer />
           <div className={classes.flyoutRoot}>
             <NavFlyout />
           </div>
@@ -75,7 +47,5 @@ const App = () => {
     </Router>
   );
 };
-
-
 
 export default App;

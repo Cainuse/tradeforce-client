@@ -7,6 +7,7 @@ export const CLOSE_FLYOUT = "CLOSE_FLYOUT";
 /**
  * Modal Action Types
  **/
+export const CLOSE_MODAL = "CLOSE_MODAL";
 export const OPEN_OFFER_MODAL = "OPEN_OFFER_MODAL";
 
 export const MAKE_OFFER = "MAKE_OFFER";

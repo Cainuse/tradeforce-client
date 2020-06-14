@@ -3,5 +3,5 @@ export const initialState = {
   modal: {
     isOpen: false,
     type: "",
-  }
-}
+  },
+};
