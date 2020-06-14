@@ -9,6 +9,7 @@ import DisplayStepper from "./DisplayStepper";
 import Step1 from "./Step1";
 import Step2 from "./Step2";
 import Step3 from "./Step3";
+import Step4 from "./Step4";
 import FinalStep from "./FinalStep";
 
 const steps = ["Item Details", "Images", "Requested Items", "Review"];
@@ -67,8 +68,6 @@ class AddPosting extends React.Component {
 
   handleInputChange = (e) => {
     let { name, value } = e.target;
-    console.log("change");
-
     this.setState({ [name]: value });
   };
 
@@ -87,8 +86,13 @@ class AddPosting extends React.Component {
     this.setState({ [type]: newTags });
   };
 
+  handleAddImage = (list) => {
+    this.setState({
+      images: [...this.state.images, ...list],
+    });
+  };
+
   setActiveStep = (step) => {
-    console.log("setActiveStep: ", step);
     this.setState({ activeStep: step });
   };
 
@@ -124,7 +128,13 @@ class AddPosting extends React.Component {
           />
         );
       case 1:
-        return <Step2 change={this.handleInputChange} />;
+        return (
+          <Step2
+            change={this.handleInputChange}
+            addImage={this.handleAddImage}
+            images={this.state.images}
+          />
+        );
       case 2:
         return (
           <Step3
@@ -134,7 +144,9 @@ class AddPosting extends React.Component {
           />
         );
       case 3:
-        return <FinalStep change={this.handleInputChange} />;
+        return <Step4 state={this.state} />;
+      case 4:
+        return <FinalStep close={this.handleClose} />;
       default:
         return null;
     }
@@ -158,21 +170,25 @@ class AddPosting extends React.Component {
             </Typography>
             <DisplayStepper activeStep={this.state.activeStep} />
             <div className={classes.form}>{this.getActiveStepDisplay()}</div>
-            <div className={classes.buttonContainer}>
-              <Button
-                disabled={this.state.activeStep === 0}
-                onClick={this.handleBack}
-              >
-                Back
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={this.handleNext}
-              >
-                {this.state.activeStep === steps.length - 1 ? "Submit" : "Next"}
-              </Button>
-            </div>
+            {this.state.activeStep <= 3 && (
+              <div className={classes.buttonContainer}>
+                <Button
+                  disabled={this.state.activeStep === 0}
+                  onClick={this.handleBack}
+                >
+                  Back
+                </Button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={this.handleNext}
+                >
+                  {this.state.activeStep === steps.length - 1
+                    ? "Submit"
+                    : "Next"}
+                </Button>
+              </div>
+            )}
           </Paper>
         </Modal>
       </div>
