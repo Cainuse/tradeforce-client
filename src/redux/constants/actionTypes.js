@@ -1,10 +1,8 @@
-
 /**
  * Nav Flyout Action Types
  **/
 export const CLICK_MENU_BTN = "CLICK_MENU_BTN";
 export const CLOSE_FLYOUT = "CLOSE_FLYOUT";
-
 
 /**
  * Modal Action Types
