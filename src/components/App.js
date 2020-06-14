@@ -8,6 +8,7 @@ import {
 import NavBar from "./Navigation/NavBar/NavBar";
 import NavFlyout from "./Navigation/NavFlyout";
 import PathRouter from "./PathRouter";
+import ModalContainer from "./ModalContainer";
 
 const theme = createMuiTheme({
   palette: {
@@ -37,6 +38,7 @@ const App = () => {
         <div className={classes.root}>
           <NavBar />
           <PathRouter />
+          <ModalContainer />
           <div className={classes.flyoutRoot}>
             <NavFlyout />
           </div>
