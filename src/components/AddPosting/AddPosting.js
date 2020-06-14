@@ -19,9 +19,10 @@ const useStyles = (theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    width: "100%",
   },
   paper: {
-    width: "50%",
+    width: "100%",
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
@@ -54,7 +55,6 @@ class AddPosting extends React.Component {
     super(props);
     this.state = {
       activeStep: 0,
-      open: true,
       title: "",
       description: "",
       category: "",
@@ -106,14 +106,6 @@ class AddPosting extends React.Component {
 
   handleReset = () => {
     this.setActiveStep(0);
-  };
-
-  handleOpen = () => {
-    this.setState({ open: true });
-  };
-
-  handleClose = () => {
-    this.setState({ open: false });
   };
 
   returnToActiveStep = (stepLabel) => {
@@ -178,42 +170,31 @@ class AddPosting extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <div>
-        <button type="button" onClick={this.handleOpen}>
-          Open Modal
-        </button>
-        <Modal
-          open={this.state.open}
-          onClose={this.handleClose}
-          className={classes.modal}
-        >
-          <Paper className={classes.paper}>
-            <Typography align="center" variant="h4">
-              Create A Posting
-            </Typography>
-            <DisplayStepper activeStep={this.state.activeStep} />
-            <div className={classes.form}>{this.getActiveStepDisplay()}</div>
-            {this.state.activeStep <= 3 && (
-              <div className={classes.buttonContainer}>
-                <Button
-                  disabled={this.state.activeStep === 0}
-                  onClick={this.handleBack}
-                >
-                  Back
-                </Button>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={this.handleNext}
-                >
-                  {this.state.activeStep === steps.length - 1
-                    ? "Submit"
-                    : "Next"}
-                </Button>
-              </div>
-            )}
-          </Paper>
-        </Modal>
+      <div className={classes.modal}>
+        <Paper className={classes.paper}>
+          <Typography align="center" variant="h4">
+            Create A Posting
+          </Typography>
+          <DisplayStepper activeStep={this.state.activeStep} />
+          <div className={classes.form}>{this.getActiveStepDisplay()}</div>
+          {this.state.activeStep <= 3 && (
+            <div className={classes.buttonContainer}>
+              <Button
+                disabled={this.state.activeStep === 0}
+                onClick={this.handleBack}
+              >
+                Back
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={this.handleNext}
+              >
+                {this.state.activeStep === steps.length - 1 ? "Submit" : "Next"}
+              </Button>
+            </div>
+          )}
+        </Paper>
       </div>
     );
   }
