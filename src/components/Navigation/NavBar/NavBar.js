@@ -11,8 +11,7 @@ import { clickMenuBtn } from "../../../redux/actions/flyoutActions";
 import { connect } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
-  navBarRoot: {
-    },
+  navBarRoot: {},
   menuButton: {
     marginRight: theme.spacing(2),
   },
@@ -32,18 +31,17 @@ const useStyles = makeStyles((theme) => ({
   },
   flyoutRoot: {
     visibility: "hidden",
-  }
+  },
 }));
 
 class NavBar extends React.Component {
-
-  handleMenuClick = event => {
+  handleMenuClick = (event) => {
     event.preventDefault();
     this.props.clickMenuBtn();
-  }
+  };
 
   render() {
-    return <CreateNavBar handleMenuClick={this.handleMenuClick}/>
+    return <CreateNavBar handleMenuClick={this.handleMenuClick} />;
   }
 }
 
@@ -78,8 +76,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(
-  null,
-  mapDispatchToProps
-)
-(NavBar);
+export default connect(null, mapDispatchToProps)(NavBar);

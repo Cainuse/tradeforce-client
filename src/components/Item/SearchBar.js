@@ -8,25 +8,23 @@ import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 
-const useStyles = (theme) => ({
+const useStyles = () => ({
   inputForm: {
     top: "10%",
     left: "10px",
-    color: "white"
-
+    color: "white",
   },
   textField: {
     width: "50%",
-    backgroundColor:"white"
+    backgroundColor: "white",
   },
   iconButton: {
     top: "10px",
-    color: "white"
+    color: "white",
   },
   searchOption: {
     top: "10px",
-    color: "white"
-
+    color: "white",
   },
 });
 

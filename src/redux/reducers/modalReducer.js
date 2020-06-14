@@ -13,6 +13,6 @@ export const modalReducer = (state = initialState.modal, action) => {
       return {
         isOpen: false,
         type: "",
-      }
+      };
   }
-}
+};
