@@ -11,6 +11,8 @@ import Chip from "@material-ui/core/Chip";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
 
+import ExpandableSection from "./ExpandableSection";
+
 const useStyles = makeStyles((theme) => ({
   heading: {
     fontWeight: 300,
@@ -33,64 +35,30 @@ const Step4 = (props) => {
 
   return (
     <React.Fragment>
-      <ExpansionPanel>
-        <ExpansionPanelSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <Typography className={classes.heading}>Items Details</Typography>
-        </ExpansionPanelSummary>
-        <ExpansionPanelDetails>
-          <ItemDetailsReview state={state} />
-        </ExpansionPanelDetails>
-        <Divider />
-        <ExpansionPanelActions>
-          <Button
-            size="small"
-            color="primary"
-            onClick={() => returnToActiveStep(0)}
-          >
-            Edit
-          </Button>
-        </ExpansionPanelActions>
-      </ExpansionPanel>
-      <ExpansionPanel>
-        <ExpansionPanelSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <Typography className={classes.heading}>Images</Typography>
-        </ExpansionPanelSummary>
-        <ExpansionPanelDetails>
-          <div>
-            {state.images.map((item, idx) => (
-              <p key={idx}>{item}</p>
-            ))}
-          </div>
-        </ExpansionPanelDetails>
-        <Divider />
-        <ExpansionPanelActions>
-          <Button
-            size="small"
-            color="primary"
-            onClick={() => returnToActiveStep(1)}
-          >
-            Edit
-          </Button>
-        </ExpansionPanelActions>
-      </ExpansionPanel>
-      <ExpansionPanel>
-        <ExpansionPanelSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <Typography className={classes.heading}>Requested Items</Typography>
-        </ExpansionPanelSummary>
-        <ExpansionPanelDetails>
-          {state.requestedItems.map((item, idx) => (
+      <ExpandableSection
+        sectionTitle="Item Details"
+        returnToActiveStep={returnToActiveStep}
+      >
+        <ItemDetailsReview state={state} />
+      </ExpandableSection>
+      <ExpandableSection
+        sectionTitle="Images"
+        returnToActiveStep={returnToActiveStep}
+      >
+        <div>
+          {state.images.map((item, idx) => (
+            <p key={idx}>{item}</p>
+          ))}
+        </div>
+      </ExpandableSection>
+      <ExpandableSection
+        sectionTitle="Requested Items"
+        returnToActiveStep={returnToActiveStep}
+      >
+        {state.requestedItems.length === 0 || !state.requestedItems ? (
+          <Typography>No requested items specified for exchange</Typography>
+        ) : (
+          state.requestedItems.map((item, idx) => (
             <Chip
               key={idx}
               color="primary"
@@ -98,19 +66,9 @@ const Step4 = (props) => {
               label={item}
               className={classes.chips}
             />
-          ))}
-        </ExpansionPanelDetails>
-        <Divider />
-        <ExpansionPanelActions>
-          <Button
-            size="small"
-            color="primary"
-            onClick={() => returnToActiveStep(2)}
-          >
-            Edit
-          </Button>
-        </ExpansionPanelActions>
-      </ExpansionPanel>
+          ))
+        )}
+      </ExpandableSection>
     </React.Fragment>
   );
 };

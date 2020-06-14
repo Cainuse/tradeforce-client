@@ -2,6 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Chip from "@material-ui/core/Chip";
+import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles((theme) => ({
   tags: {
@@ -25,7 +26,6 @@ const Step3 = (props) => {
   return (
     <React.Fragment>
       <TextField
-        required
         label="Requested Items"
         className={classes.textfield}
         fullWidth
@@ -42,18 +42,22 @@ const Step3 = (props) => {
         disabled={requests.length >= 5}
       />
       <div className={classes.chipContainer}>
-        {requests.map((tag, idx) => (
-          <Chip
-            key={idx}
-            color="primary"
-            onDelete={() => {
-              deleteRequest("requestedItems", idx);
-            }}
-            label={tag}
-            className={classes.tags}
-            variant="outlined"
-          />
-        ))}
+        {requests.length === 0 || !requests ? (
+          <Typography>No requested items specified for exchange</Typography>
+        ) : (
+          requests.map((tag, idx) => (
+            <Chip
+              key={idx}
+              color="primary"
+              onDelete={() => {
+                deleteRequest("requestedItems", idx);
+              }}
+              label={tag}
+              className={classes.tags}
+              variant="outlined"
+            />
+          ))
+        )}
       </div>
     </React.Fragment>
   );

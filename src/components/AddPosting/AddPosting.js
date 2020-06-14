@@ -116,7 +116,21 @@ class AddPosting extends React.Component {
     this.setState({ open: false });
   };
 
-  returnToActiveStep = (step) => {
+  returnToActiveStep = (stepLabel) => {
+    let step = this.state.activeStep;
+    switch (stepLabel) {
+      case "Item Details":
+        step = 0;
+        break;
+      case "Images":
+        step = 1;
+        break;
+      case "Requested Items":
+        step = 2;
+        break;
+      default:
+        break;
+    }
     this.setState({ activeStep: step });
   };
 
