@@ -10,7 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import Avatar from "@material-ui/core/Avatar";
 import Grid from "@material-ui/core/Grid";
 import Rating from "./Rating";
-import { useHistory } from "react-router-dom";
+import { useHistory, useRouteMatch } from "react-router-dom";
 
 const useStyles = makeStyles(() => ({
   tradeItemCard: {
@@ -21,34 +21,42 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const MediaCard = ({ title, datePosted }) => {
-  const history = useHistory("/");
+const ItemPreview = ({ id, title, datePosted, location }) => {
+  const history = useHistory();
+  let { path } = useRouteMatch();
   const classes = useStyles();
 
-  // postedDate must be a date object
+  const parseDate = (str) => {
+    const mdy = str.split("/");
+    return new Date(mdy[2], mdy[0] - 1, mdy[1]);
+  };
+
   const getDate = (postedDate) => {
     const today = new Date();
-    const diffTime = Math.abs(today - postedDate);
-    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    const diffTime = Math.abs(today - parseDate(postedDate));
+    const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
     if (diffDays < 30) {
       return diffDays === 0
         ? "Posted today"
         : "Posted " + diffDays + " day(s) ago";
     }
     if (diffDays >= 30 && diffDays <= 365) {
-      return "Posted " + Math.floor(diffDays / 30) + " month(s) ago";
+      return "Posted " + Math.round(diffDays / 30) + " month(s) ago";
     }
 
-    return "Posted " + diffDays / 365 + " year(s) ago";
+    return "Posted " + Math.round(diffDays / 365) + " year(s) ago";
   };
 
-  const routeToItem = (path) => {
-    history.push(path);
+  const routeToItem = (itemId) => {
+    history.push({
+      pathname: path + "/item=" + itemId,
+      search: "items",
+    });
   };
 
   return (
     <Card className={classes.tradeItemCard}>
-      <CardActionArea onClick={() => routeToItem("testItem")}>
+      <CardActionArea onClick={() => routeToItem(id)}>
         <CardMedia
           className={classes.tradeItemCardImg}
           image={require("../../images/trade.jpg")}
@@ -73,18 +81,18 @@ const MediaCard = ({ title, datePosted }) => {
             </Grid>
             <Grid item xs={8}>
               <Typography variant="body2" color="textPrimary" component="p">
-                Vancouver, BC
+                {location}
               </Typography>
             </Grid>
             <Grid item align="center" xs={4}>
               <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-              <Rating ratingMode={true} />
+              <Rating isReadOnly={true} />
             </Grid>
           </Grid>
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary">
+        <Button size="small" color="primary" onClick={() => routeToItem(id)}>
           Details
         </Button>
       </CardActions>
@@ -92,4 +100,4 @@ const MediaCard = ({ title, datePosted }) => {
   );
 };
 
-export default MediaCard;
+export default ItemPreview;

@@ -9,6 +9,7 @@ import ReviewSection from "./ReviewSection";
 import ItemDescription from "./ItemDescription";
 import ItemHeader from "./ItemHeader";
 import ItemDetail from "./ItemDetail";
+import { useHistory, useLocation } from "react-router-dom";
 
 // Item Details page for in-depth view of offered items
 
@@ -82,11 +83,22 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ItemPage() {
   const classes = useStyles();
+  const history = useHistory();
+  const location = useLocation();
+  const parentPath = location.pathname.substring(
+    0,
+    location.pathname.lastIndexOf("/")
+  );
+  // you can use the hook useParams to get the id of the specific item to be shown
+
+  const redirect = () => {
+    history.push(parentPath + "/" + location.search);
+  };
 
   return (
     <div>
       <div className={classes.root}>
-        <Button>&lt; Back to Search</Button>
+        <Button onClick={redirect}>&lt; Back to Search</Button>
       </div>
       <Container className={classes.root}>
         <ItemHeader classes={classes} />
