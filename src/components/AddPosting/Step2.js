@@ -90,6 +90,7 @@ class Step2 extends React.Component {
           <label className={classes.browseButton}>
             <input
               type="file"
+              multiple
               onDragOver={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
