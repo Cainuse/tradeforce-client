@@ -2,6 +2,7 @@ import React from "react";
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import { IconButton } from "@material-ui/core";
+import { useHistory } from "react-router";
 import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
 import SmsOutlinedIcon from "@material-ui/icons/SmsOutlined";
 import AccountCircleOutlinedIcon from "@material-ui/icons/AccountCircleOutlined";
@@ -93,11 +94,13 @@ const ChatBtn = (props) => {
 };
 
 const AccountBtn = (props) => {
+  const history = useHistory();
   return (
     <IconButton
       className={props.iconBtnClass}
       color="inherit"
       aria-label="accountButton"
+      onClick={() => history.push("/profile")}
     >
       <AccountCircleOutlinedIcon className={props.accountBtnClass} />
     </IconButton>
@@ -110,6 +113,7 @@ const AccountBtn = (props) => {
 
 const LoggedInActionItems = (props) => {
   const classes = loggedInStyles();
+
   return (
     <div className={classes.root}>
       <PostItemBtn
