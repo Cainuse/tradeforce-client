@@ -5,6 +5,9 @@ import { IconButton } from "@material-ui/core";
 import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
 import SmsOutlinedIcon from "@material-ui/icons/SmsOutlined";
 import AccountCircleOutlinedIcon from "@material-ui/icons/AccountCircleOutlined";
+import { openPostingModal } from "../../../../redux/actions/modalActions";
+
+import { connect } from "react-redux";
 
 const loggedOutStyles = makeStyles(() => ({
   loginBtn: {
@@ -70,6 +73,7 @@ const PostItemBtn = (props) => {
       color="inherit"
       className={props.className}
       startIcon={<AddCircleOutlineOutlinedIcon />}
+      onClick={() => props.openPostingModal()}
     >
       post an item
     </Button>
@@ -104,11 +108,14 @@ const AccountBtn = (props) => {
  * MAIN: Logged Out Action Item Components
  **/
 
-const LoggedInActionItems = () => {
+const LoggedInActionItems = (props) => {
   const classes = loggedInStyles();
   return (
     <div className={classes.root}>
-      <PostItemBtn className={classes.postItem} />
+      <PostItemBtn
+        className={classes.postItem}
+        openPostingModal={props.openPostingModal}
+      />
       <AppBarDivider className={classes.divider} />
       <ChatBtn iconBtnClass={classes.iconBtn} chatBtnClass={classes.chatBtn} />
       <AccountBtn
@@ -119,9 +126,11 @@ const LoggedInActionItems = () => {
   );
 };
 
-export const ActionItems = (props) => {
+const ActionItems = (props) => {
   if (props.isLoggedIn) {
-    return <LoggedInActionItems />;
+    return <LoggedInActionItems openPostingModal={props.openPostingModal} />;
   }
   return <LoginRegisterBtn />;
 };
+
+export default connect(null, { openPostingModal })(ActionItems);

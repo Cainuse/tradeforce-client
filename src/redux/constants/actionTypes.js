@@ -10,7 +10,6 @@ export const CLOSE_FLYOUT = "CLOSE_FLYOUT";
 export const CLOSE_MODAL = "CLOSE_MODAL";
 export const OPEN_OFFER_MODAL = "OPEN_OFFER_MODAL";
 
-/**
- * Other Action Types
- **/
 export const MAKE_OFFER = "MAKE_OFFER";
+
+export const OPEN_POSTING_MODAL = "OPEN_POSTING_MODAL";

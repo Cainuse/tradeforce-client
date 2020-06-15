@@ -1,4 +1,8 @@
-import { CLOSE_MODAL, OPEN_OFFER_MODAL } from "../constants/actionTypes";
+import {
+  CLOSE_MODAL,
+  OPEN_OFFER_MODAL,
+  OPEN_POSTING_MODAL,
+} from "../constants/actionTypes";
 
 export const closeModal = () => {
   return {
@@ -9,5 +13,11 @@ export const closeModal = () => {
 export const openOfferModal = () => {
   return {
     type: OPEN_OFFER_MODAL,
+  };
+};
+
+export const openPostingModal = () => {
+  return {
+    type: OPEN_POSTING_MODAL,
   };
 };
