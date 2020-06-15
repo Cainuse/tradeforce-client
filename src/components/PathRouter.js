@@ -2,6 +2,7 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 import ItemPage from "./Item/ItemPage";
 import ItemResults from "./pages/ItemResults";
+import UserProfile from "./pages/UserProfile";
 
 // this will be replaced with a back-end call to fetch the actual items from the db
 const sampleItemPreviews = [
@@ -66,6 +67,9 @@ const PathRouter = () => {
       </Route>
       <Route path="/items/item=:id">
         <ItemPage />
+      </Route>
+      <Route exact path="/profile">
+        <UserProfile />
       </Route>
     </Switch>
   );
