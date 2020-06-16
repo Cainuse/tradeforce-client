@@ -4,16 +4,22 @@ import { withStyles } from "@material-ui/core/styles";
 
 const useStyles = () => ({
   card: {
+    position: "relative",
     display: "flex",
-    width: "10ch",
-    height: "10ch",
+    width: "10vw",
+    height: "10vw",
     alignItems: "center",
     flexDirection: "column",
   },
   image: {
     width: "100%",
     height: "100%",
+    objectFit: "cover",
     borderRadius: "100%",
+  },
+  categoryName: {
+    marginTop: "-1%",
+    fontWeight: "normal",
   },
 });
 
@@ -28,7 +34,7 @@ class CategoryCard extends Component {
             alt={this.props.imageName}
             className={classes.image}
           />
-          <h4>{this.props.imageName}</h4>
+          <h1 className={classes.categoryName}>{this.props.imageName}</h1>
         </Paper>
       </div>
     );

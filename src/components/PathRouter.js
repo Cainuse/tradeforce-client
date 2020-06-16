@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 import ItemPage from "./Item/ItemPage";
 import ItemResults from "./pages/ItemResults";
-
+import LandingPage from "./pages/LandingPage";
 // this will be replaced with a back-end call to fetch the actual items from the db
 const sampleItemPreviews = [
   {
@@ -60,6 +60,7 @@ const PathRouter = () => {
     <Switch>
       <Route exact path="/">
         {/* TODO: this is where the landing page should be rendered */}
+        <LandingPage></LandingPage>
       </Route>
       <Route exact path="/items">
         <ItemResults items={sampleItemPreviews} />
