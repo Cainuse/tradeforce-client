@@ -5,6 +5,7 @@ import { Modal } from "@material-ui/core";
 import { closeModal } from "../redux/actions/modalActions";
 import { OFFER_MODAL, POSTING_MODAL } from "../redux/constants/modalTypes";
 import AddPosting from "../components/AddPosting/AddPosting";
+import AddOffering from "./AddOffering/AddOffering";
 
 //--------------- Helper: Error for if wrong modal type is given -------------//
 const errorModalStyle = makeStyles((theme) => ({
@@ -23,7 +24,7 @@ const ErrorModal = () => {
   );
 };
 
-//------------------
+//------------- Modal Container and Choosing Modal Content -------------------//
 
 const modalStyles = makeStyles(() => ({
   modalContainer: {
@@ -33,12 +34,19 @@ const modalStyles = makeStyles(() => ({
     margin: "0 auto",
     width: "50%",
   },
+  modalContents: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
+    outline: "none",
+  },
 }));
 
-const ChooseModalContents = (props) => {
+const chooseModalContents = (props) => {
   switch (props.modal.type) {
     case OFFER_MODAL:
-      return <h2>HIIII</h2>;
+      return <AddOffering />;
     case POSTING_MODAL:
       return <AddPosting />;
     default:
@@ -46,7 +54,6 @@ const ChooseModalContents = (props) => {
   }
 };
 
-// Helper function to allow for classes
 const MakeModalContainer = (props) => {
   let classes = modalStyles();
 
@@ -61,7 +68,7 @@ const MakeModalContainer = (props) => {
       aria-labelledby="simple-modal-title"
       aria-describedby="simple-modal-description"
     >
-      <ChooseModalContents modal={props.modal} />
+      <div className={classes.modalContents}>{chooseModalContents(props)}</div>
     </Modal>
   );
 };
