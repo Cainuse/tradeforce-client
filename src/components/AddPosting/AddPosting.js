@@ -196,7 +196,6 @@ class AddPosting extends React.Component {
   handleNext = () => {
     if (this.state.activeStep === 0) {
       let nextStep = this.validateRequiredFields();
-      console.log(nextStep);
       this.setState({ activeStep: nextStep });
     } else if (this.state.activeStep === 3) {
       this.handleSubmit();
