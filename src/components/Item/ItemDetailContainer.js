@@ -1,5 +1,4 @@
 import React from "react";
-import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import ItemDescription from "./ItemDescription";

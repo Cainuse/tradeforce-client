@@ -6,25 +6,10 @@ import Chip from "@material-ui/core/Chip";
 import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
+import _ from "lodash";
 
 import { openOfferModal } from "../../redux/actions/modalActions";
 import ImageCarousel from "./ImageCarousel";
-
-const tags = [
-  "selectedtag1",
-  "selectedtag2",
-  "selectedtag3",
-  "selectedtag4",
-  "selectedtag5",
-  "selectedtag6",
-];
-const requestedItems = [
-  "Toilet Paper",
-  "Hand Sanitizer",
-  "Active Dry Yeast",
-  "Sourdough Starter",
-  "Some Other Thing",
-];
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -71,7 +56,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function ItemInfo(props) {
-  let images = ["bicycle.jpg", "tomato.jpg"];
+  let { itemDetail } = props;
+  let { images, quantity, condition, requestedItems, tags } = itemDetail;
   const classes = useStyles();
 
   return (
@@ -92,18 +78,20 @@ function ItemInfo(props) {
           </Button>
           <Box my={3} width="60%">
             <p className={classes.detailTitle}>
-              Quantity: <span className={classes.qtyVal}>3 available</span>
+              Quantity: <span className={classes.qtyVal}>{quantity}</span>
             </p>
             <p className={classes.detailTitle}>
-              Condition: <span className={classes.qtyVal}>Brand New</span>
+              Condition:{" "}
+              <span className={classes.qtyVal}>{_.startCase(condition)}</span>
             </p>
             <p className={clsx(classes.detailTitle, classes.trade)}>
               Looking to trade for:
             </p>
             <ul className={classes.wishlist}>
-              {requestedItems.map((val, idx) => (
-                <li key={idx}>{val}</li>
-              ))}
+              {requestedItems.map((val, idx) => {
+                let formattedValue = _.startCase(_.toLower(val));
+                return <li key={idx}>{formattedValue}</li>;
+              })}
             </ul>
           </Box>
           <div className={classes.tags}>
