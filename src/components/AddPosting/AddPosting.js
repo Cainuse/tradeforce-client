@@ -268,30 +268,30 @@ class AddPosting extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-        <Paper className={classes.paper}>
-          <Typography align="center" variant="h4">
-            Create A Posting
-          </Typography>
-          <DisplayStepper activeStep={this.state.activeStep} />
-          <div className={classes.form}>{this.getActiveStepDisplay()}</div>
-          {this.state.activeStep <= 3 && (
-            <div className={classes.buttonContainer}>
-              <Button
-                disabled={this.state.activeStep === 0}
-                onClick={this.handleBack}
-              >
-                Back
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={this.handleNext}
-              >
-                {this.state.activeStep === steps.length - 1 ? "Submit" : "Next"}
-              </Button>
-            </div>
-          )}
-        </Paper>
+      <Paper className={classes.paper}>
+        <Typography align="center" variant="h4">
+          Create A Posting
+        </Typography>
+        <DisplayStepper activeStep={this.state.activeStep} />
+        <div className={classes.form}>{this.getActiveStepDisplay()}</div>
+        {this.state.activeStep <= 3 && (
+          <div className={classes.buttonContainer}>
+            <Button
+              disabled={this.state.activeStep === 0}
+              onClick={this.handleBack}
+            >
+              Back
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={this.handleNext}
+            >
+              {this.state.activeStep === steps.length - 1 ? "Submit" : "Next"}
+            </Button>
+          </div>
+        )}
+      </Paper>
     );
   }
 }

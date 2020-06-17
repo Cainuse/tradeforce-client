@@ -40,7 +40,7 @@ const modalStyles = makeStyles(() => ({
     justifyContent: "center",
     width: "100%",
     outline: "none",
-  }
+  },
 }));
 
 const chooseModalContents = (props) => {
@@ -68,13 +68,10 @@ const MakeModalContainer = (props) => {
       aria-labelledby="simple-modal-title"
       aria-describedby="simple-modal-description"
     >
-      <div className={classes.modalContents}>
-        {chooseModalContents(props)}
-      </div>
+      <div className={classes.modalContents}>{chooseModalContents(props)}</div>
     </Modal>
-  )
-}
-
+  );
+};
 
 /**
  * MAIN: Modal Component
