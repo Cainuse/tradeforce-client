@@ -13,22 +13,19 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const ItemDetailContainer = () => {
+const ItemDetailContainer = (props) => {
   const classes = useStyles();
+  let { itemDetail } = props;
 
   return (
     <React.Fragment>
-      <ItemHeader />
+      <ItemHeader itemDetail={itemDetail} />
       <Grid container spacing={2} className={classes.content}>
-        <ItemInfo />
-        <ItemDescription />
+        <ItemInfo itemDetail={itemDetail} />
+        <ItemDescription itemDetail={itemDetail} />
       </Grid>
     </React.Fragment>
   );
 };
 
-const mapStateToProps = (state) => ({
-  itemDetail: state.itemDetail,
-});
-
-export default connect(mapStateToProps)(ItemDetailContainer);
+export default ItemDetailContainer;

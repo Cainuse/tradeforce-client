@@ -21,7 +21,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function ItemPage() {
+function ItemPage(props) {
+  let { itemDetail } = props;
   const classes = useStyles();
   const history = useHistory();
   const location = useLocation();
@@ -43,7 +44,7 @@ function ItemPage() {
         <Button onClick={redirect}>&lt; Back to Search</Button>
       </div>
       <Container className={classes.root}>
-        <ItemDetailContainer />
+        <ItemDetailContainer itemDetail={itemDetail} />
         <Divider className={classes.divider} />
         <ReviewSection />
       </Container>
@@ -53,7 +54,7 @@ function ItemPage() {
 
 const mapStateToProps = (state) => {
   return {
-    itemDetail: state.postings,
+    itemDetail: state.itemDetail,
   };
 };
 

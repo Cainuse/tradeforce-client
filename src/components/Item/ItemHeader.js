@@ -22,19 +22,30 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ItemHeader() {
+export default function ItemHeader(props) {
   const classes = useStyles();
+  let { itemDetail } = props;
+  let { datePosted, title, location } = itemDetail;
+
+  const formatDate = (date) => {
+    const options = { month: "long", day: "numeric" };
+    let dateObj = new Date(date);
+    return dateObj.toLocaleDateString(undefined, options);
+  };
+
+  let humanReadableDate = formatDate(datePosted);
+  // let humanReadableDate = formatDate(datePosted);
 
   return (
     <Paper elevation={0} className={classes.header}>
       <Typography className={classes.subtitle} variant="subtitle1">
-        May 20
+        {humanReadableDate}
       </Typography>
       <Typography className={classes.title} variant="h3">
-        Freshly Picked Tomatoes
+        {title}
       </Typography>
       <Typography className={classes.subtitle} variant="subtitle1">
-        0.5 km
+        {location}
       </Typography>
     </Paper>
   );
