@@ -1,8 +1,11 @@
 import React from "react";
+import _ from "lodash";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
+import { connect } from "react-redux";
+import { addPosting } from "../../redux/actions/postingActions";
 
 import DisplayStepper from "./DisplayStepper";
 import Step1 from "./Step1";
@@ -65,6 +68,19 @@ class AddPosting extends React.Component {
     };
   }
 
+  resetPostingFields = () => {
+    this.setState({
+      title: "",
+      description: "",
+      category: "",
+      condition: "",
+      tags: [],
+      images: [],
+      requestedItems: [],
+      quantity: 1,
+    });
+  };
+
   handleInputChange = (e) => {
     let { name, value } = e.target;
     this.setState({ [name]: value });
@@ -96,6 +112,20 @@ class AddPosting extends React.Component {
   };
 
   handleNext = () => {
+    if (this.state.activeStep === 3) {
+      let submitted = _.pick(this.state, [
+        "title",
+        "description",
+        "category",
+        "condition",
+        "tags",
+        "images",
+        "requestedItems",
+        "quantity",
+      ]);
+      this.resetPostingFields();
+      this.props.addPosting(submitted, this.props.currentUser);
+    }
     this.setState({ activeStep: this.state.activeStep + 1 });
   };
 
@@ -199,4 +229,10 @@ class AddPosting extends React.Component {
   }
 }
 
-export default withStyles(useStyles)(AddPosting);
+const mapStateToProps = (state) => {
+  return { currentUser: state.currentUser };
+};
+
+export default connect(mapStateToProps, { addPosting })(
+  withStyles(useStyles)(AddPosting)
+);
