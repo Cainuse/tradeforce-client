@@ -21,7 +21,7 @@ const useStyles = makeStyles(() => ({
   },
   container: {
     position: "relative",
-    height: "30vh",
+    height: "18rem",
   },
 }));
 
