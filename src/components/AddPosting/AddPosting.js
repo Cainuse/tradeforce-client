@@ -17,12 +17,6 @@ import FinalStep from "./FinalStep";
 const steps = ["Item Details", "Images", "Requested Items", "Review"];
 
 const useStyles = (theme) => ({
-  modal: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    width: "100%",
-  },
   paper: {
     width: "100%",
     backgroundColor: theme.palette.background.paper,
@@ -274,32 +268,30 @@ class AddPosting extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <div className={classes.modal}>
-        <Paper className={classes.paper}>
-          <Typography align="center" variant="h4">
-            Create A Posting
-          </Typography>
-          <DisplayStepper activeStep={this.state.activeStep} />
-          <div className={classes.form}>{this.getActiveStepDisplay()}</div>
-          {this.state.activeStep <= 3 && (
-            <div className={classes.buttonContainer}>
-              <Button
-                disabled={this.state.activeStep === 0}
-                onClick={this.handleBack}
-              >
-                Back
-              </Button>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={this.handleNext}
-              >
-                {this.state.activeStep === steps.length - 1 ? "Submit" : "Next"}
-              </Button>
-            </div>
-          )}
-        </Paper>
-      </div>
+      <Paper className={classes.paper}>
+        <Typography align="center" variant="h4">
+          Create A Posting
+        </Typography>
+        <DisplayStepper activeStep={this.state.activeStep} />
+        <div className={classes.form}>{this.getActiveStepDisplay()}</div>
+        {this.state.activeStep <= 3 && (
+          <div className={classes.buttonContainer}>
+            <Button
+              disabled={this.state.activeStep === 0}
+              onClick={this.handleBack}
+            >
+              Back
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={this.handleNext}
+            >
+              {this.state.activeStep === steps.length - 1 ? "Submit" : "Next"}
+            </Button>
+          </div>
+        )}
+      </Paper>
     );
   }
 }
