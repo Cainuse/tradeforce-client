@@ -70,7 +70,15 @@ const conditions = [
 
 const Step1 = (props) => {
   const { change, state, addTag, deleteTag } = props;
-  const { title, description, category, condition, quantity, tags } = state;
+  const {
+    title,
+    description,
+    category,
+    condition,
+    quantity,
+    tags,
+    errors,
+  } = state;
 
   const classes = useStyles();
 
@@ -88,6 +96,8 @@ const Step1 = (props) => {
             name="title"
             onChange={change}
             defaultValue={title}
+            error={!!errors.title}
+            helperText={errors.title}
           />
         </Grid>
         <Grid item xs={12}>
@@ -103,6 +113,8 @@ const Step1 = (props) => {
             name="description"
             onChange={change}
             defaultValue={description}
+            error={!!errors.description}
+            helperText={errors.description}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -120,6 +132,8 @@ const Step1 = (props) => {
             onChange={change}
             name="category"
             defaultValue={category}
+            error={!!errors.category}
+            helperText={errors.category}
           >
             {categories.map((option) => (
               <option key={option.value} value={option.value}>
@@ -143,6 +157,8 @@ const Step1 = (props) => {
             onChange={change}
             name="condition"
             defaultValue={condition}
+            error={!!errors.condition}
+            helperText={errors.condition}
           >
             {conditions.map((option) => (
               <option key={option.value} value={option.value}>
@@ -153,7 +169,6 @@ const Step1 = (props) => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            required
             label="Tags"
             className={classes.textfield}
             fullWidth
@@ -182,6 +197,9 @@ const Step1 = (props) => {
             defaultValue={quantity}
             onChange={change}
             type="number"
+            inputProps={{ min: "1" }}
+            error={!!errors.quantity}
+            helperText={errors.quantity}
           />
         </Grid>
         {tags.map((tag, idx) => (
