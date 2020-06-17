@@ -17,12 +17,6 @@ import FinalStep from "./FinalStep";
 const steps = ["Item Details", "Images", "Requested Items", "Review"];
 
 const useStyles = (theme) => ({
-  modal: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    width: "100%",
-  },
   paper: {
     width: "100%",
     backgroundColor: theme.palette.background.paper,
@@ -274,7 +268,6 @@ class AddPosting extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <div className={classes.modal}>
         <Paper className={classes.paper}>
           <Typography align="center" variant="h4">
             Create A Posting
@@ -299,7 +292,6 @@ class AddPosting extends React.Component {
             </div>
           )}
         </Paper>
-      </div>
     );
   }
 }
