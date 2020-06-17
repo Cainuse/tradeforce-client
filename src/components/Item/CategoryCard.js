@@ -4,7 +4,6 @@ import { withStyles } from "@material-ui/core/styles";
 
 const useStyles = () => ({
   card: {
-    position: "relative",
     display: "flex",
     width: "10vw",
     height: "10vw",
@@ -27,7 +26,7 @@ class CategoryCard extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <div className={classes.wrapper}>
+      <div>
         <Paper elevation={0} className={classes.card}>
           <img
             src={this.props.image}
