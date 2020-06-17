@@ -2,7 +2,6 @@ import React from "react";
 import Paper from "@material-ui/core/Paper";
 import { withStyles } from "@material-ui/core/styles";
 
-
 const useStyles = (theme) => ({
   paper: {
     width: "100%",
@@ -11,10 +10,8 @@ const useStyles = (theme) => ({
     padding: theme.spacing(2, 4, 3),
     outline: "none",
     position: "relative",
-  }
-})
-
-
+  },
+});
 
 /**
  * MAIN: AddOffering Component
@@ -27,11 +24,7 @@ class AddOffering extends React.Component {
 
   render() {
     const { classes } = this.props;
-    return (
-      <Paper className={classes.paper}>
-
-      </Paper>
-    );
+    return <Paper className={classes.paper}></Paper>;
   }
 }
 
