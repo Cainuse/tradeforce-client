@@ -115,6 +115,7 @@ export const initialState = {
     id: "591024",
     userName: "shellstrop",
     postalCode: "V3L0A5",
+    location: "New Westminster, BC",
   },
   itemDetail: {},
   userDetail: {},

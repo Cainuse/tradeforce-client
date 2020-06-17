@@ -1,8 +1,11 @@
 import React from "react";
+import _ from "lodash";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
+import { connect } from "react-redux";
+import { addPosting } from "../../redux/actions/postingActions";
 
 import DisplayStepper from "./DisplayStepper";
 import Step1 from "./Step1";
@@ -62,11 +65,89 @@ class AddPosting extends React.Component {
       images: [],
       requestedItems: [],
       quantity: 1,
+      errors: {
+        title: "",
+        description: "",
+        category: "",
+        condition: "",
+        quantity: "",
+      },
     };
   }
 
+  isFormInvalid = () => {
+    let requiredFields = _.pick(this.state, [
+      "title",
+      "description",
+      "category",
+      "condition",
+    ]);
+    let haveEmptyFields = _.values(requiredFields).some(
+      (val) => val.length === 0
+    );
+    let isQuantityInvalid = this.state.quantity < 1;
+    return isQuantityInvalid || haveEmptyFields;
+  };
+
+  resetPostingFields = () => {
+    this.setState({
+      title: "",
+      description: "",
+      category: "",
+      condition: "",
+      tags: [],
+      images: [],
+      requestedItems: [],
+      quantity: 1,
+    });
+  };
+
+  validateInput = ([key, value]) => {
+    let errors = this.state.errors;
+    switch (key) {
+      case "title":
+        errors.title = value.length > 0 ? "" : "Title cannot be left blank";
+        break;
+      case "description":
+        errors.description =
+          value.length > 0 ? "" : "Description cannot be left blank";
+        break;
+      case "category":
+        errors.category = value.length > 0 ? "" : "Category must be selected";
+        break;
+      case "condition":
+        errors.condition = value.length > 0 ? "" : "Condition must be selected";
+        break;
+      case "quantity":
+        errors.quantity = value > 0 ? "" : "Quantity must be greater than 0";
+        break;
+      default:
+        break;
+    }
+    this.setState({ errors: errors });
+  };
+
+  validateRequiredFields = () => {
+    let requiredFields = _.toPairs(
+      _.pick(this.state, [
+        "title",
+        "description",
+        "category",
+        "condition",
+        "quantity",
+      ])
+    );
+
+    _.forEach(requiredFields, this.validateInput);
+
+    return this.isFormInvalid()
+      ? this.state.activeStep
+      : this.state.activeStep + 1;
+  };
+
   handleInputChange = (e) => {
     let { name, value } = e.target;
+    this.validateInput([name, value]);
     this.setState({ [name]: value });
   };
 
@@ -95,8 +176,32 @@ class AddPosting extends React.Component {
     this.setState({ activeStep: step });
   };
 
-  handleNext = () => {
+  handleSubmit = () => {
+    let submitted = _.pick(this.state, [
+      "title",
+      "description",
+      "category",
+      "condition",
+      "tags",
+      "images",
+      "requestedItems",
+      "quantity",
+    ]);
+    this.resetPostingFields();
+    this.props.addPosting(submitted, this.props.currentUser);
+
     this.setState({ activeStep: this.state.activeStep + 1 });
+  };
+
+  handleNext = () => {
+    if (this.state.activeStep === 0) {
+      let nextStep = this.validateRequiredFields();
+      this.setState({ activeStep: nextStep });
+    } else if (this.state.activeStep === 3) {
+      this.handleSubmit();
+    } else {
+      this.setState({ activeStep: this.state.activeStep + 1 });
+    }
   };
 
   handleBack = () => {
@@ -199,4 +304,10 @@ class AddPosting extends React.Component {
   }
 }
 
-export default withStyles(useStyles)(AddPosting);
+const mapStateToProps = (state) => {
+  return { currentUser: state.currentUser };
+};
+
+export default connect(mapStateToProps, { addPosting })(
+  withStyles(useStyles)(AddPosting)
+);
