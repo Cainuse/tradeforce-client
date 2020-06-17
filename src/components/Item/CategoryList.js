@@ -10,7 +10,7 @@ import Snacks from "../../images/snacks.jpg";
 import Household from "../../images/household.jpg";
 import Toys from "../../images/toys.jpeg";
 import Clothing from "../../images/clothing.jpeg";
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     backgroundColor: "white",
     position: "relative",
@@ -53,9 +53,9 @@ export default function CategoryList() {
     <div className={classes.root}>
       <h1 className={classes.categoriesTitle}>Categories</h1>
       <Grid container spacing={3} className={classes.container}>
-        {Categories.map((category) => {
+        {Categories.map((category, index) => {
           return (
-            <Grid item xs={3} className={classes.categoryCards}>
+            <Grid item xs={3} className={classes.categoryCards} key={index}>
               <CategoryCard image={category.image} imageName={category.label} />
             </Grid>
           );
