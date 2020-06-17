@@ -4,10 +4,10 @@ import ItemPreview from "../Item/ItemPreview";
 import Grid from "@material-ui/core/Grid";
 
 // this is the page with all the item previews displayed (also includes the result to searching for a specific item)
-const ItemResults = ({ items }) => {
+const ItemResults = ({ postings }) => {
   return (
-    <Grid container direction={"row"}>
-      {items.map((item, index) => {
+    <Grid container direction={"row"} spacing={3}>
+      {postings.map((item, index) => {
         return (
           <Grid key={index} item xs={3}>
             <ItemPreview
@@ -15,6 +15,7 @@ const ItemResults = ({ items }) => {
               title={item.title}
               datePosted={item.datePosted}
               location={item.location}
+              images={item.images}
             />
           </Grid>
         );
@@ -23,4 +24,8 @@ const ItemResults = ({ items }) => {
   );
 };
 
-export default connect()(ItemResults);
+const mapStateToProps = (state) => ({
+  postings: state.postings,
+});
+
+export default connect(mapStateToProps)(ItemResults);

@@ -88,10 +88,14 @@ function ItemInfo(props) {
               Looking to trade for:
             </p>
             <ul className={classes.wishlist}>
-              {requestedItems.map((val, idx) => {
-                let formattedValue = _.startCase(_.toLower(val));
-                return <li key={idx}>{formattedValue}</li>;
-              })}
+              {requestedItems.length > 1 ? (
+                requestedItems.map((val, idx) => {
+                  let formattedValue = _.startCase(_.toLower(val));
+                  return <li key={idx}>{formattedValue}</li>;
+                })
+              ) : (
+                <li>Open to Anything</li>
+              )}
             </ul>
           </Box>
           <div className={classes.tags}>

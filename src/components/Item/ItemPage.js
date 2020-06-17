@@ -6,8 +6,9 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import ReviewSection from "./ReviewSection";
 import ItemDetailContainer from "./ItemDetailContainer";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import { connect } from "react-redux";
+import _ from "lodash";
 
 // Item Details page for in-depth view of offered items
 
@@ -21,8 +22,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+// TODO: decide how to load the item details with routing
 function ItemPage(props) {
-  let { itemDetail } = props;
+  let { /* itemDetail, */ postings } = props;
   const classes = useStyles();
   const history = useHistory();
   const location = useLocation();
@@ -31,8 +33,8 @@ function ItemPage(props) {
     location.pathname.lastIndexOf("/")
   );
   // you can use the hook useParams to get the id of the specific item to be shown
-  // const id = useParams();
-  // console.log(id);
+  const id = parseInt(useParams().id);
+  const item = _.find(postings, { id: id });
 
   const redirect = () => {
     history.push(parentPath + "/" + location.search);
@@ -44,9 +46,9 @@ function ItemPage(props) {
         <Button onClick={redirect}>&lt; Back to Search</Button>
       </div>
       <Container className={classes.root}>
-        <ItemDetailContainer itemDetail={itemDetail} />
+        <ItemDetailContainer itemDetail={item} />
         <Divider className={classes.divider} />
-        <ReviewSection />
+        <ReviewSection itemDetail={item} />
       </Container>
     </div>
   );
@@ -55,6 +57,7 @@ function ItemPage(props) {
 const mapStateToProps = (state) => {
   return {
     itemDetail: state.itemDetail,
+    postings: state.postings,
   };
 };
 
