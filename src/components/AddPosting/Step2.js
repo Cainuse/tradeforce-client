@@ -1,6 +1,8 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import CloudUploadOutlinedIcon from "@material-ui/icons/CloudUploadOutlined";
+import IconButton from "@material-ui/core/IconButton";
+import ClearIcon from "@material-ui/icons/Clear";
 
 const useStyles = (theme) => ({
   dropzone: {
@@ -41,6 +43,25 @@ const useStyles = (theme) => ({
   input: {
     display: "none",
   },
+  imgPreview: {
+    height: 100,
+  },
+  imgContainer: {
+    display: "flex",
+    flexWrap: "wrap",
+  },
+  deleteButton: {
+    margin: 0,
+    padding: 0,
+    position: "absolute",
+    right: "0",
+    top: "0",
+    color: "red",
+  },
+  imgDiv: {
+    margin: theme.spacing(1),
+    position: "relative",
+  },
 });
 
 class Step2 extends React.Component {
@@ -56,14 +77,19 @@ class Step2 extends React.Component {
   };
 
   processFiles = (files) => {
-    let res = Array.from(files)
+    Array.from(files)
       .filter((file) => file.type === "image/png" || file.type === "image/jpeg")
-      .map((file) => file.name);
-    this.props.addImage(res);
+      .forEach((file) => {
+        let reader = new FileReader();
+        reader.onloadend = () => {
+          this.props.addImage([{ name: file.name, url: reader.result }]);
+        };
+        reader.readAsDataURL(file);
+      });
   };
 
   render() {
-    const { classes, images } = this.props;
+    const { classes, images, deleteImage } = this.props;
     return (
       <React.Fragment>
         <div
@@ -101,9 +127,25 @@ class Step2 extends React.Component {
             Browse
           </label>
         </div>
-        <div className={classes.imageList}>
+        <div className={classes.imgContainer}>
           {images.map((img, idx) => {
-            return <p key={idx}>{img}</p>;
+            return (
+              <div key={idx} className={classes.imgDiv}>
+                <img
+                  src={img.url}
+                  alt="something"
+                  className={classes.imgPreview}
+                />
+                <IconButton
+                  aria-label="delete image"
+                  component="span"
+                  className={classes.deleteButton}
+                  onClick={() => deleteImage("images", idx)}
+                >
+                  <ClearIcon />
+                </IconButton>
+              </div>
+            );
           })}
         </div>
       </React.Fragment>
