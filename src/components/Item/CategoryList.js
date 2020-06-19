@@ -15,24 +15,23 @@ const useStyles = makeStyles(() => ({
     backgroundColor: "white",
     position: "relative",
     flexGrow: 1,
-    minHeight: "80vh",
   },
   categoriesTitle: {
     color: "#1d588f",
-    marginLeft: "5%",
+    paddingLeft: "10%",
     paddingTop: "2%",
     fontStyle: "italic",
     fontWeight: "normal",
   },
   container: {
-    marginLeft: "5%",
     display: "flex",
     flexDirection: "row",
     alignContent: "center",
+    paddingLeft: "10%",
     textAlign: "center",
   },
   categoryCards: {
-    marginBottom: "3%",
+    paddingBottom: "3%",
   },
 }));
 
@@ -52,10 +51,11 @@ export default function CategoryList() {
   return (
     <div className={classes.root}>
       <h1 className={classes.categoriesTitle}>Categories</h1>
-      <Grid container spacing={3} className={classes.container}>
+      <Grid container className={classes.container}>
         {Categories.map((category, index) => {
           return (
-            <Grid item xs={3} className={classes.categoryCards} key={index}>
+            <Grid key={index} item xs={3} className={classes.categoryCards}>
+
               <CategoryCard image={category.image} imageName={category.label} />
             </Grid>
           );

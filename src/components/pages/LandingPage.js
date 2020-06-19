@@ -15,18 +15,13 @@ const useStyles = makeStyles(() => ({
   },
   searchBar: {
     position: "absolute",
-    width: "100%",
+    width: "80%",
     top: "35%",
-    left: "15%",
+    left: "20%",
   },
   container: {
     position: "relative",
-    width: "100vw",
-    height: "30vh",
-  },
-  categoryList: {
-    width: "100vw",
-    minHeight: "40vw",
+    height: "18rem",
   },
 }));
 
@@ -45,9 +40,7 @@ export default function LandingPage() {
           <SearchBar className={classes.searchBar} />
         </div>
       </div>
-      <div className={classes.categoryList}>
-        <CategoryList />
-      </div>
+      <CategoryList />
     </div>
   );
 }
