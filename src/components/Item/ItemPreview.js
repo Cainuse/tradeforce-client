@@ -77,7 +77,7 @@ const ItemPreview = ({
           className={classes.tradeItemCardImg}
           image={
             images.length > 0
-              ? require(`../../images/${images[0]}`)
+              ? require(`../../images/${images[0].name}`)
               : require(`../../images/default.jpg`)
           }
           title="Tradeforce"
