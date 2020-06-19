@@ -11,6 +11,7 @@ export const postingsReducer = (state = initialState.postings, action) => {
       datePosted: new Date(),
       postalCode: currentUser.postalCode,
       location: currentUser.location,
+      active: true,
     };
     posting.quantity = parseInt(posting.quantity);
     return [...state, { ...posting, ...additionalDetails }];

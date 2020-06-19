@@ -2,16 +2,19 @@
   "Posting": {
     "id": 0,
     "title": "Something",
-    "dateOfPost": "2020-06-06",
+    "datePosted": "2020-06-06",
     "description": "Sexist game console",
     "category": "electronics",
     "condition": "not bad",
     "quantity": 1,
     "tags": ["tag1", "tag2"],
     "requestedItems": ["Gameboy", "ps5"],
-    "img-src": ["img.jpg", "img2.jpg"],
+    "images": ["img.jpg", "img2.jpg"],
     "ownerId": "2131254",
+    "ownerUsername": "hulkbuster",
     "postalCode": "V73P6G1",
+    "location": "New Westminster, BC",
+    "active": true,
     "offerings": [
       {
         "offerer": {
@@ -22,9 +25,9 @@
         "offeredItems": [
           {
             "id": 2,
-            "name": "Gameboy",
+            "nameOfItem": "Gameboy",
             "quantity": 1,
-            "img-src": "img.jpg",
+            "images": "img.jpg",
             "description": "Sexist game console",
             "condition": "not bad",
             "category": "electronics"
@@ -34,15 +37,20 @@
             "title": "Something"
           }
         ],
-        "comments": "I have an offer here! https://tradeforce.com/postings/321512312"
+        "comments": "I have an offer here! https://tradeforce.com/postings/321512312",
+        "status": "pending"
       }
     ]
   },
   "User": {
     "id": 100,
+    "firstName": "Bob",
+    "lastName": "Ross",
     "userName": "great guy",
     "email": "greatguyguranteed@hotmale.com",
     "password": "great guy indeed 2020!!!",
-    "postalCode": "V73P6G1"
+    "postalCode": "V73P6G1",
+    "postings": [],
+    "reviews": []
   }
 }
