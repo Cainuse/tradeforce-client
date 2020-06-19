@@ -10,7 +10,7 @@ import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import clsx from "clsx";
-import { ItemSection } from "./ItemSection";
+import { ItemSection } from "./AddItems/ItemSection";
 
 const useStyles = (theme) => ({
   formSection: {
@@ -31,7 +31,7 @@ const useStyles = (theme) => ({
   },
 });
 
-class CreateOfferContents extends React.Component {
+class OfferingContents extends React.Component {
   render() {
     const { classes } = this.props;
 
@@ -76,4 +76,4 @@ class CreateOfferContents extends React.Component {
   }
 }
 
-export default withStyles(useStyles)(CreateOfferContents);
+export default withStyles(useStyles)(OfferingContents);

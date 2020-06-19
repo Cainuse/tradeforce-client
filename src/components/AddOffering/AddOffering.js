@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import CreateOfferContents from "./CreateOfferContents";
+import CreateOfferContents from "./OfferingContents";
 import { withStyles } from "@material-ui/core/styles";
 import { Tabs, Tab, Typography, Paper } from "@material-ui/core";
 import { TabPanel } from "./TabPanels";

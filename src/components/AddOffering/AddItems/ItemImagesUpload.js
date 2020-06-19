@@ -82,7 +82,6 @@ class Step2 extends React.Component {
             this.processFiles(e.dataTransfer.files);
           }}
         >
-          {/*<CloudUploadOutlinedIcon className={classes.uploadIcon} />*/}
           <h4 className={classes.dropText}>Drop image files here</h4>
 
           <label className={classes.browseButton}>

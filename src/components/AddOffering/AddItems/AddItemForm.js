@@ -1,8 +1,8 @@
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
-import { categories, conditions } from "../constants/ComponentConstants";
-import OfferingUploadImg from "./OfferingUploadImg";
+import { categories, conditions } from "../../constants/ComponentConstants";
+import OfferingUploadImg from "./ItemImagesUpload";
 import { Button } from "@material-ui/core";
 import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
 import React from "react";
@@ -34,8 +34,6 @@ const useStyles = makeStyles((theme) => ({
     justifySelf: "flex-end",
   },
   addBtn: {
-    // backgroundColor: theme.palette.primary.main,
-    // color: theme.palette.secondary.main,
     fontWeight: 300,
     textTransform: "capitalize",
     justifySelf: "flex-end",
