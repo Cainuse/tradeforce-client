@@ -23,14 +23,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ProfileCard() {
+export default function ProfileCard(props) {
+  let { userDetail } = props;
   const classes = useStyles();
 
   return (
     <div className={classes.profile}>
       <UserAvatar isLargeAvatar={true} userProfileImgSrc={shellstrop} />
-      <Typography className={classes.name}>Eleanor Shellstrop</Typography>
-      <Typography className={classes.username}>shellstrop</Typography>
+      <Typography
+        className={classes.name}
+      >{`${userDetail.firstName} ${userDetail.lastName}`}</Typography>
+      <Typography className={classes.username}>
+        {userDetail.userName}
+      </Typography>
     </div>
   );
 }

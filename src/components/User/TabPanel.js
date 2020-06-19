@@ -22,11 +22,7 @@ function TabPanel(props) {
       {...other}
       className={classes.panel}
     >
-      {value === index && (
-        <Box p={3}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
+      {value === index && <Box p={3}>{children}</Box>}
     </div>
   );
 }

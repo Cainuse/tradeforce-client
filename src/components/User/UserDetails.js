@@ -7,6 +7,8 @@ import { withStyles } from "@material-ui/core/styles";
 import TabPanel from "./TabPanel";
 import TabLabel from "./TabLabel";
 import ReviewList from "../Review/ReviewList";
+import ItemPreviewList from "../Item/ItemPreviewList";
+import _ from "lodash";
 
 const useStyles = (theme) => ({
   root: {
@@ -30,7 +32,9 @@ class UserDetails extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, userDetail, currentUser, postings } = this.props;
+    let activePostings = _.filter(userDetail.postings, (val) => val.active);
+    let inactivePostings = _.filter(userDetail.postings, (val) => !val.active);
     return (
       <Paper className={classes.root}>
         <Tabs
@@ -42,34 +46,41 @@ class UserDetails extends React.Component {
           centered
         >
           <Tab
-            label={<TabLabel value={12} title={"Item Postings"} />}
+            label={
+              <TabLabel value={activePostings.length} title={"Item Postings"} />
+            }
             className={classes.tab}
           />
           <Tab
-            label={<TabLabel value={42} title={"Items Traded"} />}
+            label={
+              <TabLabel
+                value={inactivePostings.length}
+                title={"Items Traded"}
+              />
+            }
             className={classes.tab}
           />
           <Tab
             label={<TabLabel value={30} title={"Reviews"} />}
             className={classes.tab}
           />
-          {1 < 4 ? null : (
+          {userDetail.id === currentUser.id ? (
             <Tab
               label={<TabLabel value={6} title={"Offers"} />}
               className={classes.tab}
             />
-          )}
+          ) : null}
         </Tabs>
         <TabPanel value={this.state.value} index={0}>
-          Item One
+          <ItemPreviewList items={activePostings} postings={postings} />
         </TabPanel>
         <TabPanel value={this.state.value} index={1}>
-          Item Two
+          <ItemPreviewList items={inactivePostings} postings={postings} />
         </TabPanel>
         <TabPanel value={this.state.value} index={2}>
           <ReviewList elevation={1} colour={"#FFFFFF"} />
         </TabPanel>
-        <TabPanel value={this.state.value} index={4}>
+        <TabPanel value={this.state.value} index={3}>
           Item Three
         </TabPanel>
       </Paper>

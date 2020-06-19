@@ -3,6 +3,7 @@ import ProfileCard from "../User/ProfileCard";
 import { makeStyles } from "@material-ui/core";
 import hero from "../../images/hero.png";
 import UserDetails from "../User/UserDetails";
+import { connect } from "react-redux";
 
 const useStyles = makeStyles(() => ({
   hero: {
@@ -31,18 +32,29 @@ const useStyles = makeStyles(() => ({
   box: {},
 }));
 
-const UserProfile = () => {
+const UserProfile = (props) => {
+  let { userDetail, currentUser, postings } = props;
   const classes = useStyles();
 
   return (
     <div>
       <div className={classes.hero}></div>
       <div className={classes.container}>
-        <ProfileCard />
-        <UserDetails />
+        <ProfileCard userDetail={userDetail} />
+        <UserDetails
+          userDetail={userDetail}
+          currentUser={currentUser}
+          postings={postings}
+        />
       </div>
     </div>
   );
 };
 
-export default UserProfile;
+const mapStateToProps = (state) => ({
+  userDetail: state.userDetail,
+  currentUser: state.currentUser,
+  postings: state.postings,
+});
+
+export default connect(mapStateToProps)(UserProfile);
