@@ -19,6 +19,14 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 500,
     textTransform: "uppercase",
   },
+  imgPreview: {
+    height: 75,
+    margin: theme.spacing(1),
+  },
+  imgContainer: {
+    display: "flex",
+    flexWrap: "wrap",
+  },
 }));
 
 const Step4 = (props) => {
@@ -38,10 +46,17 @@ const Step4 = (props) => {
         sectionTitle="Images"
         returnToActiveStep={returnToActiveStep}
       >
-        <div>
-          {state.images.map((item, idx) => (
-            <p key={idx}>{item}</p>
-          ))}
+        <div className={classes.imgContainer}>
+          {state.images.map((img, idx) => {
+            return (
+              <img
+                src={img.url}
+                key={idx}
+                alt="something"
+                className={classes.imgPreview}
+              />
+            );
+          })}
         </div>
       </ExpandableSection>
       <ExpandableSection

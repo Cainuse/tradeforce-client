@@ -241,6 +241,7 @@ class AddPosting extends React.Component {
             change={this.handleInputChange}
             addImage={this.handleAddImage}
             images={this.state.images}
+            deleteImage={this.handleRemoveFromList}
           />
         );
       case 2:
