@@ -11,6 +11,8 @@ import Avatar from "@material-ui/core/Avatar";
 import Grid from "@material-ui/core/Grid";
 import Rating from "./Rating";
 import { useHistory, useRouteMatch } from "react-router-dom";
+import { loadItemDetail } from "../../redux/actions/postingActions";
+import { connect } from "react-redux";
 
 const useStyles = makeStyles(() => ({
   tradeItemCard: {
@@ -21,14 +23,21 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const ItemPreview = ({ id, title, datePosted, location }) => {
+const ItemPreview = ({
+  id,
+  title,
+  datePosted,
+  location,
+  images,
+  postings,
+  loadItemDetail,
+}) => {
   const history = useHistory();
   let { path } = useRouteMatch();
   const classes = useStyles();
 
   const parseDate = (str) => {
-    const mdy = str.split("/");
-    return new Date(mdy[2], mdy[0] - 1, mdy[1]);
+    return new Date(str);
   };
 
   const getDate = (postedDate) => {
@@ -38,16 +47,23 @@ const ItemPreview = ({ id, title, datePosted, location }) => {
     if (diffDays < 30) {
       return diffDays === 0
         ? "Posted today"
-        : "Posted " + diffDays + " day(s) ago";
+        : diffDays === 1
+        ? "Posted " + diffDays + " day ago"
+        : "Posted " + diffDays + " days ago";
     }
     if (diffDays >= 30 && diffDays <= 365) {
-      return "Posted " + Math.round(diffDays / 30) + " month(s) ago";
+      return Math.round(diffDays / 30) === 1
+        ? "Posted " + Math.round(diffDays / 30) + " month ago"
+        : "Posted " + Math.round(diffDays / 30) + " months ago";
     }
 
-    return "Posted " + Math.round(diffDays / 365) + " year(s) ago";
+    return Math.round(diffDays / 365) === 1
+      ? "Posted " + Math.round(diffDays / 365) + " year ago"
+      : "Posted " + Math.round(diffDays / 365) + " years ago";
   };
 
   const routeToItem = (itemId) => {
+    loadItemDetail(itemId, postings);
     history.push({
       pathname: path + "/item=" + itemId,
       search: "items",
@@ -59,7 +75,11 @@ const ItemPreview = ({ id, title, datePosted, location }) => {
       <CardActionArea onClick={() => routeToItem(id)}>
         <CardMedia
           className={classes.tradeItemCardImg}
-          image={require("../../images/trade.jpg")}
+          image={
+            images.length > 0
+              ? require(`../../images/${images[0].name}`)
+              : require(`../../images/default.jpg`)
+          }
           title="Tradeforce"
         />
         <CardContent>
@@ -100,4 +120,4 @@ const ItemPreview = ({ id, title, datePosted, location }) => {
   );
 };
 
-export default ItemPreview;
+export default connect(null, { loadItemDetail })(ItemPreview);

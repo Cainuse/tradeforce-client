@@ -14,3 +14,5 @@ export const MAKE_OFFER = "MAKE_OFFER";
 
 export const OPEN_POSTING_MODAL = "OPEN_POSTING_MODAL";
 export const ADD_POSTING = "ADD_POSTING";
+
+export const LOAD_ITEM_DETAIL = "LOAD_ITEM_DETAIL";

@@ -23,7 +23,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ReviewSection() {
+export default function ReviewSection(props) {
+  let { itemDetail } = props;
   const classes = useStyles();
   return (
     <Box>
@@ -35,7 +36,7 @@ export default function ReviewSection() {
           variant="h6"
           className={classes.sellerName}
         >
-          iamironman
+          {itemDetail.ownerUsername}
         </Link>
         <Typography variant="h6">Reviews</Typography>
         <Rating
