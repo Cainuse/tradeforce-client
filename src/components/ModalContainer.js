@@ -59,6 +59,8 @@ const chooseModalContents = (props) => {
       return <AddPosting />;
     case LOGIN_MODAL:
       return <LoginModal />;
+    case "":
+      return null;
     default:
       return <ErrorModal />;
   }
