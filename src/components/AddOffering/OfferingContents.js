@@ -1,15 +1,6 @@
-import {
-  Grid,
-  TextField,
-  IconButton,
-  Typography,
-  Collapse,
-} from "@material-ui/core";
-import { Card, CardHeader, CardContent } from "@material-ui/core";
+import { Grid, TextField, Typography } from "@material-ui/core";
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import clsx from "clsx";
 import { ItemSection } from "./AddItems/ItemSection";
 
 const useStyles = (theme) => ({
