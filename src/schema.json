@@ -12,9 +12,10 @@
     "img-src": ["img.jpg", "img2.jpg"],
     "ownerId": "2131254",
     "postalCode": "V73P6G1",
+    "active": true,
     "offerings": [
-      {
-        "offerer": {
+       {
+          "offerer": {
           "id": 100,
           "userName": "great guy",
           "email": "greatguyguranteed@hotmale.com"
@@ -34,7 +35,8 @@
             "title": "Something"
           }
         ],
-        "comments": "I have an offer here! https://tradeforce.com/postings/321512312"
+        "comments": "I have an offer here! https://tradeforce.com/postings/321512312",
+        "status": "pending"
       }
     ]
   },
