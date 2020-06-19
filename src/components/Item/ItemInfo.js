@@ -88,7 +88,7 @@ function ItemInfo(props) {
               Looking to trade for:
             </p>
             <ul className={classes.wishlist}>
-              {requestedItems.length > 1 ? (
+              {requestedItems.length >= 1 ? (
                 requestedItems.map((val, idx) => {
                   let formattedValue = _.startCase(_.toLower(val));
                   return <li key={idx}>{formattedValue}</li>;

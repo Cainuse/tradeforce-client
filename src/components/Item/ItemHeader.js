@@ -34,7 +34,6 @@ export default function ItemHeader(props) {
   };
 
   let humanReadableDate = formatDate(datePosted);
-  // let humanReadableDate = formatDate(datePosted);
 
   return (
     <Paper elevation={0} className={classes.header}>
