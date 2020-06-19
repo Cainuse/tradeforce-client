@@ -16,6 +16,7 @@ const ItemResults = ({ postings }) => {
               datePosted={item.datePosted}
               location={item.location}
               images={item.images}
+              postings={postings} //TODO: remove when BE implemented
             />
           </Grid>
         );

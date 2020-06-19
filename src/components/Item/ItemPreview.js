@@ -11,6 +11,8 @@ import Avatar from "@material-ui/core/Avatar";
 import Grid from "@material-ui/core/Grid";
 import Rating from "./Rating";
 import { useHistory, useRouteMatch } from "react-router-dom";
+import { loadItemDetail } from "../../redux/actions/postingActions";
+import { connect } from "react-redux";
 
 const useStyles = makeStyles(() => ({
   tradeItemCard: {
@@ -21,14 +23,20 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const ItemPreview = ({ id, title, datePosted, location, images }) => {
+const ItemPreview = ({
+  id,
+  title,
+  datePosted,
+  location,
+  images,
+  postings,
+  loadItemDetail,
+}) => {
   const history = useHistory();
   let { path } = useRouteMatch();
   const classes = useStyles();
 
   const parseDate = (str) => {
-    // const mdy = str.split("/");
-    // return new Date(mdy[2], mdy[0] - 1, mdy[1]);
     return new Date(str);
   };
 
@@ -55,6 +63,7 @@ const ItemPreview = ({ id, title, datePosted, location, images }) => {
   };
 
   const routeToItem = (itemId) => {
+    loadItemDetail(itemId, postings);
     history.push({
       pathname: path + "/item=" + itemId,
       search: "items",
@@ -111,4 +120,4 @@ const ItemPreview = ({ id, title, datePosted, location, images }) => {
   );
 };
 
-export default ItemPreview;
+export default connect(null, { loadItemDetail })(ItemPreview);
