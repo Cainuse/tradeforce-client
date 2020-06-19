@@ -51,6 +51,8 @@ const chooseModalContents = (props) => {
       return <AddOffering />;
     case POSTING_MODAL:
       return <AddPosting />;
+    case "":
+      return null;
     default:
       return <ErrorModal />;
   }
