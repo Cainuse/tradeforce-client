@@ -1,86 +1,36 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import Divider from "@material-ui/core/Divider";
 import UserAvatar from "./UserAvatar";
-import Grid from "@material-ui/core/Grid";
-import tomato from "../../images/tomato.jpg";
+import shellstrop from "../../images/shellstrop.jpg";
 
-const useStyles = makeStyles(() => ({
-  root: {
-    maxWidth: "25rem",
+const useStyles = makeStyles((theme) => ({
+  profile: {
+    fontFamily: "Montserrat",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: theme.spacing(5),
   },
-  title: {
-    fontSize: 14,
+  name: {
+    fontSize: "1.2rem",
+    fontWeight: 400,
   },
-  pos: {
-    marginBottom: 12,
-  },
-  fullWidth: {
-    width: "100%",
+  username: {
+    fontSize: ".9rem",
+    fontWeight: 300,
   },
 }));
 
-export default function ProfileCard({ userName }) {
+export default function ProfileCard() {
   const classes = useStyles();
 
   return (
-    <Card className={classes.root} variant="outlined">
-      <Grid
-        container
-        spacing={0}
-        direction="column"
-        alignItems="center"
-        justify="center"
-      >
-        <Grid item xs={12} className={classes.fullWidth}>
-          <CardContent>
-            <div>
-              <Grid
-                container
-                spacing={0}
-                direction="column"
-                alignItems="center"
-                justify="center"
-              >
-                <Grid item xs={12}>
-                  <UserAvatar isLargeAvatar={true} userProfileImgSrc={tomato} />
-                </Grid>
-                <Grid item xs={12}>
-                  <Typography variant="h5" component="h2">
-                    {userName}
-                  </Typography>
-                </Grid>
-              </Grid>
-            </div>
-            <Divider />
-            <div>
-              <Grid
-                container
-                spacing={0}
-                direction="column"
-                alignItems="center"
-                justify="center"
-              >
-                <Grid item xs={12}>
-                  <Typography variant="h5" component="h2">
-                    {userName}
-                  </Typography>
-                </Grid>
-              </Grid>
-            </div>
-          </CardContent>
-        </Grid>
-      </Grid>
-      <Grid item xs={12} className={classes.fullWidth}>
-        <CardActions>
-          <Button size="small">Edit Info</Button>
-        </CardActions>
-      </Grid>
-    </Card>
+    <div className={classes.profile}>
+      <UserAvatar isLargeAvatar={true} userProfileImgSrc={shellstrop} />
+      <Typography className={classes.name}>Eleanor Shellstrop</Typography>
+      <Typography className={classes.username}>shellstrop</Typography>
+    </div>
   );
 }
