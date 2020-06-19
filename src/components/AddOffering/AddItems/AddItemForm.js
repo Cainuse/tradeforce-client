@@ -1,12 +1,14 @@
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
-import { categories, conditions } from "../../constants/ComponentConstants";
-import OfferingUploadImg from "./ItemImagesUpload";
 import { Button } from "@material-ui/core";
 import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
+
+import { categories, conditions } from "../../constants/ComponentConstants";
+import OfferingUploadImg from "./ItemImagesUpload";
+
 
 const useStyles = makeStyles((theme) => ({
   addItemSection: {
