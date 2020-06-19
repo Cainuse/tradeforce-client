@@ -5,7 +5,7 @@ import { closeModal } from "../redux/actions/modalActions";
 import { OFFER_MODAL, POSTING_MODAL } from "../redux/constants/modalTypes";
 import AddPosting from "../components/AddPosting/AddPosting";
 import AddOffering from "./AddOffering/AddOffering";
-import { Dialog } from '@material-ui/core';
+import { Dialog } from "@material-ui/core";
 
 //--------------- Helper: Error for if wrong modal type is given -------------//
 const errorModalStyle = makeStyles((theme) => ({

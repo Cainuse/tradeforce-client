@@ -16,7 +16,7 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Grid container >
+        <Grid container>
           <Grid item xs={12}>
             {children}
           </Grid>
@@ -25,7 +25,6 @@ function TabPanel(props) {
     </div>
   );
 }
-
 
 const useStyles = (theme) => ({
   paper: {
@@ -43,9 +42,7 @@ const useStyles = (theme) => ({
   modalHeader: {
     paddingBottom: "20px",
   },
-
 });
-
 
 /**
  * MAIN: AddOffering Component
@@ -56,7 +53,25 @@ class AddOffering extends React.Component {
     super(props);
 
     this.state = {
-      value: 0,
+      currTabIdx: 0,
+      // addedItems: [
+      //     {
+      //       nameOfItem: "name",
+      //       quantity: 2,
+      //       images: [],
+      //       description: "description",
+      //       category: "Electronics",
+      //       condition: "Brand new"
+      //     },
+      //     {
+      //       nameOfItem: "name2",
+      //       quantity: 1,
+      //       images: [],
+      //       description: "description2",
+      //       category: "Electronics2",
+      //       condition: "Brand new2"
+      //     },
+      //   ],
       addedItems: [],
       comment: "",
       nameOfItem: "",
@@ -65,7 +80,6 @@ class AddOffering extends React.Component {
       description: "",
       category: "",
       condition: "",
-      tags: [],
       errors: {
         addedItems: "",
         comment: "",
@@ -75,45 +89,82 @@ class AddOffering extends React.Component {
         condition: "",
         quantity: "",
       },
-    }
+    };
   }
 
   handleChangeTab = (event, newValue) => {
-    this.setState({ value: newValue})
-  }
+    this.setState({ currTabIdx: newValue });
+  };
+
+  handleChangeForm = (event) => {
+    this.setState({
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  addItemToList = () => {
+    let item = {};
+    let {
+      nameOfItem,
+      quantity,
+      images,
+      description,
+      category,
+      condition,
+    } = this.state;
+
+    item["nameOfItem"] = nameOfItem;
+    item["quantity"] = parseInt(quantity);
+    item["images"] = images;
+    item["description"] = description;
+    item["category"] = category;
+    item["condition"] = condition;
+
+    let newArr = this.state.addedItems;
+    newArr.push(item);
+    this.setState({ addedItems: newArr });
+    console.log(this.state.addedItems);
+    console.log(newArr);
+  };
 
   render() {
     const { classes } = this.props;
 
-    return <Paper className={classes.paper}>
+    return (
+      <Paper className={classes.paper}>
+        <Typography align="center" variant="h4" className={classes.modalHeader}>
+          Make an Offer
+        </Typography>
 
-      <Typography align="center" variant="h4" className={classes.modalHeader}>
-        Make an Offer
-      </Typography>
+        <Tabs
+          className={classes.tabsRoot}
+          value={this.state.currTabIdx}
+          indicatorColor={"primary"}
+          textColor={"primary"}
+          onChange={this.handleChangeTab}
+        >
+          <Tab label="Create Offering" />
+          <Tab label="Preview" />
+        </Tabs>
 
-      <Tabs className={classes.tabsRoot}
-            value={this.state.value}
-            indicatorColor={"primary"}
-            textColor={"primary"}
-            onChange={this.handleChangeTab}
-      >
-        <Tab label="Create Offering" />
-        <Tab label="Preview" />
-      </Tabs>
-
-      <TabPanel value={this.state.value} index={0} >
-        <CreateOfferContents images={this.state.images}/>
-      </TabPanel>
-      <TabPanel value={this.state.value} index={1} >
-        Item Two
-      </TabPanel>
-
-    </Paper>;
+        <TabPanel value={this.state.currTabIdx} index={0}>
+          <CreateOfferContents
+            images={this.state.images}
+            addedItems={this.state.addedItems}
+            handleChangeForm={this.handleChangeForm}
+            addItemToList={this.addItemToList}
+          />
+        </TabPanel>
+        <TabPanel value={this.state.currTabIdx} index={1}>
+          Item Two
+        </TabPanel>
+      </Paper>
+    );
   }
 }
 
 const mapStateToProps = (state) => ({
   currentUser: state.currentUser,
-})
+});
 
 export default connect(mapStateToProps)(withStyles(useStyles)(AddOffering));
