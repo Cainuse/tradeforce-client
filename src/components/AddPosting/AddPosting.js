@@ -50,7 +50,7 @@ class AddPosting extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeStep: 1,
+      activeStep: 0,
       title: "",
       description: "",
       category: "",
