@@ -2,29 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import CreateOfferContents from "./CreateOfferContents";
 import { withStyles } from "@material-ui/core/styles";
-import { Tabs, Tab, Typography, Grid, Paper } from "@material-ui/core";
-
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`full-width-tabpanel-${index}`}
-      aria-labelledby={`full-width-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Grid container>
-          <Grid item xs={12}>
-            {children}
-          </Grid>
-        </Grid>
-      )}
-    </div>
-  );
-}
+import { Tabs, Tab, Typography, Paper } from "@material-ui/core";
+import { TabPanel } from "./TabPanels";
 
 const useStyles = (theme) => ({
   paper: {
@@ -54,25 +33,25 @@ class AddOffering extends React.Component {
 
     this.state = {
       currTabIdx: 0,
-      // addedItems: [
-      //     {
-      //       nameOfItem: "name",
-      //       quantity: 2,
-      //       images: [],
-      //       description: "description",
-      //       category: "Electronics",
-      //       condition: "Brand new"
-      //     },
-      //     {
-      //       nameOfItem: "name2",
-      //       quantity: 1,
-      //       images: [],
-      //       description: "description2",
-      //       category: "Electronics2",
-      //       condition: "Brand new2"
-      //     },
-      //   ],
-      addedItems: [],
+      addedItems: [
+        {
+          nameOfItem: "name",
+          quantity: 2,
+          images: [],
+          description: "description",
+          category: "Electronics",
+          condition: "Brand new",
+        },
+        {
+          nameOfItem: "name2",
+          quantity: 1,
+          images: [],
+          description: "description2",
+          category: "Electronics2",
+          condition: "Brand new2",
+        },
+      ],
+      // addedItems: [],
       comment: "",
       nameOfItem: "",
       quantity: 1,
@@ -102,6 +81,17 @@ class AddOffering extends React.Component {
     });
   };
 
+  clearAddItemForm = () => {
+    this.setState({
+      nameOfItem: "",
+      quantity: 1,
+      images: [],
+      description: "",
+      category: "",
+      condition: "",
+    });
+  };
+
   addItemToList = () => {
     let item = {};
     let {
@@ -123,8 +113,7 @@ class AddOffering extends React.Component {
     let newArr = this.state.addedItems;
     newArr.push(item);
     this.setState({ addedItems: newArr });
-    console.log(this.state.addedItems);
-    console.log(newArr);
+    this.clearAddItemForm();
   };
 
   render() {
