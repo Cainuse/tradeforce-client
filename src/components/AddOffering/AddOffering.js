@@ -1,9 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
-import CreateOfferContents from "./OfferingContents";
+import _ from "lodash";
 import { withStyles } from "@material-ui/core/styles";
 import { Tabs, Tab, Typography, Paper } from "@material-ui/core";
+
 import { TabPanel } from "./TabPanels";
+import CreateOfferContents from "./OfferingContents";
+
 
 const useStyles = (theme) => ({
   paper: {

@@ -1,7 +1,8 @@
 import React from "react";
-import { AddItemSection } from "./AddItemSection";
 import { Grid, Typography } from "@material-ui/core";
+
 import { ItemListSection } from "./ItemListSection";
+import { AddItemSection } from "./AddItemSection";
 
 export const ItemSection = (props) => {
   const [expandedPanelIdx, setExpandedIdx] = React.useState(-1);
