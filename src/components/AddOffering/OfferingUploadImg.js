@@ -1,7 +1,6 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 
-
 const useStyles = (theme) => ({
   dropzone: {
     border: `2px dashed ${theme.palette.text.disabled}`,
@@ -83,9 +82,8 @@ class Step2 extends React.Component {
             this.processFiles(e.dataTransfer.files);
           }}
         >
-
-            {/*<CloudUploadOutlinedIcon className={classes.uploadIcon} />*/}
-            <h4 className={classes.dropText}>Drop image files here</h4>
+          {/*<CloudUploadOutlinedIcon className={classes.uploadIcon} />*/}
+          <h4 className={classes.dropText}>Drop image files here</h4>
 
           <label className={classes.browseButton}>
             <input

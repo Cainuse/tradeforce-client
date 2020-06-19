@@ -9,54 +9,50 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
-    comment: {
-      outline: "none",
-      marginBottom: "20px",
-    },
-    formSection: {
-      marginBottom: "20px",
-    },
-    formHeader: {
-      color: theme.palette.primary.main,
-      paddingBottom: "10px",
-    },
-    form: {
-      width: "100%",
-      minHeight: "270px",
-      marginBottom: theme.spacing(3),
-      flexGrow: 1,
-    },
-    textField: {
+  addItemSection: {
+    marginTop: "30px",
+  },
+  comment: {
+    outline: "none",
+    marginBottom: "20px",
+  },
+  formSection: {
+    marginBottom: "20px",
+  },
+  formHeader: {
+    color: theme.palette.primary.main,
+    paddingBottom: "10px",
+  },
+  form: {
+    width: "100%",
+    minHeight: "270px",
+    marginBottom: theme.spacing(3),
+    flexGrow: 1,
+  },
+  textField: {},
+  addBtnContainer: {
+    justifySelf: "flex-end",
+  },
+  addBtn: {
+    // backgroundColor: theme.palette.primary.main,
+    // color: theme.palette.secondary.main,
+    fontWeight: 300,
+    textTransform: "capitalize",
+    justifySelf: "flex-end",
+    margin: "5px",
+  },
+}));
 
-    },
-    addBtnContainer: {
-      justifySelf: "flex-end",
-    },
-    addBtn: {
-      // backgroundColor: theme.palette.primary.main,
-      // color: theme.palette.secondary.main,
-      fontWeight: 300,
-      textTransform: "capitalize",
-      justifySelf: "flex-end",
-      margin: "5px"
-    },
-  })
-)
-
-export const AddItemOffering = (props) => {
+export const AddItemForm = (props) => {
   let classes = useStyles();
 
   return (
-      <React.Fragment>
+    <div className={classes.addItemSection}>
       <Typography variant="h6" className={classes.formHeader}>
         Add an Item
       </Typography>
 
-      <Grid
-        container
-        className={classes.form}
-        spacing={1}
-      >
+      <Grid container className={classes.form} spacing={1}>
         <Grid item xs={12}>
           <TextField
             required
@@ -65,8 +61,8 @@ export const AddItemOffering = (props) => {
             fullWidth
             margin="dense"
             variant="outlined"
-            name="name"
-            // onChange={change}
+            name="nameOfItem"
+            onChange={props.handleChangeForm}
             // defaultValue={title}
             // error={!!errors.title}
             // helperText={errors.title}
@@ -83,7 +79,7 @@ export const AddItemOffering = (props) => {
             margin="dense"
             variant="outlined"
             name="description"
-            // onChange={change}
+            onChange={props.handleChangeForm}
             // defaultValue={description}
             // error={!!errors.description}
             // helperText={errors.description}
@@ -101,7 +97,7 @@ export const AddItemOffering = (props) => {
               native: true,
             }}
             variant="outlined"
-            // onChange={change}
+            onChange={props.handleChangeForm}
             name="category"
             // defaultValue={category}
             // error={!!errors.category}
@@ -126,7 +122,7 @@ export const AddItemOffering = (props) => {
               native: true,
             }}
             variant="outlined"
-            // onChange={change}
+            onChange={props.handleChangeForm}
             name="condition"
             // defaultValue={condition}
             // error={!!errors.condition}
@@ -149,7 +145,7 @@ export const AddItemOffering = (props) => {
             variant="outlined"
             name="quantity"
             // defaultValue={quantity}
-            // onChange={change}
+            onChange={props.handleChangeForm}
             type="number"
             inputProps={{ min: "1" }}
             // error={!!errors.quantity}
@@ -157,7 +153,7 @@ export const AddItemOffering = (props) => {
           />
         </Grid>
         <Grid item xs={12}>
-          <OfferingUploadImg images={props.images}/>
+          <OfferingUploadImg images={props.images} />
         </Grid>
         <Grid container item justify={"flex-end"} xs={12}>
           <Button
@@ -165,12 +161,14 @@ export const AddItemOffering = (props) => {
             variant={"contained"}
             className={classes.addBtn}
             startIcon={<AddCircleOutlineOutlinedIcon />}
-            onClick={() => null}
+            onClick={() => {
+              props.handleSubmitAddItem();
+            }}
           >
             Add Item
           </Button>
         </Grid>
       </Grid>
-      </React.Fragment>
-  )
-}
+    </div>
+  );
+};
