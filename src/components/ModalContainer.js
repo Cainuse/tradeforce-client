@@ -38,7 +38,7 @@ const modalStyles = makeStyles(() => ({
     alignItems: "center",
     justifyContent: "center",
     margin: "0 auto",
-    width: "50%",
+    width: "40%",
     height: "100%",
     maxHeight: "100vh",
   },
@@ -77,6 +77,8 @@ const MakeModalContainer = (props) => {
         props.closeModal();
       }}
       scroll={"paper"}
+      maxWidth={"xl"}
+      fullWidth={false}
       disableScrollLock={true}
       aria-labelledby="simple-modal-title"
       aria-describedby="simple-modal-description"

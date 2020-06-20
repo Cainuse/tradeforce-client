@@ -36,25 +36,7 @@ class AddOffering extends React.Component {
 
     this.state = {
       currTabIdx: 0,
-      addedItems: [
-        {
-          nameOfItem: "name",
-          quantity: 2,
-          images: [],
-          description: "description",
-          category: "Electronics",
-          condition: "Brand new",
-        },
-        {
-          nameOfItem: "name2",
-          quantity: 1,
-          images: [],
-          description: "description2",
-          category: "Electronics2",
-          condition: "Brand new2",
-        },
-      ],
-      // addedItems: [],
+      addedItems: [],
       comment: "",
       item: {
         nameOfItem: "",
@@ -151,6 +133,7 @@ class AddOffering extends React.Component {
       default:
         break;
     }
+    this.setState({errors: errors});
   }
 
   validateRequiredItemFields = () => {
