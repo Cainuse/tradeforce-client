@@ -37,6 +37,7 @@ export const ItemSection = (props) => {
       <div className={props.classes.formSection}>
         <AddItemSection
           item={item}
+          state={props.state}
           handleChangeForm={props.handleChange}
           handleClickAddIcon={handleClickAddIcon}
           handleClickAddItem={handleClickAddItem}

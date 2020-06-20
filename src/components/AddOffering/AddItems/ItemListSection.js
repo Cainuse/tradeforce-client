@@ -13,7 +13,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   itemContainer: {
-    minWidth: "300px",
+    minWidth: "600px",
   },
   itemCard: {
     borderLeftColor: "#6AB547",
