@@ -7,7 +7,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 
 import { categories, conditions } from "../../constants/ComponentConstants";
-import OfferingUploadImg from "./ItemImagesUpload";
+import ItemImagesUpload from "./ItemImagesUpload";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -45,6 +45,8 @@ const useStyles = makeStyles((theme) => ({
 
 export const AddItemForm = (props) => {
   let classes = useStyles();
+  let {item, errors} = props.state;
+  let {nameOfItem, quantity, images, description, category, condition} = item;
 
   return (
     <div className={classes.addItemSection}>
@@ -63,7 +65,7 @@ export const AddItemForm = (props) => {
             variant="outlined"
             name="nameOfItem"
             onChange={props.handleChangeForm}
-            // defaultValue={title}
+            defaultValue={nameOfItem}
             // error={!!errors.title}
             // helperText={errors.title}
           />
@@ -80,7 +82,7 @@ export const AddItemForm = (props) => {
             variant="outlined"
             name="description"
             onChange={props.handleChangeForm}
-            // defaultValue={description}
+            defaultValue={description}
             // error={!!errors.description}
             // helperText={errors.description}
           />
@@ -99,7 +101,7 @@ export const AddItemForm = (props) => {
             variant="outlined"
             onChange={props.handleChangeForm}
             name="category"
-            // defaultValue={category}
+            defaultValue={category}
             // error={!!errors.category}
             // helperText={errors.category}
           >
@@ -124,7 +126,7 @@ export const AddItemForm = (props) => {
             variant="outlined"
             onChange={props.handleChangeForm}
             name="condition"
-            // defaultValue={condition}
+            defaultValue={condition}
             // error={!!errors.condition}
             // helperText={errors.condition}
           >
@@ -144,7 +146,7 @@ export const AddItemForm = (props) => {
             margin="dense"
             variant="outlined"
             name="quantity"
-            // defaultValue={quantity}
+            defaultValue={quantity}
             onChange={props.handleChangeForm}
             type="number"
             inputProps={{ min: "1" }}
@@ -153,7 +155,7 @@ export const AddItemForm = (props) => {
           />
         </Grid>
         <Grid item xs={12}>
-          <OfferingUploadImg images={props.images} />
+          <ItemImagesUpload images={images} />
         </Grid>
         <Grid container item justify={"flex-end"} xs={12}>
           <Button

@@ -47,7 +47,7 @@ class OfferingContents extends React.Component {
                 margin="dense"
                 variant="outlined"
                 name="comment"
-                onChange={this.props.handleChangeForm}
+                onChange={this.props.handleChangeCommentInput}
                 // defaultValue={description}
                 // error={!!errors.description}
                 // helperText={errors.description}
@@ -58,10 +58,9 @@ class OfferingContents extends React.Component {
 
         <ItemSection
           classes={classes}
-          addedItems={this.props.addedItems}
-          images={this.props.images}
-          handleChangeForm={this.props.handleChangeForm}
+          state={this.props.state}
           addItemToList={this.props.addItemToList}
+          handleChange={this.props.handleChangeAddItemInputs}
         />
       </div>
     );

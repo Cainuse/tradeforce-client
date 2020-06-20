@@ -5,7 +5,7 @@ import { withStyles } from "@material-ui/core/styles";
 import { Tabs, Tab, Typography, Paper } from "@material-ui/core";
 
 import { TabPanel } from "./TabPanels";
-import CreateOfferContents from "./OfferingContents";
+import OfferContents from "./OfferingContents";
 
 
 const useStyles = (theme) => ({
@@ -56,12 +56,14 @@ class AddOffering extends React.Component {
       ],
       // addedItems: [],
       comment: "",
-      nameOfItem: "",
-      quantity: 1,
-      images: [],
-      description: "",
-      category: "",
-      condition: "",
+      item: {
+        nameOfItem: "",
+        quantity: 1,
+        images: [],
+        description: "",
+        category: "",
+        condition: "",
+      },
       errors: {
         addedItems: "",
         comment: "",
@@ -78,43 +80,34 @@ class AddOffering extends React.Component {
     this.setState({ currTabIdx: newValue });
   };
 
-  handleChangeForm = (event) => {
+  handleChangeAddItemInputs = (event) => {
+    let item = {...this.state.item};
+    item[event.target.name] = event.target.value;
+
+    this.setState({ item })
+  };
+
+  handleChangeCommentInput = (event) => {
     this.setState({
       [event.target.name]: event.target.value,
     });
   };
 
   clearAddItemForm = () => {
-    this.setState({
+    let clearedItem = {
       nameOfItem: "",
       quantity: 1,
       images: [],
       description: "",
       category: "",
       condition: "",
-    });
+    }
+    this.setState({ item: clearedItem });
   };
 
   addItemToList = () => {
-    let item = {};
-    let {
-      nameOfItem,
-      quantity,
-      images,
-      description,
-      category,
-      condition,
-    } = this.state;
-
-    item["nameOfItem"] = nameOfItem;
-    item["quantity"] = parseInt(quantity);
-    item["images"] = images;
-    item["description"] = description;
-    item["category"] = category;
-    item["condition"] = condition;
-
     let newArr = this.state.addedItems;
-    newArr.push(item);
+    newArr.push(this.state.item);
     this.setState({ addedItems: newArr });
     this.clearAddItemForm();
   };
@@ -140,10 +133,10 @@ class AddOffering extends React.Component {
         </Tabs>
 
         <TabPanel value={this.state.currTabIdx} index={0}>
-          <CreateOfferContents
-            images={this.state.images}
-            addedItems={this.state.addedItems}
-            handleChangeForm={this.handleChangeForm}
+          <OfferContents
+            state={this.state}
+            handleChangeCommentInput={this.handleChangeCommentInput}
+            handleChangeAddItemInputs={this.handleChangeAddItemInputs}
             addItemToList={this.addItemToList}
           />
         </TabPanel>
