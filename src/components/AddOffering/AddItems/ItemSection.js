@@ -4,10 +4,13 @@ import { Grid, Typography } from "@material-ui/core";
 import { ItemListSection } from "./ItemListSection";
 import { AddItemSection } from "./AddItemSection";
 
+
 export const ItemSection = (props) => {
+  let {addedItems, item} = props.state;
+
   const [expandedPanelIdx, setExpandedIdx] = React.useState(-1);
   const [showForm, setShowForm] = React.useState(
-    props.addedItems.length === 0 ? true : false
+    addedItems.length === 0 ? true : false
   );
 
   const handleExpand = (index) => {
@@ -24,12 +27,12 @@ export const ItemSection = (props) => {
     setShowForm(true);
   };
 
-  if (props.addedItems.length === 0) {
+  if (addedItems.length === 0) {
     return (
       <div className={props.classes.formSection}>
         <AddItemSection
-          images={props.images}
-          handleChangeForm={props.handleChangeForm}
+          item={item}
+          handleChangeForm={props.handleChange}
           handleClickAddIcon={handleClickAddIcon}
           handleClickAddItem={handleClickAddItem}
           showForm={showForm}
@@ -51,7 +54,7 @@ export const ItemSection = (props) => {
           <Grid container spacing={1}>
             <ItemListSection
               expandedPanelIdx={expandedPanelIdx}
-              addedItems={props.addedItems}
+              addedItems={addedItems}
               classes={props.classes}
               handleExpand={handleExpand}
             />
@@ -59,8 +62,8 @@ export const ItemSection = (props) => {
         </Grid>
 
         <AddItemSection
-          images={props.images}
-          handleChangeForm={props.handleChangeForm}
+          state={props.state}
+          handleChangeForm={props.handleChange}
           handleClickAddIcon={handleClickAddIcon}
           handleClickAddItem={handleClickAddItem}
           showForm={showForm}

@@ -42,7 +42,7 @@ const useStyles = (theme) => ({
   },
 });
 
-class Step2 extends React.Component {
+class ItemImagesUpload extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -110,4 +110,4 @@ class Step2 extends React.Component {
   }
 }
 
-export default withStyles(useStyles)(Step2);
+export default withStyles(useStyles)(ItemImagesUpload);

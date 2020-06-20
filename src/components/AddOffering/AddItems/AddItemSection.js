@@ -19,7 +19,7 @@ export const AddItemSection = (props) => {
   if (props.showForm) {
     return (
       <AddItemForm
-        images={props.images}
+        state={props.state}
         handleChangeForm={props.handleChangeForm}
         handleSubmitAddItem={props.handleClickAddItem}
       />
