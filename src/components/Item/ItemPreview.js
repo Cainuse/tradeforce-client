@@ -7,7 +7,6 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import Avatar from "@material-ui/core/Avatar";
 import Grid from "@material-ui/core/Grid";
 import Rating from "./Rating";
 import { useHistory, useRouteMatch } from "react-router-dom";
@@ -20,6 +19,10 @@ const useStyles = makeStyles(() => ({
   },
   tradeItemCardImg: {
     height: "10rem",
+  },
+  bottom: {
+    display: "flex",
+    justifyContent: "space-between",
   },
 }));
 
@@ -71,7 +74,7 @@ const ItemPreview = ({
   };
 
   return (
-    <Card className={classes.tradeItemCard}>
+    <Card className={classes.tradeItemCard} elevation={2}>
       <CardActionArea onClick={() => routeToItem(id)}>
         <CardMedia
           className={classes.tradeItemCardImg}
@@ -83,38 +86,28 @@ const ItemPreview = ({
           title="Tradeforce"
         />
         <CardContent>
-          <Grid container spacing={3}>
+          <Grid container spacing={2}>
             <Grid item xs={12}>
-              <Typography
-                gutterBottom
-                variant="h6"
-                color="textPrimary"
-                component="h2"
-              >
-                {getDate(datePosted)}
-              </Typography>
+              <Typography variant="body2">{getDate(datePosted)}</Typography>
             </Grid>
             <Grid item xs={12}>
-              <Typography gutterBottom variant="h6" component="h2">
+              <Typography variant="h6" component="h2" color="primary">
                 {title ? title : "Untitled"}
               </Typography>
             </Grid>
-            <Grid item xs={8}>
+            <Grid item xs={12}>
               <Typography variant="body2" color="textPrimary" component="p">
                 {location}
               </Typography>
             </Grid>
-            <Grid item align="center" xs={4}>
-              <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
-              <Rating isReadOnly={true} />
-            </Grid>
           </Grid>
         </CardContent>
       </CardActionArea>
-      <CardActions>
+      <CardActions className={classes.bottom}>
         <Button size="small" color="primary" onClick={() => routeToItem(id)}>
           Details
         </Button>
+        <Rating isReadOnly={true} />
       </CardActions>
     </Card>
   );
