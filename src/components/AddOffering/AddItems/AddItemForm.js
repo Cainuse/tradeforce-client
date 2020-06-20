@@ -66,8 +66,8 @@ export const AddItemForm = (props) => {
             name="nameOfItem"
             onChange={props.handleChangeForm}
             defaultValue={nameOfItem}
-            // error={!!errors.title}
-            // helperText={errors.title}
+            error={!!errors.nameOfItem}
+            helperText={errors.nameOfItem}
           />
         </Grid>
         <Grid item xs={12}>
@@ -83,8 +83,8 @@ export const AddItemForm = (props) => {
             name="description"
             onChange={props.handleChangeForm}
             defaultValue={description}
-            // error={!!errors.description}
-            // helperText={errors.description}
+            error={!!errors.description}
+            helperText={errors.description}
           />
         </Grid>
         <Grid item xs={3} sm={6}>
@@ -102,8 +102,8 @@ export const AddItemForm = (props) => {
             onChange={props.handleChangeForm}
             name="category"
             defaultValue={category}
-            // error={!!errors.category}
-            // helperText={errors.category}
+            error={!!errors.category}
+            helperText={errors.category}
           >
             {categories.map((option) => (
               <option key={option.value} value={option.value}>
@@ -127,8 +127,8 @@ export const AddItemForm = (props) => {
             onChange={props.handleChangeForm}
             name="condition"
             defaultValue={condition}
-            // error={!!errors.condition}
-            // helperText={errors.condition}
+            error={!!errors.condition}
+            helperText={errors.condition}
           >
             {conditions.map((option) => (
               <option key={option.value} value={option.value}>
@@ -150,8 +150,8 @@ export const AddItemForm = (props) => {
             onChange={props.handleChangeForm}
             type="number"
             inputProps={{ min: "1" }}
-            // error={!!errors.quantity}
-            // helperText={errors.quantity}
+            error={!!errors.quantity}
+            helperText={errors.quantity}
           />
         </Grid>
         <Grid item xs={12}>

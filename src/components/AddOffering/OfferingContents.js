@@ -61,6 +61,7 @@ class OfferingContents extends React.Component {
           state={this.props.state}
           addItemToList={this.props.addItemToList}
           handleChange={this.props.handleChangeAddItemInputs}
+          validateItemFields={this.props.validateItemFields}
         />
       </div>
     );

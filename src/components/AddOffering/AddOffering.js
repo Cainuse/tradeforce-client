@@ -81,9 +81,11 @@ class AddOffering extends React.Component {
   };
 
   handleChangeAddItemInputs = (event) => {
-    let item = {...this.state.item};
-    item[event.target.name] = event.target.value;
+    let {name, value} = event.target;
+    this.validateItemInput([name, value]);
 
+    let item = {...this.state.item};
+    item[name] = value;
     this.setState({ item })
   };
 
@@ -112,6 +114,73 @@ class AddOffering extends React.Component {
     this.clearAddItemForm();
   };
 
+  isItemFormInvalid = () => {
+    let requiredAddItemFields = _.pick(this.state.item, [
+      "nameOfItem",
+      "description",
+      "category",
+      "condition",
+    ]);
+
+    let hasAddItemFormEmptyFields = _.values(requiredAddItemFields).some(
+      (val) => val.length === 0
+    );
+    let isQuantityInvalid = this.state.quantity < 1;
+
+    return isQuantityInvalid || hasAddItemFormEmptyFields;
+  }
+
+  validateItemInput = ([key, value]) => {
+    let errors = this.state.errors;
+    switch (key) {
+      case "nameOfItem":
+        errors.nameOfItem = value.length > 0 ? "" : "Name of item cannot be left blank";
+        break;
+      case "description":
+        errors.description = value.length > 0 ? "" : "Description cannot be left blank";
+        break;
+      case "category":
+        errors.category = value.length > 0 ? "" : "Category must be selected";
+        break;
+      case "condition":
+        errors.condition = value.length > 0 ? "" : "Condition must be selected";
+        break;
+      case "quantity":
+        errors.quantity = value > 0 ? "" : "Quantity must be greater than 1";
+        break;
+      default:
+        break;
+    }
+  }
+
+  validateRequiredItemFields = () => {
+    let requiredFields = _.toPairs(
+      _.pick(this.state.item, [
+        "nameOfItem",
+        "description",
+        "category",
+        "condition",
+        "quantity",
+      ])
+    );
+
+    _.forEach(requiredFields, this.validateItemInput);
+
+    return !this.isItemFormInvalid();
+  }
+
+  //TODO: To use in submit function
+  validateOfferSubmission = () => {
+    let errors = this.state.error;
+
+    if (this.state.comment.length === 0 && this.state.addedItems.length === 0) {
+      errors.comment = "Must have either a comment or an item";
+      errors.addedItems = "Must have either a comment or an item";
+    }
+  }
+
+
+
   render() {
     const { classes } = this.props;
 
@@ -137,6 +206,7 @@ class AddOffering extends React.Component {
             state={this.state}
             handleChangeCommentInput={this.handleChangeCommentInput}
             handleChangeAddItemInputs={this.handleChangeAddItemInputs}
+            validateItemFields={this.validateRequiredItemFields}
             addItemToList={this.addItemToList}
           />
         </TabPanel>
