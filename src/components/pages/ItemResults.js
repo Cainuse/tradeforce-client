@@ -29,7 +29,7 @@ const ItemResults = ({ postings }) => {
       <div className={classes.search}>
         <SearchBar />
       </div>
-      <Grid container direction={"row"} spacing={3}>
+      <Grid container direction={"row"} spacing={4}>
         {postings.map((item, index) => {
           return (
             <Grid key={index} item xs={3}>
