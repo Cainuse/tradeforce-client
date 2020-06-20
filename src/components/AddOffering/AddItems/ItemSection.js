@@ -3,6 +3,7 @@ import { Grid, Typography } from "@material-ui/core";
 
 import { ItemListSection } from "./ItemListSection";
 import { AddItemSection } from "./AddItemSection";
+import _ from "lodash";
 
 
 export const ItemSection = (props) => {
@@ -18,9 +19,13 @@ export const ItemSection = (props) => {
   };
 
   const handleClickAddItem = () => {
-    props.addItemToList();
-    setShowForm(false);
-    //TODO: do all the other stuff with state
+    let isValid = props.validateItemFields();
+    if (isValid){
+      props.addItemToList();
+      setShowForm(false);
+    } else {
+      setShowForm(true);
+    }
   };
 
   const handleClickAddIcon = () => {
