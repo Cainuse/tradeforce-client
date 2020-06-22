@@ -14,6 +14,7 @@ import FeedbackSnackbar from "./FeedbackSnackbar";
 const theme = createMuiTheme({
   palette: {
     primary: {
+      light: "#01BAEF",
       main: "#1D588F",
     },
     secondary: {

@@ -36,7 +36,15 @@ class AddOffering extends React.Component {
 
     this.state = {
       currTabIdx: 0,
-      addedItems: [],
+      // addedItems: [],
+      addedItems: [{
+        nameOfItem: "name",
+        quantity: 1,
+        images: [],
+        description: "description is great isn't it? So enlightening",
+        category: "for parts",
+        condition: "brand new",
+      }],
       comment: "",
       item: {
         nameOfItem: "",
