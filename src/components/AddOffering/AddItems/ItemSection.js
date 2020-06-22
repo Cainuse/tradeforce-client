@@ -3,6 +3,7 @@ import { Grid, Typography } from "@material-ui/core";
 
 import { ItemListSection } from "./ItemListSection";
 import { AddItemSection } from "./AddItemSection";
+import OfferContents from "../OfferingContents";
 
 export const ItemSection = (props) => {
   let {addedItems, item} = props.state;
@@ -61,6 +62,7 @@ export const ItemSection = (props) => {
               addedItems={addedItems}
               classes={props.classes}
               handleExpand={handleExpand}
+              deleteItemFromList={props.deleteItemFromList}
             />
           </Grid>
         </Grid>

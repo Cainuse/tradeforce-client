@@ -105,6 +105,13 @@ class AddOffering extends React.Component {
     this.clearAddItemForm();
   };
 
+  deleteItemFromList = (indexToDelete) => {
+    let updatedArr = this.state.addedItems.filter((val, index) => index !== indexToDelete);
+    this.setState({
+      addedItems: updatedArr,
+    })
+  }
+
   isItemFormInvalid = () => {
     let requiredAddItemFields = _.pick(this.state.item, [
       "nameOfItem",
@@ -200,6 +207,7 @@ class AddOffering extends React.Component {
             handleChangeAddItemInputs={this.handleChangeAddItemInputs}
             validateItemFields={this.validateRequiredItemFields}
             addItemToList={this.addItemToList}
+            deleteItemFromList={this.deleteItemFromList}
           />
         </TabPanel>
         <TabPanel value={this.state.currTabIdx} index={1}>

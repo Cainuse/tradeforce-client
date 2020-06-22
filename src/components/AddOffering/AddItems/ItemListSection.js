@@ -174,7 +174,7 @@ export const ItemListSection = (props) => {
         </Grid>
 
         <Grid container item xs={1} className={classes.deleteIconContainer} spacing={1} >
-            <IconButton>
+            <IconButton onClick={() => {props.deleteItemFromList(index)}}>
               <DeleteForeverIcon className={classes.deleteIcon}/>
             </IconButton>
         </Grid>

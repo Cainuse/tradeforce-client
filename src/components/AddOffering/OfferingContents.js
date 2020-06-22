@@ -65,6 +65,7 @@ class OfferingContents extends React.Component {
           addItemToList={this.props.addItemToList}
           handleChange={this.props.handleChangeAddItemInputs}
           validateItemFields={this.props.validateItemFields}
+          deleteItemFromList={this.props.deleteItemFromList}
         />
       </div>
     );
