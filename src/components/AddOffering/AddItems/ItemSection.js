@@ -1,11 +1,8 @@
 import React from "react";
-import { Grid, Typography, IconButton } from "@material-ui/core";
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import { Grid, Typography } from "@material-ui/core";
 
 import { ItemListSection } from "./ItemListSection";
 import { AddItemSection } from "./AddItemSection";
-import _ from "lodash";
-
 
 export const ItemSection = (props) => {
   let {addedItems, item} = props.state;
@@ -58,20 +55,13 @@ export const ItemSection = (props) => {
             Added Items
           </Typography>
 
-          <Grid container spacing={1} alignContent={"center"} direction={"row"}>
-            <Grid item xs={12}>
+          <Grid container spacing={1} direction={"row"}>
             <ItemListSection
               expandedPanelIdx={expandedPanelIdx}
               addedItems={addedItems}
               classes={props.classes}
               handleExpand={handleExpand}
             />
-            </Grid>
-            {/*<Grid item xs={2}>*/}
-            {/*    <IconButton>*/}
-            {/*      <DeleteForeverIcon />*/}
-            {/*    </IconButton>*/}
-            {/*</Grid>*/}
           </Grid>
         </Grid>
 

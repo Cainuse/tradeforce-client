@@ -21,6 +21,9 @@ const useStyles = (theme) => ({
     marginBottom: theme.spacing(3),
     flexGrow: 1,
   },
+  commentTxtbox: {
+    minWidth: "600px",
+  },
 });
 
 class OfferingContents extends React.Component {
@@ -35,7 +38,7 @@ class OfferingContents extends React.Component {
             Comment
           </Typography>
 
-          <Grid container spacing={1}>
+          <Grid container spacing={1} className={classes.commentTxtbox}>
             <Grid item xs={12}>
               <TextField
                 required

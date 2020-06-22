@@ -15,7 +15,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   itemContainer: {
-    minWidth: "600px",
+    paddingTop: "6px",
   },
   itemCard: {
     // borderLeftColor: theme.palette.primary.light,
@@ -70,6 +70,15 @@ const useStyles = makeStyles((theme) => ({
   expandOpen: {
     transform: "rotate(180deg)",
   },
+  deleteIconContainer: {
+    alignSelf: "flex-start",
+    marginTop: "3px",
+    marginLeft: "2px",
+    // paddingTop: "6px",
+  },
+  deleteIcon: {
+    color: "#b8061d",
+  },
 }));
 
 export const ItemListSection = (props) => {
@@ -87,8 +96,10 @@ export const ItemListSection = (props) => {
 
   return props.addedItems.map((item, index) => {
     return (
-      <React.Fragment>
-      <Grid item sm={10} key={index} className={classes.itemContainer}>
+      <React.Fragment key={index}>
+        <Grid container alignContent={"flex-start"} className={classes.itemContainer}>
+        <Grid item xs={11} key={index} >
+      <Grid item sm={12} >
         <Card key={index} className={clsx(classes.itemCard, {
           [classes.itemCardOpen]: index === props.expandedPanelIdx,
         })}>
@@ -160,11 +171,19 @@ export const ItemListSection = (props) => {
           </Grid>
         </Card>
       </Grid>
+        </Grid>
+
+        <Grid container item xs={1} className={classes.deleteIconContainer} spacing={1} >
+            <IconButton>
+              <DeleteForeverIcon className={classes.deleteIcon}/>
+            </IconButton>
+        </Grid>
       {/*<Grid container sm={2}>*/}
       {/*  <IconButton>*/}
       {/*    <DeleteForeverIcon />*/}
       {/*  </IconButton>*/}
       {/*</Grid>*/}
+          </Grid>
       </React.Fragment>
     );
   });

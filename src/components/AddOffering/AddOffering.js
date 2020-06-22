@@ -45,6 +45,7 @@ class AddOffering extends React.Component {
         category: "for parts",
         condition: "brand new",
       }],
+      showAddForm: true,
       comment: "",
       item: {
         nameOfItem: "",

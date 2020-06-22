@@ -26,10 +26,11 @@ export const AddItemSection = (props) => {
     );
   } else {
     return (
-      <Grid container justify={"flex-end"} spacing={1}>
-        <Grid item>
+      <Grid container justify={"flex-end"} direction={"row"} spacing={1}>
+        <Grid container item xs={11}>
+        </Grid>
+        <Grid container item xs={1}>
           <IconButton
-            edge="start"
             className={classes.addCircleIcon}
             color="inherit"
             aria-label="showAddItemFormBtn"
