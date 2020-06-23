@@ -40,6 +40,8 @@ const useStyles = makeStyles((theme) => ({
     textTransform: "capitalize",
     justifySelf: "flex-end",
     margin: "5px",
+    // backgroundColor: theme.palette.primary.light,
+    // color: "white",
   },
 }));
 
@@ -159,8 +161,8 @@ export const AddItemForm = (props) => {
         </Grid>
         <Grid container item justify={"flex-end"} xs={12}>
           <Button
-            color="primary"
             variant={"contained"}
+            color={"primary"}
             className={classes.addBtn}
             startIcon={<AddCircleOutlineOutlinedIcon />}
             onClick={() => {

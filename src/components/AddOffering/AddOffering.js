@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import _ from "lodash";
 import { withStyles } from "@material-ui/core/styles";
-import { Tabs, Tab, Typography, Paper } from "@material-ui/core";
+import { Tabs, Tab, Typography, Paper, Button, Grid } from "@material-ui/core";
 
 import { TabPanel } from "./TabPanels";
 import OfferContents from "./OfferingContents";
@@ -24,7 +24,28 @@ const useStyles = (theme) => ({
   modalHeader: {
     paddingBottom: "20px",
   },
+  submitBtn: {
+    backgroundColor: "#6ab547",
+  }
 });
+
+const makeOfferer = (currentUser) => {
+  return {
+    id: currentUser.id,
+    userName: currentUser.userName,
+    email: currentUser.email,
+  }
+}
+
+const makeOffering = (comment, offeredItems, currentUser) => {
+  let offering = {
+    offerer: makeOfferer(currentUser),
+    offeredItems: offeredItems,
+    comment: comment,
+    status: "pending",
+  }
+  return offering;
+}
 
 /**
  * MAIN: AddOffering Component
@@ -176,6 +197,8 @@ class AddOffering extends React.Component {
       errors.comment = "Must have either a comment or an item";
       errors.addedItems = "Must have either a comment or an item";
     }
+    this.setState({errors: errors});
+
   }
 
 
@@ -213,6 +236,20 @@ class AddOffering extends React.Component {
         <TabPanel value={this.state.currTabIdx} index={1}>
           Item Two
         </TabPanel>
+
+        <Grid container justify={"space-between"}>
+          <Grid item xs={6}>
+            <Button>
+                Cancel
+            </Button>
+          </Grid>
+
+          <Grid container item xs={6} justify={"flex-end"}>
+            <Button>
+              Submit
+            </Button>
+          </Grid>
+        </Grid>
       </Paper>
     );
   }
