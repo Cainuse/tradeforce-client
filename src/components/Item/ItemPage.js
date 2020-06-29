@@ -15,6 +15,10 @@ const useStyles = makeStyles((theme) => ({
   root: {
     fontFamily: "Montserrat",
   },
+  buttonHeader: {
+    display: "flex",
+    justifyContent: "space-between",
+  },
   divider: {
     marginTop: theme.spacing(3),
     marginBottom: theme.spacing(3),
@@ -26,19 +30,26 @@ function ItemPage(props) {
   const classes = useStyles();
   const history = useHistory();
   const location = useLocation();
-  const parentPath = location.pathname.substring(
-    0,
-    location.pathname.lastIndexOf("/")
-  );
+  const pathItems = location.pathname.split("/");
+  // const parentPath = location.pathname.substring(
+  //   0,
+  //   location.pathname.lastIndexOf("/")
+  // );
+  const parentPath = "/" + pathItems[1];
 
   const redirect = () => {
     history.push(parentPath + "/" + location.search);
   };
 
+  const editPosting = () => {
+    history.push(parentPath + "/" + pathItems[2] + "/edit");
+  };
+
   return (
     <div>
-      <div className={classes.root}>
+      <div className={classes.buttonHeader}>
         <Button onClick={redirect}>&lt; Back to Search</Button>
+        <Button onClick={editPosting}>Edit</Button>
       </div>
       <Container className={classes.root}>
         <ItemDetailContainer itemDetail={itemDetail} />

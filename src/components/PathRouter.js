@@ -16,13 +16,13 @@ const PathRouter = () => {
       <Route exact path="/items">
         <ItemResults />
       </Route>
-      <Route path="/items/item=:id">
+      <Route exact path="/items/item=:id">
         <ItemPage />
       </Route>
       <Route exact path="/profile">
         <UserProfile />
       </Route>
-      <Route path="items/item=:id/edit">
+      <Route path="/items/item=:id/edit">
         <EditItemDetailsPage />
       </Route>
       <Route>
