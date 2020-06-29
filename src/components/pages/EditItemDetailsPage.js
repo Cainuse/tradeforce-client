@@ -4,19 +4,19 @@ import { withRouter } from "react-router";
 import Button from "@material-ui/core/Button";
 import { connect } from "react-redux";
 import Container from "@material-ui/core/Container";
-import TextField from "@material-ui/core/TextField";
-import Chip from "@material-ui/core/Chip";
-import Grid from "@material-ui/core/Grid";
-import { categories, conditions } from "../../redux/constants/classifierTypes";
+import Step1 from "../AddPosting/Step1";
+import Step2 from "../AddPosting/Step2";
+import Step3 from "../AddPosting/Step3";
+import _ from "lodash";
 
 const useStyles = (theme) => ({
   buttonHeader: {
     display: "flex",
     justifyContent: "space-between",
   },
-  // header: {
-  //   color: "orange",
-  // },
+  section: {
+    margin: theme.spacing(2, 0),
+  },
 });
 
 class EditItemDetailsPage extends React.Component {
@@ -45,160 +45,155 @@ class EditItemDetailsPage extends React.Component {
     history.push(parentPath);
   };
 
-  onChange = () => {};
+  isFormInvalid = () => {
+    let requiredFields = _.pick(this.state, [
+      "title",
+      "description",
+      "category",
+      "condition",
+    ]);
+    let haveEmptyFields = _.values(requiredFields).some(
+      (val) => val.length === 0
+    );
+    let isQuantityInvalid = this.state.quantity < 1;
+    return isQuantityInvalid || haveEmptyFields;
+  };
 
-  addTag = () => {};
+  resetPostingFields = () => {
+    this.setState({
+      title: "",
+      description: "",
+      category: "",
+      condition: "",
+      tags: [],
+      images: [],
+      requestedItems: [],
+      quantity: 1,
+    });
+  };
 
-  deleteTag = () => {};
+  validateInput = ([key, value]) => {
+    let errors = this.state.errors;
+    switch (key) {
+      case "title":
+        errors.title = value.length > 0 ? "" : "Title cannot be left blank";
+        break;
+      case "description":
+        errors.description =
+          value.length > 0 ? "" : "Description cannot be left blank";
+        break;
+      case "category":
+        errors.category = value.length > 0 ? "" : "Category must be selected";
+        break;
+      case "condition":
+        errors.condition = value.length > 0 ? "" : "Condition must be selected";
+        break;
+      case "quantity":
+        errors.quantity = value > 0 ? "" : "Quantity must be greater than 0";
+        break;
+      default:
+        break;
+    }
+    this.setState({ errors: errors });
+  };
+
+  validateRequiredFields = () => {
+    let requiredFields = _.toPairs(
+      _.pick(this.state, [
+        "title",
+        "description",
+        "category",
+        "condition",
+        "quantity",
+      ])
+    );
+
+    _.forEach(requiredFields, this.validateInput);
+
+    return this.isFormInvalid();
+  };
+
+  handleInputChange = (e) => {
+    let { name, value } = e.target;
+    this.validateInput([name, value]);
+    this.setState({ [name]: value });
+  };
+
+  handleAddtoList = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      this.setState({
+        [e.target.name]: [...this.state[e.target.name], e.target.value],
+      });
+      e.target.value = "";
+    }
+  };
+
+  handleRemoveFromList = (type, idx) => {
+    let newTags = this.state[type].filter((item, index) => index !== idx);
+    this.setState({ [type]: newTags });
+  };
+
+  handleAddImage = (list) => {
+    this.setState({
+      images: [...this.state.images, ...list],
+    });
+  };
+
+  handleSubmit = () => {
+    if (!this.validateRequiredFields()) {
+      console.log("validated inputs");
+      //call action to update store
+      // call to redirect back to posting
+    } else {
+      console.log("not valid");
+      window.alert("Please fill required fields");
+    }
+  };
 
   render() {
     const { classes } = this.props;
-    const {
-      title,
-      description,
-      condition,
-      category,
-      quantity,
-      tags,
-      errors,
-    } = this.state;
     return (
       <div>
         <div className={classes.buttonHeader}>
           <Button onClick={this.redirect}>&lt; Back to Posting</Button>
         </div>
         <Container>
-          <Grid container className={classes.form} spacing={1}>
-            <Grid item xs={12}>
-              <TextField
-                required
-                label="Title"
-                className={classes.textfield}
-                fullWidth
-                margin="dense"
-                variant="outlined"
-                name="title"
-                onChange={this.onChange}
-                defaultValue={title}
-                error={!!errors.title}
-                helperText={errors.title}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                required
-                multiline
-                rows={4}
-                label="Description"
-                className={classes.textfield}
-                fullWidth
-                margin="dense"
-                variant="outlined"
-                name="description"
-                onChange={this.onChange}
-                defaultValue={description}
-                error={!!errors.description}
-                helperText={errors.description}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                required
-                id="outlined-select-category-native"
-                select
-                label="Category"
-                margin="dense"
-                fullWidth
-                SelectProps={{
-                  native: true,
-                }}
-                variant="outlined"
-                onChange={this.onChange}
-                name="category"
-                defaultValue={category}
-                error={!!errors.category}
-                helperText={errors.category}
-              >
-                {categories.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </TextField>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                required
-                id="outlined-select-condition-native"
-                select
-                label="Condition"
-                margin="dense"
-                fullWidth
-                SelectProps={{
-                  native: true,
-                }}
-                variant="outlined"
-                onChange={this.onChange}
-                name="condition"
-                defaultValue={condition}
-                error={!!errors.condition}
-                helperText={errors.condition}
-              >
-                {conditions.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </TextField>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                label="Tags"
-                className={classes.textfield}
-                fullWidth
-                margin="dense"
-                variant="outlined"
-                name="tags"
-                defaultValue=""
-                onKeyUp={this.addTag}
-                placeholder={
-                  tags.length === 10
-                    ? "Tag limit reached"
-                    : "Press enter to add tag"
-                }
-                disabled={tags.length >= 10}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                required
-                label="Quantity"
-                className={classes.textfield}
-                fullWidth
-                margin="dense"
-                variant="outlined"
-                name="quantity"
-                defaultValue={quantity}
-                onChange={this.onChange}
-                type="number"
-                inputProps={{ min: "1" }}
-                error={!!errors.quantity}
-                helperText={errors.quantity}
-              />
-            </Grid>
-            {tags.map((tag, idx) => (
-              <Chip
-                key={idx}
-                color="primary"
-                size="small"
-                onDelete={() => {
-                  this.deleteTag("tags", idx);
-                }}
-                label={tag}
-                className={classes.tags}
-              />
-            ))}
-          </Grid>
+          <div className={classes.section}>
+            <Step1
+              change={this.handleInputChange}
+              addTag={this.handleAddtoList}
+              state={this.state}
+              deleteTag={this.handleRemoveFromList}
+            />
+          </div>
+          <div className={classes.section}>
+            <Step2
+              change={this.handleInputChange}
+              addImage={this.handleAddImage}
+              images={this.state.images}
+              deleteImage={this.handleRemoveFromList}
+            />
+          </div>
+          <div className={classes.section}>
+            <Step3
+              addRequest={this.handleAddtoList}
+              deleteRequest={this.handleRemoveFromList}
+              requests={this.state.requestedItems}
+            />
+          </div>
+          <div className={classes.buttonHeader}>
+            <Button onClick={this.redirect} variant="contained" color="primary">
+              Cancel
+            </Button>
+            <Button
+              onClick={this.handleSubmit}
+              variant="contained"
+              color="primary"
+            >
+              Save
+            </Button>
+          </div>
         </Container>
       </div>
     );
