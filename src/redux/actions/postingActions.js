@@ -1,5 +1,6 @@
 import {
   ADD_POSTING,
+  DELETE_POSTING,
   LOAD_ITEM_DETAIL,
   UPDATE_ITEM_DETAIL,
 } from "../constants/actionTypes";
@@ -26,5 +27,12 @@ export const updateItemDetail = (itemId, details) => {
     type: UPDATE_ITEM_DETAIL,
     itemId: itemId,
     details: details,
+  };
+};
+
+export const deletePosting = (itemId) => {
+  return {
+    type: DELETE_POSTING,
+    itemId: itemId,
   };
 };

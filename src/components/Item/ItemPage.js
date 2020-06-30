@@ -3,7 +3,6 @@ import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
 import { makeStyles } from "@material-ui/core/styles";
-import EditIcon from "@material-ui/icons/Edit";
 import ReviewSection from "./ReviewSection";
 import ItemDetailContainer from "./ItemDetailContainer";
 import { useHistory, useLocation } from "react-router-dom";
@@ -27,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function ItemPage(props) {
-  let { itemDetail, currentUser } = props;
+  let { itemDetail } = props;
   const classes = useStyles();
   const history = useHistory();
   const location = useLocation();
@@ -42,24 +41,10 @@ function ItemPage(props) {
     history.push(parentPath + "/" + location.search);
   };
 
-  const editPosting = () => {
-    history.push(parentPath + "/" + pathItems[2] + "/edit");
-  };
-
   return (
     <div>
       <div className={classes.buttonHeader}>
         <Button onClick={redirect}>&lt; Back to Search</Button>
-        {currentUser.id === itemDetail.ownerId && (
-          <Button
-            onClick={editPosting}
-            startIcon={<EditIcon />}
-            variant="outlined"
-            color="primary"
-          >
-            Edit
-          </Button>
-        )}
       </div>
       <Container className={classes.root}>
         <ItemDetailContainer itemDetail={itemDetail} />
@@ -70,11 +55,8 @@ function ItemPage(props) {
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    itemDetail: state.itemDetail,
-    currentUser: state.currentUser,
-  };
-};
+const mapStateToProps = (state) => ({
+  itemDetail: state.itemDetail,
+});
 
 export default connect(mapStateToProps)(ItemPage);

@@ -9,7 +9,10 @@ import Step2 from "../AddPosting/Step2";
 import Step3 from "../AddPosting/Step3";
 import _ from "lodash";
 import DeleteIcon from "@material-ui/icons/Delete";
-import { updateItemDetail } from "../../redux/actions/postingActions";
+import {
+  updateItemDetail,
+  deletePosting,
+} from "../../redux/actions/postingActions";
 
 const useStyles = (theme) => ({
   buttonHeader: {
@@ -45,12 +48,13 @@ class EditItemDetailsPage extends React.Component {
   }
 
   redirect = () => {
-    const { history, location } = this.props;
-    const parentPath = location.pathname.substring(
-      0,
-      location.pathname.lastIndexOf("/")
-    );
-    history.push(parentPath);
+    const { history } = this.props;
+    // const parentPath = location.pathname.substring(
+    //   0,
+    //   location.pathname.lastIndexOf("/")
+    // );
+    // history.push(parentPath);
+    history.goBack();
   };
 
   isFormInvalid = () => {
@@ -65,19 +69,6 @@ class EditItemDetailsPage extends React.Component {
     );
     let isQuantityInvalid = this.state.quantity < 1;
     return isQuantityInvalid || haveEmptyFields;
-  };
-
-  resetPostingFields = () => {
-    this.setState({
-      title: "",
-      description: "",
-      category: "",
-      condition: "",
-      tags: [],
-      images: [],
-      requestedItems: [],
-      quantity: 1,
-    });
   };
 
   validateInput = ([key, value]) => {
@@ -160,13 +151,19 @@ class EditItemDetailsPage extends React.Component {
 
   handleSubmit = () => {
     if (!this.validateRequiredFields()) {
-      console.log(this.state.changedFields);
+      // console.log(this.state.changedFields);
       let details = _.pick(this.state, this.state.changedFields);
       this.props.updateItemDetail(this.state.id, details);
       this.redirect();
     } else {
       window.alert("Please fill required fields");
     }
+  };
+
+  handleDeletePosting = () => {
+    let { history, deletePosting } = this.props;
+    deletePosting(this.state.id);
+    history.go(-2);
   };
 
   render() {
@@ -176,7 +173,7 @@ class EditItemDetailsPage extends React.Component {
         <div className={classes.buttonHeader}>
           <Button onClick={this.redirect}>&lt; Back to Posting</Button>
           <Button
-            onClick={this.deletePosting}
+            onClick={this.handleDeletePosting}
             startIcon={<DeleteIcon />}
             className={classes.cancelButton}
           >
@@ -235,6 +232,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { updateItemDetail })(
+export default connect(mapStateToProps, { updateItemDetail, deletePosting })(
   withRouter(withStyles(useStyles)(EditItemDetailsPage))
 );

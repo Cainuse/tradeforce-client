@@ -1,5 +1,9 @@
 import { initialState } from "../constants/_initialState";
-import { ADD_POSTING, UPDATE_ITEM_DETAIL } from "../constants/actionTypes";
+import {
+  ADD_POSTING,
+  UPDATE_ITEM_DETAIL,
+  DELETE_POSTING,
+} from "../constants/actionTypes";
 
 export const postingsReducer = (state = initialState.postings, action) => {
   if (action.type === ADD_POSTING) {
@@ -22,6 +26,10 @@ export const postingsReducer = (state = initialState.postings, action) => {
       }
       return posting;
     });
+    return newState;
+  } else if (action.type === DELETE_POSTING) {
+    let { itemId } = action;
+    let newState = state.filter((posting) => posting.id !== itemId);
     return newState;
   }
   return state;
