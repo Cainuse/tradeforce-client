@@ -3,7 +3,7 @@ import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
 import { makeStyles } from "@material-ui/core/styles";
-
+import EditIcon from "@material-ui/icons/Edit";
 import ReviewSection from "./ReviewSection";
 import ItemDetailContainer from "./ItemDetailContainer";
 import { useHistory, useLocation } from "react-router-dom";
@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
   buttonHeader: {
     display: "flex",
     justifyContent: "space-between",
+    margin: theme.spacing(1),
   },
   divider: {
     marginTop: theme.spacing(3),
@@ -26,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function ItemPage(props) {
-  let { itemDetail } = props;
+  let { itemDetail, currentUser } = props;
   const classes = useStyles();
   const history = useHistory();
   const location = useLocation();
@@ -49,7 +50,16 @@ function ItemPage(props) {
     <div>
       <div className={classes.buttonHeader}>
         <Button onClick={redirect}>&lt; Back to Search</Button>
-        <Button onClick={editPosting}>Edit</Button>
+        {currentUser.id === itemDetail.ownerId && (
+          <Button
+            onClick={editPosting}
+            startIcon={<EditIcon />}
+            variant="outlined"
+            color="primary"
+          >
+            Edit
+          </Button>
+        )}
       </div>
       <Container className={classes.root}>
         <ItemDetailContainer itemDetail={itemDetail} />
@@ -63,6 +73,7 @@ function ItemPage(props) {
 const mapStateToProps = (state) => {
   return {
     itemDetail: state.itemDetail,
+    currentUser: state.currentUser,
   };
 };
 

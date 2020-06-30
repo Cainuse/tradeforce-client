@@ -8,14 +8,21 @@ import Step1 from "../AddPosting/Step1";
 import Step2 from "../AddPosting/Step2";
 import Step3 from "../AddPosting/Step3";
 import _ from "lodash";
+import DeleteIcon from "@material-ui/icons/Delete";
+import { updateItemDetail } from "../../redux/actions/postingActions";
 
 const useStyles = (theme) => ({
   buttonHeader: {
     display: "flex",
     justifyContent: "space-between",
+    margin: theme.spacing(1),
   },
   section: {
     margin: theme.spacing(2, 0),
+  },
+  cancelButton: {
+    color: "#AD343E",
+    borderColor: "#AD343E",
   },
 });
 
@@ -33,6 +40,7 @@ class EditItemDetailsPage extends React.Component {
         condition: "",
         quantity: "",
       },
+      changedFields: [],
     };
   }
 
@@ -113,10 +121,17 @@ class EditItemDetailsPage extends React.Component {
     return this.isFormInvalid();
   };
 
+  updateChangedFields = (field) => {
+    if (!_.includes(this.state.changedFields, field)) {
+      this.setState({ changedFields: [...this.state.changedFields, field] });
+    }
+  };
+
   handleInputChange = (e) => {
     let { name, value } = e.target;
     this.validateInput([name, value]);
     this.setState({ [name]: value });
+    this.updateChangedFields(name);
   };
 
   handleAddtoList = (e) => {
@@ -125,6 +140,7 @@ class EditItemDetailsPage extends React.Component {
       this.setState({
         [e.target.name]: [...this.state[e.target.name], e.target.value],
       });
+      this.updateChangedFields(e.target.name);
       e.target.value = "";
     }
   };
@@ -132,21 +148,23 @@ class EditItemDetailsPage extends React.Component {
   handleRemoveFromList = (type, idx) => {
     let newTags = this.state[type].filter((item, index) => index !== idx);
     this.setState({ [type]: newTags });
+    this.updateChangedFields(type);
   };
 
   handleAddImage = (list) => {
     this.setState({
       images: [...this.state.images, ...list],
     });
+    this.updateChangedFields("images");
   };
 
   handleSubmit = () => {
     if (!this.validateRequiredFields()) {
-      console.log("validated inputs");
-      //call action to update store
-      // call to redirect back to posting
+      console.log(this.state.changedFields);
+      let details = _.pick(this.state, this.state.changedFields);
+      this.props.updateItemDetail(this.state.id, details);
+      this.redirect();
     } else {
-      console.log("not valid");
       window.alert("Please fill required fields");
     }
   };
@@ -157,6 +175,13 @@ class EditItemDetailsPage extends React.Component {
       <div>
         <div className={classes.buttonHeader}>
           <Button onClick={this.redirect}>&lt; Back to Posting</Button>
+          <Button
+            onClick={this.deletePosting}
+            startIcon={<DeleteIcon />}
+            className={classes.cancelButton}
+          >
+            Delete Posting
+          </Button>
         </div>
         <Container>
           <div className={classes.section}>
@@ -183,7 +208,11 @@ class EditItemDetailsPage extends React.Component {
             />
           </div>
           <div className={classes.buttonHeader}>
-            <Button onClick={this.redirect} variant="contained" color="primary">
+            <Button
+              onClick={this.redirect}
+              variant="outlined"
+              className={classes.cancelButton}
+            >
               Cancel
             </Button>
             <Button
@@ -206,6 +235,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(
+export default connect(mapStateToProps, { updateItemDetail })(
   withRouter(withStyles(useStyles)(EditItemDetailsPage))
 );

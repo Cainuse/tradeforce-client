@@ -1,5 +1,5 @@
 import { initialState } from "../constants/_initialState";
-import { LOAD_ITEM_DETAIL } from "../constants/actionTypes";
+import { LOAD_ITEM_DETAIL, UPDATE_ITEM_DETAIL } from "../constants/actionTypes";
 import _ from "lodash";
 
 export const itemDetailReducer = (state = initialState.itemDetail, action) => {
@@ -8,6 +8,11 @@ export const itemDetailReducer = (state = initialState.itemDetail, action) => {
     let newState = _.find(postings, { id: itemId });
     if (newState) {
       return newState;
+    }
+  } else if (action.type === UPDATE_ITEM_DETAIL) {
+    let { itemId, details } = action;
+    if (state.id === itemId) {
+      return { ...state, ...details };
     }
   }
   return state;

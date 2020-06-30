@@ -1,4 +1,8 @@
-import { ADD_POSTING, LOAD_ITEM_DETAIL } from "../constants/actionTypes";
+import {
+  ADD_POSTING,
+  LOAD_ITEM_DETAIL,
+  UPDATE_ITEM_DETAIL,
+} from "../constants/actionTypes";
 
 export const addPosting = (posting, currentUser) => {
   return {
@@ -14,5 +18,13 @@ export const loadItemDetail = (itemId, postings) => {
     itemId: itemId,
     // TODO: postings unnecessary for when BE integrated
     postings: postings,
+  };
+};
+
+export const updateItemDetail = (itemId, details) => {
+  return {
+    type: UPDATE_ITEM_DETAIL,
+    itemId: itemId,
+    details: details,
   };
 };
