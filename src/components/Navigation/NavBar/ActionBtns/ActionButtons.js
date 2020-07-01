@@ -4,9 +4,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import { IconButton } from "@material-ui/core";
 import { useHistory } from "react-router";
 import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
-import SmsOutlinedIcon from "@material-ui/icons/SmsOutlined";
+import NotificationsNoneOutlinedIcon from "@material-ui/icons/NotificationsNoneOutlined";
 import AccountCircleOutlinedIcon from "@material-ui/icons/AccountCircleOutlined";
 import { openPostingModal } from "../../../../redux/actions/modalActions";
+import LoginModalBtn from "../../../Login/LoginModal";
 
 import { connect } from "react-redux";
 
@@ -36,7 +37,7 @@ const loggedInStyles = makeStyles(() => ({
     fontSize: "1.3rem",
     fontWeight: "100",
   },
-  chatBtn: {
+  notificationBtn: {
     fontSize: "1.7rem",
     padding: "5px",
   },
@@ -48,15 +49,6 @@ const loggedInStyles = makeStyles(() => ({
     padding: "1px",
   },
 }));
-
-const LoginRegisterBtn = () => {
-  const classes = loggedOutStyles();
-  return (
-    <Button className={classes.loginBtn} color="inherit">
-      Login/Register
-    </Button>
-  );
-};
 
 //=================================================================================================================//
 
@@ -81,14 +73,14 @@ const PostItemBtn = (props) => {
   );
 };
 
-const ChatBtn = (props) => {
+const NotificationBtn = (props) => {
   return (
     <IconButton
       className={props.iconBtnClass}
       color="inherit"
       aria-label="chat"
     >
-      <SmsOutlinedIcon className={props.chatBtnClass} />
+      <NotificationsNoneOutlinedIcon className={props.notificationBtnClass} />
     </IconButton>
   );
 };
@@ -121,7 +113,10 @@ const LoggedInActionItems = (props) => {
         openPostingModal={props.openPostingModal}
       />
       <AppBarDivider className={classes.divider} />
-      <ChatBtn iconBtnClass={classes.iconBtn} chatBtnClass={classes.chatBtn} />
+      <NotificationBtn
+        iconBtnClass={classes.iconBtn}
+        notificationBtnClass={classes.notificationBtn}
+      />
       <AccountBtn
         iconBtnClass={classes.iconBtn}
         accountBtnClass={classes.accountBtn}
@@ -134,7 +129,7 @@ const ActionItems = (props) => {
   if (props.isLoggedIn) {
     return <LoggedInActionItems openPostingModal={props.openPostingModal} />;
   }
-  return <LoginRegisterBtn />;
+  return <LoginModalBtn />;
 };
 
 export default connect(null, { openPostingModal })(ActionItems);

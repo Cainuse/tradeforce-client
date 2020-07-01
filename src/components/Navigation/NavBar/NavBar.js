@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -8,6 +8,7 @@ import { Logo } from "../../Logo";
 import ActionItems from "./ActionBtns/ActionButtons";
 import { clickMenuBtn } from "../../../redux/actions/flyoutActions";
 import { connect } from "react-redux";
+import { UserContext } from "../../../UserContext";
 
 const useStyles = makeStyles((theme) => ({
   navBarRoot: {},
@@ -45,6 +46,7 @@ class NavBar extends React.Component {
 }
 
 function CreateNavBar(props) {
+  const { isLoggedIn } = useContext(UserContext);
   const classes = useStyles();
 
   return (
@@ -61,7 +63,7 @@ function CreateNavBar(props) {
             <MenuIcon className={classes.menuIcon} />
           </IconButton>
           <Logo className={classes.logo} />
-          <ActionItems isLoggedIn={true} />
+          <ActionItems isLoggedIn={isLoggedIn} />
         </Toolbar>
       </AppBar>
     </div>
