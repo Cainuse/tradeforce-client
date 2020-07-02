@@ -2,6 +2,10 @@ import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { withRouter } from "react-router";
 import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
 import { connect } from "react-redux";
 import Container from "@material-ui/core/Container";
 import Step1 from "../AddPosting/Step1";
@@ -44,6 +48,7 @@ class EditItemDetailsPage extends React.Component {
         quantity: "",
       },
       changedFields: [],
+      confirmationOpen: false,
     };
   }
 
@@ -166,14 +171,41 @@ class EditItemDetailsPage extends React.Component {
     history.go(-2);
   };
 
+  handleConfirmationClose = () => {
+    this.setState({ confirmationOpen: false });
+  };
+
+  handleConfirmationOpen = () => {
+    this.setState({ confirmationOpen: true });
+  };
+
   render() {
     const { classes } = this.props;
     return (
       <div>
+        <Dialog
+          open={this.state.confirmationOpen}
+          onClose={this.handleConfirmationClose}
+        >
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Are you sure you want to delete this posting? This action cannot
+              be undone.
+            </DialogContentText>
+            <DialogActions>
+              <Button onClick={this.handleConfirmationClose} color="primary">
+                Cancel
+              </Button>
+              <Button onClick={this.handleDeletePosting} color="primary">
+                Delete
+              </Button>
+            </DialogActions>
+          </DialogContent>
+        </Dialog>
         <div className={classes.buttonHeader}>
           <Button onClick={this.redirect}>&lt; Back to Posting</Button>
           <Button
-            onClick={this.handleDeletePosting}
+            onClick={this.handleConfirmationOpen}
             startIcon={<DeleteIcon />}
             className={classes.cancelButton}
           >
