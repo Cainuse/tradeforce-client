@@ -84,7 +84,7 @@ function ItemInfo(props) {
             <Button
               onClick={editPosting}
               // startIcon={<EditIcon />}
-              variant="contained"
+              variant="outlined"
               color="primary"
             >
               Edit Posting
