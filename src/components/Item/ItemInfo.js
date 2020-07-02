@@ -62,15 +62,15 @@ function ItemInfo(props) {
   const classes = useStyles();
   const history = useHistory();
   const location = useLocation();
-  const pathItems = location.pathname.split("/");
+  // const pathItems = location.pathname.split("/");
   // const parentPath = location.pathname.substring(
   //   0,
   //   location.pathname.lastIndexOf("/")
   // );
-  const parentPath = "/" + pathItems[1];
+  // const parentPath = "/" + pathItems[1];
 
   const editPosting = () => {
-    history.push(parentPath + "/" + pathItems[2] + "/edit");
+    history.push(location.pathname + "/edit");
   };
 
   return (

@@ -4,6 +4,11 @@ export const initialState = {
     isOpen: false,
     type: "",
   },
+  snackbar: {
+    isOpen: false,
+    type: "",
+    message: "",
+  },
   postings: [
     {
       id: 0,
