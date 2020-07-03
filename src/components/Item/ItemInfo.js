@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import _ from "lodash";
+import { useHistory, useLocation } from "react-router-dom";
 
 import { openOfferModal } from "../../redux/actions/modalActions";
 import ImageCarousel from "./ImageCarousel";
@@ -56,9 +57,21 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function ItemInfo(props) {
-  let { itemDetail } = props;
+  let { itemDetail, currentUser } = props;
   let { images, quantity, condition, requestedItems, tags } = itemDetail;
   const classes = useStyles();
+  const history = useHistory();
+  const location = useLocation();
+  // const pathItems = location.pathname.split("/");
+  // const parentPath = location.pathname.substring(
+  //   0,
+  //   location.pathname.lastIndexOf("/")
+  // );
+  // const parentPath = "/" + pathItems[1];
+
+  const editPosting = () => {
+    history.push(location.pathname + "/edit");
+  };
 
   return (
     <React.Fragment>
@@ -67,15 +80,26 @@ function ItemInfo(props) {
       </Grid>
       <Grid item xs={4}>
         <Grid container alignItems="center" direction="column">
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => {
-              props.openOfferingModal();
-            }}
-          >
-            Make Offer
-          </Button>
+          {currentUser.id === itemDetail.ownerId ? (
+            <Button
+              onClick={editPosting}
+              // startIcon={<EditIcon />}
+              variant="outlined"
+              color="primary"
+            >
+              Edit Posting
+            </Button>
+          ) : (
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => {
+                props.openOfferingModal();
+              }}
+            >
+              Make Offer
+            </Button>
+          )}
           <Box my={3} width="60%">
             <p className={classes.detailTitle}>
               Quantity: <span className={classes.qtyVal}>{quantity}</span>
@@ -119,4 +143,8 @@ const mapDispatchToProps = (dispatch) => ({
   openOfferingModal: () => dispatch(openOfferModal()),
 });
 
-export default connect(null, mapDispatchToProps)(ItemInfo);
+const mapStateToProps = (state) => ({
+  currentUser: state.currentUser,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ItemInfo);
