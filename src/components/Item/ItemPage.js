@@ -3,7 +3,6 @@ import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
 import { makeStyles } from "@material-ui/core/styles";
-
 import ReviewSection from "./ReviewSection";
 import ItemDetailContainer from "./ItemDetailContainer";
 import { useHistory, useLocation } from "react-router-dom";
@@ -14,6 +13,11 @@ import { connect } from "react-redux";
 const useStyles = makeStyles((theme) => ({
   root: {
     fontFamily: "Montserrat",
+  },
+  buttonHeader: {
+    display: "flex",
+    justifyContent: "space-between",
+    margin: theme.spacing(1),
   },
   divider: {
     marginTop: theme.spacing(3),
@@ -26,10 +30,12 @@ function ItemPage(props) {
   const classes = useStyles();
   const history = useHistory();
   const location = useLocation();
-  const parentPath = location.pathname.substring(
-    0,
-    location.pathname.lastIndexOf("/")
-  );
+  const pathItems = location.pathname.split("/");
+  // const parentPath = location.pathname.substring(
+  //   0,
+  //   location.pathname.lastIndexOf("/")
+  // );
+  const parentPath = "/" + pathItems[1];
 
   const redirect = () => {
     history.push(parentPath + "/" + location.search);
@@ -37,7 +43,7 @@ function ItemPage(props) {
 
   return (
     <div>
-      <div className={classes.root}>
+      <div className={classes.buttonHeader}>
         <Button onClick={redirect}>&lt; Back to Search</Button>
       </div>
       <Container className={classes.root}>
@@ -49,10 +55,8 @@ function ItemPage(props) {
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    itemDetail: state.itemDetail,
-  };
-};
+const mapStateToProps = (state) => ({
+  itemDetail: state.itemDetail,
+});
 
 export default connect(mapStateToProps)(ItemPage);

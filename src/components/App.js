@@ -9,6 +9,7 @@ import NavBar from "./Navigation/NavBar/NavBar";
 import NavFlyout from "./Navigation/NavFlyout";
 import PathRouter from "./PathRouter";
 import ModalContainer from "./ModalContainer";
+import FeedbackSnackbar from "./FeedbackSnackbar";
 
 const theme = createMuiTheme({
   palette: {
@@ -39,6 +40,7 @@ const App = () => {
           <NavBar />
           <PathRouter />
           <ModalContainer />
+          <FeedbackSnackbar />
           <div className={classes.flyoutRoot}>
             <NavFlyout />
           </div>
