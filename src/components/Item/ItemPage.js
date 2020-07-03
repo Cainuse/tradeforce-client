@@ -51,7 +51,7 @@ function ItemPage(props) {
         <Divider className={classes.divider} />
         <ReviewSection itemDetail={itemDetail} />
       </Container>
-    </div>
+     </div>
   );
 }
 

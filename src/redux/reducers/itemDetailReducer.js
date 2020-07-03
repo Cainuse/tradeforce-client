@@ -26,8 +26,9 @@ export const itemDetailReducer = (state = initialState.itemDetail, action) => {
     //   offerer: offerer,
     //   offeredItems: action.offering
     // };
+    //TODO: change it so that we don't change state directly. Need to give copy
     state.offerings = state.offerings.concat(action.offering)
-    return null;
+    return state;
   } else if (action.type === UPDATE_ITEM_DETAIL) {
     let { itemId, details } = action;
     if (state.id === itemId) {

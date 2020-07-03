@@ -6,6 +6,7 @@ import { Tabs, Tab, Typography, Paper, Button, Grid } from "@material-ui/core";
 
 import { TabPanel } from "./TabPanels";
 import OfferContents from "./OfferingContents";
+import { makeOffer } from "../../redux/actions/offeringActions";
 
 
 const useStyles = (theme) => ({
@@ -201,6 +202,41 @@ class AddOffering extends React.Component {
 
   }
 
+  resetFormState = () => {
+    this.setState({
+      addedItems: [],
+      showAddForm: true,
+      comment: "",
+      item: {
+        nameOfItem: "",
+        quantity: 1,
+        images: [],
+        description: "",
+        category: "",
+        condition: "",
+      },
+      errors: {
+        addedItems: "",
+        comment: "",
+        nameOfItem: "",
+        description: "",
+        category: "",
+        condition: "",
+        quantity: "",
+      },
+    })
+  }
+
+  handleSubmit = () => {
+    let offering = makeOffering(
+      this.state.comment,
+      this.state.addedItems,
+      this.props.currentUser);
+
+    let id = this.props.itemDetail.id;
+    this.props.makeOffer(offering , id);
+    this.resetFormState();
+  }
 
 
   render() {
@@ -245,7 +281,7 @@ class AddOffering extends React.Component {
           </Grid>
 
           <Grid container item xs={6} justify={"flex-end"}>
-            <Button>
+            <Button onClick={() => {this.handleSubmit()}}>
               Submit
             </Button>
           </Grid>
@@ -257,6 +293,11 @@ class AddOffering extends React.Component {
 
 const mapStateToProps = (state) => ({
   currentUser: state.currentUser,
+  itemDetail: state.itemDetail,
 });
 
-export default connect(mapStateToProps)(withStyles(useStyles)(AddOffering));
+const mapDispatchToProps = (dispatch) => ({
+  makeOffer: (offering, postingId) => dispatch(makeOffer(offering, postingId)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(AddOffering));

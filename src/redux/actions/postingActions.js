@@ -14,14 +14,6 @@ export const addPosting = (posting, currentUser) => {
   };
 };
 
-export const makeOffer = (offering, postId) => {
-  return {
-    type: MAKE_OFFER,
-    offering: offering,
-    postId: postId,
-  }
-}
-
 export const loadItemDetail = (itemId, postings) => {
   return {
     type: LOAD_ITEM_DETAIL,
