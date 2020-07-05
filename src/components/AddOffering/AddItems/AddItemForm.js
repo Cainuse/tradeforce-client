@@ -6,7 +6,7 @@ import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOut
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 
-import { categories, conditions } from "../../constants/ComponentConstants";
+import { categories, conditions } from "../../../redux/constants/classifierTypes";
 import ItemImagesUpload from "./ItemImagesUpload";
 
 

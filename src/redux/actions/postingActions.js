@@ -3,7 +3,6 @@ import {
   DELETE_POSTING,
   LOAD_ITEM_DETAIL,
   UPDATE_ITEM_DETAIL,
-  MAKE_OFFER,
 } from "../constants/actionTypes";
 
 export const addPosting = (posting, currentUser) => {

@@ -7,6 +7,9 @@ import { Tabs, Tab, Typography, Paper, Button, Grid } from "@material-ui/core";
 import { TabPanel } from "./TabPanels";
 import OfferContents from "./OfferingContents";
 import { makeOffer } from "../../redux/actions/offeringActions";
+import { offeringStatus } from "../constants/OfferingConstants";
+import { closeModal } from "../../redux/actions/modalActions";
+import { displayError, displaySuccess } from "../../redux/actions/snackbarActions";
 
 
 const useStyles = (theme) => ({
@@ -43,7 +46,7 @@ const makeOffering = (comment, offeredItems, currentUser) => {
     offerer: makeOfferer(currentUser),
     offeredItems: offeredItems,
     comment: comment,
-    status: "pending",
+    status: offeringStatus.PENDING,
   }
   return offering;
 }
@@ -58,15 +61,15 @@ class AddOffering extends React.Component {
 
     this.state = {
       currTabIdx: 0,
-      // addedItems: [],
-      addedItems: [{
-        nameOfItem: "name",
-        quantity: 1,
-        images: [],
-        description: "description is great isn't it? So enlightening",
-        category: "for parts",
-        condition: "brand new",
-      }],
+      addedItems: [],
+      // addedItems: [{
+      //   nameOfItem: "name",
+      //   quantity: 1,
+      //   images: [],
+      //   description: "description is great isn't it? So enlightening",
+      //   category: "for parts",
+      //   condition: "brand new",
+      // }],
       showAddForm: true,
       comment: "",
       item: {
@@ -103,7 +106,9 @@ class AddOffering extends React.Component {
   };
 
   handleChangeCommentInput = (event) => {
-    this.setState({
+      this.validateItemInput([event.target.name, event.target.value]);
+
+      this.setState({
       [event.target.name]: event.target.value,
     });
   };
@@ -168,6 +173,9 @@ class AddOffering extends React.Component {
       case "quantity":
         errors.quantity = value > 0 ? "" : "Quantity must be greater than 1";
         break;
+      case "comment":
+        errors.comment = value.length > 0 ? "" : "Must have either a comment or an item";
+        break;
       default:
         break;
     }
@@ -192,13 +200,16 @@ class AddOffering extends React.Component {
 
   //TODO: To use in submit function
   validateOfferSubmission = () => {
-    let errors = this.state.error;
+    let isValid = true;
+    let errors = this.state.errors;
 
     if (this.state.comment.length === 0 && this.state.addedItems.length === 0) {
       errors.comment = "Must have either a comment or an item";
       errors.addedItems = "Must have either a comment or an item";
+      isValid = false;
     }
     this.setState({errors: errors});
+    return isValid;
 
   }
 
@@ -228,14 +239,21 @@ class AddOffering extends React.Component {
   }
 
   handleSubmit = () => {
-    let offering = makeOffering(
-      this.state.comment,
-      this.state.addedItems,
-      this.props.currentUser);
+    if (this.validateOfferSubmission()){
+      let offering = makeOffering(
+        this.state.comment,
+        this.state.addedItems,
+        this.props.currentUser);
 
-    let id = this.props.itemDetail.id;
-    this.props.makeOffer(offering , id);
-    this.resetFormState();
+      let id = this.props.itemDetail.id;
+      this.props.makeOffer(offering , id);
+      this.props.displaySuccess("Offer successfully made");
+      this.resetFormState();
+      setTimeout(() => {this.props.closeModal();}, 700);
+    } else {
+      this.props.displayError("An offer must have either must have either a comment or an item")
+      // window.alert("An offer must have either must have either a comment or an item");
+    }
   }
 
 
@@ -298,6 +316,9 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   makeOffer: (offering, postingId) => dispatch(makeOffer(offering, postingId)),
+  closeModal: () => dispatch(closeModal()),
+  displayError: (errMessage) => dispatch(displayError(errMessage)),
+  displaySuccess: (successMessage) => dispatch(displaySuccess(successMessage)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(AddOffering));

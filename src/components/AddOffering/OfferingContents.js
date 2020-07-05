@@ -28,7 +28,7 @@ const useStyles = (theme) => ({
 
 class OfferingContents extends React.Component {
   render() {
-    const { classes } = this.props;
+    const { classes, state } = this.props;
 
     return (
       <div className={classes.form}>
@@ -50,10 +50,10 @@ class OfferingContents extends React.Component {
                 margin="dense"
                 variant="outlined"
                 name="comment"
+                value={this.props.state.comment}
                 onChange={this.props.handleChangeCommentInput}
-                // defaultValue={description}
-                // error={!!errors.description}
-                // helperText={errors.description}
+                error={!!state.errors.comment}
+                helperText={state.errors.comment}
               />
             </Grid>
           </Grid>

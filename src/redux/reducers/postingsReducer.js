@@ -2,7 +2,7 @@ import { initialState } from "../constants/_initialState";
 import {
   ADD_POSTING,
   UPDATE_ITEM_DETAIL,
-  DELETE_POSTING,
+  DELETE_POSTING, MAKE_OFFER
 } from "../constants/actionTypes";
 
 export const postingsReducer = (state = initialState.postings, action) => {
@@ -30,6 +30,19 @@ export const postingsReducer = (state = initialState.postings, action) => {
   } else if (action.type === DELETE_POSTING) {
     let { itemId } = action;
     let newState = state.filter((posting) => posting.id !== itemId);
+    return newState;
+  } else if (action.type === MAKE_OFFER) {
+    let newState = state.map((posting) => {
+      if (posting.id === action.postId) {
+        let updatedOfferings = posting.offerings.concat(action.offering);
+        let newPostingDetail = {
+          ...posting,
+          offerings: updatedOfferings,
+        }
+        return newPostingDetail;
+      }
+      return posting;
+    })
     return newState;
   }
   return state;
