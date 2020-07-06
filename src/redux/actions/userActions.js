@@ -7,7 +7,6 @@ import {
 import {
   registerError,
   loginError,
-  logoutError,
   registerSuccess,
   loginSuccess,
 } from "./snackbarActions";
@@ -50,7 +49,6 @@ export const registerUserAsync = (
   isGoogleUser
 ) => {
   return async (dispatch, getState) => {
-    console.log(getState());
     try {
       dispatch(isUserFetching());
       const createUserResp = await axios.post(
@@ -64,15 +62,16 @@ export const registerUserAsync = (
           isGoogleUser,
         }
       );
-      const userData = createUserResp.data;
-      console.log(userData);
+      const respData = createUserResp.data;
+
+      localStorage.setItem("token", respData.token);
       dispatch(registerSuccess("Your user was successfully registered!"));
       return dispatch(
         setUser(
-          userData._id,
-          userData.userName,
-          userData.email,
-          userData.dateRegistered
+          respData.user._id,
+          respData.user.userName,
+          respData.user.email,
+          respData.user.dateRegistered
         )
       );
     } catch (err) {
@@ -85,8 +84,6 @@ export const registerUserAsync = (
 
 export const loginUserAsync = (email, password, googleInfo) => {
   return async (dispatch, getState) => {
-    console.log(getState());
-    let user;
     dispatch(isUserFetching());
 
     try {
@@ -106,26 +103,58 @@ export const loginUserAsync = (email, password, googleInfo) => {
           )
         );
       }
+      dispatch(isUserFailed());
       return dispatch(loginError(err.response.data.message));
     }
 
     try {
       // authenticate user
       const authUserResp = await axios.post(
-        "http://localhost:3001/api/users/authenticate",
+        "http://localhost:3001/api/users/login",
         {
           email,
           password,
           isGoogleLogin: googleInfo !== null,
         }
       );
-      user = authUserResp.data;
+      const respData = authUserResp.data;
 
+      localStorage.setItem("token", respData.token);
       dispatch(loginSuccess("Successfully logged into the app!"));
+      return dispatch(
+        setUser(
+          respData.user._id,
+          respData.user.userName,
+          respData.user.email,
+          respData.user.dateRegistered
+        )
+      );
+    } catch (err) {
+      dispatch(isUserFailed());
+      return dispatch(loginError(err.response.data.message));
+    }
+  };
+};
+
+export const authenticateUser = (token) => {
+  return async (dispatch, getState) => {
+    try {
+      let config = {
+        headers: {
+          "auth-token": token,
+        },
+      };
+      const resp = await axios.post(
+        "http://localhost:3001/api/users/authenticate",
+        {},
+        config
+      );
+      const user = resp.data;
       return dispatch(
         setUser(user._id, user.userName, user.email, user.dateRegistered)
       );
     } catch (err) {
+      dispatch(isUserFailed());
       return dispatch(loginError(err.response.data.message));
     }
   };

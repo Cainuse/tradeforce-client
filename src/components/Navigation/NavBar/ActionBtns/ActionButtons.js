@@ -6,6 +6,8 @@ import { useHistory } from "react-router";
 import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
 import NotificationsNoneOutlinedIcon from "@material-ui/icons/NotificationsNoneOutlined";
 import AccountCircleOutlinedIcon from "@material-ui/icons/AccountCircleOutlined";
+import { unsetUser } from "../../../../redux/actions/userActions";
+import GoogleLogoutBtn from "../../../Login/GoogleLogoutBtn";
 import {
   openPostingModal,
   openLoginModal,
@@ -89,6 +91,23 @@ const LoginBtn = (props) => {
   );
 };
 
+const LogoutBtn = (props) => {
+  const classes = loggedOutStyles();
+  return (
+    <Button
+      type="button"
+      color="inherit"
+      className={classes.loginBtn}
+      onClick={() => {
+        localStorage.removeItem("token");
+        props.logout();
+      }}
+    >
+      Logout
+    </Button>
+  );
+};
+
 const NotificationBtn = (props) => {
   return (
     <IconButton
@@ -137,15 +156,26 @@ const LoggedInActionItems = (props) => {
         iconBtnClass={classes.iconBtn}
         accountBtnClass={classes.accountBtn}
       />
+      <LogoutBtn logout={props.logout} />
+      <GoogleLogoutBtn />
     </div>
   );
 };
 
 const ActionItems = (props) => {
   if (props.isLoggedIn) {
-    return <LoggedInActionItems openPostingModal={props.openPostingModal} />;
+    return (
+      <LoggedInActionItems
+        logout={props.unsetUser}
+        openPostingModal={props.openPostingModal}
+      />
+    );
   }
   return <LoginBtn openLoginModal={props.openLoginModal} />;
 };
 
-export default connect(null, { openPostingModal, openLoginModal })(ActionItems);
+export default connect(null, {
+  openPostingModal,
+  openLoginModal,
+  unsetUser,
+})(ActionItems);
