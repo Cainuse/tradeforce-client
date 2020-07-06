@@ -6,8 +6,10 @@ import { useHistory } from "react-router";
 import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
 import NotificationsNoneOutlinedIcon from "@material-ui/icons/NotificationsNoneOutlined";
 import AccountCircleOutlinedIcon from "@material-ui/icons/AccountCircleOutlined";
-import { openPostingModal } from "../../../../redux/actions/modalActions";
-import LoginModalBtn from "../../../Login/LoginModal";
+import {
+  openPostingModal,
+  openLoginModal,
+} from "../../../../redux/actions/modalActions";
 
 import { connect } from "react-redux";
 
@@ -73,6 +75,20 @@ const PostItemBtn = (props) => {
   );
 };
 
+const LoginBtn = (props) => {
+  const classes = loggedOutStyles();
+  return (
+    <Button
+      type="button"
+      color="inherit"
+      className={classes.loginBtn}
+      onClick={() => props.openLoginModal()}
+    >
+      Login/Register
+    </Button>
+  );
+};
+
 const NotificationBtn = (props) => {
   return (
     <IconButton
@@ -129,7 +145,7 @@ const ActionItems = (props) => {
   if (props.isLoggedIn) {
     return <LoggedInActionItems openPostingModal={props.openPostingModal} />;
   }
-  return <LoginModalBtn />;
+  return <LoginBtn openLoginModal={props.openLoginModal} />;
 };
 
-export default connect(null, { openPostingModal })(ActionItems);
+export default connect(null, { openPostingModal, openLoginModal })(ActionItems);

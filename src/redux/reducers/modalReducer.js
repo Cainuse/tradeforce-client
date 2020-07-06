@@ -3,8 +3,13 @@ import {
   CLOSE_MODAL,
   OPEN_OFFER_MODAL,
   OPEN_POSTING_MODAL,
+  OPEN_LOGIN_MODAL,
 } from "../constants/actionTypes";
-import { OFFER_MODAL, POSTING_MODAL } from "../constants/modalTypes";
+import {
+  OFFER_MODAL,
+  POSTING_MODAL,
+  LOGIN_MODAL,
+} from "../constants/modalTypes";
 
 export const modalReducer = (state = initialState.modal, action) => {
   switch (action.type) {
@@ -22,6 +27,11 @@ export const modalReducer = (state = initialState.modal, action) => {
       return {
         isOpen: true,
         type: POSTING_MODAL,
+      };
+    case OPEN_LOGIN_MODAL:
+      return {
+        isOpen: true,
+        type: LOGIN_MODAL,
       };
     default:
       return {

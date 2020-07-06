@@ -1,7 +1,8 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
+import { closeModal } from "../../redux/actions/modalActions";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
@@ -10,11 +11,16 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import StatusAlert from "./StatusAlert";
+import {
+  registerUserAsync,
+  loginUserAsync,
+} from "../../redux/actions/userActions";
 import GoogleLogin from "./GoogleLoginBtn";
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="textSecondary" align="center">
+    <Typography color="textSecondary" align="center">
       {"Copyright © "}
       <Link color="inherit" href="/">
         Tradeforce 2020
@@ -45,9 +51,71 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const RegisterForm = () => {
+const RegisterForm = ({ error, modal, dispatch }) => {
   const classes = useStyles();
   const [showLoginForm, setShowLoginForm] = useState(true);
+  const [email, setEmail] = useState("");
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
+  const [open, setOpen] = useState(false);
+  const [msg, setMsg] = useState("");
+  const [alertType, setAlertType] = useState("success");
+
+  const handleSubmitRegister = async (e) => {
+    e.preventDefault();
+    let statusMsg;
+    await dispatch(
+      registerUserAsync(userName, email, "None", new Date(), password, false)
+    );
+    console.log("register user is done!");
+    if (error) {
+      setAlertType("error");
+      statusMsg = error.message;
+    } else {
+      statusMsg = "Authentication successful!";
+    }
+    setMsg(statusMsg);
+    setOpen(true);
+    // dispatch(closeModal());
+  };
+
+  const handleSubmitLogin = async (e) => {
+    e.preventDefault();
+    let statusMsg;
+    await dispatch(loginUserAsync(email, password, false));
+    console.log("login done");
+    if (error) {
+      setAlertType("error");
+      statusMsg = error.message;
+    } else {
+      statusMsg = "Authentication successful!";
+    }
+    setMsg(statusMsg);
+    setOpen(true);
+    // dispatch(closeModal());
+  };
+
+  const handleInputChange = (e) => {
+    let { name, value } = e.target;
+    switch (name) {
+      case "email":
+        setEmail(value);
+        break;
+      case "password":
+        setPassword(value);
+        break;
+      case "userName":
+        setUserName(value);
+        break;
+    }
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
 
   const toggleShowLoginForm = () => {
     setShowLoginForm(!showLoginForm);
@@ -79,6 +147,7 @@ const RegisterForm = () => {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  onChange={handleInputChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -91,6 +160,7 @@ const RegisterForm = () => {
                   type="password"
                   id="password"
                   autoComplete="current-password"
+                  onChange={handleInputChange}
                 />
               </Grid>
             </Grid>
@@ -100,13 +170,13 @@ const RegisterForm = () => {
               variant="contained"
               color="primary"
               className={classes.submit}
+              onClick={handleSubmitLogin}
             >
               Sign in
             </Button>
             <Grid container justify="flex-end">
               <Grid item>
                 <Button
-                  variant="body2"
                   className={classes.loginBtn}
                   onClick={toggleShowLoginForm}
                 >
@@ -140,6 +210,7 @@ const RegisterForm = () => {
                   label="User Name"
                   name="userName"
                   autoComplete="userName"
+                  onChange={handleInputChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -151,6 +222,7 @@ const RegisterForm = () => {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  onChange={handleInputChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -163,6 +235,7 @@ const RegisterForm = () => {
                   type="password"
                   id="password"
                   autoComplete="current-password"
+                  onChange={handleInputChange}
                 />
               </Grid>
             </Grid>
@@ -172,13 +245,13 @@ const RegisterForm = () => {
               variant="contained"
               color="primary"
               className={classes.submit}
+              onClick={handleSubmitRegister}
             >
               Sign Up
             </Button>
             <Grid container justify="flex-end">
               <Grid item>
                 <Button
-                  variant="body2"
                   className={classes.loginBtn}
                   onClick={toggleShowLoginForm}
                 >
@@ -192,8 +265,19 @@ const RegisterForm = () => {
       <Box mt={5}>
         <Copyright />
       </Box>
+      <StatusAlert
+        open={open}
+        handleClose={handleClose}
+        alertType={alertType}
+        msg={msg}
+      />
     </Container>
   );
 };
 
-export default RegisterForm;
+const mapStateToProps = (state) => ({
+  error: state.error,
+  modal: state.modal,
+});
+
+export default connect(mapStateToProps)(RegisterForm);

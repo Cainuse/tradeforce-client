@@ -4,6 +4,7 @@ import { modalReducer } from "./modalReducer";
 import { postingsReducer } from "./postingsReducer";
 import { userReducer } from "./userReducer";
 import { itemDetailReducer } from "./itemDetailReducer";
+import { errorReducer } from "./errorReducer";
 
 const rootReducer = combineReducers({
   flyoutIsOpen: flyoutReducer,
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   postings: postingsReducer,
   currentUser: userReducer,
   itemDetail: itemDetailReducer,
+  error: errorReducer,
 });
 
 export default rootReducer;
