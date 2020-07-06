@@ -5,7 +5,7 @@ import Link from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 
-import Review from "./Review";
+import ReviewList from "../Review/ReviewList";
 
 const preventDefault = (event) => event.preventDefault();
 
@@ -46,12 +46,7 @@ export default function ReviewSection(props) {
           readOnly
         />
       </Box>
-      <Box my={3} display="flex" justifyContent="center">
-        <Review />
-      </Box>
-      <Box my={3} display="flex" justifyContent="center">
-        <Review />
-      </Box>
+      <ReviewList elevation={0} colour={"#EBEEF1"} />
     </Box>
   );
 }
