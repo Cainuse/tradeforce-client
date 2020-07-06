@@ -3,70 +3,13 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Chip from "@material-ui/core/Chip";
 import Grid from "@material-ui/core/Grid";
+import { categories, conditions } from "../../redux/constants/classifierTypes";
 
 const useStyles = makeStyles((theme) => ({
   tags: {
     margin: theme.spacing(0.5),
   },
 }));
-
-const categories = [
-  {
-    value: "",
-    label: "",
-  },
-  {
-    value: "homeware",
-    label: "Homeware",
-  },
-  {
-    value: "electronics",
-    label: "Electronics",
-  },
-  {
-    value: "necessities",
-    label: "Necessities",
-  },
-  {
-    value: "hobbies",
-    label: "Hobbies",
-  },
-  {
-    value: "food drink",
-    label: "Food/Drink",
-  },
-  {
-    value: "miscellaneous",
-    label: "Miscellaneous",
-  },
-];
-
-const conditions = [
-  {
-    value: "",
-    label: "",
-  },
-  {
-    value: "brand new",
-    label: "Brand New",
-  },
-  {
-    value: "like new",
-    label: "Like New",
-  },
-  {
-    value: "good",
-    label: "Good",
-  },
-  {
-    value: "used",
-    label: "Used",
-  },
-  {
-    value: "for parts",
-    label: "For Parts/Not Working",
-  },
-];
 
 const Step1 = (props) => {
   const { change, state, addTag, deleteTag } = props;
