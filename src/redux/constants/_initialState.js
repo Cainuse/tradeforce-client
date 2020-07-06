@@ -4,6 +4,11 @@ export const initialState = {
     isOpen: false,
     type: "",
   },
+  snackbar: {
+    isOpen: false,
+    type: "",
+    message: "",
+  },
   postings: [
     {
       id: 0,
@@ -135,6 +140,23 @@ export const initialState = {
     user: null,
   },
   error: null,
-  itemDetail: {},
+  itemDetail: {
+    id: 5,
+    title: "Sourdough + Tomatoes",
+    datePosted: "2020-06-16T00:00:00.000Z",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eu est volutpat, luctus mauris id, bibendum sem. Mauris ultrices diam eu metus mattis, ut sodales tellus rhoncus. Nunc eleifend rutrum tortor, sit amet mattis mi euismod ac. Mauris diam ante, tincidunt in mauris et, ullamcorper fermentum urna.",
+    category: "food drink",
+    condition: "brand new",
+    quantity: 1,
+    tags: ["homemade bread", "sourdough", "freshly picked", "heirloom tomato"],
+    requestedItems: ["Coffee", "Cookies", "Toilet Paper", ""],
+    images: [{ name: "bread.jpg" }, { name: "tomato.jpg" }],
+    ownerId: "50192",
+    ownerUsername: "fatthor",
+    postalCode: "V6V1A4",
+    offerings: [],
+    location: "Richmond, BC",
+  },
   userDetail: {},
 };
