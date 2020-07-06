@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { GoogleLogin, GoogleLogout } from "react-google-login";
 import { loginUserAsync, unsetUser } from "../../redux/actions/userActions";
+import {
+  logoutSuccess,
+  logoutError,
+} from "../../redux/actions/snackbarActions";
 import { LOGIN_ERROR, LOGOUT_ERROR } from "../../redux/constants/actionTypes";
 import { closeModal } from "../../redux/actions/modalActions";
-import { setError } from "../../redux/actions/errorActions";
 import { connect } from "react-redux";
-import StatusAlert from "./StatusAlert";
 
 const CLIENT_ID =
   "282830719674-g3jh5koi6efcqmvtml24atp923gibqjp.apps.googleusercontent.com";
@@ -21,28 +23,15 @@ const useStyles = makeStyles((theme) => ({
 const GoogleBtn = ({
   loginUserAsync,
   unsetUser,
-  setError,
   currentUser,
   closeModal,
+  logoutError,
+  logoutSuccess,
 }) => {
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [accessToken, setToken] = useState("");
 
-  const [openAlert, setOpenAlert] = useState(false);
-  const [msg, setMsg] = useState("");
-  const [alertType, setAlertType] = useState("success");
-
   const classes = useStyles();
-
-  useEffect(() => {
-    if (currentUser.user) {
-      setAlertType("success");
-      setMsg("Successfully logged in!");
-      setOpenAlert(true);
-      closeModal();
-      closeModal();
-    }
-  }, [currentUser.user]);
 
   const login = async (response) => {
     console.log(response);
@@ -56,18 +45,11 @@ const GoogleBtn = ({
     if (response.accessToken) {
       setLoggedIn(true);
       setToken(response.accessToken);
-      loginUserAsync(email, password, {
+      await loginUserAsync(email, password, {
         userName,
         postalCode,
         dateRegistered,
       });
-    }
-
-    console.log(currentUser);
-    if (currentUser.user) {
-      setAlertType("success");
-      setMsg("Successfully logged in!");
-      setOpenAlert(true);
       closeModal();
     }
   };
@@ -77,20 +59,17 @@ const GoogleBtn = ({
     setLoggedIn(false);
     setToken("");
     unsetUser();
+    logoutSuccess("Successfully logged out!");
+    closeModal();
   };
 
   const handleLoginFailure = (response) => {
     console.log(response);
-    setError(LOGIN_ERROR, response);
   };
 
   const handleLogoutFailure = (response) => {
     console.log(response);
-    setError(LOGOUT_ERROR, response);
-  };
-
-  const handleAlertClose = () => {
-    setOpenAlert(false);
+    logoutError("Failed to logout! Try again.");
   };
 
   return (
@@ -113,12 +92,6 @@ const GoogleBtn = ({
           cookiePolicy={"single_host_origin"}
         />
       )}
-      <StatusAlert
-        open={openAlert}
-        msg={msg}
-        alertType={alertType}
-        handleClose={handleAlertClose}
-      />
     </div>
   );
 };
@@ -131,8 +104,9 @@ const mapDispatchToProps = (dispatch) => ({
   loginUserAsync: (email, passsword, googleInfoObj) =>
     dispatch(loginUserAsync(email, passsword, googleInfoObj)),
   unsetUser: () => dispatch(unsetUser()),
-  setError: (type, msg) => dispatch(setError(type, msg)),
   closeModal: () => dispatch(closeModal()),
+  logoutSuccess: (msg) => dispatch(logoutSuccess(msg)),
+  logoutError: (msg) => dispatch(logoutError(msg)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(GoogleBtn);

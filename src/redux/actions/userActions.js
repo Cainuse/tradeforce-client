@@ -1,12 +1,16 @@
 import {
   SET_USER,
   UNSET_USER,
-  LOGIN_ERROR,
-  REGISTER_ERROR,
   IS_USER_FETCHING,
   IS_USER_FAILED,
 } from "../constants/actionTypes";
-import { setError } from "./errorActions";
+import {
+  registerError,
+  loginError,
+  logoutError,
+  registerSuccess,
+  loginSuccess,
+} from "./snackbarActions";
 import axios from "axios";
 
 export const setUser = (userId, userName, email, date) => {
@@ -62,6 +66,7 @@ export const registerUserAsync = (
       );
       const userData = createUserResp.data;
       console.log(userData);
+      dispatch(registerSuccess("Your user was successfully registered!"));
       return dispatch(
         setUser(
           userData._id,
@@ -73,7 +78,7 @@ export const registerUserAsync = (
     } catch (err) {
       // error occurred while saving user in db
       dispatch(isUserFailed());
-      return dispatch(setError(REGISTER_ERROR, err.response.data.message));
+      return dispatch(registerError(err.response.data.message));
     }
   };
 };
@@ -89,6 +94,7 @@ export const loginUserAsync = (email, password, googleInfo) => {
       await axios.get(`http://localhost:3001/api/users/findUser/${email}`);
     } catch (err) {
       if (googleInfo) {
+        dispatch(loginSuccess("Successfully logged in through Google.com!"));
         return dispatch(
           registerUserAsync(
             googleInfo.userName,
@@ -100,7 +106,7 @@ export const loginUserAsync = (email, password, googleInfo) => {
           )
         );
       }
-      return dispatch(setError(LOGIN_ERROR, err.response.data.message));
+      return dispatch(loginError(err.response.data.message));
     }
 
     try {
@@ -115,11 +121,12 @@ export const loginUserAsync = (email, password, googleInfo) => {
       );
       user = authUserResp.data;
 
+      dispatch(loginSuccess("Successfully logged into the app!"));
       return dispatch(
         setUser(user._id, user.userName, user.email, user.dateRegistered)
       );
     } catch (err) {
-      return dispatch(setError(LOGIN_ERROR, err.response.data.message));
+      return dispatch(loginError(err.response.data.message));
     }
   };
 };

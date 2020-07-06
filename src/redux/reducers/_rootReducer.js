@@ -4,7 +4,6 @@ import { modalReducer } from "./modalReducer";
 import { postingsReducer } from "./postingsReducer";
 import { userReducer } from "./userReducer";
 import { itemDetailReducer } from "./itemDetailReducer";
-import { errorReducer } from "./errorReducer";
 import { snackbarReducer } from "./snackbarReducer";
 
 const rootReducer = combineReducers({
@@ -13,7 +12,6 @@ const rootReducer = combineReducers({
   postings: postingsReducer,
   currentUser: userReducer,
   itemDetail: itemDetailReducer,
-  error: errorReducer,
   snackbar: snackbarReducer,
 });
 

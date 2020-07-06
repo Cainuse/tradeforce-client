@@ -11,7 +11,6 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import StatusAlert from "./StatusAlert";
 import {
   registerUserAsync,
   loginUserAsync,
@@ -51,15 +50,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const RegisterForm = ({ error, modal, dispatch }) => {
+const RegisterForm = ({ dispatch }) => {
   const classes = useStyles();
   const [showLoginForm, setShowLoginForm] = useState(true);
   const [email, setEmail] = useState("");
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const [open, setOpen] = useState(false);
-  const [msg, setMsg] = useState("");
-  const [alertType, setAlertType] = useState("success");
 
   const handleSubmitRegister = async (e) => {
     e.preventDefault();
@@ -67,32 +63,19 @@ const RegisterForm = ({ error, modal, dispatch }) => {
     await dispatch(
       registerUserAsync(userName, email, "None", new Date(), password, false)
     );
-    console.log("register user is done!");
-    if (error) {
-      setAlertType("error");
-      statusMsg = error.message;
-    } else {
-      statusMsg = "Authentication successful!";
-    }
-    setMsg(statusMsg);
-    setOpen(true);
-    // dispatch(closeModal());
+    setEmail("");
+    setPassword("");
+    setUserName("");
+    dispatch(closeModal());
   };
 
   const handleSubmitLogin = async (e) => {
     e.preventDefault();
     let statusMsg;
     await dispatch(loginUserAsync(email, password, false));
-    console.log("login done");
-    if (error) {
-      setAlertType("error");
-      statusMsg = error.message;
-    } else {
-      statusMsg = "Authentication successful!";
-    }
-    setMsg(statusMsg);
-    setOpen(true);
-    // dispatch(closeModal());
+    setEmail("");
+    setPassword("");
+    dispatch(closeModal());
   };
 
   const handleInputChange = (e) => {
@@ -108,13 +91,6 @@ const RegisterForm = ({ error, modal, dispatch }) => {
         setUserName(value);
         break;
     }
-  };
-
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setOpen(false);
   };
 
   const toggleShowLoginForm = () => {
@@ -147,6 +123,7 @@ const RegisterForm = ({ error, modal, dispatch }) => {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  value={email}
                   onChange={handleInputChange}
                 />
               </Grid>
@@ -160,6 +137,7 @@ const RegisterForm = ({ error, modal, dispatch }) => {
                   type="password"
                   id="password"
                   autoComplete="current-password"
+                  value={password}
                   onChange={handleInputChange}
                 />
               </Grid>
@@ -210,6 +188,7 @@ const RegisterForm = ({ error, modal, dispatch }) => {
                   label="User Name"
                   name="userName"
                   autoComplete="userName"
+                  value={userName}
                   onChange={handleInputChange}
                 />
               </Grid>
@@ -222,6 +201,7 @@ const RegisterForm = ({ error, modal, dispatch }) => {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  value={email}
                   onChange={handleInputChange}
                 />
               </Grid>
@@ -235,6 +215,7 @@ const RegisterForm = ({ error, modal, dispatch }) => {
                   type="password"
                   id="password"
                   autoComplete="current-password"
+                  value={password}
                   onChange={handleInputChange}
                 />
               </Grid>
@@ -265,19 +246,8 @@ const RegisterForm = ({ error, modal, dispatch }) => {
       <Box mt={5}>
         <Copyright />
       </Box>
-      <StatusAlert
-        open={open}
-        handleClose={handleClose}
-        alertType={alertType}
-        msg={msg}
-      />
     </Container>
   );
 };
 
-const mapStateToProps = (state) => ({
-  error: state.error,
-  modal: state.modal,
-});
-
-export default connect(mapStateToProps)(RegisterForm);
+export default connect()(RegisterForm);
