@@ -1,32 +1,12 @@
 export const categories = [
-  {
-    value: "",
-    label: "",
-  },
-  {
-    value: "homeware",
-    label: "Homeware",
-  },
-  {
-    value: "electronics",
-    label: "Electronics",
-  },
-  {
-    value: "necessities",
-    label: "Necessities",
-  },
-  {
-    value: "hobbies",
-    label: "Hobbies",
-  },
-  {
-    value: "food drink",
-    label: "Food/Drink",
-  },
-  {
-    value: "miscellaneous",
-    label: "Miscellaneous",
-  },
+  { value: "", label: "" },
+  { value: "clothing", label: "Clothing" },
+  { value: "electronics", label: "Electronics" },
+  { value: "food drink", label: "Food/Drink" },
+  { value: "hobbies", label: "Hobbies" },
+  { value: "homeware", label: "Homeware" },
+  { value: "miscellaneous", label: "Miscellaneous" },
+  { value: "necessities", label: "Necessities" },
 ];
 
 export const conditions = [
