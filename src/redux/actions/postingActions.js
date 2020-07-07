@@ -3,13 +3,23 @@ import {
   DELETE_POSTING,
   LOAD_ITEM_DETAIL,
   UPDATE_ITEM_DETAIL,
+  LOAD_POSTINGS,
 } from "../constants/actionTypes";
+import axios from "axios";
 
-export const addPosting = (posting, currentUser) => {
+const BASE_URL = `${process.env.REACT_APP_BASE_URL}/postings`;
+
+const addPostingSuccess = (posting) => {
   return {
     type: ADD_POSTING,
     posting: posting,
-    currentUser: currentUser,
+  };
+};
+
+const loadAllPostingsSuccess = (postings) => {
+  return {
+    type: LOAD_POSTINGS,
+    postings: postings,
   };
 };
 
@@ -34,5 +44,34 @@ export const deletePosting = (itemId) => {
   return {
     type: DELETE_POSTING,
     itemId: itemId,
+  };
+};
+
+export const addPosting = (posting, currentUser) => {
+  return async (dispatch) => {
+    try {
+      let postingRequest = {
+        ...posting,
+        ownerId: currentUser._id,
+        ownerUsername: currentUser.userName,
+        date: new Date(),
+        location: currentUser.location,
+      };
+      let postingResponse = await axios.post(BASE_URL, postingRequest);
+      dispatch(addPostingSuccess(postingResponse.data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const getAllPostings = () => {
+  return async (dispatch) => {
+    try {
+      let postingResponse = await axios.get(BASE_URL);
+      dispatch(loadAllPostingsSuccess(postingResponse.data));
+    } catch (error) {
+      console.log(error);
+    }
   };
 };
