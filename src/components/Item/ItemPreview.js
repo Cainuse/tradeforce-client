@@ -29,7 +29,7 @@ const useStyles = makeStyles(() => ({
 const ItemPreview = ({
   id,
   title,
-  datePosted,
+  date,
   location,
   images,
   postings,
@@ -88,7 +88,7 @@ const ItemPreview = ({
         <CardContent>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <Typography variant="body2">{getDate(datePosted)}</Typography>
+              <Typography variant="body2">{getDate(date)}</Typography>
             </Grid>
             <Grid item xs={12}>
               <Typography variant="h6" component="h2" color="primary">

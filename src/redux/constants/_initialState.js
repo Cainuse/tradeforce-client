@@ -13,7 +13,7 @@ export const initialState = {
     {
       id: 0,
       title: "Game Boy Advanced SP",
-      datePosted: "2018-07-01T00:00:00.000Z",
+      date: "2018-07-01T00:00:00.000Z",
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eu est volutpat, luctus mauris id, bibendum sem. Mauris ultrices diam eu metus mattis, ut sodales tellus rhoncus. Nunc eleifend rutrum tortor, sit amet mattis mi euismod ac. Mauris diam ante, tincidunt in mauris et, ullamcorper fermentum urna.",
       category: "electronics",
@@ -36,7 +36,7 @@ export const initialState = {
     {
       id: 1,
       title: "Freshly Picked Tomatoes",
-      datePosted: "2019-08-14T00:00:00.000Z",
+      date: "2019-08-14T00:00:00.000Z",
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eu est volutpat, luctus mauris id, bibendum sem. Mauris ultrices diam eu metus mattis, ut sodales tellus rhoncus. Nunc eleifend rutrum tortor, sit amet mattis mi euismod ac. Mauris diam ante, tincidunt in mauris et, ullamcorper fermentum urna.",
       category: "food drink",
@@ -59,7 +59,7 @@ export const initialState = {
     {
       id: 2,
       title: "Racing Bicycle (64cm)",
-      datePosted: "2020-03-14T00:00:00.000Z",
+      date: "2020-03-14T00:00:00.000Z",
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eu est volutpat, luctus mauris id, bibendum sem. Mauris ultrices diam eu metus mattis, ut sodales tellus rhoncus. Nunc eleifend rutrum tortor, sit amet mattis mi euismod ac. Mauris diam ante, tincidunt in mauris et, ullamcorper fermentum urna.",
       category: "hobbies",
@@ -77,7 +77,7 @@ export const initialState = {
     {
       id: 3,
       title: "Puzzle (1000 Pieces)",
-      datePosted: "2020-05-19T00:00:00.000Z",
+      date: "2020-05-19T00:00:00.000Z",
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eu est volutpat, luctus mauris id, bibendum sem. Mauris ultrices diam eu metus mattis, ut sodales tellus rhoncus. Nunc eleifend rutrum tortor, sit amet mattis mi euismod ac. Mauris diam ante, tincidunt in mauris et, ullamcorper fermentum urna.",
       category: "hobbies",
@@ -95,7 +95,7 @@ export const initialState = {
     {
       id: 4,
       title: "Sourdough",
-      datePosted: "2020-06-06T00:00:00.000Z",
+      date: "2020-06-06T00:00:00.000Z",
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eu est volutpat, luctus mauris id, bibendum sem. Mauris ultrices diam eu metus mattis, ut sodales tellus rhoncus. Nunc eleifend rutrum tortor, sit amet mattis mi euismod ac. Mauris diam ante, tincidunt in mauris et, ullamcorper fermentum urna.",
       category: "food drink",
@@ -113,7 +113,7 @@ export const initialState = {
     {
       id: 5,
       title: "Sourdough + Tomatoes",
-      datePosted: "2020-06-16T00:00:00.000Z",
+      date: "2020-06-16T00:00:00.000Z",
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eu est volutpat, luctus mauris id, bibendum sem. Mauris ultrices diam eu metus mattis, ut sodales tellus rhoncus. Nunc eleifend rutrum tortor, sit amet mattis mi euismod ac. Mauris diam ante, tincidunt in mauris et, ullamcorper fermentum urna.",
       category: "food drink",
@@ -135,7 +135,7 @@ export const initialState = {
     },
   ],
   currentUser: {
-    id: "591024",
+    _id: "5f03d321c8c1090b3a425982",
     userName: "shellstrop",
     postalCode: "V3L0A5",
     location: "New Westminster, BC",
@@ -143,7 +143,7 @@ export const initialState = {
   itemDetail: {
     id: 5,
     title: "Sourdough + Tomatoes",
-    datePosted: "2020-06-16T00:00:00.000Z",
+    date: "2020-06-16T00:00:00.000Z",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eu est volutpat, luctus mauris id, bibendum sem. Mauris ultrices diam eu metus mattis, ut sodales tellus rhoncus. Nunc eleifend rutrum tortor, sit amet mattis mi euismod ac. Mauris diam ante, tincidunt in mauris et, ullamcorper fermentum urna.",
     category: "food drink",
@@ -159,7 +159,7 @@ export const initialState = {
     location: "Richmond, BC",
   },
   userDetail: {
-    id: "591024",
+    _id: "5f03d321c8c1090b3a425982",
     firstName: "Eleanor",
     lastName: "Shellstrop",
     userName: "shellstrop",
@@ -169,7 +169,7 @@ export const initialState = {
       {
         id: 1,
         title: "Freshly Picked Tomatoes",
-        datePosted: "2019-08-14T00:00:00.000Z",
+        date: "2019-08-14T00:00:00.000Z",
         description:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eu est volutpat, luctus mauris id, bibendum sem. Mauris ultrices diam eu metus mattis, ut sodales tellus rhoncus. Nunc eleifend rutrum tortor, sit amet mattis mi euismod ac. Mauris diam ante, tincidunt in mauris et, ullamcorper fermentum urna.",
         category: "food drink",
@@ -193,7 +193,7 @@ export const initialState = {
       {
         id: 2,
         title: "Racing Bicycle (64cm)",
-        datePosted: "2020-03-14T00:00:00.000Z",
+        date: "2020-03-14T00:00:00.000Z",
         description:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eu est volutpat, luctus mauris id, bibendum sem. Mauris ultrices diam eu metus mattis, ut sodales tellus rhoncus. Nunc eleifend rutrum tortor, sit amet mattis mi euismod ac. Mauris diam ante, tincidunt in mauris et, ullamcorper fermentum urna.",
         category: "hobbies",
@@ -212,7 +212,7 @@ export const initialState = {
       {
         id: 5,
         title: "Sourdough + Tomatoes",
-        datePosted: "2020-06-16T00:00:00.000Z",
+        date: "2020-06-16T00:00:00.000Z",
         description:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eu est volutpat, luctus mauris id, bibendum sem. Mauris ultrices diam eu metus mattis, ut sodales tellus rhoncus. Nunc eleifend rutrum tortor, sit amet mattis mi euismod ac. Mauris diam ante, tincidunt in mauris et, ullamcorper fermentum urna.",
         category: "food drink",

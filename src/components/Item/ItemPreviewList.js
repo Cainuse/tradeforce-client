@@ -13,7 +13,7 @@ const ItemPreviewList = (props) => {
             <ItemPreview
               id={item.id}
               title={item.title}
-              datePosted={item.datePosted}
+              date={item.date}
               location={item.location}
               images={item.images}
               postings={postings} //TODO: remove when BE implemented
