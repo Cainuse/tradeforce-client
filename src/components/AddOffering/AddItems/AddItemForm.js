@@ -6,10 +6,11 @@ import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOut
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 
-import { categories, conditions } from "../../../redux/constants/classifierTypes";
+import {
+  categories,
+  conditions,
+} from "../../../redux/constants/classifierTypes";
 import ItemImagesUpload from "./ItemImagesUpload";
-import { ItemSection } from "./ItemSection";
-
 
 const useStyles = makeStyles((theme) => ({
   addItemSection: {
@@ -41,15 +42,13 @@ const useStyles = makeStyles((theme) => ({
     textTransform: "capitalize",
     justifySelf: "flex-end",
     margin: "5px",
-    // backgroundColor: theme.palette.primary.light,
-    // color: "white",
   },
 }));
 
 export const AddItemForm = (props) => {
   let classes = useStyles();
-  let {item, errors} = props.state;
-  let {nameOfItem, quantity, images, description, category, condition} = item;
+  let { item, errors } = props.state;
+  let { nameOfItem, quantity, images, description, category, condition } = item;
 
   return (
     <div className={classes.addItemSection}>

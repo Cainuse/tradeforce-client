@@ -4,7 +4,7 @@ import {
   DELETE_POSTING,
   ERROR_SNACKBAR,
   SUCCESS_SNACKBAR,
-  UPDATE_ITEM_DETAIL
+  UPDATE_ITEM_DETAIL,
   REGISTER_ERROR,
   LOGIN_ERROR,
   LOGOUT_ERROR,
@@ -15,7 +15,7 @@ import {
 const defaultSnackBarPosition = {
   vertical: "bottom",
   horizontal: "center",
-}
+};
 
 export const snackbarReducer = (state = initialState.snackbar, action) => {
   switch (action.type) {
@@ -48,8 +48,8 @@ export const snackbarReducer = (state = initialState.snackbar, action) => {
         position: {
           vertical: "top",
           horizontal: "center",
-        }
-      }
+        },
+      };
     case ERROR_SNACKBAR:
       return {
         isOpen: true,

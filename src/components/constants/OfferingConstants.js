@@ -3,4 +3,4 @@ export const offeringStatus = {
   ACCEPTED: "ACCEPTED",
   DECLINED: "DECLINED",
   RESCINDED: "RESCINDED",
-}
+};

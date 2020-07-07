@@ -3,7 +3,6 @@ import { Grid, TextField, Typography } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 
 import { ItemSection } from "./AddItems/ItemSection";
-import Step2 from "../AddPosting/Step2";
 
 const useStyles = (theme) => ({
   formSection: {

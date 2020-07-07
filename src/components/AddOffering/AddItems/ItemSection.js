@@ -3,10 +3,9 @@ import { Grid, Typography } from "@material-ui/core";
 
 import { ItemListSection } from "./ItemListSection";
 import { AddItemSection } from "./AddItemSection";
-import OfferContents from "../OfferingContents";
 
 export const ItemSection = (props) => {
-  let {addedItems, item} = props.state;
+  let { addedItems } = props.state;
 
   const [expandedPanelIdx, setExpandedIdx] = React.useState(-1);
   const [showForm, setShowForm] = React.useState(
@@ -19,7 +18,7 @@ export const ItemSection = (props) => {
 
   const handleClickAddItem = () => {
     let isValid = props.validateItemFields();
-    if (isValid){
+    if (isValid) {
       props.addItemToList();
       setShowForm(false);
     } else {

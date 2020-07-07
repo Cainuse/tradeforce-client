@@ -2,7 +2,8 @@ import { initialState } from "../constants/_initialState";
 import {
   ADD_POSTING,
   UPDATE_ITEM_DETAIL,
-  DELETE_POSTING, MAKE_OFFER
+  DELETE_POSTING,
+  MAKE_OFFER,
 } from "../constants/actionTypes";
 
 export const postingsReducer = (state = initialState.postings, action) => {
@@ -38,11 +39,11 @@ export const postingsReducer = (state = initialState.postings, action) => {
         let newPostingDetail = {
           ...posting,
           offerings: updatedOfferings,
-        }
+        };
         return newPostingDetail;
       }
       return posting;
-    })
+    });
     return newState;
   }
   return state;

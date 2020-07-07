@@ -101,7 +101,8 @@ class AddPosting extends React.Component {
     switch (key) {
       case "title":
         errors.title = value.length > 0 ? "" : "Title cannot be left blank";
-        break;     case "description":
+        break;
+      case "description":
         errors.description =
           value.length > 0 ? "" : "Description cannot be left blank";
         break;

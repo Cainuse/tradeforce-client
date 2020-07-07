@@ -4,8 +4,6 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 
 import { AddItemForm } from "./AddItemForm";
-import { ItemSection } from "./ItemSection";
-
 
 const useStyles = makeStyles((theme) => ({
   addCircleIcon: {
@@ -30,8 +28,7 @@ export const AddItemSection = (props) => {
   } else {
     return (
       <Grid container justify={"flex-end"} direction={"row"} spacing={1}>
-        <Grid container item xs={11}>
-        </Grid>
+        <Grid container item xs={11}></Grid>
         <Grid container item xs={1}>
           <IconButton
             className={classes.addCircleIcon}

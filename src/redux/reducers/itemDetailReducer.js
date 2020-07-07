@@ -16,11 +16,11 @@ export const itemDetailReducer = (state = initialState.itemDetail, action) => {
       return newState;
     }
   } else if (action.type === MAKE_OFFER) {
-    let updatedOffering = state.offerings.concat(action.offering)
+    let updatedOffering = state.offerings.concat(action.offering);
     let newState = {
       ...state,
       offerings: updatedOffering,
-    }
+    };
     return newState;
   } else if (action.type === UPDATE_ITEM_DETAIL) {
     let { itemId, details } = action;

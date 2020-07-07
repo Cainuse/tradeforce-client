@@ -9,9 +9,10 @@ import OfferContents from "./OfferingContents";
 import { makeOffer } from "../../redux/actions/offeringActions";
 import { offeringStatus } from "../constants/OfferingConstants";
 import { closeModal } from "../../redux/actions/modalActions";
-import { displayError, displaySuccess } from "../../redux/actions/snackbarActions";
-import Step2 from "../AddPosting/Step2";
-
+import {
+  displayError,
+  displaySuccess,
+} from "../../redux/actions/snackbarActions";
 
 const useStyles = (theme) => ({
   paper: {
@@ -31,7 +32,7 @@ const useStyles = (theme) => ({
   },
   submitBtn: {
     backgroundColor: "#6ab547",
-  }
+  },
 });
 
 //-------------- Helper functions -----------------------//
@@ -41,8 +42,8 @@ const makeOfferer = (currentUser) => {
     id: currentUser.id,
     userName: currentUser.userName,
     email: currentUser.email,
-  }
-}
+  };
+};
 
 const makeOffering = (comment, offeredItems, currentUser) => {
   let offering = {
@@ -50,9 +51,9 @@ const makeOffering = (comment, offeredItems, currentUser) => {
     offeredItems: offeredItems,
     comment: comment,
     status: offeringStatus.PENDING,
-  }
+  };
   return offering;
-}
+};
 
 /**
  * MAIN: AddOffering Component
@@ -102,45 +103,49 @@ class AddOffering extends React.Component {
       description: "",
       category: "",
       condition: "",
-    }
+    };
     this.setState({ item: clearedItem });
   };
 
   deleteItemFromList = (indexToDelete) => {
-    let updatedArr = this.state.addedItems.filter((val, index) => index !== indexToDelete);
+    let updatedArr = this.state.addedItems.filter(
+      (val, index) => index !== indexToDelete
+    );
     this.setState({
       addedItems: updatedArr,
-    })
-  }
+    });
+  };
 
   handleAddImage = (list) => {
     this.setState({
       item: {
         ...this.state.item,
-        images: [...this.state.item.images, ...list]
-      }
-    })
+        images: [...this.state.item.images, ...list],
+      },
+    });
   };
 
   handleCancel = () => {
     let { comment, addedItems } = this.state;
     if (comment !== "" || addedItems.length !== 0) {
-      let result = window.confirm("Are you sure you want to leave? Changes will not be saved.");
+      let result = window.confirm(
+        "Are you sure you want to leave? Changes will not be saved."
+      );
       if (result) {
         this.props.closeModal();
       }
     } else {
       this.props.closeModal();
     }
-  }
+  };
 
   handleChangeAddItemInputs = (event) => {
-    let {name, value} = event.target;
+    let { name, value } = event.target;
     this.validateItemInput([name, value]);
 
     let item = this.state.item;
     item[name] = value;
-    this.setState({ item })
+    this.setState({ item });
   };
 
   handleChangeTab = (event, newValue) => {
@@ -148,39 +153,46 @@ class AddOffering extends React.Component {
   };
 
   handleChangeCommentInput = (event) => {
-      this.validateItemInput([event.target.name, event.target.value]);
+    this.validateItemInput([event.target.name, event.target.value]);
 
-      this.setState({
+    this.setState({
       [event.target.name]: event.target.value,
     });
   };
 
   handleRemoveFromList = (type, idx) => {
-    let newImages = this.state.item[type].filter((item, index) => index !== idx);
+    let newImages = this.state.item[type].filter(
+      (item, index) => index !== idx
+    );
     this.setState({
       item: {
-        ... this.state.item,
-        [type]: newImages
-      }
-    })
+        ...this.state.item,
+        [type]: newImages,
+      },
+    });
   };
 
   handleSubmit = () => {
-    if (this.validateOfferSubmission()){
+    if (this.validateOfferSubmission()) {
       let offering = makeOffering(
         this.state.comment,
         this.state.addedItems,
-        this.props.currentUser);
+        this.props.currentUser
+      );
 
       let id = this.props.itemDetail.id;
-      this.props.makeOffer(offering , id);
+      this.props.makeOffer(offering, id);
       this.props.displaySuccess("Offer successfully made");
       this.resetFormState();
-      setTimeout(() => {this.props.closeModal();}, 700);
+      setTimeout(() => {
+        this.props.closeModal();
+      }, 700);
     } else {
-      this.props.displayError("An offer must have either must have either a comment or an item")
+      this.props.displayError(
+        "An offer must have either must have either a comment or an item"
+      );
     }
-  }
+  };
 
   isItemFormInvalid = () => {
     let requiredAddItemFields = _.pick(this.state.item, [
@@ -196,7 +208,7 @@ class AddOffering extends React.Component {
     let isQuantityInvalid = this.state.quantity < 1;
 
     return isQuantityInvalid || hasAddItemFormEmptyFields;
-  }
+  };
 
   resetFormState = () => {
     this.setState({
@@ -220,17 +232,19 @@ class AddOffering extends React.Component {
         condition: "",
         quantity: "",
       },
-    })
-  }
+    });
+  };
 
   validateItemInput = ([key, value]) => {
     let errors = this.state.errors;
     switch (key) {
       case "nameOfItem":
-        errors.nameOfItem = value.length > 0 ? "" : "Name of item cannot be left blank";
+        errors.nameOfItem =
+          value.length > 0 ? "" : "Name of item cannot be left blank";
         break;
       case "description":
-        errors.description = value.length > 0 ? "" : "Description cannot be left blank";
+        errors.description =
+          value.length > 0 ? "" : "Description cannot be left blank";
         break;
       case "category":
         errors.category = value.length > 0 ? "" : "Category must be selected";
@@ -242,13 +256,14 @@ class AddOffering extends React.Component {
         errors.quantity = value > 0 ? "" : "Quantity must be greater than 1";
         break;
       case "comment":
-        errors.comment = value.length > 0 ? "" : "Must have either a comment or an item";
+        errors.comment =
+          value.length > 0 ? "" : "Must have either a comment or an item";
         break;
       default:
         break;
     }
-    this.setState({errors: errors});
-  }
+    this.setState({ errors: errors });
+  };
 
   validateOfferSubmission = () => {
     let isValid = true;
@@ -259,9 +274,9 @@ class AddOffering extends React.Component {
       errors.addedItems = "Must have either a comment or an item";
       isValid = false;
     }
-    this.setState({errors: errors});
+    this.setState({ errors: errors });
     return isValid;
-  }
+  };
 
   validateRequiredItemFields = () => {
     let requiredFields = _.toPairs(
@@ -277,7 +292,7 @@ class AddOffering extends React.Component {
     _.forEach(requiredFields, this.validateItemInput);
 
     return !this.isItemFormInvalid();
-  }
+  };
 
   render() {
     const { classes } = this.props;
@@ -317,13 +332,21 @@ class AddOffering extends React.Component {
 
         <Grid container justify={"space-between"}>
           <Grid item xs={6}>
-            <Button onClick={() => {this.handleCancel()}}>
-                Cancel
+            <Button
+              onClick={() => {
+                this.handleCancel();
+              }}
+            >
+              Cancel
             </Button>
           </Grid>
 
           <Grid container item xs={6} justify={"flex-end"}>
-            <Button onClick={() => {this.handleSubmit()}}>
+            <Button
+              onClick={() => {
+                this.handleSubmit();
+              }}
+            >
               Submit
             </Button>
           </Grid>
@@ -343,6 +366,9 @@ const mapDispatchToProps = (dispatch) => ({
   closeModal: () => dispatch(closeModal()),
   displayError: (errMessage) => dispatch(displayError(errMessage)),
   displaySuccess: (successMessage) => dispatch(displaySuccess(successMessage)),
-})
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(AddOffering));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(useStyles)(AddOffering));

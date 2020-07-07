@@ -21,15 +21,15 @@ export const displayError = (errMessage) => {
   return {
     type: ERROR_SNACKBAR,
     errMessage,
-  }
-}
+  };
+};
 
 export const displaySuccess = (successMessage) => {
   return {
     type: SUCCESS_SNACKBAR,
     successMessage,
-  }
-}
+  };
+};
 
 export const registerError = (msg) => {
   return {

@@ -5,5 +5,5 @@ export const makeOffer = (offering, postId) => {
     type: MAKE_OFFER,
     offering: offering,
     postId: postId,
-  }
-}
+  };
+};
