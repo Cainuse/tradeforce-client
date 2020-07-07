@@ -1,4 +1,4 @@
-import { initialState } from "../constants/_initialState";
+// import { initialState } from "../constants/_initialState";
 import {
   ADD_POSTING,
   UPDATE_ITEM_DETAIL,
@@ -6,32 +6,46 @@ import {
   LOAD_POSTINGS,
 } from "../constants/actionTypes";
 
+const initialState = { postings: [] };
+
+const addPosting = (state, action) => {
+  let { posting } = action;
+  posting.quantity = parseInt(posting.quantity);
+  return [...state, posting];
+};
+
+const deletePosting = (state, action) => {
+  let { itemId } = action;
+  let newState = state.filter((posting) => posting.id !== itemId);
+  return newState;
+};
+
+const updatePostingDetail = (state, action) => {
+  let { itemId, details } = action;
+  let newState = state.map((posting) => {
+    if (posting._id === itemId) {
+      return { ...posting, ...details };
+    }
+    return posting;
+  });
+  return newState;
+};
+
+const loadPostings = (action) => {
+  return action.postings;
+};
+
 export const postingsReducer = (state = initialState.postings, action) => {
-  if (action.type === ADD_POSTING) {
-    let { /* currentUser,  */ posting } = action;
-    // let additionalDetails = {
-    //   id: state.reduce((maxID, posting) => Math.max(maxID, posting.id), -1) + 1,
-    //   ownerID: currentUser.id,
-    //   ownerUsername: currentUser.userName,
-    //   datePosted: new Date(),
-    //   postalCode: currentUser.postalCode,
-    //   location: currentUser.location,
-    // };
-    posting.quantity = parseInt(posting.quantity);
-    return [...state, { ...posting /* , ...additionalDetails */ }];
-  } else if (action.type === UPDATE_ITEM_DETAIL) {
-    let { itemId, details } = action;
-    let newState = state.map((posting) => {
-      if (posting.id === itemId) {
-        return { ...posting, ...details };
-      }
-      return posting;
-    });
-    return newState;
-  } else if (action.type === DELETE_POSTING) {
-    let { itemId } = action;
-    let newState = state.filter((posting) => posting.id !== itemId);
-    return newState;
+  switch (action.type) {
+    case ADD_POSTING:
+      return addPosting(state, action);
+    case DELETE_POSTING:
+      return deletePosting(state, action);
+    case UPDATE_ITEM_DETAIL:
+      return updatePostingDetail(state, action);
+    case LOAD_POSTINGS:
+      return loadPostings(action);
+    default:
+      return state;
   }
-  return state;
 };

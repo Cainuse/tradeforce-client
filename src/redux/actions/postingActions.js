@@ -57,7 +57,10 @@ export const addPosting = (posting, currentUser) => {
         date: new Date(),
         location: currentUser.location,
       };
-      let postingResponse = await axios.post(BASE_URL, postingRequest);
+      let postingResponse = await axios.post(
+        `${BASE_URL}/postings`,
+        postingRequest
+      );
       dispatch(addPostingSuccess(postingResponse.data));
     } catch (error) {
       console.log(error);
@@ -65,10 +68,23 @@ export const addPosting = (posting, currentUser) => {
   };
 };
 
-export const getAllPostings = () => {
+export const loadAllPostings = () => {
   return async (dispatch) => {
     try {
       let postingResponse = await axios.get(BASE_URL);
+      dispatch(loadAllPostingsSuccess(postingResponse.data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const loadPostingsByCategory = (category) => {
+  return async (dispatch) => {
+    try {
+      let postingResponse = await axios.get(
+        `${BASE_URL}/search/category=${category}`
+      );
       dispatch(loadAllPostingsSuccess(postingResponse.data));
     } catch (error) {
       console.log(error);
