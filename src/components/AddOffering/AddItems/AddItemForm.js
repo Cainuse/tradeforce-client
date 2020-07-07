@@ -66,7 +66,7 @@ export const AddItemForm = (props) => {
             margin="dense"
             variant="outlined"
             name="nameOfItem"
-            onChange={props.handleChangeForm}
+            onChange={props.handleChange}
             defaultValue={nameOfItem}
             error={!!errors.nameOfItem}
             helperText={errors.nameOfItem}
@@ -83,7 +83,7 @@ export const AddItemForm = (props) => {
             margin="dense"
             variant="outlined"
             name="description"
-            onChange={props.handleChangeForm}
+            onChange={props.handleChange}
             defaultValue={description}
             error={!!errors.description}
             helperText={errors.description}
@@ -101,7 +101,7 @@ export const AddItemForm = (props) => {
               native: true,
             }}
             variant="outlined"
-            onChange={props.handleChangeForm}
+            onChange={props.handleChange}
             name="category"
             defaultValue={category}
             error={!!errors.category}
@@ -126,7 +126,7 @@ export const AddItemForm = (props) => {
               native: true,
             }}
             variant="outlined"
-            onChange={props.handleChangeForm}
+            onChange={props.handleChange}
             name="condition"
             defaultValue={condition}
             error={!!errors.condition}
@@ -149,7 +149,7 @@ export const AddItemForm = (props) => {
             variant="outlined"
             name="quantity"
             defaultValue={quantity}
-            onChange={props.handleChangeForm}
+            onChange={props.handleChange}
             type="number"
             inputProps={{ min: "1" }}
             error={!!errors.quantity}

@@ -172,7 +172,7 @@ export const ItemListSection = (props) => {
                           <Typography className={classes.staticLabel}>
                             Images:
                           </Typography>
-                          {item.images}
+                          {/*{item.images}*/}
                         </Grid>
                       </Grid>
                     </CardContent>
