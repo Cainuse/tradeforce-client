@@ -4,15 +4,16 @@ import { withStyles } from "@material-ui/core/styles";
 import { withRouter } from "react-router";
 import { connect } from "react-redux";
 import { loadPostingsByCategory } from "../../redux/actions/postingActions";
-import _ from "lodash";
+import Typography from "@material-ui/core/Typography";
 
-const useStyles = () => ({
+const useStyles = (theme) => ({
   card: {
     display: "flex",
     width: "10vw",
     height: "10vw",
     alignItems: "center",
     flexDirection: "column",
+    margin: theme.spacing(1),
   },
   image: {
     width: "100%",
@@ -21,20 +22,19 @@ const useStyles = () => ({
     borderRadius: "100%",
   },
   categoryName: {
-    marginTop: "-1%",
-    fontWeight: "normal",
+    fontWeight: 300,
   },
 });
 
 class CategoryCard extends Component {
   redirect = async () => {
-    let category = _.toLower(this.props.imageName);
+    let category = this.props.value === "all" ? "" : this.props.value;
     await this.props.loadPostingsByCategory(category);
     this.props.history.push("/items");
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, label, value } = this.props;
     return (
       <div>
         <Paper
@@ -43,11 +43,13 @@ class CategoryCard extends Component {
           onClick={() => this.redirect()}
         >
           <img
-            src={this.props.image}
-            alt={this.props.imageName}
+            src={require(`../../images/categories/${value}.jpg`)}
+            alt={label}
             className={classes.image}
           />
-          <h1 className={classes.categoryName}>{this.props.imageName}</h1>
+          <Typography variant="h5" className={classes.categoryName}>
+            {label}
+          </Typography>
         </Paper>
       </div>
     );

@@ -57,10 +57,7 @@ export const addPosting = (posting, currentUser) => {
         date: new Date(),
         location: currentUser.location,
       };
-      let postingResponse = await axios.post(
-        `${BASE_URL}/postings`,
-        postingRequest
-      );
+      let postingResponse = await axios.post(BASE_URL, postingRequest);
       dispatch(addPostingSuccess(postingResponse.data));
     } catch (error) {
       console.log(error);
@@ -82,9 +79,8 @@ export const loadAllPostings = () => {
 export const loadPostingsByCategory = (category) => {
   return async (dispatch) => {
     try {
-      let postingResponse = await axios.get(
-        `${BASE_URL}/search/category=${category}`
-      );
+      let url = category ? `${BASE_URL}/search/category=${category}` : BASE_URL;
+      let postingResponse = await axios.get(url);
       dispatch(loadAllPostingsSuccess(postingResponse.data));
     } catch (error) {
       console.log(error);
