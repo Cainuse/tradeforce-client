@@ -3,6 +3,7 @@ import { Grid, TextField, Typography } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 
 import { ItemSection } from "./AddItems/ItemSection";
+import Step2 from "../AddPosting/Step2";
 
 const useStyles = (theme) => ({
   formSection: {
@@ -32,7 +33,6 @@ class OfferingContents extends React.Component {
 
     return (
       <div className={classes.form}>
-        {/*TODO: Separate into "Comment" section*/}
         <div className={classes.formSection}>
           <Typography variant="h6" className={classes.formHeader}>
             Comment
@@ -64,6 +64,8 @@ class OfferingContents extends React.Component {
           state={this.props.state}
           addItemToList={this.props.addItemToList}
           handleChange={this.props.handleChangeAddItemInputs}
+          addImage={this.props.addImage}
+          deleteImage={this.props.deleteImage}
           validateItemFields={this.props.validateItemFields}
           deleteItemFromList={this.props.deleteItemFromList}
         />

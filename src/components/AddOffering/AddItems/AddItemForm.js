@@ -8,6 +8,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import { categories, conditions } from "../../../redux/constants/classifierTypes";
 import ItemImagesUpload from "./ItemImagesUpload";
+import { ItemSection } from "./ItemSection";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -157,7 +158,12 @@ export const AddItemForm = (props) => {
           />
         </Grid>
         <Grid item xs={12}>
-          <ItemImagesUpload images={images} />
+          <ItemImagesUpload
+            images={images}
+            handleChange={props.handleChange}
+            addImage={props.addImage}
+            deleteImage={props.deleteImage}
+          />
         </Grid>
         <Grid container item justify={"flex-end"} xs={12}>
           <Button

@@ -10,6 +10,7 @@ import { makeOffer } from "../../redux/actions/offeringActions";
 import { offeringStatus } from "../constants/OfferingConstants";
 import { closeModal } from "../../redux/actions/modalActions";
 import { displayError, displaySuccess } from "../../redux/actions/snackbarActions";
+import Step2 from "../AddPosting/Step2";
 
 
 const useStyles = (theme) => ({
@@ -112,6 +113,15 @@ class AddOffering extends React.Component {
     })
   }
 
+  handleAddImage = (list) => {
+    this.setState({
+      item: {
+        ...this.state.item,
+        images: [...this.state.item.images, ...list]
+      }
+    })
+  };
+
   handleCancel = () => {
     let { comment, addedItems } = this.state;
     if (comment !== "" || addedItems.length !== 0) {
@@ -128,7 +138,7 @@ class AddOffering extends React.Component {
     let {name, value} = event.target;
     this.validateItemInput([name, value]);
 
-    let item = {...this.state.item};
+    let item = this.state.item;
     item[name] = value;
     this.setState({ item })
   };
@@ -143,6 +153,16 @@ class AddOffering extends React.Component {
       this.setState({
       [event.target.name]: event.target.value,
     });
+  };
+
+  handleRemoveFromList = (type, idx) => {
+    let newImages = this.state.item[type].filter((item, index) => index !== idx);
+    this.setState({
+      item: {
+        ... this.state.item,
+        [type]: newImages
+      }
+    })
   };
 
   handleSubmit = () => {
@@ -284,6 +304,8 @@ class AddOffering extends React.Component {
             state={this.state}
             handleChangeCommentInput={this.handleChangeCommentInput}
             handleChangeAddItemInputs={this.handleChangeAddItemInputs}
+            addImage={this.handleAddImage}
+            deleteImage={this.handleRemoveFromList}
             validateItemFields={this.validateRequiredItemFields}
             addItemToList={this.addItemToList}
             deleteItemFromList={this.deleteItemFromList}

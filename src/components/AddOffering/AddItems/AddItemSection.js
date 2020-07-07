@@ -4,6 +4,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 
 import { AddItemForm } from "./AddItemForm";
+import { ItemSection } from "./ItemSection";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -20,8 +21,10 @@ export const AddItemSection = (props) => {
     return (
       <AddItemForm
         state={props.state}
-        handleChangeForm={props.handleChangeForm}
+        handleChange={props.handleChange}
         handleSubmitAddItem={props.handleClickAddItem}
+        addImage={props.addImage}
+        deleteImage={props.deleteImage}
       />
     );
   } else {

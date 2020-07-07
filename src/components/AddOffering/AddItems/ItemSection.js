@@ -35,12 +35,13 @@ export const ItemSection = (props) => {
     return (
       <div className={props.classes.formSection}>
         <AddItemSection
-          item={item}
           state={props.state}
-          handleChangeForm={props.handleChange}
           handleClickAddIcon={handleClickAddIcon}
           handleClickAddItem={handleClickAddItem}
+          handleChange={props.handleChange}
           showForm={showForm}
+          addImage={props.addImage}
+          deleteImage={props.deleteImage}
         />
       </div>
     );
@@ -69,10 +70,12 @@ export const ItemSection = (props) => {
 
         <AddItemSection
           state={props.state}
-          handleChangeForm={props.handleChange}
           handleClickAddIcon={handleClickAddIcon}
           handleClickAddItem={handleClickAddItem}
+          handleChange={props.handleChange}
           showForm={showForm}
+          addImage={props.addImage}
+          deleteImage={props.deleteImage}
         />
       </div>
     );
