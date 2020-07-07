@@ -50,7 +50,7 @@ class ImageCarousel extends React.Component {
           src={
             maxSteps === 0
               ? require(`../../images/default.jpg`)
-              : require(`../../images/${images[this.state.activeStep].name}`)
+              : images[this.state.activeStep]
           }
           alt={`${this.state.activeStep}`}
         />

@@ -23,12 +23,10 @@ const loadAllPostingsSuccess = (postings) => {
   };
 };
 
-export const loadItemDetail = (itemId, postings) => {
+const loadItemDetailSuccess = (item) => {
   return {
     type: LOAD_ITEM_DETAIL,
-    itemId: itemId,
-    // TODO: postings unnecessary for when BE integrated
-    postings: postings,
+    item: item,
   };
 };
 
@@ -82,6 +80,17 @@ export const loadPostingsByCategory = (category) => {
       let url = category ? `${BASE_URL}/search/category=${category}` : BASE_URL;
       let postingResponse = await axios.get(url);
       dispatch(loadAllPostingsSuccess(postingResponse.data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const loadItemDetail = (itemId) => {
+  return async (dispatch) => {
+    try {
+      let getItemResponse = await axios.get(`${BASE_URL}/${itemId}`);
+      dispatch(loadItemDetailSuccess(getItemResponse.data));
     } catch (error) {
       console.log(error);
     }

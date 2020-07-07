@@ -27,12 +27,11 @@ const useStyles = makeStyles(() => ({
 }));
 
 const ItemPreview = ({
-  id,
+  _id,
   title,
   date,
   location,
   images,
-  postings,
   loadItemDetail,
 }) => {
   const history = useHistory();
@@ -66,7 +65,7 @@ const ItemPreview = ({
   };
 
   const routeToItem = (itemId) => {
-    loadItemDetail(itemId, postings);
+    loadItemDetail(itemId);
     history.push({
       pathname: path + "/item=" + itemId,
       search: "items",
@@ -75,7 +74,7 @@ const ItemPreview = ({
 
   return (
     <Card className={classes.tradeItemCard} elevation={2}>
-      <CardActionArea onClick={() => routeToItem(id)}>
+      <CardActionArea onClick={() => routeToItem(_id)}>
         <CardMedia
           className={classes.tradeItemCardImg}
           image={
@@ -102,7 +101,7 @@ const ItemPreview = ({
         </CardContent>
       </CardActionArea>
       <CardActions className={classes.bottom}>
-        <Button size="small" color="primary" onClick={() => routeToItem(id)}>
+        <Button size="small" color="primary" onClick={() => routeToItem(_id)}>
           Details
         </Button>
         <Rating isReadOnly={true} />

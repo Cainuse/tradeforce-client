@@ -34,7 +34,7 @@ const ItemResults = ({ postings }) => {
           return (
             <Grid key={index} item xs={3}>
               <ItemPreview
-                id={item.id}
+                _id={item._id}
                 title={item.title}
                 date={item.date}
                 location={item.location}
