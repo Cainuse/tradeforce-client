@@ -55,7 +55,6 @@ export default function CategoryList() {
         {Categories.map((category, index) => {
           return (
             <Grid key={index} item xs={3} className={classes.categoryCards}>
-
               <CategoryCard image={category.image} imageName={category.label} />
             </Grid>
           );
