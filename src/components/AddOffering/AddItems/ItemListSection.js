@@ -192,15 +192,6 @@ export const ItemListSection = (props) => {
                             {item.description}
                           </Typography>
                         </Grid>
-                        {/*<Grid container item xs={12}>*/}
-                        {/*  <Typography className={classes.staticLabel}>*/}
-                        {/*    Images:*/}
-                        {/*  </Typography>*/}
-                        {/*</Grid>*/}
-                        {/*<Grid container item xs={12}>*/}
-                        {/*  /!*<ImageCarousel className={classes.carousel} images={item.images}/>*!/*/}
-                        {/*  <ItemImagesPreview images={item.images} />*/}
-                        {/*</Grid>*/}
                         {imageSection(classes, item.images)}
                       </Grid>
                     </CardContent>
