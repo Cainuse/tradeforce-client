@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import ItemDetailsReview from "./ItemDetailsReview";
 import Chip from "@material-ui/core/Chip";
+import Grid from "@material-ui/core/Grid";
 
 import ExpandableSection from "./ExpandableSection";
 
@@ -33,18 +34,30 @@ const Step4 = (props) => {
   const { state, returnToActiveStep } = props;
 
   const classes = useStyles();
+  const [expandedIdx, setExpandedIdx] = useState(-1);
+
+  const handleExpand = (currIdx) => {
+    expandedIdx === currIdx ? setExpandedIdx(-1) : setExpandedIdx(currIdx);
+  }
 
   return (
     <React.Fragment>
+      <Grid container spacing={1}>
       <ExpandableSection
         sectionTitle="Item Details"
         returnToActiveStep={returnToActiveStep}
+        handleExpand={handleExpand}
+        panelIdx={0}
+        expandedIdx={expandedIdx}
       >
         <ItemDetailsReview state={state} />
       </ExpandableSection>
       <ExpandableSection
         sectionTitle="Images"
         returnToActiveStep={returnToActiveStep}
+        handleExpand={handleExpand}
+        panelIdx={1}
+        expandedIdx={expandedIdx}
       >
         <div className={classes.imgContainer}>
           {state.images.map((img, idx) => {
@@ -62,6 +75,9 @@ const Step4 = (props) => {
       <ExpandableSection
         sectionTitle="Requested Items"
         returnToActiveStep={returnToActiveStep}
+        handleExpand={handleExpand}
+        panelIdx={2}
+        expandedIdx={expandedIdx}
       >
         {state.requestedItems.length === 0 || !state.requestedItems ? (
           <Typography>No requested items specified for exchange</Typography>
@@ -77,6 +93,7 @@ const Step4 = (props) => {
           ))
         )}
       </ExpandableSection>
+      </Grid>
     </React.Fragment>
   );
 };
