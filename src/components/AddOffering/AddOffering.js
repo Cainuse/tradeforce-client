@@ -303,18 +303,18 @@ class AddOffering extends React.Component {
           Make an Offer
         </Typography>
 
-        <Tabs
-          className={classes.tabsRoot}
-          value={this.state.currTabIdx}
-          indicatorColor={"primary"}
-          textColor={"primary"}
-          onChange={this.handleChangeTab}
-        >
-          <Tab label="Create Offering" />
-          <Tab label="Preview" />
-        </Tabs>
+        {/*<Tabs*/}
+        {/*  className={classes.tabsRoot}*/}
+        {/*  value={this.state.currTabIdx}*/}
+        {/*  indicatorColor={"primary"}*/}
+        {/*  textColor={"primary"}*/}
+        {/*  onChange={this.handleChangeTab}*/}
+        {/*>*/}
+        {/*  <Tab label="Create Offering" />*/}
+        {/*  <Tab label="Preview" />*/}
+        {/*</Tabs>*/}
 
-        <TabPanel value={this.state.currTabIdx} index={0}>
+        {/*<TabPanel value={this.state.currTabIdx} index={0}>*/}
           <OfferContents
             state={this.state}
             handleChangeCommentInput={this.handleChangeCommentInput}
@@ -325,10 +325,10 @@ class AddOffering extends React.Component {
             addItemToList={this.addItemToList}
             deleteItemFromList={this.deleteItemFromList}
           />
-        </TabPanel>
-        <TabPanel value={this.state.currTabIdx} index={1}>
-          Item Two
-        </TabPanel>
+        {/*</TabPanel>*/}
+        {/*<TabPanel value={this.state.currTabIdx} index={1}>*/}
+        {/*  Item Two*/}
+        {/*</TabPanel>*/}
 
         <Grid container justify={"space-between"}>
           <Grid item xs={6}>

@@ -11,6 +11,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import ItemImagesPreview from "./ItemImagesPreview";
 
 const useStyles = makeStyles((theme) => ({
   itemContainer: {
@@ -71,6 +72,35 @@ const useStyles = makeStyles((theme) => ({
     color: "#b8061d",
   },
 }));
+
+const imageSection = (classes, images) => {
+  if (images.length === 0) {
+    return (
+      <Grid container item xs={12}>
+        <Typography className={classes.staticLabel}>
+          Images:&nbsp;
+        </Typography>
+        <Typography className={classes.itemInfo}>
+          N/A
+        </Typography>
+      </Grid>
+    )
+  }
+  return (
+    <React.Fragment>
+    <Grid container item xs={12}>
+      <Typography className={classes.staticLabel}>
+        Images:
+      </Typography>
+    </Grid>
+  <Grid container item xs={12}>
+    {/*<ImageCarousel images={images}/>*/}
+    <ItemImagesPreview images={images} />
+  </Grid>
+    </React.Fragment>
+  )
+}
+
 
 export const ItemListSection = (props) => {
   let classes = useStyles();
@@ -168,12 +198,16 @@ export const ItemListSection = (props) => {
                             {item.description}
                           </Typography>
                         </Grid>
-                        <Grid container item xs={12}>
-                          <Typography className={classes.staticLabel}>
-                            Images:
-                          </Typography>
-                          {/*{item.images}*/}
-                        </Grid>
+                        {/*<Grid container item xs={12}>*/}
+                        {/*  <Typography className={classes.staticLabel}>*/}
+                        {/*    Images:*/}
+                        {/*  </Typography>*/}
+                        {/*</Grid>*/}
+                        {/*<Grid container item xs={12}>*/}
+                        {/*  /!*<ImageCarousel className={classes.carousel} images={item.images}/>*!/*/}
+                        {/*  <ItemImagesPreview images={item.images} />*/}
+                        {/*</Grid>*/}
+                        {imageSection(classes, item.images)}
                       </Grid>
                     </CardContent>
                   </Collapse>

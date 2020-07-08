@@ -82,7 +82,7 @@ class ItemImagesUpload extends React.Component {
       .forEach((file) => {
         let reader = new FileReader();
         reader.onloadend = () => {
-          this.props.addImage([{ name: file.name, url: reader.result }]);
+          this.props.addImage([reader.result]);
         };
         reader.readAsDataURL(file);
       });
@@ -132,7 +132,7 @@ class ItemImagesUpload extends React.Component {
             return (
               <div key={idx} className={classes.imgDiv}>
                 <img
-                  src={img.url}
+                  src={img}
                   alt="something"
                   className={classes.imgPreview}
                 />
