@@ -131,11 +131,7 @@ class ItemImagesUpload extends React.Component {
           {images.map((img, idx) => {
             return (
               <div key={idx} className={classes.imgDiv}>
-                <img
-                  src={img}
-                  alt="something"
-                  className={classes.imgPreview}
-                />
+                <img src={img} alt="something" className={classes.imgPreview} />
                 <IconButton
                   aria-label="delete image"
                   component="span"

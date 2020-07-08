@@ -2,9 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import _ from "lodash";
 import { withStyles } from "@material-ui/core/styles";
-import { Tabs, Tab, Typography, Paper, Button, Grid } from "@material-ui/core";
+import { Typography, Paper, Button, Grid } from "@material-ui/core";
 
-import { TabPanel } from "./TabPanels";
 import OfferContents from "./OfferingContents";
 import { makeOffer } from "../../redux/actions/offeringActions";
 import { offeringStatus } from "../constants/OfferingConstants";
@@ -315,16 +314,16 @@ class AddOffering extends React.Component {
         {/*</Tabs>*/}
 
         {/*<TabPanel value={this.state.currTabIdx} index={0}>*/}
-          <OfferContents
-            state={this.state}
-            handleChangeCommentInput={this.handleChangeCommentInput}
-            handleChangeAddItemInputs={this.handleChangeAddItemInputs}
-            addImage={this.handleAddImage}
-            deleteImage={this.handleRemoveFromList}
-            validateItemFields={this.validateRequiredItemFields}
-            addItemToList={this.addItemToList}
-            deleteItemFromList={this.deleteItemFromList}
-          />
+        <OfferContents
+          state={this.state}
+          handleChangeCommentInput={this.handleChangeCommentInput}
+          handleChangeAddItemInputs={this.handleChangeAddItemInputs}
+          addImage={this.handleAddImage}
+          deleteImage={this.handleRemoveFromList}
+          validateItemFields={this.validateRequiredItemFields}
+          addItemToList={this.addItemToList}
+          deleteItemFromList={this.deleteItemFromList}
+        />
         {/*</TabPanel>*/}
         {/*<TabPanel value={this.state.currTabIdx} index={1}>*/}
         {/*  Item Two*/}
