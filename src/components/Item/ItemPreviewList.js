@@ -1,14 +1,13 @@
 import React from "react";
 import ItemPreview from "./ItemPreview";
 import Grid from "@material-ui/core/Grid";
-import { makeStyles } from '@material-ui/core/styles';
-
+import { makeStyles } from "@material-ui/core/styles";
 
 let useStyles = makeStyles({
   itemPreviewContainer: {
     minHeight: "45vh",
   },
-})
+});
 
 const ItemPreviewList = (props) => {
   let classes = useStyles();
