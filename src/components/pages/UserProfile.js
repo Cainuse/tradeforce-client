@@ -19,7 +19,8 @@ const useStyles = makeStyles(() => ({
   container: {
     width: "100%",
     zIndex: "-1",
-    transform: "translateY(-85px)",
+    // transform: "translateY(-85px)",
+    marginTop: "-85px",
   },
   profile: {
     display: "flex",
