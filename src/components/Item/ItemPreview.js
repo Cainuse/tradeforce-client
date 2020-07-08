@@ -64,8 +64,8 @@ const ItemPreview = ({
       : "Posted " + Math.round(diffDays / 365) + " years ago";
   };
 
-  const routeToItem = (itemId) => {
-    loadItemDetail(itemId);
+  const routeToItem = async (itemId) => {
+    await loadItemDetail(itemId);
     history.push({
       pathname: path + "/item=" + itemId,
       search: "items",

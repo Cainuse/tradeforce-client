@@ -16,7 +16,7 @@ const addPosting = (state, action) => {
 
 const deletePosting = (state, action) => {
   let { itemId } = action;
-  let newState = state.filter((posting) => posting.id !== itemId);
+  let newState = state.filter((posting) => posting._id !== itemId);
   return newState;
 };
 

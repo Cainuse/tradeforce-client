@@ -80,7 +80,18 @@ function ItemInfo(props) {
       </Grid>
       <Grid item xs={4}>
         <Grid container alignItems="center" direction="column">
-          {currentUser.id === itemDetail.ownerId ? (
+          {!currentUser || currentUser._id !== itemDetail.ownerId ? (
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => {
+                props.openOfferingModal();
+              }}
+              disabled={currentUser === null}
+            >
+              Make Offer
+            </Button>
+          ) : (
             <Button
               onClick={editPosting}
               // startIcon={<EditIcon />}
@@ -88,16 +99,6 @@ function ItemInfo(props) {
               color="primary"
             >
               Edit Posting
-            </Button>
-          ) : (
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => {
-                props.openOfferingModal();
-              }}
-            >
-              Make Offer
             </Button>
           )}
           <Box my={3} width="60%">

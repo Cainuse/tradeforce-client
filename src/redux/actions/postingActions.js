@@ -30,7 +30,7 @@ const loadItemDetailSuccess = (item) => {
   };
 };
 
-export const updateItemDetail = (itemId, details) => {
+const updateItemDetailSuccess = (itemId, details) => {
   return {
     type: UPDATE_ITEM_DETAIL,
     itemId: itemId,
@@ -38,7 +38,7 @@ export const updateItemDetail = (itemId, details) => {
   };
 };
 
-export const deletePosting = (itemId) => {
+const deletePostingSuccess = (itemId) => {
   return {
     type: DELETE_POSTING,
     itemId: itemId,
@@ -91,6 +91,28 @@ export const loadItemDetail = (itemId) => {
     try {
       let getItemResponse = await axios.get(`${BASE_URL}/${itemId}`);
       dispatch(loadItemDetailSuccess(getItemResponse.data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const deletePosting = (itemId) => {
+  return async (dispatch) => {
+    try {
+      await axios.delete(`${BASE_URL}/${itemId}`);
+      dispatch(deletePostingSuccess(itemId));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const updateItemDetail = (itemId, details) => {
+  return async (dispatch) => {
+    try {
+      await axios.patch(`${BASE_URL}/${itemId}`, details);
+      dispatch(updateItemDetailSuccess(itemId, details));
     } catch (error) {
       console.log(error);
     }

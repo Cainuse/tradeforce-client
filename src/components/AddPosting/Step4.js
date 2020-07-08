@@ -50,7 +50,7 @@ const Step4 = (props) => {
           {state.images.map((img, idx) => {
             return (
               <img
-                src={img.url}
+                src={img}
                 key={idx}
                 alt="something"
                 className={classes.imgPreview}
