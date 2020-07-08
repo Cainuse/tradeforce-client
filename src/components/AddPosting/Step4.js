@@ -38,61 +38,61 @@ const Step4 = (props) => {
 
   const handleExpand = (currIdx) => {
     expandedIdx === currIdx ? setExpandedIdx(-1) : setExpandedIdx(currIdx);
-  }
+  };
 
   return (
     <React.Fragment>
       <Grid container spacing={1}>
-      <ExpandableSection
-        sectionTitle="Item Details"
-        returnToActiveStep={returnToActiveStep}
-        handleExpand={handleExpand}
-        panelIdx={0}
-        expandedIdx={expandedIdx}
-      >
-        <ItemDetailsReview state={state} />
-      </ExpandableSection>
-      <ExpandableSection
-        sectionTitle="Images"
-        returnToActiveStep={returnToActiveStep}
-        handleExpand={handleExpand}
-        panelIdx={1}
-        expandedIdx={expandedIdx}
-      >
-        <div className={classes.imgContainer}>
-          {state.images.map((img, idx) => {
-            return (
-              <img
-                src={img.url}
+        <ExpandableSection
+          sectionTitle="Item Details"
+          returnToActiveStep={returnToActiveStep}
+          handleExpand={handleExpand}
+          panelIdx={0}
+          expandedIdx={expandedIdx}
+        >
+          <ItemDetailsReview state={state} />
+        </ExpandableSection>
+        <ExpandableSection
+          sectionTitle="Images"
+          returnToActiveStep={returnToActiveStep}
+          handleExpand={handleExpand}
+          panelIdx={1}
+          expandedIdx={expandedIdx}
+        >
+          <div className={classes.imgContainer}>
+            {state.images.map((img, idx) => {
+              return (
+                <img
+                  src={img.url}
+                  key={idx}
+                  alt="something"
+                  className={classes.imgPreview}
+                />
+              );
+            })}
+          </div>
+        </ExpandableSection>
+        <ExpandableSection
+          sectionTitle="Requested Items"
+          returnToActiveStep={returnToActiveStep}
+          handleExpand={handleExpand}
+          panelIdx={2}
+          expandedIdx={expandedIdx}
+        >
+          {state.requestedItems.length === 0 || !state.requestedItems ? (
+            <Typography>No requested items specified for exchange</Typography>
+          ) : (
+            state.requestedItems.map((item, idx) => (
+              <Chip
                 key={idx}
-                alt="something"
-                className={classes.imgPreview}
+                color="primary"
+                variant="outlined"
+                label={item}
+                className={classes.chips}
               />
-            );
-          })}
-        </div>
-      </ExpandableSection>
-      <ExpandableSection
-        sectionTitle="Requested Items"
-        returnToActiveStep={returnToActiveStep}
-        handleExpand={handleExpand}
-        panelIdx={2}
-        expandedIdx={expandedIdx}
-      >
-        {state.requestedItems.length === 0 || !state.requestedItems ? (
-          <Typography>No requested items specified for exchange</Typography>
-        ) : (
-          state.requestedItems.map((item, idx) => (
-            <Chip
-              key={idx}
-              color="primary"
-              variant="outlined"
-              label={item}
-              className={classes.chips}
-            />
-          ))
-        )}
-      </ExpandableSection>
+            ))
+          )}
+        </ExpandableSection>
       </Grid>
     </React.Fragment>
   );

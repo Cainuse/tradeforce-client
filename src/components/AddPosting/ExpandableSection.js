@@ -7,7 +7,7 @@ import {
   Collapse,
   Grid,
   IconButton,
-  Typography
+  Typography,
 } from "@material-ui/core/";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import clsx from "clsx";
@@ -17,36 +17,36 @@ import Divider from "@material-ui/core/Divider";
 const useStyles = makeStyles((theme) => ({
   headingContainer: {
     "&:last-child": {
-      paddingBottom: "16px"
-    }
+      paddingBottom: "16px",
+    },
   },
   heading: {
     fontWeight: 300,
-    fontSize: "1.2rem"
+    fontSize: "1.2rem",
   },
   chips: {
-    margin: theme.spacing(0.5)
+    margin: theme.spacing(0.5),
   },
   staticTitle: {
     color: theme.palette.primary.main,
     fontWeight: 500,
-    textTransform: "uppercase"
+    textTransform: "uppercase",
   },
   expand: {
     transform: "rotate(0deg)",
     marginLeft: "auto",
     transition: theme.transitions.create("transform", {
-      duration: theme.transitions.duration.shortest
-    })
+      duration: theme.transitions.duration.shortest,
+    }),
   },
   expandOpen: {
-    transform: "rotate(180deg)"
+    transform: "rotate(180deg)",
   },
   expandIconContainer: {
     display: "inline-grid",
     justifyItems: "center",
-    alignContent: "center"
-  }
+    alignContent: "center",
+  },
 }));
 
 const ExpandableSection = (props) => {
@@ -56,7 +56,7 @@ const ExpandableSection = (props) => {
     children,
     sectionTitle,
     panelIdx,
-    expandedIdx
+    expandedIdx,
   } = props;
 
   const classes = useStyles();
@@ -91,7 +91,7 @@ const ExpandableSection = (props) => {
                 <Grid item xs={1} className={classes.expandIconContainer}>
                   <IconButton
                     className={clsx(classes.expand, {
-                      [classes.expandOpen]: isExpanded
+                      [classes.expandOpen]: isExpanded,
                     })}
                     onClick={() => {
                       handleExpand(panelIdx);
@@ -99,15 +99,13 @@ const ExpandableSection = (props) => {
                     aria-expanded={isExpanded}
                     aria-label="show more"
                   >
-                    <ExpandMoreIcon/>
+                    <ExpandMoreIcon />
                   </IconButton>
                 </Grid>
               </Grid>
 
               <Collapse in={isExpanded}>
-                <CardContent>
-                  {children}
-                </CardContent>
+                <CardContent>{children}</CardContent>
                 <Divider />
                 <Grid container item xs={12} justify={"flex-end"}>
                   <CardActions>
@@ -123,7 +121,6 @@ const ExpandableSection = (props) => {
                   </CardActions>
                 </Grid>
               </Collapse>
-
             </Card>
           </Grid>
         </Grid>
