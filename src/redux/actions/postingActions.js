@@ -4,7 +4,9 @@ import {
   LOAD_ITEM_DETAIL,
   UPDATE_ITEM_DETAIL,
   LOAD_POSTINGS,
+  ERROR_SNACKBAR,
 } from "../constants/actionTypes";
+import { setLoading } from "./loadingActions";
 import axios from "axios";
 
 const BASE_URL = `${process.env.REACT_APP_BASE_URL}/postings`;
@@ -13,6 +15,13 @@ const addPostingSuccess = (posting) => {
   return {
     type: ADD_POSTING,
     posting: posting,
+  };
+};
+
+const addPostingError = () => {
+  return {
+    type: ERROR_SNACKBAR,
+    msg: "Something went wrong. Posting was not created",
   };
 };
 
@@ -38,6 +47,13 @@ const updateItemDetailSuccess = (itemId, details) => {
   };
 };
 
+const updateItemDetailError = () => {
+  return {
+    type: ERROR_SNACKBAR,
+    msg: "Something went wrong. Posting was not updated",
+  };
+};
+
 const deletePostingSuccess = (itemId) => {
   return {
     type: DELETE_POSTING,
@@ -45,9 +61,17 @@ const deletePostingSuccess = (itemId) => {
   };
 };
 
+const deletePostingError = () => {
+  return {
+    type: ERROR_SNACKBAR,
+    msg: "Something went wrong. Posting was not deleted",
+  };
+};
+
 export const addPosting = (posting, currentUser) => {
   return async (dispatch) => {
     try {
+      dispatch(setLoading());
       let postingRequest = {
         ...posting,
         ownerId: currentUser._id,
@@ -58,7 +82,7 @@ export const addPosting = (posting, currentUser) => {
       let postingResponse = await axios.post(BASE_URL, postingRequest);
       dispatch(addPostingSuccess(postingResponse.data));
     } catch (error) {
-      console.log(error);
+      dispatch(addPostingError());
     }
   };
 };
@@ -66,6 +90,7 @@ export const addPosting = (posting, currentUser) => {
 export const loadAllPostings = () => {
   return async (dispatch) => {
     try {
+      dispatch(setLoading());
       let postingResponse = await axios.get(BASE_URL);
       dispatch(loadAllPostingsSuccess(postingResponse.data));
     } catch (error) {
@@ -77,6 +102,7 @@ export const loadAllPostings = () => {
 export const loadPostingsByCategory = (category) => {
   return async (dispatch) => {
     try {
+      dispatch(setLoading());
       let url = category ? `${BASE_URL}/search/category=${category}` : BASE_URL;
       let postingResponse = await axios.get(url);
       dispatch(loadAllPostingsSuccess(postingResponse.data));
@@ -89,6 +115,7 @@ export const loadPostingsByCategory = (category) => {
 export const loadItemDetail = (itemId) => {
   return async (dispatch) => {
     try {
+      dispatch(setLoading());
       let getItemResponse = await axios.get(`${BASE_URL}/${itemId}`);
       dispatch(loadItemDetailSuccess(getItemResponse.data));
     } catch (error) {
@@ -100,10 +127,12 @@ export const loadItemDetail = (itemId) => {
 export const deletePosting = (itemId) => {
   return async (dispatch) => {
     try {
+      dispatch(setLoading());
       await axios.delete(`${BASE_URL}/${itemId}`);
       dispatch(deletePostingSuccess(itemId));
     } catch (error) {
       console.log(error);
+      dispatch(deletePostingError());
     }
   };
 };
@@ -111,10 +140,12 @@ export const deletePosting = (itemId) => {
 export const updateItemDetail = (itemId, details) => {
   return async (dispatch) => {
     try {
+      dispatch(setLoading());
       await axios.patch(`${BASE_URL}/${itemId}`, details);
       dispatch(updateItemDetailSuccess(itemId, details));
     } catch (error) {
       console.log(error);
+      dispatch(updateItemDetailError());
     }
   };
 };

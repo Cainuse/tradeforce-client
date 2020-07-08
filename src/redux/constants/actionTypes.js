@@ -30,3 +30,5 @@ export const LOAD_POSTINGS = "LOAD_POSTINGS";
  **/
 export const LOAD_ITEM_DETAIL = "LOAD_ITEM_DETAIL";
 export const UPDATE_ITEM_DETAIL = "UPDATE_ITEM_DETAIL";
+
+export const SET_LOADING = "SET_LOADING";

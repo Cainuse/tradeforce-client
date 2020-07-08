@@ -3,6 +3,7 @@ import {
   CLEAR_SNACKBAR,
   DELETE_POSTING,
   UPDATE_ITEM_DETAIL,
+  ERROR_SNACKBAR,
 } from "../constants/actionTypes";
 
 export const snackbarReducer = (state = initialState.snackbar, action) => {
@@ -24,6 +25,12 @@ export const snackbarReducer = (state = initialState.snackbar, action) => {
         isOpen: true,
         type: "success",
         message: "Posting successfully updated",
+      };
+    case ERROR_SNACKBAR:
+      return {
+        isOpen: true,
+        type: "error",
+        message: action.msg,
       };
     default:
       return state;

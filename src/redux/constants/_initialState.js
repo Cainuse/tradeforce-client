@@ -1,4 +1,5 @@
 export const initialState = {
+  loading: false,
   flyoutIsOpen: false,
   modal: {
     isOpen: false,
