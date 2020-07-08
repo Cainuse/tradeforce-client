@@ -2,7 +2,6 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import { findLastIndex } from "lodash";
 
 const useStyles = makeStyles(() => ({
   root: {
