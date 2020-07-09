@@ -18,6 +18,7 @@ export const userReducer = (state = initialState.currentUser, action) => {
           email: action.email,
           postalCode: "None",
           dateRegistered: action.date,
+          isGoogleUser: action.isGoogleUser,
         },
       };
     case UNSET_USER:

@@ -12,13 +12,14 @@ import {
 } from "./snackbarActions";
 import axios from "axios";
 
-export const setUser = (userId, userName, email, date) => {
+export const setUser = (userId, userName, email, date, isGoogleUser) => {
   return {
     type: SET_USER,
     userId,
     userName,
     email,
     date,
+    isGoogleUser,
   };
 };
 
@@ -71,7 +72,8 @@ export const registerUserAsync = (
           respData.user._id,
           respData.user.userName,
           respData.user.email,
-          respData.user.dateRegistered
+          respData.user.dateRegistered,
+          respData.user.isGoogleUser
         )
       );
     } catch (err) {
@@ -126,7 +128,8 @@ export const loginUserAsync = (email, password, googleInfo) => {
           respData.user._id,
           respData.user.userName,
           respData.user.email,
-          respData.user.dateRegistered
+          respData.user.dateRegistered,
+          respData.user.isGoogleUser
         )
       );
     } catch (err) {
@@ -151,7 +154,13 @@ export const authenticateUser = (token) => {
       );
       const user = resp.data;
       return dispatch(
-        setUser(user._id, user.userName, user.email, user.dateRegistered)
+        setUser(
+          user._id,
+          user.userName,
+          user.email,
+          user.dateRegistered,
+          user.isGoogleUser
+        )
       );
     } catch (err) {
       dispatch(isUserFailed());

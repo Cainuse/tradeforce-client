@@ -91,23 +91,6 @@ const LoginBtn = (props) => {
   );
 };
 
-const LogoutBtn = (props) => {
-  const classes = loggedOutStyles();
-  return (
-    <Button
-      type="button"
-      color="inherit"
-      className={classes.loginBtn}
-      onClick={() => {
-        localStorage.removeItem("token");
-        props.logout();
-      }}
-    >
-      Logout
-    </Button>
-  );
-};
-
 const NotificationBtn = (props) => {
   return (
     <IconButton
@@ -156,20 +139,13 @@ const LoggedInActionItems = (props) => {
         iconBtnClass={classes.iconBtn}
         accountBtnClass={classes.accountBtn}
       />
-      <LogoutBtn logout={props.logout} />
-      <GoogleLogoutBtn />
     </div>
   );
 };
 
 const ActionItems = (props) => {
   if (props.isLoggedIn) {
-    return (
-      <LoggedInActionItems
-        logout={props.unsetUser}
-        openPostingModal={props.openPostingModal}
-      />
-    );
+    return <LoggedInActionItems openPostingModal={props.openPostingModal} />;
   }
   return <LoginBtn openLoginModal={props.openLoginModal} />;
 };
