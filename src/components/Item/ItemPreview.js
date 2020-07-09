@@ -11,6 +11,7 @@ import Grid from "@material-ui/core/Grid";
 import Rating from "./Rating";
 import { loadItemDetail } from "../../redux/actions/postingActions";
 import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(() => ({
   tradeItemCard: {
@@ -35,6 +36,7 @@ const ItemPreview = ({
   error,
 }) => {
   const classes = useStyles();
+  const history = useHistory();
 
   const parseDate = (str) => {
     return new Date(str);
@@ -65,8 +67,9 @@ const ItemPreview = ({
   const routeToItem = async (itemId) => {
     try {
       await loadItemDetail(itemId);
-      window.location.href =
-        window.location.origin + "/items" + "/item=" + itemId;
+      history.push({
+        pathname: "/items/item=" + itemId,
+      });
     } catch (e) {
       console.log(error);
       /* no redirect; snackbar gives error feedback */
