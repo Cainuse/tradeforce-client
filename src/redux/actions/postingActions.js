@@ -91,7 +91,9 @@ export const addPosting = (posting, currentUser) => {
         ownerId: currentUser._id,
         ownerUsername: currentUser.userName,
         date: new Date(),
-        location: currentUser.location,
+        location: currentUser.location
+          ? currentUser.location
+          : "The Darkest Timeline",
       };
       let postingResponse = await axios.post(BASE_URL, postingRequest);
       dispatch(addPostingSuccess(postingResponse.data));

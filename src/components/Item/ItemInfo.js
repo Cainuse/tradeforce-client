@@ -145,7 +145,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const mapStateToProps = (state) => ({
-  currentUser: state.currentUser,
+  currentUser: state.currentUser.user,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ItemInfo);
