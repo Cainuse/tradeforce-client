@@ -7,9 +7,8 @@ import {
   LOGIN_SUCCESS,
   LOGOUT_SUCCESS,
   ERROR_SNACKBAR,
-  SUCCESS_SNACKBAR
+  SUCCESS_SNACKBAR,
 } from "../constants/actionTypes";
-
 
 export const clearSnackbar = () => {
   return {

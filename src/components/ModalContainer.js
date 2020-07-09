@@ -10,7 +10,7 @@ import {
 } from "../redux/constants/modalTypes";
 import AddPosting from "../components/AddPosting/AddPosting";
 import AddOffering from "./AddOffering/AddOffering";
-import { Dialog } from '@material-ui/core';
+import { Dialog } from "@material-ui/core";
 import LoginModal from "./Login/Login";
 
 //--------------- Helper: Error for if wrong modal type is given -------------//
