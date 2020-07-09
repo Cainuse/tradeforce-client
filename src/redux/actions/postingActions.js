@@ -32,6 +32,13 @@ const loadAllPostingsSuccess = (postings) => {
   };
 };
 
+const loadPostingsError = () => {
+  return {
+    type: ERROR_SNACKBAR,
+    msg: "Something went wrong. Postings could not be loaded",
+  };
+};
+
 const loadItemDetailSuccess = (item) => {
   return {
     type: LOAD_ITEM_DETAIL,
@@ -101,7 +108,7 @@ export const loadAllPostings = () => {
       let postingResponse = await axios.get(BASE_URL);
       dispatch(loadAllPostingsSuccess(postingResponse.data));
     } catch (error) {
-      console.log(error);
+      dispatch(loadPostingsError());
     }
   };
 };
@@ -114,7 +121,7 @@ export const loadPostingsByCategory = (category) => {
       let postingResponse = await axios.get(url);
       dispatch(loadAllPostingsSuccess(postingResponse.data));
     } catch (error) {
-      console.log(error);
+      dispatch(loadPostingsError());
     }
   };
 };
@@ -147,7 +154,6 @@ export const deletePosting = (itemId) => {
       await axios.delete(`${BASE_URL}/${itemId}`);
       dispatch(deletePostingSuccess(itemId));
     } catch (error) {
-      console.log(error);
       dispatch(deletePostingError());
     }
   };
@@ -160,7 +166,6 @@ export const updateItemDetail = (itemId, details) => {
       await axios.patch(`${BASE_URL}/${itemId}`, details);
       dispatch(updateItemDetailSuccess(itemId, details));
     } catch (error) {
-      console.log(error);
       dispatch(updateItemDetailError());
     }
   };
