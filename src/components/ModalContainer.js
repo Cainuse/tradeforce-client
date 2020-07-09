@@ -7,11 +7,13 @@ import {
   OFFER_MODAL,
   POSTING_MODAL,
   LOGIN_MODAL,
+  REVIEW_MODAL,
 } from "../redux/constants/modalTypes";
 import AddPosting from "../components/AddPosting/AddPosting";
 import AddOffering from "./AddOffering/AddOffering";
 import { Dialog } from "@material-ui/core";
 import LoginModal from "./Login/Login";
+import ReviewModal from "./Review/AddReview";
 
 //--------------- Helper: Error for if wrong modal type is given -------------//
 const errorModalStyle = makeStyles((theme) => ({
@@ -38,7 +40,7 @@ const modalStyles = makeStyles(() => ({
     alignItems: "center",
     justifyContent: "center",
     margin: "0 auto",
-    width: "40%",
+    // width: "40%",
     height: "100%",
     maxHeight: "100vh",
   },
@@ -55,10 +57,13 @@ const chooseModalContents = (props) => {
   switch (props.modal.type) {
     case OFFER_MODAL:
       return <AddOffering />;
+    // return <ReviewModal />;
     case POSTING_MODAL:
       return <AddPosting />;
     case LOGIN_MODAL:
       return <LoginModal />;
+    case REVIEW_MODAL:
+      return <ReviewModal />;
     case "":
       return null;
     default:
@@ -71,17 +76,18 @@ const MakeModalContainer = (props) => {
 
   return (
     <Dialog
-      className={classes.modalContainer}
+      // className={classes.modalContainer}
       open={props.modal.isOpen}
       onClose={() => {
         props.closeModal();
       }}
       scroll={"paper"}
-      maxWidth={"xl"}
-      fullWidth={false}
+      maxWidth={props.modal.type === LOGIN_MODAL ? "sm" : "md"}
+      fullWidth={true}
       disableScrollLock={true}
       aria-labelledby="simple-modal-title"
       aria-describedby="simple-modal-description"
+      classes={{ paperFullWidth: classes.dialogCustomizedWidth }}
     >
       <div className={classes.modalContents}>{chooseModalContents(props)}</div>
     </Dialog>
