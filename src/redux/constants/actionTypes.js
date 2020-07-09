@@ -16,7 +16,28 @@ export const OPEN_POSTING_MODAL = "OPEN_POSTING_MODAL";
 export const ADD_POSTING = "ADD_POSTING";
 export const DELETE_POSTING = "DELETE_POSTING";
 
+export const OPEN_LOGIN_MODAL = "OPEN_LOGIN_MODAL";
+
 export const LOAD_ITEM_DETAIL = "LOAD_ITEM_DETAIL";
+
+/**
+ * User Action Types
+ **/
+export const SET_USER = "SET_USER";
+export const UNSET_USER = "UNSET_USER";
+
+export const IS_USER_FETCHING = "IS_USER_FETCHING";
+export const IS_USER_FAILED = "IS_USER_FAILED";
+
+/**
+ * Error Action Types
+ **/
+export const REGISTER_ERROR = "REGISTER_ERROR";
+export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
+export const LOGIN_ERROR = "LOGIN_ERROR";
+export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+export const LOGOUT_ERROR = "LOGOUT_ERROR";
+export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
 export const UPDATE_ITEM_DETAIL = "UPDATE_ITEM_DETAIL";
 
 export const CLEAR_SNACKBAR = "CLEAR_SNACKBAR";

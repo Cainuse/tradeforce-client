@@ -40,7 +40,12 @@ class NavBar extends React.Component {
   };
 
   render() {
-    return <CreateNavBar handleMenuClick={this.handleMenuClick} />;
+    return (
+      <CreateNavBar
+        isLoggedIn={this.props.currentUser.user !== null}
+        handleMenuClick={this.handleMenuClick}
+      />
+    );
   }
 }
 
@@ -61,11 +66,17 @@ function CreateNavBar(props) {
             <MenuIcon className={classes.menuIcon} />
           </IconButton>
           <Logo className={classes.logo} />
-          <ActionItems isLoggedIn={true} />
+          <ActionItems isLoggedIn={props.isLoggedIn} />
         </Toolbar>
       </AppBar>
     </div>
   );
+}
+
+function mapStateToProps(state) {
+  return {
+    currentUser: state.currentUser,
+  };
 }
 
 function mapDispatchToProps(dispatch) {
@@ -74,4 +85,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(null, mapDispatchToProps)(NavBar);
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar);

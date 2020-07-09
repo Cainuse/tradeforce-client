@@ -3,9 +3,14 @@ import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import { Modal } from "@material-ui/core";
 import { closeModal } from "../redux/actions/modalActions";
-import { OFFER_MODAL, POSTING_MODAL } from "../redux/constants/modalTypes";
+import {
+  OFFER_MODAL,
+  POSTING_MODAL,
+  LOGIN_MODAL,
+} from "../redux/constants/modalTypes";
 import AddPosting from "../components/AddPosting/AddPosting";
 import AddOffering from "./AddOffering/AddOffering";
+import LoginModal from "./Login/Login";
 
 //--------------- Helper: Error for if wrong modal type is given -------------//
 const errorModalStyle = makeStyles((theme) => ({
@@ -49,6 +54,8 @@ const chooseModalContents = (props) => {
       return <AddOffering />;
     case POSTING_MODAL:
       return <AddPosting />;
+    case LOGIN_MODAL:
+      return <LoginModal />;
     default:
       return <ErrorModal />;
   }
