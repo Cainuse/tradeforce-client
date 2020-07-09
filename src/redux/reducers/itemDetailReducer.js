@@ -1,9 +1,11 @@
 import { initialState } from "../constants/_initialState";
 import {
   LOAD_ITEM_DETAIL,
+  MAKE_OFFER,
   UPDATE_ITEM_DETAIL,
   DELETE_POSTING,
 } from "../constants/actionTypes";
+
 import _ from "lodash";
 
 export const itemDetailReducer = (state = initialState.itemDetail, action) => {
@@ -13,6 +15,13 @@ export const itemDetailReducer = (state = initialState.itemDetail, action) => {
     if (newState) {
       return newState;
     }
+  } else if (action.type === MAKE_OFFER) {
+    let updatedOffering = state.offerings.concat(action.offering);
+    let newState = {
+      ...state,
+      offerings: updatedOffering,
+    };
+    return newState;
   } else if (action.type === UPDATE_ITEM_DETAIL) {
     let { itemId, details } = action;
     if (state.id === itemId) {
