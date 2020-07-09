@@ -10,9 +10,6 @@ import {
   logoutError,
 } from "../../redux/actions/snackbarActions";
 
-const CLIENT_ID =
-  "282830719674-g3jh5koi6efcqmvtml24atp923gibqjp.apps.googleusercontent.com";
-
 const useStyles = makeStyles((theme) => ({
   googleBtn: {
     backgroundColor: "#1d588f",
@@ -43,7 +40,7 @@ const GoogleLogoutBtn = ({
 
   return (
     <GoogleLogout
-      clientId={CLIENT_ID}
+      clientId={process.env.REACT_APP_CLIENT_ID}
       className={classes.googleBtn}
       buttonText="Sign out using Google"
       onLogoutSuccess={logout}

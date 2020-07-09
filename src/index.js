@@ -9,6 +9,8 @@ import { createStore, applyMiddleware } from "redux";
 import { authenticateUser } from "./redux/actions/userActions";
 import rootReducer from "./redux/reducers/_rootReducer";
 
+require("dotenv").config();
+
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
 const token = localStorage.getItem("token");

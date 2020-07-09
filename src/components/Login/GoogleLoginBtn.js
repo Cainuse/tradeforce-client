@@ -9,9 +9,6 @@ import {
 import { closeModal } from "../../redux/actions/modalActions";
 import { connect } from "react-redux";
 
-const CLIENT_ID =
-  "282830719674-g3jh5koi6efcqmvtml24atp923gibqjp.apps.googleusercontent.com";
-
 const useStyles = makeStyles((theme) => ({
   googleBtn: {
     backgroundColor: "#1d588f",
@@ -45,7 +42,7 @@ const GoogleBtn = ({ loginUserAsync, closeModal }) => {
 
   return (
     <GoogleLogin
-      clientId={CLIENT_ID}
+      clientId={process.env.REACT_APP_CLIENT_ID}
       buttonText="Continue with Google"
       className={classes.googleBtn}
       onSuccess={login}
