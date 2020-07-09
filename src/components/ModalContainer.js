@@ -57,7 +57,6 @@ const chooseModalContents = (props) => {
   switch (props.modal.type) {
     case OFFER_MODAL:
       return <AddOffering />;
-    // return <ReviewModal />;
     case POSTING_MODAL:
       return <AddPosting />;
     case LOGIN_MODAL:

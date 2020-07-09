@@ -2,8 +2,6 @@ import React from "react";
 import Review from "./Review";
 import { makeStyles } from "@material-ui/core/styles";
 
-// let reviews = [...Array(3)];
-
 const useStyles = makeStyles(() => ({
   reviews: {
     display: "flex",
