@@ -66,6 +66,7 @@ function AccountBtn(props) {
         keepMounted
         open={Boolean(anchorEl)}
         onClose={handleClose}
+        disableScrollLock={true}
       >
         <MenuItem onClick={handleClickProfile}>My Profile</MenuItem>
         {getLogoutMenuItem(props.currentUser, handleClickLogout)}
