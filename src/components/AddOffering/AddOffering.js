@@ -37,10 +37,11 @@ const useStyles = (theme) => ({
 //-------------- Helper functions -----------------------//
 
 const makeOfferer = (currentUser) => {
+  let { user } = currentUser;
   return {
-    id: currentUser.id,
-    userName: currentUser.userName,
-    email: currentUser.email,
+    _id: user._id,
+    userName: user.userName,
+    email: user.email,
   };
 };
 
