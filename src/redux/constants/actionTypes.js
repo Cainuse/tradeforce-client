@@ -9,10 +9,12 @@ export const CLOSE_FLYOUT = "CLOSE_FLYOUT";
  **/
 export const CLOSE_MODAL = "CLOSE_MODAL";
 export const OPEN_OFFER_MODAL = "OPEN_OFFER_MODAL";
-
-export const MAKE_OFFER = "MAKE_OFFER";
-
 export const OPEN_POSTING_MODAL = "OPEN_POSTING_MODAL";
+
+/**
+ * Posting Action Types
+ **/
+export const MAKE_OFFER = "MAKE_OFFER";
 
 export const CLEAR_SNACKBAR = "CLEAR_SNACKBAR";
 export const SUCCESS_SNACKBAR = "SUCCESS_SNACKBAR";

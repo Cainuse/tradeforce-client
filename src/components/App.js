@@ -15,10 +15,14 @@ import Loader from "./Loader";
 const theme = createMuiTheme({
   palette: {
     primary: {
+      light: "#01BAEF",
       main: "#1D588F",
     },
     secondary: {
       main: "#FFFFFF",
+    },
+    info: {
+      main: "#00A5E0",
     },
   },
   typography: {

@@ -4,6 +4,7 @@ import {
   UPDATE_ITEM_DETAIL,
   DELETE_POSTING,
   LOAD_POSTINGS,
+  MAKE_OFFER,
 } from "../constants/actionTypes";
 
 const initialState = { postings: [] };
@@ -35,6 +36,24 @@ const loadPostings = (action) => {
   return action.postings;
 };
 
+const makeOffer = (state, action) => {
+  let newState = state.map((posting) => {
+    if (posting.id === action.postId) {
+      if (!posting.offerings) {
+        posting["offerings"] = [];
+      }
+      let updatedOfferings = posting.offerings.concat(action.offering);
+      let newPostingDetail = {
+        ...posting,
+        offerings: updatedOfferings,
+      };
+      return newPostingDetail;
+    }
+    return posting;
+  });
+  return newState;
+};
+
 export const postingsReducer = (state = initialState.postings, action) => {
   switch (action.type) {
     case ADD_POSTING:
@@ -45,6 +64,8 @@ export const postingsReducer = (state = initialState.postings, action) => {
       return updatePostingDetail(state, action);
     case LOAD_POSTINGS:
       return loadPostings(action);
+    case MAKE_OFFER:
+      return makeOffer(state, action);
     default:
       return state;
   }
