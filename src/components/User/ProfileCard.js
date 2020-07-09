@@ -16,29 +16,21 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     marginBottom: theme.spacing(5),
   },
-  name: {
+  username: {
     fontSize: "1.2rem",
     fontWeight: 400,
-  },
-  username: {
-    fontSize: ".9rem",
-    fontWeight: 300,
   },
 }));
 
 const ProfileCard = (props) => {
-  let { userDetail, currentUser } = props;
+  let { currentUser } = props;
   const classes = useStyles();
-  console.log(currentUser);
 
   return (
     <div className={classes.profile}>
       <UserAvatar isLargeAvatar={true} userProfileImgSrc={shellstrop} />
-      <Typography
-        className={classes.name}
-      >{`${userDetail.firstName} ${userDetail.lastName}`}</Typography>
-      <Typography className={classes.username}>
-        {userDetail.userName}
+      <Typography className={classes.name}>
+        {currentUser.user.userName}
       </Typography>
       {currentUser.user.isGoogleUser ? (
         <GoogleLogoutBtn />
