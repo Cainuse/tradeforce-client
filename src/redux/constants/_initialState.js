@@ -234,5 +234,6 @@ export const initialState = {
         active: true,
       },
     ],
+    reviews: [],
   },
 };

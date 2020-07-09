@@ -3,7 +3,7 @@ import Box from "@material-ui/core/Box";
 import Rating from "@material-ui/lab/Rating";
 
 export default function Review(props) {
-  let { elevation, colour } = props;
+  let { elevation, colour, review } = props;
   return (
     <Box
       p={2}
@@ -22,30 +22,22 @@ export default function Review(props) {
           display="inline"
           flexGrow={1}
         >
-          fatthor
+          {review.reviewerUsername}
         </Box>
         <Box display="inline" alignContent="center">
           <Rating
             name="half-rating-read"
-            defaultValue={4.5}
+            value={review.rating}
             precision={0.5}
             readOnly
           />
         </Box>
       </Box>
       <Box fontSize="h5.fontSize" fontWeight="fontWeightMedium" my={1.5}>
-        Fresh Strawberries - 1lb
+        {review.title}
       </Box>
       <Box fontSize="body2.fontSize" fontWeight="fontWeightLight" my={1}>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque egestas
-        erat nec eros semper, ut condimentum purus dignissim. Nam non massa non
-        mauris fringilla eleifend. Nullam ligula odio, placerat in magna vitae,
-        pulvinar vehicula augue. Pellentesque aliquet quam nibh, vitae semper
-        augue sollicitudin ac. Maecenas rutrum urna turpis. Donec risus ligula,
-        mollis sit amet massa eget, porttitor luctus diam. Vestibulum vulputate,
-        arcu vel pellentesque sodales, nulla neque euismod ex, rhoncus vulputate
-        nunc arcu quis dolor. Praesent imperdiet facilisis fermentum. Aliquam
-        aliquet est elit, in auctor arcu tristique sed.
+        {review.review}
       </Box>
     </Box>
   );

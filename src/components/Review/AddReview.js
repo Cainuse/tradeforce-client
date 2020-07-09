@@ -6,6 +6,9 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import Rating from "@material-ui/lab/Rating";
 import Button from "@material-ui/core/Button";
+import { connect } from "react-redux";
+import { addReview } from "../../redux/actions/userDetailActions";
+import { closeModal } from "../../redux/actions/modalActions";
 
 const useStyles = (theme) => ({
   paper: {
@@ -53,31 +56,33 @@ class ReviewModal extends React.Component {
   }
 
   handleInputChange = (e) => {
-    let { name, value } = e.target;
+    let { name } = e.target;
+    let value = name === "rating" ? parseInt(e.target.value) : e.target.value;
     this.setState({ [name]: value });
   };
 
   handleSubmit = () => {
-    console.log("submit");
+    let review = {
+      ...this.state,
+      reviewerUsername: this.props.currentUser.userName,
+    };
+    this.props.addReview(review);
+    this.props.closeModal();
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, closeModal } = this.props;
     return (
       <Paper className={classes.paper}>
         <Typography align="center" variant="h4">
           Create A Review
         </Typography>
         <Grid container spacing={1} className={classes.reviewContainer}>
-          {/* <Grid item xs={2} className={classes.rateText}>
-            Rate this user:
-          </Grid> */}
           <Grid item className={classes.ratingContainer} xs={6}>
             <Typography variant="subtitle1">Rate this user:</Typography>
             <Rating
               name="rating"
               value={this.state.rating}
-              precision={0.5}
               onChange={this.handleInputChange}
               size="large"
               className={classes.rating}
@@ -114,7 +119,7 @@ class ReviewModal extends React.Component {
         </Grid>
         <div className={classes.buttonHeader}>
           <Button
-            onClick={() => console.log("close")}
+            onClick={closeModal}
             variant="outlined"
             className={classes.cancelButton}
           >
@@ -133,4 +138,10 @@ class ReviewModal extends React.Component {
   }
 }
 
-export default withStyles(useStyles)(ReviewModal);
+const mapStateToProps = (state) => ({
+  currentUser: state.currentUser.user,
+});
+
+export default connect(mapStateToProps, { addReview, closeModal })(
+  withStyles(useStyles)(ReviewModal)
+);
