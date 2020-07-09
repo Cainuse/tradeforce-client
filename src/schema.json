@@ -16,7 +16,7 @@
     "offerings": [
        {
           "offerer": {
-          "id": 100,
+          "_id": 100,
           "userName": "great guy",
           "email": "greatguyguranteed@hotmale.com"
         },
