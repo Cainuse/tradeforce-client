@@ -9,7 +9,7 @@ import {
 import { setLoading } from "./loadingActions";
 import axios from "axios";
 
-const BASE_URL = `${process.env.REACT_APP_BASE_URL}/postings`;
+const BASE_URL = `${process.env.REACT_APP_BASE_URL}`;
 
 const addPostingSuccess = (posting) => {
   return {
@@ -89,13 +89,16 @@ export const addPosting = (posting, currentUser) => {
       let postingRequest = {
         ...posting,
         ownerId: currentUser._id,
-        ownerUsername: currentUser.userName,
+        // ownerUsername: currentUser.userName,
         date: new Date(),
         location: currentUser.location
           ? currentUser.location
           : "The Darkest Timeline",
       };
-      let postingResponse = await axios.post(BASE_URL, postingRequest);
+      let postingResponse = await axios.post(
+        `${BASE_URL}/postings`,
+        postingRequest
+      );
       dispatch(addPostingSuccess(postingResponse.data));
     } catch (error) {
       dispatch(addPostingError());
@@ -107,7 +110,7 @@ export const loadAllPostings = () => {
   return async (dispatch) => {
     try {
       dispatch(setLoading());
-      let postingResponse = await axios.get(BASE_URL);
+      let postingResponse = await axios.get(`${BASE_URL}/postings`);
       dispatch(loadAllPostingsSuccess(postingResponse.data));
     } catch (error) {
       dispatch(loadPostingsError());
@@ -119,7 +122,9 @@ export const loadPostingsByCategory = (category) => {
   return async (dispatch) => {
     try {
       dispatch(setLoading());
-      let url = category ? `${BASE_URL}/search/category=${category}` : BASE_URL;
+      let url = category
+        ? `${BASE_URL}/postings/search/category=${category}`
+        : `${BASE_URL}/postings`;
       let postingResponse = await axios.get(url);
       dispatch(loadAllPostingsSuccess(postingResponse.data));
     } catch (error) {
@@ -132,8 +137,19 @@ export const loadItemDetail = (itemId) => {
   return async (dispatch) => {
     try {
       dispatch(setLoading());
-      let getItemResponse = await axios.get(`${BASE_URL}/${itemId}`);
-      dispatch(loadItemDetailSuccess(getItemResponse.data));
+      let getItemResponse = await axios.get(`${BASE_URL}/postings/${itemId}`);
+      let userId = getItemResponse.data.ownerId
+        ? getItemResponse.data.ownerId
+        : 0;
+      let getUserInfo = await axios.get(`${BASE_URL}/users/${userId}`);
+      let ownerUsername = getUserInfo.data.userName
+        ? getUserInfo.data.userName
+        : "Unavailable";
+      let item = {
+        ...getItemResponse.data,
+        ownerUsername,
+      };
+      dispatch(loadItemDetailSuccess(item));
     } catch (error) {
       if (error.response.status === 404) {
         dispatch(
@@ -153,7 +169,7 @@ export const deletePosting = (itemId) => {
   return async (dispatch) => {
     try {
       dispatch(setLoading());
-      await axios.delete(`${BASE_URL}/${itemId}`);
+      await axios.delete(`${BASE_URL}/postings/${itemId}`);
       dispatch(deletePostingSuccess(itemId));
     } catch (error) {
       dispatch(deletePostingError());
@@ -165,7 +181,7 @@ export const updateItemDetail = (itemId, details) => {
   return async (dispatch) => {
     try {
       dispatch(setLoading());
-      await axios.patch(`${BASE_URL}/${itemId}`, details);
+      await axios.patch(`${BASE_URL}/postings/${itemId}`, details);
       dispatch(updateItemDetailSuccess(itemId, details));
     } catch (error) {
       dispatch(updateItemDetailError());

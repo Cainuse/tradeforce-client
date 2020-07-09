@@ -5,11 +5,11 @@ import {
   UPDATE_ITEM_DETAIL,
   DELETE_POSTING,
 } from "../constants/actionTypes";
-import _ from "lodash";
 
 const initialState = { itemDetail: {} };
 
 const loadItemDetail = (item) => {
+  console.log(item);
   return item;
 };
 
