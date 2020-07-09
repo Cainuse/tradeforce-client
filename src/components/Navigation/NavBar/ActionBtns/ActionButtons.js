@@ -120,12 +120,10 @@ const LoggedInActionItems = (props) => {
         iconBtnClass={classes.iconBtn}
         notificationBtnClass={classes.notificationBtn}
       />
-      {/*<MenuListComposition />*/}
       <AccountBtn
         iconBtnClass={classes.iconBtn}
         accountBtnClass={classes.accountBtn}
       />
-      {/*<SimpleMenu />*/}
     </div>
   );
 };
