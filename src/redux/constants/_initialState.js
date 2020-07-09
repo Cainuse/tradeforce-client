@@ -135,11 +135,11 @@ export const initialState = {
     },
   ],
   currentUser: {
-    id: "591024",
-    userName: "shellstrop",
-    postalCode: "V3L0A5",
-    location: "New Westminster, BC",
+    isFetching: false,
+    isFailed: false,
+    user: null,
   },
+  error: null,
   itemDetail: {
     id: 5,
     title: "Sourdough + Tomatoes",

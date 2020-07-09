@@ -40,7 +40,7 @@ const UserProfile = (props) => {
     <div>
       <div className={classes.hero}></div>
       <div className={classes.container}>
-        <ProfileCard userDetail={userDetail} />
+        <ProfileCard userDetail={userDetail} currentUser={currentUser} />
         <UserDetails
           userDetail={userDetail}
           currentUser={currentUser}

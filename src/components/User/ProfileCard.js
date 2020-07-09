@@ -1,8 +1,11 @@
 import React from "react";
+import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import UserAvatar from "./UserAvatar";
 import shellstrop from "../../images/shellstrop.jpg";
+import GoogleLogoutBtn from "../Login/GoogleLogoutBtn";
+import LogoutBtn from "../Login/LogoutBtn";
 
 const useStyles = makeStyles((theme) => ({
   profile: {
@@ -23,9 +26,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ProfileCard(props) {
-  let { userDetail } = props;
+const ProfileCard = (props) => {
+  let { userDetail, currentUser } = props;
   const classes = useStyles();
+  console.log(currentUser);
 
   return (
     <div className={classes.profile}>
@@ -36,6 +40,13 @@ export default function ProfileCard(props) {
       <Typography className={classes.username}>
         {userDetail.userName}
       </Typography>
+      {currentUser.user.isGoogleUser ? (
+        <GoogleLogoutBtn />
+      ) : (
+        <LogoutBtn logout={props.logout} />
+      )}
     </div>
   );
-}
+};
+
+export default connect()(ProfileCard);
