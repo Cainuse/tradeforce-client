@@ -12,8 +12,11 @@ import {
   openPostingModal,
   openLoginModal,
 } from "../../../../redux/actions/modalActions";
+import AccountBtn from "./AccountBtn";
 
 import { connect } from "react-redux";
+import SimpleMenu from "./AccountBtn";
+import MenuListComposition from "./MenuListComposition";
 
 const loggedOutStyles = makeStyles(() => ({
   loginBtn: {
@@ -103,20 +106,6 @@ const NotificationBtn = (props) => {
   );
 };
 
-const AccountBtn = (props) => {
-  const history = useHistory();
-  return (
-    <IconButton
-      className={props.iconBtnClass}
-      color="inherit"
-      aria-label="accountButton"
-      onClick={() => history.push("/profile")}
-    >
-      <AccountCircleOutlinedIcon className={props.accountBtnClass} />
-    </IconButton>
-  );
-};
-
 /**
  * MAIN: Logged Out Action Item Components
  **/
@@ -135,10 +124,12 @@ const LoggedInActionItems = (props) => {
         iconBtnClass={classes.iconBtn}
         notificationBtnClass={classes.notificationBtn}
       />
+      {/*<MenuListComposition />*/}
       <AccountBtn
         iconBtnClass={classes.iconBtn}
         accountBtnClass={classes.accountBtn}
       />
+      {/*<SimpleMenu />*/}
     </div>
   );
 };
