@@ -9,7 +9,6 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Rating from "./Rating";
-import { useHistory, useRouteMatch } from "react-router-dom";
 import { loadItemDetail } from "../../redux/actions/postingActions";
 import { connect } from "react-redux";
 
@@ -35,8 +34,6 @@ const ItemPreview = ({
   loadItemDetail,
   error,
 }) => {
-  const history = useHistory();
-  let { path } = useRouteMatch();
   const classes = useStyles();
 
   const parseDate = (str) => {
@@ -68,10 +65,8 @@ const ItemPreview = ({
   const routeToItem = async (itemId) => {
     try {
       await loadItemDetail(itemId);
-      history.push({
-        pathname: path + "/item=" + itemId,
-        search: "items",
-      });
+      window.location.href =
+        window.location.origin + "/items" + "/item=" + itemId;
     } catch (e) {
       console.log(error);
       /* no redirect; snackbar gives error feedback */
