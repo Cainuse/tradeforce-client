@@ -1,22 +1,22 @@
-import React from 'react';
-import Button from '@material-ui/core/Button';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
+import React from "react";
+import { useHistory } from "react-router";
+import { connect } from "react-redux";
+
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
 import AccountCircleOutlinedIcon from "@material-ui/icons/AccountCircleOutlined";
 import { IconButton } from "@material-ui/core";
-import { useHistory } from "react-router";
-import { unsetUser } from "../../../../redux/actions/userActions";
-import { connect } from "react-redux";
-import GoogleLogoutBtn from "../../../Login/GoogleLogoutBtn";
 
+import { unsetUser } from "../../../../redux/actions/userActions";
+import GoogleLogoutBtn from "../../../Login/GoogleLogoutBtn";
 
 const getLogoutMenuItem = (currentUser, handleClickLogout) => {
   return currentUser.user.isGoogleUser ? (
     <GoogleLogoutBtn />
   ) : (
     <MenuItem onClick={handleClickLogout}>Logout</MenuItem>
-  )
-}
+  );
+};
 
 function AccountBtn(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -29,13 +29,13 @@ function AccountBtn(props) {
   const handleClickProfile = () => {
     history.push("/profile");
     setAnchorEl(null);
-  }
+  };
 
   const handleClickLogout = () => {
     localStorage.removeItem("token");
     props.unsetUser();
     history.push("/");
-  }
+  };
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -49,7 +49,7 @@ function AccountBtn(props) {
         aria-label="accountButton"
         onClick={handleClick}
       >
-        <AccountCircleOutlinedIcon className={props.accountBtnClass}/>
+        <AccountCircleOutlinedIcon className={props.accountBtnClass} />
       </IconButton>
       <Menu
         id="simple-menu"
@@ -57,7 +57,7 @@ function AccountBtn(props) {
         getContentAnchorEl={null}
         anchorOrigin={{
           vertical: "bottom",
-          horizontal: "right"
+          horizontal: "right",
         }}
         transformOrigin={{
           vertical: "top",

@@ -9,8 +9,7 @@ import {
   logoutSuccess,
   logoutError,
 } from "../../redux/actions/snackbarActions";
-import MenuItem from '@material-ui/core/MenuItem';
-
+import MenuItem from "@material-ui/core/MenuItem";
 
 const useStyles = makeStyles((theme) => ({
   googleBtn: {
@@ -33,7 +32,7 @@ const GoogleLogoutBtn = ({
     history.push("/");
     unsetUser();
     logoutSuccess("Successfully logged out!");
-    // closeModal();
+    closeModal();
     return response;
   };
 
@@ -47,10 +46,14 @@ const GoogleLogoutBtn = ({
       clientId={process.env.REACT_APP_CLIENT_ID}
       className={classes.googleBtn}
       buttonText="Sign out using Google"
-      render={(GoogleLogoutBtn) => (<MenuItem onClick={GoogleLogoutBtn.onClick}>Logout</MenuItem>)}
+      render={(GoogleLogoutBtn) => (
+        <MenuItem onClick={GoogleLogoutBtn.onClick}>Logout</MenuItem>
+      )}
       onLogoutSuccess={logout}
       onFailure={handleLogoutFailure}
-    > </GoogleLogout>
+    >
+      {" "}
+    </GoogleLogout>
   );
 };
 

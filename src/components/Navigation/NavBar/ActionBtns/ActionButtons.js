@@ -1,22 +1,18 @@
 import React from "react";
+import { connect } from "react-redux";
+
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import { IconButton } from "@material-ui/core";
-import { useHistory } from "react-router";
 import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
 import NotificationsNoneOutlinedIcon from "@material-ui/icons/NotificationsNoneOutlined";
-import AccountCircleOutlinedIcon from "@material-ui/icons/AccountCircleOutlined";
+
 import { unsetUser } from "../../../../redux/actions/userActions";
-import GoogleLogoutBtn from "../../../Login/GoogleLogoutBtn";
 import {
   openPostingModal,
   openLoginModal,
 } from "../../../../redux/actions/modalActions";
 import AccountBtn from "./AccountBtn";
-
-import { connect } from "react-redux";
-import SimpleMenu from "./AccountBtn";
-import MenuListComposition from "./MenuListComposition";
 
 const loggedOutStyles = makeStyles(() => ({
   loginBtn: {
