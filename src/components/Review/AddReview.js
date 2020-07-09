@@ -42,7 +42,7 @@ const useStyles = (theme) => ({
   },
 });
 
-class AddReview extends React.Component {
+class ReviewModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -57,7 +57,7 @@ class AddReview extends React.Component {
     this.setState({ [name]: value });
   };
 
-  handleSubmit = (e) => {
+  handleSubmit = () => {
     console.log("submit");
   };
 
@@ -133,4 +133,4 @@ class AddReview extends React.Component {
   }
 }
 
-export default withStyles(useStyles)(AddReview);
+export default withStyles(useStyles)(ReviewModal);
