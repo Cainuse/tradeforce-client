@@ -1,12 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import ItemPreview from "../Item/ItemPreview";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
 import SearchBar from "../Item/SearchBar";
 import { makeStyles } from "@material-ui/core/styles";
-import { useParams } from "react-router-dom";
-import { loadPostingsByCategory } from "../../redux/actions/postingActions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,16 +22,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // this is the page with all the item previews displayed (also includes the result to searching for a specific item)
-const ItemResults = ({ postings, loadPostingsByCategory }) => {
+const ItemResults = ({ postings }) => {
   const classes = useStyles();
-  const params = useParams();
-  useEffect(() => {
-    let category = params.category === "all" ? "" : params.category;
-    async function fetchData() {
-      await loadPostingsByCategory(category);
-    }
-    fetchData();
-  }, []);
 
   return (
     <Container className={classes.root}>
@@ -64,6 +54,4 @@ const mapStateToProps = (state) => ({
   postings: state.postings,
 });
 
-export default connect(mapStateToProps, { loadPostingsByCategory })(
-  ItemResults
-);
+export default connect(mapStateToProps)(ItemResults);

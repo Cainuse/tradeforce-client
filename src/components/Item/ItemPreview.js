@@ -33,6 +33,7 @@ const ItemPreview = ({
   location,
   images,
   loadItemDetail,
+  error,
 }) => {
   const history = useHistory();
   let { path } = useRouteMatch();
@@ -65,11 +66,16 @@ const ItemPreview = ({
   };
 
   const routeToItem = async (itemId) => {
-    await loadItemDetail(itemId);
-    history.push({
-      pathname: path + "/item=" + itemId,
-      search: "items",
-    });
+    try {
+      await loadItemDetail(itemId);
+      history.push({
+        pathname: path + "/item=" + itemId,
+        search: "items",
+      });
+    } catch (e) {
+      console.log(error);
+      /* no redirect; snackbar gives error feedback */
+    }
   };
 
   return (
@@ -110,4 +116,8 @@ const ItemPreview = ({
   );
 };
 
-export default connect(null, { loadItemDetail })(ItemPreview);
+const mapStateToProps = (state) => ({
+  error: state.error,
+});
+
+export default connect(mapStateToProps, { loadItemDetail })(ItemPreview);

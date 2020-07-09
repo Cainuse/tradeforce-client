@@ -39,6 +39,13 @@ const loadItemDetailSuccess = (item) => {
   };
 };
 
+const loadItemDetailError = (msg) => {
+  return {
+    type: ERROR_SNACKBAR,
+    msg: msg,
+  };
+};
+
 const updateItemDetailSuccess = (itemId, details) => {
   return {
     type: UPDATE_ITEM_DETAIL,
@@ -119,7 +126,16 @@ export const loadItemDetail = (itemId) => {
       let getItemResponse = await axios.get(`${BASE_URL}/${itemId}`);
       dispatch(loadItemDetailSuccess(getItemResponse.data));
     } catch (error) {
-      console.log(error);
+      if (error.response.status === 404) {
+        dispatch(
+          loadItemDetailError("Something went wrong. Posting not found")
+        );
+      } else {
+        dispatch(
+          loadItemDetailError("Something went wrong. Please try again later")
+        );
+      }
+      throw new Error(error);
     }
   };
 };
