@@ -1,8 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
-import { Modal } from "@material-ui/core";
 import { closeModal } from "../redux/actions/modalActions";
+
 import {
   OFFER_MODAL,
   POSTING_MODAL,
@@ -10,6 +10,7 @@ import {
 } from "../redux/constants/modalTypes";
 import AddPosting from "../components/AddPosting/AddPosting";
 import AddOffering from "./AddOffering/AddOffering";
+import { Dialog } from "@material-ui/core";
 import LoginModal from "./Login/Login";
 
 //--------------- Helper: Error for if wrong modal type is given -------------//
@@ -37,7 +38,9 @@ const modalStyles = makeStyles(() => ({
     alignItems: "center",
     justifyContent: "center",
     margin: "0 auto",
-    width: "50%",
+    width: "40%",
+    height: "100%",
+    maxHeight: "100vh",
   },
   modalContents: {
     display: "flex",
@@ -56,6 +59,8 @@ const chooseModalContents = (props) => {
       return <AddPosting />;
     case LOGIN_MODAL:
       return <LoginModal />;
+    case "":
+      return null;
     default:
       return <ErrorModal />;
   }
@@ -65,18 +70,21 @@ const MakeModalContainer = (props) => {
   let classes = modalStyles();
 
   return (
-    <Modal
+    <Dialog
       className={classes.modalContainer}
       open={props.modal.isOpen}
       onClose={() => {
         props.closeModal();
       }}
+      scroll={"paper"}
+      maxWidth={"xl"}
+      fullWidth={false}
       disableScrollLock={true}
       aria-labelledby="simple-modal-title"
       aria-describedby="simple-modal-description"
     >
       <div className={classes.modalContents}>{chooseModalContents(props)}</div>
-    </Modal>
+    </Dialog>
   );
 };
 

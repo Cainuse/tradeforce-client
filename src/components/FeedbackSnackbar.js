@@ -15,17 +15,22 @@ const FeedbackSnackbar = (props) => {
     clearSnackbar();
   };
 
-  return (
-    <Snackbar
-      open={snackbar.isOpen}
-      autoHideDuration={6000}
-      onClose={handleClose}
-    >
-      <Alert onClose={handleClose} severity={snackbar.type}>
-        {snackbar.message}
-      </Alert>
-    </Snackbar>
-  );
+  if (snackbar.isOpen) {
+    return (
+      <Snackbar
+        anchorOrigin={snackbar.position}
+        open={snackbar.isOpen}
+        autoHideDuration={6000}
+        onClose={handleClose}
+      >
+        <Alert onClose={handleClose} severity={snackbar.type}>
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
+    );
+  } else {
+    return null;
+  }
 };
 
 const mapStateToProps = (state) => ({ snackbar: state.snackbar });
