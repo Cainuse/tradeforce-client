@@ -9,8 +9,12 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Rating from "./Rating";
-import { loadItemDetail } from "../../redux/actions/postingActions";
+import {
+  loadItemDetail,
+  displayError,
+} from "../../redux/actions/postingActions";
 import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(() => ({
   tradeItemCard: {
@@ -26,15 +30,16 @@ const useStyles = makeStyles(() => ({
 }));
 
 const ItemPreview = ({
-  id,
+  _id,
   title,
-  datePosted,
+  date,
   location,
   images,
-  postings,
   loadItemDetail,
+  displayError,
 }) => {
   const classes = useStyles();
+  const history = useHistory();
 
   const parseDate = (str) => {
     return new Date(str);
@@ -62,28 +67,35 @@ const ItemPreview = ({
       : "Posted " + Math.round(diffDays / 365) + " years ago";
   };
 
-  const routeToItem = (itemId) => {
-    loadItemDetail(itemId, postings);
-    window.location.href =
-      window.location.origin + "/items" + "/item=" + itemId;
+  const routeToItem = async (itemId) => {
+    try {
+      await loadItemDetail(itemId);
+      history.push({
+        pathname: "/items/item=" + itemId,
+      });
+    } catch (e) {
+      if (e.message === 404) {
+        displayError("Something went wrong. Item could not be found.");
+      } else {
+        displayError("Item could not be loaded. Please try again later");
+      }
+    }
   };
 
   return (
     <Card className={classes.tradeItemCard} elevation={2}>
-      <CardActionArea onClick={() => routeToItem(id)}>
+      <CardActionArea onClick={() => routeToItem(_id)}>
         <CardMedia
           className={classes.tradeItemCardImg}
           image={
-            images.length > 0
-              ? require(`../../images/${images[0].name}`)
-              : require(`../../images/default.jpg`)
+            images.length > 0 ? images[0] : require("../../images/default.jpg")
           }
           title="Tradeforce"
         />
         <CardContent>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <Typography variant="body2">{getDate(datePosted)}</Typography>
+              <Typography variant="body2">{getDate(date)}</Typography>
             </Grid>
             <Grid item xs={12}>
               <Typography variant="h6" component="h2" color="primary">
@@ -99,7 +111,7 @@ const ItemPreview = ({
         </CardContent>
       </CardActionArea>
       <CardActions className={classes.bottom}>
-        <Button size="small" color="primary" onClick={() => routeToItem(id)}>
+        <Button size="small" color="primary" onClick={() => routeToItem(_id)}>
           Details
         </Button>
         <Rating isReadOnly={true} />
@@ -108,4 +120,10 @@ const ItemPreview = ({
   );
 };
 
-export default connect(null, { loadItemDetail })(ItemPreview);
+const mapStateToProps = (state) => ({
+  error: state.error,
+});
+
+export default connect(mapStateToProps, { loadItemDetail, displayError })(
+  ItemPreview
+);

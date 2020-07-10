@@ -6,32 +6,44 @@ import {
   DELETE_POSTING,
 } from "../constants/actionTypes";
 
-import _ from "lodash";
+const loadItemDetail = (item) => {
+  return item;
+};
 
-export const itemDetailReducer = (state = initialState.itemDetail, action) => {
-  if (action.type === LOAD_ITEM_DETAIL) {
-    let { itemId, postings } = action;
-    let newState = _.find(postings, { id: itemId });
-    if (newState) {
-      return newState;
-    }
-  } else if (action.type === MAKE_OFFER) {
-    let updatedOffering = state.offerings.concat(action.offering);
-    let newState = {
-      ...state,
-      offerings: updatedOffering,
-    };
-    return newState;
-  } else if (action.type === UPDATE_ITEM_DETAIL) {
-    let { itemId, details } = action;
-    if (state.id === itemId) {
-      return { ...state, ...details };
-    }
-  } else if (action.type === DELETE_POSTING) {
-    let { itemId } = action;
-    if (state.id === itemId) {
-      return {};
-    }
+const updateItemDetail = (state, itemId, details) => {
+  if (state._id === itemId) {
+    return { ...state, ...details };
   }
   return state;
+};
+
+const deletePosting = () => {
+  return {};
+};
+
+const makeOffer = (state, action) => {
+  if (!state.offerings) {
+    state["offerings"] = [];
+  }
+  let updatedOffering = state.offerings.concat(action.offering);
+  let newState = {
+    ...state,
+    offerings: updatedOffering,
+  };
+  return newState;
+};
+
+export const itemDetailReducer = (state = initialState.itemDetail, action) => {
+  switch (action.type) {
+    case LOAD_ITEM_DETAIL:
+      return loadItemDetail(action.item);
+    case UPDATE_ITEM_DETAIL:
+      return updateItemDetail(state, action.itemId, action.details);
+    case DELETE_POSTING:
+      return deletePosting();
+    case MAKE_OFFER:
+      return makeOffer(state, action);
+    default:
+      return state;
+  }
 };

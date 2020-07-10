@@ -6,6 +6,8 @@ import { userReducer } from "./userReducer";
 import { itemDetailReducer } from "./itemDetailReducer";
 import { userDetailReducer } from "./userDetailReducer";
 import { snackbarReducer } from "./snackbarReducer";
+import { loadingReducer } from "./loadingReducer";
+import { errorReducer } from "./errorReducer";
 
 const rootReducer = combineReducers({
   flyoutIsOpen: flyoutReducer,
@@ -15,6 +17,8 @@ const rootReducer = combineReducers({
   itemDetail: itemDetailReducer,
   userDetail: userDetailReducer,
   snackbar: snackbarReducer,
+  loading: loadingReducer,
+  error: errorReducer,
 });
 
 export default rootReducer;
