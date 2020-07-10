@@ -298,7 +298,7 @@ class AddPosting extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  return { currentUser: state.currentUser };
+  return { currentUser: state.currentUser.user };
 };
 
 export default connect(mapStateToProps, { addPosting })(

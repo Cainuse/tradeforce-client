@@ -11,7 +11,7 @@ let useStyles = makeStyles({
 
 const ItemPreviewList = (props) => {
   let classes = useStyles();
-  let { postings, items } = props;
+  let { items } = props;
 
   return (
     <Grid
@@ -26,12 +26,11 @@ const ItemPreviewList = (props) => {
         return (
           <Grid key={index} item xs={3}>
             <ItemPreview
-              id={item.id}
+              _id={item._id}
               title={item.title}
-              datePosted={item.datePosted}
+              date={item.date}
               location={item.location}
               images={item.images}
-              postings={postings} //TODO: remove when BE implemented
             />
           </Grid>
         );

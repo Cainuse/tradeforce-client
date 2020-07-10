@@ -152,20 +152,20 @@ class EditItemDetailsPage extends React.Component {
     this.updateChangedFields("images");
   };
 
-  handleSubmit = () => {
+  handleSubmit = async () => {
     if (!this.validateRequiredFields()) {
       // console.log(this.state.changedFields);
       let details = _.pick(this.state, this.state.changedFields);
-      this.props.updateItemDetail(this.state.id, details);
+      await this.props.updateItemDetail(this.state._id, details);
       this.redirect();
     } else {
       window.alert("Please fill required fields");
     }
   };
 
-  handleDeletePosting = () => {
+  handleDeletePosting = async () => {
     let { history, deletePosting } = this.props;
-    deletePosting(this.state.id);
+    await deletePosting(this.state._id);
     history.go(-2);
   };
 

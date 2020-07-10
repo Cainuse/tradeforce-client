@@ -50,16 +50,17 @@ export const snackbarReducer = (state = initialState.snackbar, action) => {
           horizontal: "center",
         },
       };
+    // case ERROR_SNACKBAR:
+    //   return {
+    //     isOpen: true,
+    //     type: "error",
+    //     message: action.errMessage,
+    //     position: {
+    //       vertical: "top",
+    //       horizontal: "center",
+    //     },
+    //   };
     case ERROR_SNACKBAR:
-      return {
-        isOpen: true,
-        type: "error",
-        message: action.errMessage,
-        position: {
-          vertical: "top",
-          horizontal: "center",
-        },
-      };
     case REGISTER_ERROR:
       return {
         isOpen: true,

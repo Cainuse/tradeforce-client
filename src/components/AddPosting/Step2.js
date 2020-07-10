@@ -82,7 +82,7 @@ class Step2 extends React.Component {
       .forEach((file) => {
         let reader = new FileReader();
         reader.onloadend = () => {
-          this.props.addImage([{ name: file.name, url: reader.result }]);
+          this.props.addImage([reader.result]);
         };
         reader.readAsDataURL(file);
       });
@@ -131,11 +131,7 @@ class Step2 extends React.Component {
           {images.map((img, idx) => {
             return (
               <div key={idx} className={classes.imgDiv}>
-                <img
-                  src={img.url}
-                  alt="something"
-                  className={classes.imgPreview}
-                />
+                <img src={img} alt="something" className={classes.imgPreview} />
                 <IconButton
                   aria-label="delete image"
                   component="span"
