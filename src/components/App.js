@@ -51,8 +51,6 @@ const App = ({ dispatch }) => {
 
     if (token) {
       const user = jwt(token);
-      console.log("user in token!");
-      console.log(user);
       dispatch(setLoading(true));
       dispatch(authenticateUser(token))
         .then(() => {
