@@ -5,7 +5,7 @@ import Divider from "@material-ui/core/Divider";
 import { makeStyles } from "@material-ui/core/styles";
 import ReviewSection from "./ReviewSection";
 import ItemDetailContainer from "./ItemDetailContainer";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 
 // Item Details page for in-depth view of offered items
@@ -29,16 +29,9 @@ function ItemPage(props) {
   let { itemDetail } = props;
   const classes = useStyles();
   const history = useHistory();
-  const location = useLocation();
-  const pathItems = location.pathname.split("/");
-  // const parentPath = location.pathname.substring(
-  //   0,
-  //   location.pathname.lastIndexOf("/")
-  // );
-  const parentPath = "/" + pathItems[1];
 
   const redirect = () => {
-    history.push(parentPath + "/" + location.search);
+    history.goBack();
   };
 
   return (
