@@ -26,5 +26,6 @@ export const initialState = {
     postalCode: "V3L0A5",
     location: "New Westminster, BC",
     postings: [],
+    reviews: [],
   },
 };

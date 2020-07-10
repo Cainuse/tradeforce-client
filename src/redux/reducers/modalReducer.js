@@ -4,11 +4,13 @@ import {
   OPEN_OFFER_MODAL,
   OPEN_POSTING_MODAL,
   OPEN_LOGIN_MODAL,
+  OPEN_REVIEW_MODAL,
 } from "../constants/actionTypes";
 import {
   OFFER_MODAL,
   POSTING_MODAL,
   LOGIN_MODAL,
+  REVIEW_MODAL,
 } from "../constants/modalTypes";
 
 export const modalReducer = (state = initialState.modal, action) => {
@@ -32,6 +34,11 @@ export const modalReducer = (state = initialState.modal, action) => {
       return {
         isOpen: true,
         type: LOGIN_MODAL,
+      };
+    case OPEN_REVIEW_MODAL:
+      return {
+        isOpen: true,
+        type: REVIEW_MODAL,
       };
     default:
       return {

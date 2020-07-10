@@ -3,6 +3,7 @@ import {
   OPEN_OFFER_MODAL,
   OPEN_POSTING_MODAL,
   OPEN_LOGIN_MODAL,
+  OPEN_REVIEW_MODAL,
 } from "../constants/actionTypes";
 
 export const closeModal = () => {
@@ -26,5 +27,11 @@ export const openPostingModal = () => {
 export const openLoginModal = () => {
   return {
     type: OPEN_LOGIN_MODAL,
+  };
+};
+
+export const openReviewModal = () => {
+  return {
+    type: OPEN_REVIEW_MODAL,
   };
 };

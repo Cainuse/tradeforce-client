@@ -9,6 +9,9 @@ import TabLabel from "./TabLabel";
 import ReviewList from "../Review/ReviewList";
 import ItemPreviewList from "../Item/ItemPreviewList";
 import _ from "lodash";
+import Button from "@material-ui/core/Button";
+import { openReviewModal } from "../../redux/actions/modalActions";
+import { connect } from "react-redux";
 
 const useStyles = (theme) => ({
   root: {
@@ -16,6 +19,13 @@ const useStyles = (theme) => ({
   },
   tab: {
     margin: theme.spacing(0, 5),
+  },
+  reviewButton: {
+    color: theme.palette.primary.main,
+  },
+  reviewButtonContainer: {
+    display: "flex",
+    justifyContent: "flex-end",
   },
 });
 
@@ -32,7 +42,13 @@ class UserDetails extends React.Component {
   };
 
   render() {
-    const { classes, userDetail, currentUser, postings } = this.props;
+    const {
+      classes,
+      userDetail,
+      currentUser,
+      postings,
+      openReviewModal,
+    } = this.props;
     let activePostings = _.filter(userDetail.postings, (val) => val.active);
     let inactivePostings = _.filter(userDetail.postings, (val) => !val.active);
     return (
@@ -61,7 +77,9 @@ class UserDetails extends React.Component {
             className={classes.tab}
           />
           <Tab
-            label={<TabLabel value={30} title={"Reviews"} />}
+            label={
+              <TabLabel value={userDetail.reviews.length} title={"Reviews"} />
+            }
             className={classes.tab}
           />
           {userDetail.id === currentUser.id ? (
@@ -78,7 +96,21 @@ class UserDetails extends React.Component {
           <ItemPreviewList items={inactivePostings} postings={postings} />
         </TabPanel>
         <TabPanel value={this.state.value} index={2}>
-          <ReviewList elevation={1} colour={"#FFFFFF"} />
+          {userDetail._id !== currentUser._id && (
+            <div className={classes.reviewButtonContainer}>
+              <Button
+                onClick={openReviewModal}
+                className={classes.reviewButton}
+              >
+                Add Review
+              </Button>
+            </div>
+          )}
+          <ReviewList
+            elevation={1}
+            colour={"#FFFFFF"}
+            reviews={userDetail.reviews}
+          />
         </TabPanel>
         <TabPanel value={this.state.value} index={3}>
           Item Three
@@ -88,4 +120,6 @@ class UserDetails extends React.Component {
   }
 }
 
-export default withStyles(useStyles)(UserDetails);
+export default connect(null, { openReviewModal })(
+  withStyles(useStyles)(UserDetails)
+);
