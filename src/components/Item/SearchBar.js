@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import InputBase from "@material-ui/core/InputBase";
@@ -7,6 +7,7 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
 import DirectionsIcon from "@material-ui/icons/Directions";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,9 +31,23 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CustomizedInputBase() {
   const classes = useStyles();
+  const history = useHistory();
+  const [input, setInput] = useState("");
+
+  const handleChange = (e) => {
+    setInput(e.target.value);
+    e.stopPropagation();
+  };
+
+  const handleSubmit = () => {
+    history.push({
+      pathname: "/items",
+      search: `search=${input}`,
+    });
+  };
 
   return (
-    <Paper component="form" className={classes.root}>
+    <Paper className={classes.root}>
       <IconButton className={classes.iconButton} aria-label="menu">
         <MenuIcon />
       </IconButton>
@@ -40,11 +55,13 @@ export default function CustomizedInputBase() {
         className={classes.input}
         placeholder="I am looking for"
         inputProps={{ "aria-label": "search google maps" }}
+        onChange={handleChange}
       />
       <IconButton
         type="submit"
         className={classes.iconButton}
         aria-label="search"
+        onClick={handleSubmit}
       >
         <SearchIcon />
       </IconButton>
