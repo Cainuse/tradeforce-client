@@ -110,11 +110,13 @@ export const loginUserAsync = (email, password, googleInfo) => {
       );
     } catch (err) {
       if (googleInfo) {
-        dispatch(displaySuccess("Successfully logged in through Google.com!"));
+        dispatch(displaySuccess("Successfully logged in through Google!"));
         dispatch(closeModal());
         return dispatch(
           registerUserAsync(
             googleInfo.userName,
+            googleInfo.fName,
+            googleInfo.lName,
             email,
             "None",
             googleInfo.dateRegistered,
@@ -146,6 +148,8 @@ export const loginUserAsync = (email, password, googleInfo) => {
         setUser(
           respData.user._id,
           respData.user.userName,
+          respData.user.firstName,
+          respData.user.lastName,
           respData.user.email,
           respData.user.dateRegistered,
           respData.user.isGoogleUser
@@ -176,6 +180,8 @@ export const authenticateUser = (token) => {
         setUser(
           user._id,
           user.userName,
+          user.firstName,
+          user.lastName,
           user.email,
           user.dateRegistered,
           user.isGoogleUser

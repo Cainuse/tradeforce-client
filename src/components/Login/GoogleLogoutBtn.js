@@ -51,9 +51,7 @@ const GoogleLogoutBtn = ({
       )}
       onLogoutSuccess={logout}
       onFailure={handleLogoutFailure}
-    >
-      {" "}
-    </GoogleLogout>
+    />
   );
 };
 

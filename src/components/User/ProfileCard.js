@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import UserAvatar from "./UserAvatar";
 import shellstrop from "../../images/shellstrop.jpg";
+import { displayError } from "../../redux/actions/snackbarActions";
 
 const useStyles = makeStyles((theme) => ({
   profile: {
@@ -34,4 +35,4 @@ const ProfileCard = (props) => {
   );
 };
 
-export default connect()(ProfileCard);
+export default connect(null, { displayError })(ProfileCard);

@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core";
 import hero from "../../images/hero.png";
 import UserDetails from "../User/UserDetails";
 import { connect } from "react-redux";
+import { displayError } from "../../redux/actions/snackbarActions";
 
 const useStyles = makeStyles(() => ({
   hero: {
@@ -36,19 +37,24 @@ const UserProfile = (props) => {
   let { userDetail, currentUser, postings } = props;
   const classes = useStyles();
 
-  return (
-    <div>
-      <div className={classes.hero}></div>
-      <div className={classes.container}>
-        <ProfileCard userDetail={userDetail} currentUser={currentUser} />
-        <UserDetails
-          userDetail={userDetail}
-          currentUser={currentUser}
-          postings={postings}
-        />
+  if (currentUser.user) {
+    return (
+      <div>
+        <div className={classes.hero}></div>
+        <div className={classes.container}>
+          <ProfileCard userDetail={userDetail} currentUser={currentUser} />
+          <UserDetails
+            userDetail={userDetail}
+            currentUser={currentUser}
+            postings={postings}
+          />
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
+
+  props.displayError("User is logged out. Profile page does not exist.");
+  return null;
 };
 
 const mapStateToProps = (state) => ({
@@ -57,4 +63,8 @@ const mapStateToProps = (state) => ({
   postings: state.postings,
 });
 
-export default connect(mapStateToProps)(UserProfile);
+const mapDispatchToProps = (dispatch) => ({
+  displayError: (msg) => dispatch(displayError(msg)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserProfile);
