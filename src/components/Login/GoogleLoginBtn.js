@@ -22,10 +22,7 @@ const GoogleBtn = ({
   const classes = useStyles();
 
   const login = async (response) => {
-    const userName = response.profileObj.name;
-    const fName = response.profileObj.givenName;
-    const lName = response.profileObj.familyName;
-    const email = response.profileObj.email;
+    const { userName, email, givenName, familyName } = response.profileObj;
     const password = "googlePassword";
     const postalCode = "None";
     const dateRegistered = new Date();
@@ -33,8 +30,8 @@ const GoogleBtn = ({
     if (response.accessToken) {
       await loginUserAsync(email, password, {
         userName,
-        fName,
-        lName,
+        givenName,
+        familyName,
         postalCode,
         dateRegistered,
       });

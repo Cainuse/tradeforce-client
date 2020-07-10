@@ -115,8 +115,8 @@ export const loginUserAsync = (email, password, googleInfo) => {
         return dispatch(
           registerUserAsync(
             googleInfo.userName,
-            googleInfo.fName,
-            googleInfo.lName,
+            googleInfo.givenName,
+            googleInfo.familyName,
             email,
             "None",
             googleInfo.dateRegistered,
