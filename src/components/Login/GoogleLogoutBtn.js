@@ -6,9 +6,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import { unsetUser } from "../../redux/actions/userActions";
 import { closeModal } from "../../redux/actions/modalActions";
 import {
-  logoutSuccess,
-  logoutError,
+  displaySuccess,
+  displayError,
 } from "../../redux/actions/snackbarActions";
+import MenuItem from "@material-ui/core/MenuItem";
 
 const useStyles = makeStyles((theme) => ({
   googleBtn: {
@@ -32,10 +33,12 @@ const GoogleLogoutBtn = ({
     unsetUser();
     logoutSuccess("Successfully logged out!");
     closeModal();
+    return response;
   };
 
   const handleLogoutFailure = (response) => {
     logoutError("Failed to logout! Try again.");
+    return response;
   };
 
   return (
@@ -43,9 +46,12 @@ const GoogleLogoutBtn = ({
       clientId={process.env.REACT_APP_CLIENT_ID}
       className={classes.googleBtn}
       buttonText="Sign out using Google"
+      render={(GoogleLogoutBtn) => (
+        <MenuItem onClick={GoogleLogoutBtn.onClick}>Logout</MenuItem>
+      )}
       onLogoutSuccess={logout}
       onFailure={handleLogoutFailure}
-    ></GoogleLogout>
+    />
   );
 };
 
@@ -56,8 +62,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   unsetUser: () => dispatch(unsetUser()),
   closeModal: () => dispatch(closeModal()),
-  logoutSuccess: (msg) => dispatch(logoutSuccess(msg)),
-  logoutError: (msg) => dispatch(logoutError(msg)),
+  logoutSuccess: (msg) => dispatch(displaySuccess(msg)),
+  logoutError: (msg) => dispatch(displayError(msg)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(GoogleLogoutBtn);

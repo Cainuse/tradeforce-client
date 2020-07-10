@@ -4,8 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import UserAvatar from "./UserAvatar";
 import shellstrop from "../../images/shellstrop.jpg";
-import GoogleLogoutBtn from "../Login/GoogleLogoutBtn";
-import LogoutBtn from "../Login/LogoutBtn";
+import { displayError } from "../../redux/actions/snackbarActions";
 
 const useStyles = makeStyles((theme) => ({
   profile: {
@@ -32,13 +31,8 @@ const ProfileCard = (props) => {
       <Typography className={classes.name}>
         {currentUser.user.userName}
       </Typography>
-      {currentUser.user.isGoogleUser ? (
-        <GoogleLogoutBtn />
-      ) : (
-        <LogoutBtn logout={props.logout} />
-      )}
     </div>
   );
 };
 
-export default connect()(ProfileCard);
+export default connect(null, { displayError })(ProfileCard);

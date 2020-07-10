@@ -1,19 +1,18 @@
 import React from "react";
+import { connect } from "react-redux";
+
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import { IconButton } from "@material-ui/core";
-import { useHistory } from "react-router";
 import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
 import NotificationsNoneOutlinedIcon from "@material-ui/icons/NotificationsNoneOutlined";
-import AccountCircleOutlinedIcon from "@material-ui/icons/AccountCircleOutlined";
+
 import { unsetUser } from "../../../../redux/actions/userActions";
-import GoogleLogoutBtn from "../../../Login/GoogleLogoutBtn";
 import {
   openPostingModal,
   openLoginModal,
 } from "../../../../redux/actions/modalActions";
-
-import { connect } from "react-redux";
+import AccountBtn from "./AccountBtn";
 
 const loggedOutStyles = makeStyles(() => ({
   loginBtn: {
@@ -99,20 +98,6 @@ const NotificationBtn = (props) => {
       aria-label="chat"
     >
       <NotificationsNoneOutlinedIcon className={props.notificationBtnClass} />
-    </IconButton>
-  );
-};
-
-const AccountBtn = (props) => {
-  const history = useHistory();
-  return (
-    <IconButton
-      className={props.iconBtnClass}
-      color="inherit"
-      aria-label="accountButton"
-      onClick={() => history.push("/profile")}
-    >
-      <AccountCircleOutlinedIcon className={props.accountBtnClass} />
     </IconButton>
   );
 };

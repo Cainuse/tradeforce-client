@@ -5,7 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 let useStyles = makeStyles({
   itemPreviewContainer: {
-    minHeight: "45vh",
+    minHeight: "47.5vh",
   },
 });
 

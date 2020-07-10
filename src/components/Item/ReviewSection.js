@@ -46,7 +46,7 @@ export default function ReviewSection(props) {
           readOnly
         />
       </Box>
-      <ReviewList elevation={0} colour={"#EBEEF1"} />
+      <ReviewList elevation={0} colour={"#EBEEF1"} reviews={[]} />
     </Box>
   );
 }

@@ -4,19 +4,25 @@ import {
   IS_USER_FETCHING,
   IS_USER_FAILED,
 } from "../constants/actionTypes";
-import {
-  registerError,
-  loginError,
-  registerSuccess,
-  loginSuccess,
-} from "./snackbarActions";
+import { displayError, displaySuccess } from "./snackbarActions";
+import { closeModal } from "./modalActions";
 import axios from "axios";
 
-export const setUser = (userId, userName, email, date, isGoogleUser) => {
+export const setUser = (
+  userId,
+  userName,
+  firstName,
+  lastName,
+  email,
+  date,
+  isGoogleUser
+) => {
   return {
     type: SET_USER,
     userId,
     userName,
+    firstName,
+    lastName,
     email,
     date,
     isGoogleUser,
@@ -43,19 +49,23 @@ export const isUserFailed = () => {
 
 export const registerUserAsync = (
   userName,
+  firstName,
+  lastName,
   email,
   postalCode,
   dateRegistered,
   password,
   isGoogleUser
 ) => {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     try {
       dispatch(isUserFetching());
       const createUserResp = await axios.post(
         "http://localhost:3001/api/users",
         {
           userName,
+          firstName,
+          lastName,
           email,
           postalCode,
           dateRegistered,
@@ -66,11 +76,14 @@ export const registerUserAsync = (
       const respData = createUserResp.data;
 
       localStorage.setItem("token", respData.token);
-      dispatch(registerSuccess("Your user was successfully registered!"));
+      dispatch(displaySuccess("Your user was successfully registered!"));
+      dispatch(closeModal());
       return dispatch(
         setUser(
           respData.user._id,
           respData.user.userName,
+          respData.user.firstName,
+          respData.user.lastName,
           respData.user.email,
           respData.user.dateRegistered,
           respData.user.isGoogleUser
@@ -79,24 +92,31 @@ export const registerUserAsync = (
     } catch (err) {
       // error occurred while saving user in db
       dispatch(isUserFailed());
-      return dispatch(registerError(err.response.data.message));
+      return dispatch(displayError(err.response.data.message));
     }
   };
 };
 
 export const loginUserAsync = (email, password, googleInfo) => {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     dispatch(isUserFetching());
+
+    let user;
 
     try {
       // check if email exists in db
-      await axios.get(`http://localhost:3001/api/users/findUser/${email}`);
+      user = await axios.get(
+        `http://localhost:3001/api/users/findUser/${email}`
+      );
     } catch (err) {
       if (googleInfo) {
-        dispatch(loginSuccess("Successfully logged in through Google.com!"));
+        dispatch(displaySuccess("Successfully logged in through Google!"));
+        dispatch(closeModal());
         return dispatch(
           registerUserAsync(
             googleInfo.userName,
+            googleInfo.givenName,
+            googleInfo.familyName,
             email,
             "None",
             googleInfo.dateRegistered,
@@ -106,7 +126,7 @@ export const loginUserAsync = (email, password, googleInfo) => {
         );
       }
       dispatch(isUserFailed());
-      return dispatch(loginError(err.response.data.message));
+      return dispatch(displayError(err.response.data.message));
     }
 
     try {
@@ -116,31 +136,34 @@ export const loginUserAsync = (email, password, googleInfo) => {
         {
           email,
           password,
-          isGoogleLogin: googleInfo !== null,
+          isGoogleLogin: user.data.isGoogleUser,
         }
       );
       const respData = authUserResp.data;
 
       localStorage.setItem("token", respData.token);
-      dispatch(loginSuccess("Successfully logged into the app!"));
+      dispatch(displaySuccess("Successfully logged into the app!"));
+      dispatch(closeModal());
       return dispatch(
         setUser(
           respData.user._id,
           respData.user.userName,
+          respData.user.firstName,
+          respData.user.lastName,
           respData.user.email,
           respData.user.dateRegistered,
-          respData.user.isGoogleUser
+          respData.user.isGoogleUser,
         )
       );
     } catch (err) {
       dispatch(isUserFailed());
-      return dispatch(loginError(err.response.data.message));
+      return dispatch(displayError(err.response.data.message));
     }
   };
 };
 
 export const authenticateUser = (token) => {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     try {
       let config = {
         headers: {
@@ -157,14 +180,16 @@ export const authenticateUser = (token) => {
         setUser(
           user._id,
           user.userName,
+          user.firstName,
+          user.lastName,
           user.email,
           user.dateRegistered,
-          user.isGoogleUser
+          user.isGoogleUser,
         )
       );
     } catch (err) {
       dispatch(isUserFailed());
-      return dispatch(loginError(err.response.data.message));
+      return dispatch(displayError(err.response.data.message));
     }
   };
 };

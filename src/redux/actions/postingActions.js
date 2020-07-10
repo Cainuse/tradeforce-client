@@ -21,7 +21,7 @@ const addPostingSuccess = (posting) => {
 export const displayError = (msg) => {
   return {
     type: ERROR_SNACKBAR,
-    msg: msg,
+    errMessage: msg,
   };
 };
 
@@ -57,7 +57,7 @@ const deletePostingSuccess = (itemId) => {
 export const addPosting = (posting, currentUser) => {
   return async (dispatch) => {
     try {
-      dispatch(setLoading());
+      dispatch(setLoading(true));
       let postingRequest = {
         ...posting,
         ownerId: currentUser._id,
@@ -73,6 +73,8 @@ export const addPosting = (posting, currentUser) => {
       dispatch(addPostingSuccess(postingResponse.data));
     } catch (error) {
       dispatch(displayError("Something went wrong. Posting was not created"));
+    } finally {
+      dispatch(setLoading(false));
     }
   };
 };
@@ -80,11 +82,13 @@ export const addPosting = (posting, currentUser) => {
 export const loadAllPostings = () => {
   return async (dispatch) => {
     try {
-      dispatch(setLoading());
+      dispatch(setLoading(true));
       let postingResponse = await axios.get(`${BASE_URL}/postings`);
       dispatch(loadAllPostingsSuccess(postingResponse.data));
     } catch (error) {
       dispatch(displayError("Something went wrong. Posting was not deleted"));
+    } finally {
+      dispatch(setLoading(false));
     }
   };
 };
@@ -92,7 +96,7 @@ export const loadAllPostings = () => {
 export const loadPostingsByQuery = (query) => {
   return async (dispatch) => {
     try {
-      dispatch(setLoading());
+      dispatch(setLoading(true));
       let url = query
         ? `${BASE_URL}/postings/search/${query}`
         : `${BASE_URL}/postings`;
@@ -102,6 +106,8 @@ export const loadPostingsByQuery = (query) => {
       dispatch(
         displayError("Something went wrong. Postings could not be loaded")
       );
+    } finally {
+      dispatch(setLoading(false));
     }
   };
 };
@@ -109,7 +115,7 @@ export const loadPostingsByQuery = (query) => {
 export const loadItemDetail = (itemId) => {
   return async (dispatch) => {
     try {
-      dispatch(setLoading());
+      dispatch(setLoading(true));
       let getItemResponse = await axios.get(`${BASE_URL}/postings/${itemId}`);
       let userId = getItemResponse.data.ownerId
         ? getItemResponse.data.ownerId
@@ -125,6 +131,8 @@ export const loadItemDetail = (itemId) => {
       dispatch(loadItemDetailSuccess(item));
     } catch (error) {
       throw new Error(error.response.status);
+    } finally {
+      dispatch(setLoading(false));
     }
   };
 };
@@ -132,11 +140,13 @@ export const loadItemDetail = (itemId) => {
 export const deletePosting = (itemId) => {
   return async (dispatch) => {
     try {
-      dispatch(setLoading());
+      dispatch(setLoading(true));
       await axios.delete(`${BASE_URL}/postings/${itemId}`);
       dispatch(deletePostingSuccess(itemId));
     } catch (error) {
       dispatch(displayError("Something went wrong. Posting was not deleted"));
+    } finally {
+      dispatch(setLoading(false));
     }
   };
 };
@@ -144,11 +154,13 @@ export const deletePosting = (itemId) => {
 export const updateItemDetail = (itemId, details) => {
   return async (dispatch) => {
     try {
-      dispatch(setLoading());
+      dispatch(setLoading(true));
       await axios.patch(`${BASE_URL}/postings/${itemId}`, details);
       dispatch(updateItemDetailSuccess(itemId, details));
     } catch (error) {
       dispatch(displayError("Something went wrong. Posting was not updated"));
+    } finally {
+      dispatch(setLoading(false));
     }
   };
 };

@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
+import { connect } from "react-redux";
+import jwt from "jwt-decode";
 import {
   createMuiTheme,
   makeStyles,
@@ -10,7 +12,10 @@ import NavFlyout from "./Navigation/NavFlyout";
 import PathRouter from "./PathRouter";
 import ModalContainer from "./ModalContainer";
 import FeedbackSnackbar from "./FeedbackSnackbar";
+import { authenticateUser } from "../redux/actions/userActions";
 import Loader from "./Loader";
+import { displayError } from "../redux/actions/snackbarActions";
+import { setLoading } from "../redux/actions/loadingActions";
 
 const theme = createMuiTheme({
   palette: {
@@ -36,9 +41,37 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const App = () => {
+const App = ({ dispatch }) => {
   const classes = useStyles();
-  return (
+  const [render, toRender] = useState(false);
+
+  // do all api calls needed to initialize store as app is loading
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      const user = jwt(token);
+      dispatch(setLoading(true));
+      dispatch(authenticateUser(token))
+        .then(() => {
+          dispatch(setLoading(false));
+        })
+        .catch(() => {
+          dispatch(
+            displayError("Error occurred during authentication. Try again!")
+          );
+        })
+        .finally(() => {
+          toRender(true);
+        });
+    } else {
+      toRender(true);
+    }
+  }, []);
+
+  return !render ? (
+    <Loader />
+  ) : (
     <Router>
       <ThemeProvider theme={theme}>
         <Loader />
@@ -56,4 +89,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default connect()(App);

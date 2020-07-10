@@ -5,11 +5,6 @@ import {
   ERROR_SNACKBAR,
   SUCCESS_SNACKBAR,
   UPDATE_ITEM_DETAIL,
-  REGISTER_ERROR,
-  LOGIN_ERROR,
-  LOGOUT_ERROR,
-  REGISTER_SUCCESS,
-  LOGIN_SUCCESS,
 } from "../constants/actionTypes";
 
 const defaultSnackBarPosition = {
@@ -46,50 +41,19 @@ export const snackbarReducer = (state = initialState.snackbar, action) => {
         type: "success",
         message: action.successMessage,
         position: {
-          vertical: "top",
+          vertical: "bottom",
           horizontal: "center",
         },
       };
-    // case ERROR_SNACKBAR:
-    //   return {
-    //     isOpen: true,
-    //     type: "error",
-    //     message: action.errMessage,
-    //     position: {
-    //       vertical: "top",
-    //       horizontal: "center",
-    //     },
-    //   };
     case ERROR_SNACKBAR:
-    case REGISTER_ERROR:
       return {
         isOpen: true,
         type: "error",
-        message: action.msg,
-      };
-    case REGISTER_SUCCESS:
-      return {
-        isOpen: true,
-        type: "success",
-        message: action.msg,
-      };
-    case LOGOUT_ERROR:
-      return {
-        isOpen: true,
-        type: "error",
-        message: action.msg,
-      };
-    case LOGIN_ERROR:
-      return {
-        isOpen: true,
-        type: "error",
-        message: action.msg,
-      };
-    case LOGIN_SUCCESS:
-      return {
-        isOpen: true,
-        type: "success",
-        message: action.msg,
+        message: action.errMessage,
+        position: {
+          vertical: "bottom",
+          horizontal: "center",
+        },
       };
     default:
       return state;

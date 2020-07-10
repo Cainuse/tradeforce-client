@@ -1,11 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { GoogleLogin, GoogleLogout } from "react-google-login";
+import { GoogleLogin } from "react-google-login";
 import { loginUserAsync, unsetUser } from "../../redux/actions/userActions";
-import {
-  logoutSuccess,
-  logoutError,
-} from "../../redux/actions/snackbarActions";
+import { displayError } from "../../redux/actions/snackbarActions";
 import { closeModal } from "../../redux/actions/modalActions";
 import { connect } from "react-redux";
 
@@ -16,12 +13,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const GoogleBtn = ({ loginUserAsync, closeModal }) => {
+const GoogleBtn = ({
+  loginUserAsync,
+  closeModal,
+  displayError,
+  currentUser,
+}) => {
   const classes = useStyles();
 
   const login = async (response) => {
-    const userName = response.profileObj.name;
-    const email = response.profileObj.email;
+    const { name, email, givenName, familyName } = response.profileObj;
+    const userName = name;
     const password = "googlePassword";
     const postalCode = "None";
     const dateRegistered = new Date();
@@ -29,14 +31,19 @@ const GoogleBtn = ({ loginUserAsync, closeModal }) => {
     if (response.accessToken) {
       await loginUserAsync(email, password, {
         userName,
+        givenName,
+        familyName,
         postalCode,
         dateRegistered,
       });
-      closeModal();
+      if (!currentUser.isFailed && !currentUser.isFetching) {
+        closeModal();
+      }
     }
   };
 
   const handleLoginFailure = (response) => {
+    displayError("Google login failed. Please try again!");
     console.log(response);
   };
 
@@ -62,8 +69,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(loginUserAsync(email, passsword, googleInfoObj)),
   unsetUser: () => dispatch(unsetUser()),
   closeModal: () => dispatch(closeModal()),
-  logoutSuccess: (msg) => dispatch(logoutSuccess(msg)),
-  logoutError: (msg) => dispatch(logoutError(msg)),
+  displayError: (msg) => dispatch(displayError(msg)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(GoogleBtn);

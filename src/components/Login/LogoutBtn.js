@@ -3,9 +3,7 @@ import { useHistory } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import { unsetUser } from "../../redux/actions/userActions";
-import ExitToAppOutlinedIcon from "@material-ui/icons/ExitToAppOutlined";
 import { connect } from "react-redux";
-import { Redirect } from "react-router";
 
 const loggedOutStyles = makeStyles(() => ({
   logoutBtn: {
