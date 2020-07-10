@@ -96,7 +96,7 @@ class UserDetails extends React.Component {
           <ItemPreviewList items={inactivePostings} postings={postings} />
         </TabPanel>
         <TabPanel value={this.state.value} index={2}>
-          {userDetail.id !== currentUser.id && (
+          {userDetail._id !== currentUser._id && (
             <div className={classes.reviewButtonContainer}>
               <Button
                 onClick={openReviewModal}
