@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import { closeFlyout } from "../../redux/actions/flyoutActions";
+import { categories } from "../../redux/constants/classifierTypes";
 
 const flyoutStyles = makeStyles((theme) => ({
   flyoutTranslateX: {
@@ -80,48 +81,21 @@ const flyoutStyles = makeStyles((theme) => ({
 const FlyoutLinks = (props) => {
   return (
     <div className={props.classes.linkContainer}>
-      <Link
-        href="#"
-        onClick={props.preventDefault}
-        className={props.classes.links}
-      >
-        Homeware
-      </Link>
-      <Link
-        href="#"
-        onClick={props.preventDefault}
-        className={props.classes.links}
-      >
-        Electronics
-      </Link>
-      <Link
-        href="#"
-        onClick={props.preventDefault}
-        className={props.classes.links}
-      >
-        Necessities
-      </Link>
-      <Link
-        href="#"
-        onClick={props.preventDefault}
-        className={props.classes.links}
-      >
-        Hobbies
-      </Link>
-      <Link
-        href="#"
-        onClick={props.preventDefault}
-        className={props.classes.links}
-      >
-        Food/Drink
-      </Link>
-      <Link
-        href="#"
-        onClick={props.preventDefault}
-        className={props.classes.links}
-      >
-        Miscellaneous
-      </Link>
+      {categories.map((category, index) => {
+        if (index === 0) {
+          category = { value: "all", label: "All" };
+        }
+        return (
+          <Link
+            href={`items?category=${category.value}`}
+            onClick={props.preventDefault}
+            className={props.classes.links}
+            key={index}
+          >
+            {category.label}
+          </Link>
+        );
+      })}
     </div>
   );
 };
