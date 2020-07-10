@@ -44,6 +44,7 @@ const makeOffering = (comment, offeredItems, currentUser, postingId) => {
     offeredItems: offeredItems,
     comment: comment,
     status: offeringStatus.PENDING,
+    date: new Date(),
   };
   return offering;
 };
