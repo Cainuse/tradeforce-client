@@ -55,13 +55,17 @@ const App = ({ dispatch }) => {
       dispatch(authenticateUser(token))
         .then(() => {
           dispatch(setLoading(false));
-          toRender(true);
         })
         .catch(() => {
           dispatch(
             displayError("Error occurred during authentication. Try again!")
           );
+        })
+        .finally(() => {
+          toRender(true);
         });
+    } else {
+      toRender(true);
     }
   }, []);
 

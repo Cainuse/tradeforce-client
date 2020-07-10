@@ -22,7 +22,8 @@ const GoogleBtn = ({
   const classes = useStyles();
 
   const login = async (response) => {
-    const { userName, email, givenName, familyName } = response.profileObj;
+    const { name, email, givenName, familyName } = response.profileObj;
+    const userName = name;
     const password = "googlePassword";
     const postalCode = "None";
     const dateRegistered = new Date();
