@@ -36,9 +36,10 @@ const useStyles = (theme) => ({
 
 //-------------- Helper functions -----------------------//
 
-const makeOffering = (comment, offeredItems, currentUser) => {
+const makeOffering = (comment, offeredItems, currentUser, postingId) => {
   let { user } = currentUser;
   let offering = {
+    postingId: postingId,
     userId: user._id,
     offeredItems: offeredItems,
     comment: comment,
@@ -169,7 +170,8 @@ class AddOffering extends React.Component {
       let offering = makeOffering(
         this.state.comment,
         this.state.addedItems,
-        this.props.currentUser
+        this.props.currentUser,
+        this.props.itemDetail.id,
       );
 
       let id = this.props.itemDetail.id;
