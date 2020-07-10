@@ -6,8 +6,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import { unsetUser } from "../../redux/actions/userActions";
 import { closeModal } from "../../redux/actions/modalActions";
 import {
-  logoutSuccess,
-  logoutError,
+  displaySuccess,
+  displayError,
 } from "../../redux/actions/snackbarActions";
 import MenuItem from "@material-ui/core/MenuItem";
 
@@ -64,8 +64,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   unsetUser: () => dispatch(unsetUser()),
   closeModal: () => dispatch(closeModal()),
-  logoutSuccess: (msg) => dispatch(logoutSuccess(msg)),
-  logoutError: (msg) => dispatch(logoutError(msg)),
+  logoutSuccess: (msg) => dispatch(displaySuccess(msg)),
+  logoutError: (msg) => dispatch(displayError(msg)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(GoogleLogoutBtn);

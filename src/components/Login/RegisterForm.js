@@ -15,6 +15,10 @@ import {
   registerUserAsync,
   loginUserAsync,
 } from "../../redux/actions/userActions";
+import {
+  displayError,
+  displaySuccess,
+} from "../../redux/actions/snackbarActions";
 import GoogleLogin from "./GoogleLoginBtn";
 
 function Copyright() {
@@ -50,32 +54,102 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const RegisterForm = ({ dispatch }) => {
+const RegisterForm = ({ dispatch, currentUser }) => {
   const classes = useStyles();
   const [showLoginForm, setShowLoginForm] = useState(true);
   const [email, setEmail] = useState("");
+  const [fName, setFName] = useState("");
+  const [lName, setLName] = useState("");
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
 
+  const validateForm = (isLoginForm) => {
+    if (isLoginForm) {
+      if (email === "" || password === "") {
+        dispatch(
+          displayError(
+            "Some required fields are missing. Please fill them out!"
+          )
+        );
+        return false;
+      }
+    } else {
+      if (
+        email === "" ||
+        password === "" ||
+        userName === "" ||
+        fName === "" ||
+        lName === ""
+      ) {
+        dispatch(
+          displayError(
+            "Some required fields are missing. Please fill them out!"
+          )
+        );
+        return false;
+      }
+    }
+
+    if (!validateEmail(email)) {
+      dispatch(
+        displayError(
+          "Bad Email address. Please input an appropriate email address."
+        )
+      );
+      return false;
+    }
+
+    if (isGmail(email)) {
+      dispatch(
+        displayError(
+          "Gmail address detected. Please use the Google Login for registering or logging in with a Google account."
+        )
+      );
+      return false;
+    }
+
+    return true;
+  };
+
+  const validateEmail = (email) => {
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+  };
+
+  const isGmail = (email) => {
+    return /@gmail\.com$/.test(email);
+  };
+
   const handleSubmitRegister = async (e) => {
     e.preventDefault();
-    let statusMsg;
-    await dispatch(
-      registerUserAsync(userName, email, "None", new Date(), password, false)
-    );
-    setEmail("");
-    setPassword("");
-    setUserName("");
-    dispatch(closeModal());
+    if (validateForm(false)) {
+      await dispatch(
+        registerUserAsync(
+          userName,
+          fName,
+          lName,
+          email,
+          "None",
+          new Date(),
+          password,
+          false
+        )
+      );
+      setEmail("");
+      setPassword("");
+      setUserName("");
+      setFName("");
+      setLName("");
+    }
   };
 
   const handleSubmitLogin = async (e) => {
     e.preventDefault();
-    let statusMsg;
-    await dispatch(loginUserAsync(email, password, false));
-    setEmail("");
-    setPassword("");
-    dispatch(closeModal());
+    if (validateForm(true)) {
+      await dispatch(loginUserAsync(email, password, false));
+      setEmail("");
+      setPassword("");
+    }
   };
 
   const handleInputChange = (e) => {
@@ -89,7 +163,14 @@ const RegisterForm = ({ dispatch }) => {
         break;
       case "userName":
         setUserName(value);
+      case "firstName":
+        setFName(value);
         break;
+      case "lastName":
+        setLName(value);
+        break;
+      default:
+        return;
     }
   };
 
@@ -125,6 +206,7 @@ const RegisterForm = ({ dispatch }) => {
                   autoComplete="email"
                   value={email}
                   onChange={handleInputChange}
+                  required
                 />
               </Grid>
               <Grid item xs={12}>
@@ -139,6 +221,7 @@ const RegisterForm = ({ dispatch }) => {
                   autoComplete="current-password"
                   value={password}
                   onChange={handleInputChange}
+                  required
                 />
               </Grid>
             </Grid>
@@ -179,6 +262,35 @@ const RegisterForm = ({ dispatch }) => {
 
           <form className={classes.form} noValidate>
             <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  autoComplete="fname"
+                  name="firstName"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="firstName"
+                  label="First Name"
+                  autoFocus
+                  value={fName}
+                  onChange={handleInputChange}
+                  required
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="lastName"
+                  label="Last Name"
+                  name="lastName"
+                  autoComplete="lname"
+                  value={lName}
+                  onChange={handleInputChange}
+                  required
+                />
+              </Grid>
               <Grid item xs={12}>
                 <TextField
                   variant="outlined"
@@ -190,6 +302,7 @@ const RegisterForm = ({ dispatch }) => {
                   autoComplete="userName"
                   value={userName}
                   onChange={handleInputChange}
+                  required
                 />
               </Grid>
               <Grid item xs={12}>
@@ -203,6 +316,7 @@ const RegisterForm = ({ dispatch }) => {
                   autoComplete="email"
                   value={email}
                   onChange={handleInputChange}
+                  required
                 />
               </Grid>
               <Grid item xs={12}>
@@ -217,6 +331,7 @@ const RegisterForm = ({ dispatch }) => {
                   autoComplete="current-password"
                   value={password}
                   onChange={handleInputChange}
+                  required
                 />
               </Grid>
             </Grid>
@@ -250,4 +365,8 @@ const RegisterForm = ({ dispatch }) => {
   );
 };
 
-export default connect()(RegisterForm);
+const mapStateToProps = (state) => ({
+  currentUser: state.currentUser,
+});
+
+export default connect(mapStateToProps)(RegisterForm);

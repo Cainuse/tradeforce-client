@@ -15,6 +15,8 @@ export const userReducer = (state = initialState.currentUser, action) => {
         user: {
           _id: action.userId,
           userName: action.userName,
+          firstName: action.firstName,
+          lastName: action.lastName,
           email: action.email,
           postalCode: "None",
           dateRegistered: action.date,

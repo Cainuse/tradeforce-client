@@ -46,7 +46,7 @@ export const snackbarReducer = (state = initialState.snackbar, action) => {
         type: "success",
         message: action.successMessage,
         position: {
-          vertical: "top",
+          vertical: "bottom",
           horizontal: "center",
         },
       };
@@ -56,39 +56,9 @@ export const snackbarReducer = (state = initialState.snackbar, action) => {
         type: "error",
         message: action.errMessage,
         position: {
-          vertical: "top",
+          vertical: "bottom",
           horizontal: "center",
         },
-      };
-    case REGISTER_ERROR:
-      return {
-        isOpen: true,
-        type: "error",
-        message: action.msg,
-      };
-    case REGISTER_SUCCESS:
-      return {
-        isOpen: true,
-        type: "success",
-        message: action.msg,
-      };
-    case LOGOUT_ERROR:
-      return {
-        isOpen: true,
-        type: "error",
-        message: action.msg,
-      };
-    case LOGIN_ERROR:
-      return {
-        isOpen: true,
-        type: "error",
-        message: action.msg,
-      };
-    case LOGIN_SUCCESS:
-      return {
-        isOpen: true,
-        type: "success",
-        message: action.msg,
       };
     default:
       return state;
