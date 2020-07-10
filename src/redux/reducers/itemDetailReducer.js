@@ -1,12 +1,10 @@
-// import { initialState } from "../constants/_initialState";
+import { initialState } from "../constants/_initialState";
 import {
   LOAD_ITEM_DETAIL,
   MAKE_OFFER,
   UPDATE_ITEM_DETAIL,
   DELETE_POSTING,
 } from "../constants/actionTypes";
-
-const initialState = { itemDetail: {} };
 
 const loadItemDetail = (item) => {
   return item;

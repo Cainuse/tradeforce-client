@@ -1,4 +1,4 @@
-// import { initialState } from "../constants/_initialState";
+import { initialState } from "../constants/_initialState";
 import {
   ADD_POSTING,
   UPDATE_ITEM_DETAIL,
@@ -6,8 +6,6 @@ import {
   LOAD_POSTINGS,
   MAKE_OFFER,
 } from "../constants/actionTypes";
-
-const initialState = { postings: [] };
 
 const addPosting = (state, action) => {
   let { posting } = action;

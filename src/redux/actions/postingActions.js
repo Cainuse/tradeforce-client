@@ -61,7 +61,6 @@ export const addPosting = (posting, currentUser) => {
       let postingRequest = {
         ...posting,
         ownerId: currentUser._id,
-        // ownerUsername: currentUser.userName,
         date: new Date(),
         location: currentUser.location
           ? currentUser.location
@@ -100,7 +99,9 @@ export const loadPostingsByQuery = (query) => {
       let postingResponse = await axios.get(url);
       dispatch(loadAllPostingsSuccess(postingResponse.data));
     } catch (error) {
-      dispatch(displayError("Something went wrong. Posting was not deleted"));
+      dispatch(
+        displayError("Something went wrong. Postings could not be loaded")
+      );
     }
   };
 };
