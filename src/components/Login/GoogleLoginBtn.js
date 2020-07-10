@@ -22,8 +22,9 @@ const GoogleBtn = ({
   const classes = useStyles();
 
   const login = async (response) => {
-    const userName = response.profileObj.name;
-    const email = response.profileObj.email;
+    // const userName = response.profileObj.name;
+    const { givenName, familyName, email } = response.profileObj;
+    const userName = email.split("@")[0];
     const password = "googlePassword";
     const postalCode = "None";
     const dateRegistered = new Date();
@@ -31,6 +32,8 @@ const GoogleBtn = ({
     if (response.accessToken) {
       await loginUserAsync(email, password, {
         userName,
+        givenName,
+        familyName,
         postalCode,
         dateRegistered,
       });
