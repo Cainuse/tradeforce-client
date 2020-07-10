@@ -36,18 +36,10 @@ const useStyles = (theme) => ({
 
 //-------------- Helper functions -----------------------//
 
-const makeOfferer = (currentUser) => {
-  let { user } = currentUser;
-  return {
-    _id: user._id,
-    userName: user.userName,
-    email: user.email,
-  };
-};
-
 const makeOffering = (comment, offeredItems, currentUser) => {
+  let { user } = currentUser;
   let offering = {
-    offerer: makeOfferer(currentUser),
+    userId: user._id,
     offeredItems: offeredItems,
     comment: comment,
     status: offeringStatus.PENDING,
