@@ -2,10 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { GoogleLogin } from "react-google-login";
 import { loginUserAsync, unsetUser } from "../../redux/actions/userActions";
-import {
-  displayError,
-  displaySuccess,
-} from "../../redux/actions/snackbarActions";
+import { displayError } from "../../redux/actions/snackbarActions";
 import { closeModal } from "../../redux/actions/modalActions";
 import { connect } from "react-redux";
 

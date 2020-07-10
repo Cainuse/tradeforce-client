@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { closeModal } from "../../redux/actions/modalActions";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
@@ -15,10 +14,7 @@ import {
   registerUserAsync,
   loginUserAsync,
 } from "../../redux/actions/userActions";
-import {
-  displayError,
-  displaySuccess,
-} from "../../redux/actions/snackbarActions";
+import { displayError } from "../../redux/actions/snackbarActions";
 import GoogleLogin from "./GoogleLoginBtn";
 
 function Copyright() {
@@ -54,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const RegisterForm = ({ dispatch, currentUser }) => {
+const RegisterForm = ({ dispatch }) => {
   const classes = useStyles();
   const [showLoginForm, setShowLoginForm] = useState(true);
   const [email, setEmail] = useState("");
@@ -163,6 +159,7 @@ const RegisterForm = ({ dispatch, currentUser }) => {
         break;
       case "userName":
         setUserName(value);
+        break;
       case "firstName":
         setFName(value);
         break;
@@ -206,7 +203,6 @@ const RegisterForm = ({ dispatch, currentUser }) => {
                   autoComplete="email"
                   value={email}
                   onChange={handleInputChange}
-                  required
                 />
               </Grid>
               <Grid item xs={12}>
@@ -221,7 +217,6 @@ const RegisterForm = ({ dispatch, currentUser }) => {
                   autoComplete="current-password"
                   value={password}
                   onChange={handleInputChange}
-                  required
                 />
               </Grid>
             </Grid>
@@ -241,7 +236,7 @@ const RegisterForm = ({ dispatch, currentUser }) => {
                   className={classes.loginBtn}
                   onClick={toggleShowLoginForm}
                 >
-                  Don't have an account? Sign up
+                  {`Don't have an account? Sign up`}
                 </Button>
               </Grid>
             </Grid>
@@ -271,10 +266,8 @@ const RegisterForm = ({ dispatch, currentUser }) => {
                   fullWidth
                   id="firstName"
                   label="First Name"
-                  autoFocus
                   value={fName}
                   onChange={handleInputChange}
-                  required
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -288,7 +281,6 @@ const RegisterForm = ({ dispatch, currentUser }) => {
                   autoComplete="lname"
                   value={lName}
                   onChange={handleInputChange}
-                  required
                 />
               </Grid>
               <Grid item xs={12}>
@@ -302,7 +294,6 @@ const RegisterForm = ({ dispatch, currentUser }) => {
                   autoComplete="userName"
                   value={userName}
                   onChange={handleInputChange}
-                  required
                 />
               </Grid>
               <Grid item xs={12}>
@@ -316,7 +307,6 @@ const RegisterForm = ({ dispatch, currentUser }) => {
                   autoComplete="email"
                   value={email}
                   onChange={handleInputChange}
-                  required
                 />
               </Grid>
               <Grid item xs={12}>
@@ -331,7 +321,6 @@ const RegisterForm = ({ dispatch, currentUser }) => {
                   autoComplete="current-password"
                   value={password}
                   onChange={handleInputChange}
-                  required
                 />
               </Grid>
             </Grid>

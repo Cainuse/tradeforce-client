@@ -5,11 +5,6 @@ import {
   ERROR_SNACKBAR,
   SUCCESS_SNACKBAR,
   UPDATE_ITEM_DETAIL,
-  REGISTER_ERROR,
-  LOGIN_ERROR,
-  LOGOUT_ERROR,
-  REGISTER_SUCCESS,
-  LOGIN_SUCCESS,
 } from "../constants/actionTypes";
 
 const defaultSnackBarPosition = {
