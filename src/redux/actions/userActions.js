@@ -152,7 +152,7 @@ export const loginUserAsync = (email, password, googleInfo) => {
           respData.user.lastName,
           respData.user.email,
           respData.user.dateRegistered,
-          respData.user.isGoogleUser
+          respData.user.isGoogleUser,
         )
       );
     } catch (err) {
@@ -184,7 +184,7 @@ export const authenticateUser = (token) => {
           user.lastName,
           user.email,
           user.dateRegistered,
-          user.isGoogleUser
+          user.isGoogleUser,
         )
       );
     } catch (err) {
