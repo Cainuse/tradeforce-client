@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import Paper from "@material-ui/core/Paper";
 import { withStyles } from "@material-ui/core/styles";
 import { withRouter } from "react-router";
-import { connect } from "react-redux";
-import { loadPostingsByCategory } from "../../redux/actions/postingActions";
 import Typography from "@material-ui/core/Typography";
 
 const useStyles = (theme) => ({
@@ -28,9 +26,12 @@ const useStyles = (theme) => ({
 
 class CategoryCard extends Component {
   redirect = async () => {
-    let category = this.props.value === "all" ? "" : this.props.value;
-    await this.props.loadPostingsByCategory(category);
-    this.props.history.push("/items");
+    // let category = this.props.value === "all" ? "" : this.props.value;
+    // await this.props.loadPostingsByCategory(category);
+    this.props.history.push({
+      pathname: "/items",
+      search: `category=${this.props.value}`,
+    });
   };
 
   render() {
@@ -56,6 +57,4 @@ class CategoryCard extends Component {
   }
 }
 
-export default connect(null, { loadPostingsByCategory })(
-  withRouter(withStyles(useStyles)(CategoryCard))
-);
+export default withRouter(withStyles(useStyles)(CategoryCard));

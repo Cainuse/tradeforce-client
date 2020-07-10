@@ -16,17 +16,17 @@ const PathRouter = () => {
         <Route exact path="/">
           <LandingPage />
         </Route>
-        <Route exact path="/items">
-          <ItemResults />
-        </Route>
         <Route exact path="/items/item=:id">
           <ItemPage />
         </Route>
-        <Route exact path="/profile">
-          <UserProfile />
-        </Route>
         <Route path="/items/item=:id/edit">
           <EditItemDetailsPage />
+        </Route>
+        <Route path="/items">
+          <ItemResults />
+        </Route>
+        <Route exact path="/profile">
+          <UserProfile />
         </Route>
         <Route>
           <NotFoundPage />

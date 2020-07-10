@@ -4,9 +4,11 @@ import ItemPreview from "../Item/ItemPreview";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
 import SearchBar from "../Item/SearchBar";
-import { makeStyles } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
+import { loadPostingsByQuery } from "../../redux/actions/postingActions";
+import { withRouter } from "react-router";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = (theme) => ({
   root: {
     display: "flex",
     flexDirection: "column",
@@ -19,39 +21,48 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     alignItems: "center",
   },
-}));
+});
 
 // this is the page with all the item previews displayed (also includes the result to searching for a specific item)
-const ItemResults = ({ postings }) => {
-  const classes = useStyles();
+class ItemResults extends React.Component {
+  componentDidMount() {
+    let val = this.props.location.search.replace("?", "");
+    this.props.loadPostingsByQuery(val);
+  }
 
-  return (
-    <Container className={classes.root}>
-      <div className={classes.search}>
-        <SearchBar />
-      </div>
-      <Grid container direction={"row"} spacing={4}>
-        {postings.map((item, index) => {
-          return (
-            <Grid key={index} item xs={3}>
-              <ItemPreview
-                _id={item._id}
-                title={item.title}
-                date={item.date}
-                location={item.location}
-                images={item.images}
-                postings={postings} //TODO: remove when BE implemented
-              />
-            </Grid>
-          );
-        })}
-      </Grid>
-    </Container>
-  );
-};
+  render() {
+    const { classes, postings } = this.props;
+
+    return (
+      <Container className={classes.root}>
+        <div className={classes.search}>
+          <SearchBar />
+        </div>
+        <Grid container direction={"row"} spacing={4}>
+          {postings.map((item, index) => {
+            return (
+              <Grid key={index} item xs={3}>
+                <ItemPreview
+                  _id={item._id}
+                  title={item.title}
+                  date={item.date}
+                  location={item.location}
+                  images={item.images}
+                  postings={postings} //TODO: remove when BE implemented
+                />
+              </Grid>
+            );
+          })}
+        </Grid>
+      </Container>
+    );
+  }
+}
 
 const mapStateToProps = (state) => ({
   postings: state.postings,
 });
 
-export default connect(mapStateToProps)(ItemResults);
+export default connect(mapStateToProps, { loadPostingsByQuery })(
+  withRouter(withStyles(useStyles)(ItemResults))
+);

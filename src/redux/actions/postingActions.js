@@ -118,12 +118,12 @@ export const loadAllPostings = () => {
   };
 };
 
-export const loadPostingsByCategory = (category) => {
+export const loadPostingsByQuery = (query) => {
   return async (dispatch) => {
     try {
       dispatch(setLoading());
-      let url = category
-        ? `${BASE_URL}/postings/search/category=${category}`
+      let url = query
+        ? `${BASE_URL}/postings/search/${query}`
         : `${BASE_URL}/postings`;
       let postingResponse = await axios.get(url);
       dispatch(loadAllPostingsSuccess(postingResponse.data));
