@@ -18,10 +18,10 @@ const addPostingSuccess = (posting) => {
   };
 };
 
-const addPostingError = () => {
+export const displayError = (msg) => {
   return {
     type: ERROR_SNACKBAR,
-    msg: "Something went wrong. Posting was not created",
+    msg: msg,
   };
 };
 
@@ -32,24 +32,10 @@ const loadAllPostingsSuccess = (postings) => {
   };
 };
 
-const loadPostingsError = () => {
-  return {
-    type: ERROR_SNACKBAR,
-    msg: "Something went wrong. Postings could not be loaded",
-  };
-};
-
 const loadItemDetailSuccess = (item) => {
   return {
     type: LOAD_ITEM_DETAIL,
     item: item,
-  };
-};
-
-const loadItemDetailError = (msg) => {
-  return {
-    type: ERROR_SNACKBAR,
-    msg: msg,
   };
 };
 
@@ -61,24 +47,10 @@ const updateItemDetailSuccess = (itemId, details) => {
   };
 };
 
-const updateItemDetailError = () => {
-  return {
-    type: ERROR_SNACKBAR,
-    msg: "Something went wrong. Posting was not updated",
-  };
-};
-
 const deletePostingSuccess = (itemId) => {
   return {
     type: DELETE_POSTING,
     itemId: itemId,
-  };
-};
-
-const deletePostingError = () => {
-  return {
-    type: ERROR_SNACKBAR,
-    msg: "Something went wrong. Posting was not deleted",
   };
 };
 
@@ -101,7 +73,7 @@ export const addPosting = (posting, currentUser) => {
       );
       dispatch(addPostingSuccess(postingResponse.data));
     } catch (error) {
-      dispatch(addPostingError());
+      dispatch(displayError("Something went wrong. Posting was not created"));
     }
   };
 };
@@ -113,7 +85,7 @@ export const loadAllPostings = () => {
       let postingResponse = await axios.get(`${BASE_URL}/postings`);
       dispatch(loadAllPostingsSuccess(postingResponse.data));
     } catch (error) {
-      dispatch(loadPostingsError());
+      dispatch(displayError("Something went wrong. Posting was not deleted"));
     }
   };
 };
@@ -128,7 +100,7 @@ export const loadPostingsByQuery = (query) => {
       let postingResponse = await axios.get(url);
       dispatch(loadAllPostingsSuccess(postingResponse.data));
     } catch (error) {
-      dispatch(loadPostingsError());
+      dispatch(displayError("Something went wrong. Posting was not deleted"));
     }
   };
 };
@@ -151,16 +123,7 @@ export const loadItemDetail = (itemId) => {
       };
       dispatch(loadItemDetailSuccess(item));
     } catch (error) {
-      if (error.response.status === 404) {
-        dispatch(
-          loadItemDetailError("Something went wrong. Posting not found")
-        );
-      } else {
-        dispatch(
-          loadItemDetailError("Something went wrong. Please try again later")
-        );
-      }
-      throw new Error(error);
+      throw new Error(error.response.status);
     }
   };
 };
@@ -172,7 +135,7 @@ export const deletePosting = (itemId) => {
       await axios.delete(`${BASE_URL}/postings/${itemId}`);
       dispatch(deletePostingSuccess(itemId));
     } catch (error) {
-      dispatch(deletePostingError());
+      dispatch(displayError("Something went wrong. Posting was not deleted"));
     }
   };
 };
@@ -184,7 +147,7 @@ export const updateItemDetail = (itemId, details) => {
       await axios.patch(`${BASE_URL}/postings/${itemId}`, details);
       dispatch(updateItemDetailSuccess(itemId, details));
     } catch (error) {
-      dispatch(updateItemDetailError());
+      dispatch(displayError("Something went wrong. Posting was not updated"));
     }
   };
 };

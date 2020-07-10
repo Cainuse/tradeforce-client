@@ -9,7 +9,10 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Rating from "./Rating";
-import { loadItemDetail } from "../../redux/actions/postingActions";
+import {
+  loadItemDetail,
+  displayError,
+} from "../../redux/actions/postingActions";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 
@@ -33,7 +36,7 @@ const ItemPreview = ({
   location,
   images,
   loadItemDetail,
-  error,
+  displayError,
 }) => {
   const classes = useStyles();
   const history = useHistory();
@@ -71,8 +74,11 @@ const ItemPreview = ({
         pathname: "/items/item=" + itemId,
       });
     } catch (e) {
-      console.log(error);
-      /* no redirect; snackbar gives error feedback */
+      if (e.message === 404) {
+        displayError("Something went wrong. Item could not be found.");
+      } else {
+        displayError("Item could not be loaded. Please try again later");
+      }
     }
   };
 
@@ -118,4 +124,6 @@ const mapStateToProps = (state) => ({
   error: state.error,
 });
 
-export default connect(mapStateToProps, { loadItemDetail })(ItemPreview);
+export default connect(mapStateToProps, { loadItemDetail, displayError })(
+  ItemPreview
+);

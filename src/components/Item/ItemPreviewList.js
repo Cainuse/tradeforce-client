@@ -11,7 +11,7 @@ let useStyles = makeStyles({
 
 const ItemPreviewList = (props) => {
   let classes = useStyles();
-  let { postings, items } = props;
+  let { items } = props;
 
   return (
     <Grid
@@ -31,7 +31,6 @@ const ItemPreviewList = (props) => {
               date={item.date}
               location={item.location}
               images={item.images}
-              postings={postings} //TODO: remove when BE implemented
             />
           </Grid>
         );

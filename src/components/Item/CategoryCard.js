@@ -25,9 +25,7 @@ const useStyles = (theme) => ({
 });
 
 class CategoryCard extends Component {
-  redirect = async () => {
-    // let category = this.props.value === "all" ? "" : this.props.value;
-    // await this.props.loadPostingsByCategory(category);
+  redirect = () => {
     this.props.history.push({
       pathname: "/items",
       search: `category=${this.props.value}`,
