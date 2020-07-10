@@ -148,9 +148,11 @@ export const loginUserAsync = (email, password, googleInfo) => {
         setUser(
           respData.user._id,
           respData.user.userName,
+          respData.user.firstName,
+          respData.user.lastName,
           respData.user.email,
           respData.user.dateRegistered,
-          respData.user.isGoogleUser
+          respData.user.isGoogleUser,
         )
       );
     } catch (err) {
@@ -178,9 +180,11 @@ export const authenticateUser = (token) => {
         setUser(
           user._id,
           user.userName,
+          user.firstName,
+          user.lastName,
           user.email,
           user.dateRegistered,
-          user.isGoogleUser
+          user.isGoogleUser,
         )
       );
     } catch (err) {
