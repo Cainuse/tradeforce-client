@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 export default function ItemHeader(props) {
   const classes = useStyles();
   let { itemDetail } = props;
-  let { datePosted, title, location } = itemDetail;
+  let { date, title, location } = itemDetail;
 
   const formatDate = (date) => {
     const options = { month: "long", day: "numeric" };
@@ -33,7 +33,7 @@ export default function ItemHeader(props) {
     return dateObj.toLocaleDateString(undefined, options);
   };
 
-  let humanReadableDate = formatDate(datePosted);
+  let humanReadableDate = formatDate(date);
 
   return (
     <Paper elevation={0} className={classes.header}>

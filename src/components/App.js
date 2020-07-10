@@ -10,6 +10,7 @@ import NavFlyout from "./Navigation/NavFlyout";
 import PathRouter from "./PathRouter";
 import ModalContainer from "./ModalContainer";
 import FeedbackSnackbar from "./FeedbackSnackbar";
+import Loader from "./Loader";
 
 const theme = createMuiTheme({
   palette: {
@@ -40,6 +41,7 @@ const App = () => {
   return (
     <Router>
       <ThemeProvider theme={theme}>
+        <Loader />
         <div className={classes.root}>
           <NavBar />
           <PathRouter />
