@@ -8,6 +8,8 @@ import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
 import DirectionsIcon from "@material-ui/icons/Directions";
 import { useHistory } from "react-router-dom";
+import { connect } from "react-redux";
+import { loadPostingsByQuery } from "../../redux/actions/postingActions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,21 +31,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CustomizedInputBase() {
+function CustomizedInputBase(props) {
   const classes = useStyles();
   const history = useHistory();
   const [input, setInput] = useState("");
 
-  const handleChange = (e) => {
-    setInput(e.target.value);
-    e.stopPropagation();
-  };
-
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    await props.loadPostingsByQuery(`search=${input}`);
     history.push({
       pathname: "/items",
       search: `search=${input}`,
     });
+  };
+
+  const handleChange = (e) => {
+    setInput(e.target.value);
   };
 
   return (
@@ -76,6 +78,8 @@ export default function CustomizedInputBase() {
     </Paper>
   );
 }
+
+export default connect(null, { loadPostingsByQuery })(CustomizedInputBase);
 
 // import React, { Component } from "react";
 // import TextField from "@material-ui/core/TextField";

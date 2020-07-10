@@ -9,7 +9,6 @@ import {
 const initialState = { itemDetail: {} };
 
 const loadItemDetail = (item) => {
-  console.log(item);
   return item;
 };
 
