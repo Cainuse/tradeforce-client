@@ -26,7 +26,7 @@ In summary, the app will support the following actions for users:
 
 #### Standard Requirements
 
-    1. Admin module
+    1. Archive unavailable/traded items
     2. User reviews for satisfaction
     3. Notification centre for receiving responses/offer
     4. User posts/offers page (personal user account page)
@@ -35,7 +35,7 @@ In summary, the app will support the following actions for users:
 #### Stretch Requirements
 
     1. Live-chat functionality
-    2. Archive unavailable/traded items
+    2. Admin module
     3. Meeting scheduling interface
     4. 2-factor authentication for login security
 
