@@ -1,102 +1,66 @@
 import React from "react";
 import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
-import { makeStyles } from "@material-ui/core/styles";
-
+import { withStyles } from "@material-ui/core/styles";
 import ReviewSection from "./ReviewSection";
-import ItemDescription from "./ItemDescription";
-import ItemHeader from "./ItemHeader";
-import ItemDetail from "./ItemDetail";
+import ItemDetailContainer from "./ItemDetailContainer";
+import { connect } from "react-redux";
+import { withRouter } from "react-router";
+import { loadItemDetail } from "../../redux/actions/postingActions";
 
 // Item Details page for in-depth view of offered items
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = (theme) => ({
   root: {
     fontFamily: "Montserrat",
   },
-  button: {
-    backgroundColor: "#1d588f",
-    color: "white",
-    fontWeight: 300,
-    margin: "0 auto",
-    padding: "1rem 1.5rem",
-  },
-  header: {
-    margin: "1rem 0",
-  },
-  title: {
-    margin: 0,
-    fontWeight: 500,
-    color: "#1d588f",
-  },
-  subtitle: {
-    fontWeight: 300,
-    color: "#4b4b4b",
-    margin: "0.3rem 0",
-  },
-  img: {
-    width: "100%",
-  },
-  description: {
-    fontWeight: 400,
-  },
-  textBody: {
-    fontWeight: 300,
-  },
-  content: {
-    margin: 0,
-    padding: 0,
-  },
-  tags: {
+  buttonHeader: {
     display: "flex",
-    justifyContent: "center",
-    flexWrap: "wrap",
-    "& > *": {
-      margin: theme.spacing(0.5),
-    },
-  },
-  wishlist: {
-    listStyle: "none",
-    "& > *": {
-      fontWeight: 300,
-      marginTop: theme.spacing(1),
-      fontSize: "1.25rem",
-    },
-  },
-  detailTitle: {
-    fontWeight: 500,
-    color: "#1d588f",
-    fontSize: "1.4rem",
-  },
-  qtyVal: {
-    fontWeight: 300,
-    color: "black",
+    justifyContent: "space-between",
+    margin: theme.spacing(1),
   },
   divider: {
     marginTop: theme.spacing(3),
     marginBottom: theme.spacing(3),
   },
-}));
+});
 
-export default function ItemPage() {
-  const classes = useStyles();
+class ItemPage extends React.Component {
+  async componentDidMount() {
+    const itemId = this.props.location.pathname.split("=")[1];
+    try {
+      await this.props.loadItemDetail(itemId);
+    } catch (e) {
+      this.props.history.push("/PostingNotFound");
+    }
+  }
 
-  return (
-    <div>
-      <div className={classes.root}>
-        <Button>&lt; Back to Search</Button>
+  redirect = async () => {
+    this.props.history.goBack();
+  };
+
+  render() {
+    const { classes, itemDetail } = this.props;
+    return Object.keys(itemDetail).length !== 0 ? (
+      <div>
+        <div className={classes.buttonHeader}>
+          <Button onClick={this.redirect}>&lt; Back to Search</Button>
+        </div>
+        <Container className={classes.root}>
+          <ItemDetailContainer itemDetail={itemDetail} />
+          <Divider className={classes.divider} />
+          <ReviewSection itemDetail={itemDetail} />
+        </Container>
       </div>
-      <Container className={classes.root}>
-        <ItemHeader classes={classes} />
-        <Grid container spacing={2} className={classes.content}>
-          <ItemDetail classes={classes} />
-          <ItemDescription classes={classes} />
-        </Grid>
-        <Divider className={classes.divider} />
-        <ReviewSection />
-      </Container>
-    </div>
-  );
+    ) : null;
+  }
 }
+
+const mapStateToProps = (state) => ({
+  itemDetail: state.itemDetail,
+});
+
+export default connect(mapStateToProps, { loadItemDetail })(
+  withRouter(withStyles(useStyles)(ItemPage))
+);

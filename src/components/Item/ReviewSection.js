@@ -5,7 +5,7 @@ import Link from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 
-import Review from "./Review";
+import ReviewList from "../Review/ReviewList";
 
 const preventDefault = (event) => event.preventDefault();
 
@@ -23,7 +23,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ReviewSection() {
+export default function ReviewSection(props) {
+  let { itemDetail } = props;
   const classes = useStyles();
   return (
     <Box>
@@ -35,7 +36,7 @@ export default function ReviewSection() {
           variant="h6"
           className={classes.sellerName}
         >
-          iamironman
+          {itemDetail.ownerUsername}
         </Link>
         <Typography variant="h6">Reviews</Typography>
         <Rating
@@ -45,12 +46,7 @@ export default function ReviewSection() {
           readOnly
         />
       </Box>
-      <Box my={3} display="flex" justifyContent="center">
-        <Review />
-      </Box>
-      <Box my={3} display="flex" justifyContent="center">
-        <Review />
-      </Box>
+      <ReviewList elevation={0} colour={"#EBEEF1"} reviews={[]} />
     </Box>
   );
 }
