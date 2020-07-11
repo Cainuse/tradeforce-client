@@ -2,15 +2,16 @@ import React from "react";
 import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
-import { makeStyles } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import ReviewSection from "./ReviewSection";
 import ItemDetailContainer from "./ItemDetailContainer";
-import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
+import { withRouter } from "react-router";
+import { loadItemDetail } from "../../redux/actions/postingActions";
 
 // Item Details page for in-depth view of offered items
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = (theme) => ({
   root: {
     fontFamily: "Montserrat",
   },
@@ -23,33 +24,43 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
     marginBottom: theme.spacing(3),
   },
-}));
+});
 
-function ItemPage(props) {
-  let { itemDetail } = props;
-  const classes = useStyles();
-  const history = useHistory();
+class ItemPage extends React.Component {
+  async componentDidMount() {
+    const itemId = this.props.location.pathname.split("=")[1];
+    try {
+      await this.props.loadItemDetail(itemId);
+    } catch (e) {
+      this.props.history.push("/PostingNotFound");
+    }
+  }
 
-  const redirect = () => {
-    history.goBack();
+  redirect = async () => {
+    this.props.history.goBack();
   };
 
-  return (
-    <div>
-      <div className={classes.buttonHeader}>
-        <Button onClick={redirect}>&lt; Back to Search</Button>
+  render() {
+    const { classes, itemDetail } = this.props;
+    return Object.keys(itemDetail).length !== 0 ? (
+      <div>
+        <div className={classes.buttonHeader}>
+          <Button onClick={this.redirect}>&lt; Back to Search</Button>
+        </div>
+        <Container className={classes.root}>
+          <ItemDetailContainer itemDetail={itemDetail} />
+          <Divider className={classes.divider} />
+          <ReviewSection itemDetail={itemDetail} />
+        </Container>
       </div>
-      <Container className={classes.root}>
-        <ItemDetailContainer itemDetail={itemDetail} />
-        <Divider className={classes.divider} />
-        <ReviewSection itemDetail={itemDetail} />
-      </Container>
-    </div>
-  );
+    ) : null;
+  }
 }
 
 const mapStateToProps = (state) => ({
   itemDetail: state.itemDetail,
 });
 
-export default connect(mapStateToProps)(ItemPage);
+export default connect(mapStateToProps, { loadItemDetail })(
+  withRouter(withStyles(useStyles)(ItemPage))
+);

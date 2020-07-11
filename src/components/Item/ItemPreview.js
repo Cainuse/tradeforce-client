@@ -29,15 +29,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const ItemPreview = ({
-  _id,
-  title,
-  date,
-  location,
-  images,
-  loadItemDetail,
-  displayError,
-}) => {
+const ItemPreview = ({ _id, title, date, location, images }) => {
   const classes = useStyles();
   const history = useHistory();
 
@@ -67,19 +59,10 @@ const ItemPreview = ({
       : "Posted " + Math.round(diffDays / 365) + " years ago";
   };
 
-  const routeToItem = async (itemId) => {
-    try {
-      await loadItemDetail(itemId);
-      history.push({
-        pathname: "/items/item=" + itemId,
-      });
-    } catch (e) {
-      if (e.message === 404) {
-        displayError("Something went wrong. Item could not be found.");
-      } else {
-        displayError("Item could not be loaded. Please try again later");
-      }
-    }
+  const routeToItem = (itemId) => {
+    history.push({
+      pathname: "/items/item=" + itemId,
+    });
   };
 
   return (
