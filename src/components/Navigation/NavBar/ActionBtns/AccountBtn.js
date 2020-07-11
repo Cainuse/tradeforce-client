@@ -12,13 +12,9 @@ import GoogleLogoutBtn from "../../../Login/GoogleLogoutBtn";
 
 const getLogoutMenuItem = (currentUser, handleClickLogout) => {
   if (currentUser.user.isGoogleUser) {
-    return (
-      <GoogleLogoutBtn/>
-    );
+    return <GoogleLogoutBtn />;
   } else {
-    return (
-      <MenuItem onClick={handleClickLogout}>Logout</MenuItem>
-    );
+    return <MenuItem onClick={handleClickLogout}>Logout</MenuItem>;
   }
 };
 
@@ -53,7 +49,7 @@ function AccountBtn(props) {
         aria-label="accountButton"
         onClick={handleClick}
       >
-        <AccountCircleOutlinedIcon className={props.accountBtnClass}/>
+        <AccountCircleOutlinedIcon className={props.accountBtnClass} />
       </IconButton>
       <Menu
         id="simple-menu"
@@ -61,11 +57,11 @@ function AccountBtn(props) {
         getContentAnchorEl={null}
         anchorOrigin={{
           vertical: "bottom",
-          horizontal: "right"
+          horizontal: "right",
         }}
         transformOrigin={{
           vertical: "top",
-          horizontal: "right"
+          horizontal: "right",
         }}
         keepMounted
         open={Boolean(anchorEl)}
@@ -80,11 +76,11 @@ function AccountBtn(props) {
 }
 
 const mapStateToProps = (state) => ({
-  currentUser: state.currentUser
+  currentUser: state.currentUser,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  unsetUser: () => dispatch(unsetUser())
+  unsetUser: () => dispatch(unsetUser()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AccountBtn);
