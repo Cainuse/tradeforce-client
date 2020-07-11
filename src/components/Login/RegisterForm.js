@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -131,11 +131,6 @@ const RegisterForm = ({ dispatch }) => {
           false
         )
       );
-      setEmail("");
-      setPassword("");
-      setUserName("");
-      setFName("");
-      setLName("");
     }
   };
 
@@ -143,8 +138,6 @@ const RegisterForm = ({ dispatch }) => {
     e.preventDefault();
     if (validateForm(true)) {
       await dispatch(loginUserAsync(email, password, false));
-      setEmail("");
-      setPassword("");
     }
   };
 
