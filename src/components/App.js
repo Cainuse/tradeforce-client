@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import { connect } from "react-redux";
-import jwt from "jwt-decode";
 import {
   createMuiTheme,
   makeStyles,
@@ -50,7 +49,6 @@ const App = ({ dispatch }) => {
     const token = localStorage.getItem("token");
 
     if (token) {
-      const user = jwt(token);
       dispatch(setLoading(true));
       dispatch(authenticateUser(token))
         .then(() => {
