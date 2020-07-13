@@ -73,6 +73,46 @@ function ItemInfo(props) {
     history.push(location.pathname + "/edit");
   };
 
+  const chooseButton = (currentUser, fns) => {
+    let {openOfferingModal, editPosting} = fns;
+    if (currentUser === null) {
+      return (
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => {
+            openOfferingModal();
+          }}
+        >
+          Make Offer
+        </Button>
+      )
+    }
+    else if (currentUser._id !== itemDetail.ownerId) {
+      return (
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => {
+            openOfferingModal();
+          }}
+        >
+          Make Offer
+        </Button>
+      )
+    } else {
+      return (
+        <Button
+          onClick={editPosting}
+          variant="outlined"
+          color="primary"
+        >
+          Edit Posting
+        </Button>
+      )
+    }
+  }
+
   return (
     <React.Fragment>
       <Grid item xs={7}>
@@ -80,27 +120,28 @@ function ItemInfo(props) {
       </Grid>
       <Grid item xs={4}>
         <Grid container alignItems="center" direction="column">
-          {!currentUser || currentUser._id !== itemDetail.ownerId ? (
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => {
-                props.openOfferingModal();
-              }}
-              disabled={currentUser === null}
-            >
-              Make Offer
-            </Button>
-          ) : (
-            <Button
-              onClick={editPosting}
-              // startIcon={<EditIcon />}
-              variant="outlined"
-              color="primary"
-            >
-              Edit Posting
-            </Button>
-          )}
+          {/*{!currentUser || currentUser._id !== itemDetail.ownerId ? (*/}
+          {/*  <Button*/}
+          {/*    variant="contained"*/}
+          {/*    color="primary"*/}
+          {/*    onClick={() => {*/}
+          {/*      props.openOfferingModal();*/}
+          {/*    }}*/}
+          {/*    disabled={currentUser === null}*/}
+          {/*  >*/}
+          {/*    Make Offer*/}
+          {/*  </Button>*/}
+          {/*) : (*/}
+          {/*  <Button*/}
+          {/*    onClick={editPosting}*/}
+          {/*    // startIcon={<EditIcon />}*/}
+          {/*    variant="outlined"*/}
+          {/*    color="primary"*/}
+          {/*  >*/}
+          {/*    Edit Posting*/}
+          {/*  </Button>*/}
+          {/*)}*/}
+          {chooseButton(currentUser, { openOfferingModal : props.openOfferingModal, editPosting: editPosting})}
           <Box my={3} width="60%">
             <p className={classes.detailTitle}>
               Quantity: <span className={classes.qtyVal}>{quantity}</span>
@@ -139,6 +180,7 @@ function ItemInfo(props) {
     </React.Fragment>
   );
 }
+
 
 const mapDispatchToProps = (dispatch) => ({
   openOfferingModal: () => dispatch(openOfferModal()),
