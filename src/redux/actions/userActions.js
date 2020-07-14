@@ -12,7 +12,7 @@ import {
 import { displayError, displaySuccess } from "./snackbarActions";
 import { closeModal, openOfferModal } from "./modalActions";
 import axios from "axios";
-import { OFFER_MODAL } from "../constants/modalTypes";
+import { MAKE_OFFER_BUTTON } from "../constants/buttonTypes";
 
 // export const setUser = (
 //   userId,
@@ -113,7 +113,7 @@ export const registerUserAsync = (user) => {
   };
 };
 
-export const loginUserAsync = (email, password, googleInfo, fromModal) => {
+export const loginUserAsync = (email, password, googleInfo, openedFrom) => {
   return async (dispatch) => {
     dispatch(isUserFetching());
 
@@ -160,7 +160,7 @@ export const loginUserAsync = (email, password, googleInfo, fromModal) => {
       localStorage.setItem("token", respData.token);
       dispatch(displaySuccess(USER_LOGIN_SUCCESS));
       dispatch(closeModal());
-      if (fromModal === OFFER_MODAL) {
+      if (openedFrom === MAKE_OFFER_BUTTON) {
         dispatch(openOfferModal());
       }
       return dispatch(

@@ -11,6 +11,7 @@ import { useHistory, useLocation } from "react-router-dom";
 
 import { openLoginModal, openOfferModal } from "../../redux/actions/modalActions";
 import ImageCarousel from "./ImageCarousel";
+import { MAKE_OFFER_BUTTON } from "../../redux/constants/buttonTypes";
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -81,7 +82,7 @@ function ItemInfo(props) {
           variant="contained"
           color="primary"
           onClick={() => {
-            openLoginModal();
+            openLoginModal(MAKE_OFFER_BUTTON);
           }}
         >
           Make Offer
@@ -161,7 +162,7 @@ function ItemInfo(props) {
 
 const mapDispatchToProps = (dispatch) => ({
   openOfferingModal: () => dispatch(openOfferModal()),
-  openLoginModal: () => dispatch(openLoginModal()),
+  openLoginModal: (openedFrom) => dispatch(openLoginModal(openedFrom)),
 });
 
 const mapStateToProps = (state) => ({

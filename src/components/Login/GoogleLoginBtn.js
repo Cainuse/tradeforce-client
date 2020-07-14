@@ -18,6 +18,7 @@ const GoogleBtn = ({
   closeModal,
   displayError,
   currentUser,
+  modal,
 }) => {
   const classes = useStyles();
 
@@ -35,10 +36,8 @@ const GoogleBtn = ({
         familyName,
         postalCode,
         dateRegistered,
-      });
-      // if (!currentUser.isFailed && !currentUser.isFetching) {
-      //   closeModal();
-      // }
+      },
+        modal.openedFrom);
     }
   };
 
@@ -62,11 +61,12 @@ const GoogleBtn = ({
 
 const mapStateToProps = (state) => ({
   currentUser: state.currentUser,
+  modal: state.modal,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  loginUserAsync: (email, passsword, googleInfoObj) =>
-    dispatch(loginUserAsync(email, passsword, googleInfoObj)),
+  loginUserAsync: (email, password, googleInfoObj, openedFrom) =>
+    dispatch(loginUserAsync(email, password, googleInfoObj, openedFrom)),
   unsetUser: () => dispatch(unsetUser()),
   closeModal: () => dispatch(closeModal()),
   displayError: (msg) => dispatch(displayError(msg)),
