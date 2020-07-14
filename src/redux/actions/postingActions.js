@@ -5,11 +5,27 @@ import {
   UPDATE_ITEM_DETAIL,
   LOAD_POSTINGS,
   ERROR_SNACKBAR,
+  SUCCESS_SNACKBAR,
 } from "../constants/actionTypes";
+import {
+  ADD_POSTING_ERROR,
+  LOAD_POSTING_ERROR,
+  DELETE_POSTING_ERROR,
+  UPDATE_POSTING_ERROR,
+  DELETE_POSTING_SUCCESS,
+  UPDATE_POSTING_SUCCESS,
+} from "../constants/snackbarMessageTypes";
 import { setLoading } from "./loadingActions";
 import axios from "axios";
 
 const BASE_URL = `${process.env.REACT_APP_BASE_URL}`;
+
+const displaySuccess = (msg) => {
+  return {
+    type: SUCCESS_SNACKBAR,
+    successMessage: msg,
+  };
+};
 
 const addPostingSuccess = (posting) => {
   return {
@@ -72,7 +88,7 @@ export const addPosting = (posting, currentUser) => {
       );
       dispatch(addPostingSuccess(postingResponse.data));
     } catch (error) {
-      dispatch(displayError("Something went wrong. Posting was not created"));
+      dispatch(displayError(ADD_POSTING_ERROR));
     } finally {
       dispatch(setLoading(false));
     }
@@ -86,7 +102,7 @@ export const loadAllPostings = () => {
       let postingResponse = await axios.get(`${BASE_URL}/postings`);
       dispatch(loadAllPostingsSuccess(postingResponse.data));
     } catch (error) {
-      dispatch(displayError("Something went wrong. Posting was not deleted"));
+      dispatch(displayError(LOAD_POSTING_ERROR));
     } finally {
       dispatch(setLoading(false));
     }
@@ -103,9 +119,7 @@ export const loadPostingsByQuery = (query) => {
       let postingResponse = await axios.get(url);
       dispatch(loadAllPostingsSuccess(postingResponse.data));
     } catch (error) {
-      dispatch(
-        displayError("Something went wrong. Postings could not be loaded")
-      );
+      dispatch(displayError(LOAD_POSTING_ERROR));
     } finally {
       dispatch(setLoading(false));
     }
@@ -143,8 +157,9 @@ export const deletePosting = (itemId) => {
       dispatch(setLoading(true));
       await axios.delete(`${BASE_URL}/postings/${itemId}`);
       dispatch(deletePostingSuccess(itemId));
+      dispatch(displaySuccess(DELETE_POSTING_SUCCESS));
     } catch (error) {
-      dispatch(displayError("Something went wrong. Posting was not deleted"));
+      dispatch(displayError(DELETE_POSTING_ERROR));
     } finally {
       dispatch(setLoading(false));
     }
@@ -157,8 +172,9 @@ export const updateItemDetail = (itemId, details) => {
       dispatch(setLoading(true));
       await axios.patch(`${BASE_URL}/postings/${itemId}`, details);
       dispatch(updateItemDetailSuccess(itemId, details));
+      dispatch(displaySuccess(UPDATE_POSTING_SUCCESS));
     } catch (error) {
-      dispatch(displayError("Something went wrong. Posting was not updated"));
+      dispatch(displayError(UPDATE_POSTING_ERROR));
     } finally {
       dispatch(setLoading(false));
     }

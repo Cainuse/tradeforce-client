@@ -4,6 +4,11 @@ import {
   IS_USER_FETCHING,
   IS_USER_FAILED,
 } from "../constants/actionTypes";
+import {
+  USER_REGISTRATION_SUCCESS,
+  GOOGLE_LOGIN_SUCCESS,
+  USER_LOGIN_SUCCESS,
+} from "../constants/snackbarMessageTypes";
 import { displayError, displaySuccess } from "./snackbarActions";
 import { closeModal } from "./modalActions";
 import axios from "axios";
@@ -76,7 +81,7 @@ export const registerUserAsync = (
       const respData = createUserResp.data;
 
       localStorage.setItem("token", respData.token);
-      dispatch(displaySuccess("Your user was successfully registered!"));
+      dispatch(displaySuccess(USER_REGISTRATION_SUCCESS));
       dispatch(closeModal());
       return dispatch(
         setUser(
@@ -110,7 +115,7 @@ export const loginUserAsync = (email, password, googleInfo) => {
       );
     } catch (err) {
       if (googleInfo) {
-        dispatch(displaySuccess("Successfully logged in through Google!"));
+        dispatch(displaySuccess(GOOGLE_LOGIN_SUCCESS));
         dispatch(closeModal());
         return dispatch(
           registerUserAsync(
@@ -142,7 +147,7 @@ export const loginUserAsync = (email, password, googleInfo) => {
       const respData = authUserResp.data;
 
       localStorage.setItem("token", respData.token);
-      dispatch(displaySuccess("Successfully logged into the app!"));
+      dispatch(displaySuccess(USER_LOGIN_SUCCESS));
       dispatch(closeModal());
       return dispatch(
         setUser(
