@@ -1,7 +1,7 @@
 import {
   CLEAR_SNACKBAR,
   ERROR_SNACKBAR,
-  SUCCESS_SNACKBAR,
+  SUCCESS_SNACKBAR, WARNING_SNACKBAR
 } from "../constants/actionTypes";
 
 export const clearSnackbar = () => {
@@ -23,3 +23,10 @@ export const displaySuccess = (successMessage) => {
     successMessage,
   };
 };
+
+export const displayWarning = (warningMessage) => {
+  return {
+    type: WARNING_SNACKBAR,
+    warningMessage,
+  }
+}

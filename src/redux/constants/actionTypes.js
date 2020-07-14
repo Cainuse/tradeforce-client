@@ -12,13 +12,18 @@ export const OPEN_OFFER_MODAL = "OPEN_OFFER_MODAL";
 export const OPEN_POSTING_MODAL = "OPEN_POSTING_MODAL";
 
 /**
- * Posting Action Types
+ * Offering Action Types
  **/
 export const MAKE_OFFER = "MAKE_OFFER";
 
+
+/**
+ * Snackbar Action Types
+ **/
 export const CLEAR_SNACKBAR = "CLEAR_SNACKBAR";
 export const SUCCESS_SNACKBAR = "SUCCESS_SNACKBAR";
 export const ERROR_SNACKBAR = "ERROR_SNACKBAR";
+export const WARNING_SNACKBAR = "WARNING_SNACKBAR";
 
 /**
  * Posting Action Types

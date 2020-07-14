@@ -15,6 +15,7 @@ import {
 } from "../../redux/actions/modalActions";
 import ImageCarousel from "./ImageCarousel";
 import { MAKE_OFFER_BUTTON } from "../../redux/constants/buttonTypes";
+import { displayWarning } from "../../redux/actions/snackbarActions";
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -78,13 +79,14 @@ function ItemInfo(props) {
   };
 
   const chooseButton = (currentUser, fns) => {
-    let { openOfferingModal, editPosting, openLoginModal } = fns;
+    let { openOfferingModal, editPosting, openLoginModal, displayWarning } = fns;
     if (currentUser === null) {
       return (
         <Button
           variant="contained"
           color="primary"
           onClick={() => {
+            displayWarning("Please sign in or register before making an offer.");
             openLoginModal(MAKE_OFFER_BUTTON);
           }}
         >
@@ -123,6 +125,7 @@ function ItemInfo(props) {
             openOfferingModal: props.openOfferingModal,
             editPosting: editPosting,
             openLoginModal: props.openLoginModal,
+            displayWarning: props.displayWarning,
           })}
           <Box my={3} width="60%">
             <p className={classes.detailTitle}>
@@ -166,6 +169,7 @@ function ItemInfo(props) {
 const mapDispatchToProps = (dispatch) => ({
   openOfferingModal: () => dispatch(openOfferModal()),
   openLoginModal: (openedFrom) => dispatch(openLoginModal(openedFrom)),
+  displayWarning: (warningMessage) => dispatch(displayWarning(warningMessage)),
 });
 
 const mapStateToProps = (state) => ({
