@@ -60,7 +60,7 @@ export const isUserFailed = () => {
   };
 };
 
-export const registerUserAsync = (user) => {
+export const registerUserAsync = (user, openedFrom, postingOwnerId) => {
   let {
     userName,
     firstName,
@@ -93,7 +93,7 @@ export const registerUserAsync = (user) => {
       localStorage.setItem("token", respData.token);
       dispatch(displaySuccess(USER_REGISTRATION_SUCCESS));
       dispatch(closeModal());
-      return dispatch(
+      let result = dispatch(
         setUser({
           _id: respData.user._id,
           userName: respData.user.userName,
@@ -105,6 +105,14 @@ export const registerUserAsync = (user) => {
           isGoogleUser: respData.user.isGoogleUser,
         })
       );
+      if (
+        openedFrom === MAKE_OFFER_BUTTON &&
+        postingOwnerId !== undefined &&
+        postingOwnerId !== respData.user._id
+      ) {
+        dispatch(openOfferModal());
+      }
+      return result;
     } catch (err) {
       // error occurred while saving user in db
       dispatch(isUserFailed());
