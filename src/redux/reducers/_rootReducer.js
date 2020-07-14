@@ -8,6 +8,7 @@ import { userDetailReducer } from "./userDetailReducer";
 import { snackbarReducer } from "./snackbarReducer";
 import { loadingReducer } from "./loadingReducer";
 import { errorReducer } from "./errorReducer";
+import { notificationsReducer } from "./notificationReducer";
 
 const rootReducer = combineReducers({
   flyoutIsOpen: flyoutReducer,
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   snackbar: snackbarReducer,
   loading: loadingReducer,
   error: errorReducer,
+  notifications: notificationsReducer,
 });
 
 export default rootReducer;
