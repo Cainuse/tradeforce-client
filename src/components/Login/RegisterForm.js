@@ -120,19 +120,20 @@ const RegisterForm = ({ dispatch, modal, itemDetail }, props) => {
     e.preventDefault();
     if (validateForm(false)) {
       await dispatch(
-        registerUserAsync({
-          userName: userName,
-          firstName: fName,
-          lastName: lName,
-          email: email,
-          postalCode: "None",
-          dateRegistered: new Date(),
-          password: password,
-          isGoogleUser: false,
-        },
+        registerUserAsync(
+          {
+            userName: userName,
+            firstName: fName,
+            lastName: lName,
+            email: email,
+            postalCode: "None",
+            dateRegistered: new Date(),
+            password: password,
+            isGoogleUser: false,
+          },
           modal.openedFrom,
           itemDetail.ownerId
-          )
+        )
       );
     }
   };

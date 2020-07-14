@@ -79,14 +79,21 @@ function ItemInfo(props) {
   };
 
   const chooseButton = (currentUser, fns) => {
-    let { openOfferingModal, editPosting, openLoginModal, displayWarning } = fns;
+    let {
+      openOfferingModal,
+      editPosting,
+      openLoginModal,
+      displayWarning,
+    } = fns;
     if (currentUser === null) {
       return (
         <Button
           variant="contained"
           color="primary"
           onClick={() => {
-            displayWarning("Please sign in or register before making an offer.");
+            displayWarning(
+              "Please sign in or register before making an offer."
+            );
             openLoginModal(MAKE_OFFER_BUTTON);
           }}
         >

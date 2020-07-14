@@ -16,7 +16,6 @@ export const OPEN_POSTING_MODAL = "OPEN_POSTING_MODAL";
  **/
 export const MAKE_OFFER = "MAKE_OFFER";
 
-
 /**
  * Snackbar Action Types
  **/
