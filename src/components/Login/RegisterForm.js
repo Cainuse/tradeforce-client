@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const RegisterForm = ({ dispatch, modal }, props) => {
+const RegisterForm = ({ dispatch, modal, itemDetail }, props) => {
   const classes = useStyles();
   const [showLoginForm, setShowLoginForm] = useState(true);
   const [email, setEmail] = useState("");
@@ -137,7 +137,7 @@ const RegisterForm = ({ dispatch, modal }, props) => {
   const handleSubmitLogin = async (e) => {
     e.preventDefault();
     if (validateForm(true)) {
-      await dispatch(loginUserAsync(email, password, false, modal.openedFrom));
+      await dispatch(loginUserAsync(email, password, false, modal.openedFrom, itemDetail.ownerId));
     }
   };
 
@@ -350,6 +350,7 @@ const RegisterForm = ({ dispatch, modal }, props) => {
 const mapStateToProps = (state) => ({
   currentUser: state.currentUser,
   modal: state.modal,
+  itemDetail: state.itemDetail,
 });
 
 export default connect(mapStateToProps)(RegisterForm);

@@ -113,7 +113,7 @@ export const registerUserAsync = (user) => {
   };
 };
 
-export const loginUserAsync = (email, password, googleInfo, openedFrom) => {
+export const loginUserAsync = (email, password, googleInfo, openedFrom, postingOwnerId) => {
   return async (dispatch) => {
     dispatch(isUserFetching());
 
@@ -160,10 +160,7 @@ export const loginUserAsync = (email, password, googleInfo, openedFrom) => {
       localStorage.setItem("token", respData.token);
       dispatch(displaySuccess(USER_LOGIN_SUCCESS));
       dispatch(closeModal());
-      if (openedFrom === MAKE_OFFER_BUTTON) {
-        dispatch(openOfferModal());
-      }
-      return dispatch(
+      let result = dispatch(
         setUser({
           _id: respData.user._id,
           userName: respData.user.userName,
@@ -175,6 +172,10 @@ export const loginUserAsync = (email, password, googleInfo, openedFrom) => {
           isGoogleUser: respData.user.isGoogleUser
         })
       );
+      if (openedFrom === MAKE_OFFER_BUTTON && postingOwnerId !== undefined && postingOwnerId !== respData.user._id) {
+        dispatch(openOfferModal());
+      }
+      return result;
       // return dispatch(openOfferModal());
     } catch (err) {
       dispatch(isUserFailed());

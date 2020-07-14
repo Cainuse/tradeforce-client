@@ -5,6 +5,7 @@ import { loginUserAsync, unsetUser } from "../../redux/actions/userActions";
 import { displayError } from "../../redux/actions/snackbarActions";
 import { closeModal } from "../../redux/actions/modalActions";
 import { connect } from "react-redux";
+import { itemDetailReducer } from "../../redux/reducers/itemDetailReducer";
 
 const useStyles = makeStyles((theme) => ({
   googleBtn: {
@@ -19,6 +20,7 @@ const GoogleBtn = ({
   displayError,
   currentUser,
   modal,
+  itemDetail,
 }) => {
   const classes = useStyles();
 
@@ -37,7 +39,8 @@ const GoogleBtn = ({
         postalCode,
         dateRegistered,
       },
-        modal.openedFrom);
+        modal.openedFrom,
+        itemDetail.ownerId);
     }
   };
 
@@ -62,11 +65,12 @@ const GoogleBtn = ({
 const mapStateToProps = (state) => ({
   currentUser: state.currentUser,
   modal: state.modal,
+  itemDetail: state.itemDetail,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  loginUserAsync: (email, password, googleInfoObj, openedFrom) =>
-    dispatch(loginUserAsync(email, password, googleInfoObj, openedFrom)),
+  loginUserAsync: (email, password, googleInfoObj, openedFrom, postingId) =>
+    dispatch(loginUserAsync(email, password, googleInfoObj, openedFrom, postingId)),
   unsetUser: () => dispatch(unsetUser()),
   closeModal: () => dispatch(closeModal()),
   displayError: (msg) => dispatch(displayError(msg)),
