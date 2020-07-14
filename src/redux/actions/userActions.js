@@ -2,7 +2,7 @@ import {
   SET_USER,
   UNSET_USER,
   IS_USER_FETCHING,
-  IS_USER_FAILED
+  IS_USER_FAILED,
 } from "../constants/actionTypes";
 import {
   USER_REGISTRATION_SUCCESS,
@@ -38,25 +38,25 @@ import { MAKE_OFFER_BUTTON } from "../constants/buttonTypes";
 export const setUser = (user) => {
   return {
     type: SET_USER,
-    user
+    user,
   };
 };
 
 export const unsetUser = () => {
   return {
-    type: UNSET_USER
+    type: UNSET_USER,
   };
 };
 
 export const isUserFetching = () => {
   return {
-    type: IS_USER_FETCHING
+    type: IS_USER_FETCHING,
   };
 };
 
 export const isUserFailed = () => {
   return {
-    type: IS_USER_FAILED
+    type: IS_USER_FAILED,
   };
 };
 
@@ -69,7 +69,7 @@ export const registerUserAsync = (user) => {
     postalCode,
     dateRegistered,
     password,
-    isGoogleUser
+    isGoogleUser,
   } = user;
 
   return async (dispatch) => {
@@ -85,7 +85,7 @@ export const registerUserAsync = (user) => {
           postalCode,
           dateRegistered,
           password,
-          isGoogleUser
+          isGoogleUser,
         }
       );
       const respData = createUserResp.data;
@@ -102,7 +102,7 @@ export const registerUserAsync = (user) => {
           email: respData.user.email,
           postalCode: "None",
           dateRegistered: respData.user.dateRegistered,
-          isGoogleUser: respData.user.isGoogleUser
+          isGoogleUser: respData.user.isGoogleUser,
         })
       );
     } catch (err) {
@@ -113,7 +113,13 @@ export const registerUserAsync = (user) => {
   };
 };
 
-export const loginUserAsync = (email, password, googleInfo, openedFrom, postingOwnerId) => {
+export const loginUserAsync = (
+  email,
+  password,
+  googleInfo,
+  openedFrom,
+  postingOwnerId
+) => {
   return async (dispatch) => {
     dispatch(isUserFetching());
 
@@ -137,7 +143,7 @@ export const loginUserAsync = (email, password, googleInfo, openedFrom, postingO
             postalCode: "None",
             dateRegistered: googleInfo.dateRegistered,
             password: password,
-            isGoogleUser: true
+            isGoogleUser: true,
           })
         );
       }
@@ -152,7 +158,7 @@ export const loginUserAsync = (email, password, googleInfo, openedFrom, postingO
         {
           email,
           password,
-          isGoogleLogin: user.data.isGoogleUser
+          isGoogleLogin: user.data.isGoogleUser,
         }
       );
       const respData = authUserResp.data;
@@ -169,10 +175,14 @@ export const loginUserAsync = (email, password, googleInfo, openedFrom, postingO
           email: respData.user.email,
           postalCode: "None",
           dateRegistered: respData.user.dateRegistered,
-          isGoogleUser: respData.user.isGoogleUser
+          isGoogleUser: respData.user.isGoogleUser,
         })
       );
-      if (openedFrom === MAKE_OFFER_BUTTON && postingOwnerId !== undefined && postingOwnerId !== respData.user._id) {
+      if (
+        openedFrom === MAKE_OFFER_BUTTON &&
+        postingOwnerId !== undefined &&
+        postingOwnerId !== respData.user._id
+      ) {
         dispatch(openOfferModal());
       }
       return result;
@@ -189,8 +199,8 @@ export const authenticateUser = (token) => {
     try {
       let config = {
         headers: {
-          "auth-token": token
-        }
+          "auth-token": token,
+        },
       };
       const resp = await axios.post(
         "http://localhost:3001/api/users/authenticate",
@@ -207,7 +217,7 @@ export const authenticateUser = (token) => {
           email: user.email,
           postalCode: "None",
           dateRegistered: user.dateRegistered,
-          isGoogleUser: user.isGoogleUser
+          isGoogleUser: user.isGoogleUser,
         })
       );
     } catch (err) {

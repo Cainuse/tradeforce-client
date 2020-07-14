@@ -129,7 +129,7 @@ const RegisterForm = ({ dispatch, modal, itemDetail }, props) => {
           dateRegistered: new Date(),
           password,
           isGoogleUser: false,
-          })
+        })
       );
     }
   };
@@ -137,7 +137,15 @@ const RegisterForm = ({ dispatch, modal, itemDetail }, props) => {
   const handleSubmitLogin = async (e) => {
     e.preventDefault();
     if (validateForm(true)) {
-      await dispatch(loginUserAsync(email, password, false, modal.openedFrom, itemDetail.ownerId));
+      await dispatch(
+        loginUserAsync(
+          email,
+          password,
+          false,
+          modal.openedFrom,
+          itemDetail.ownerId
+        )
+      );
     }
   };
 
@@ -178,7 +186,7 @@ const RegisterForm = ({ dispatch, modal, itemDetail }, props) => {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <GoogleLogin fromButton={props.fromButton}/>
+          <GoogleLogin fromButton={props.fromButton} />
           <Typography component="h1" variant="h5">
             Or
           </Typography>

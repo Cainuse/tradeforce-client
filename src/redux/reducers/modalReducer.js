@@ -12,7 +12,11 @@ import {
   LOGIN_MODAL,
   REVIEW_MODAL,
 } from "../constants/modalTypes";
-import { ADD_POSTING_BUTTON, ADD_REVIEW_BUTTON, MAKE_OFFER_BUTTON } from "../constants/buttonTypes";
+import {
+  ADD_POSTING_BUTTON,
+  ADD_REVIEW_BUTTON,
+  MAKE_OFFER_BUTTON,
+} from "../constants/buttonTypes";
 
 export const modalReducer = (state = initialState.modal, action) => {
   switch (action.type) {

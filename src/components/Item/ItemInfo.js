@@ -9,7 +9,10 @@ import clsx from "clsx";
 import _ from "lodash";
 import { useHistory, useLocation } from "react-router-dom";
 
-import { openLoginModal, openOfferModal } from "../../redux/actions/modalActions";
+import {
+  openLoginModal,
+  openOfferModal,
+} from "../../redux/actions/modalActions";
 import ImageCarousel from "./ImageCarousel";
 import { MAKE_OFFER_BUTTON } from "../../redux/constants/buttonTypes";
 
