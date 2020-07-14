@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const RegisterForm = ({ dispatch }) => {
+const RegisterForm = ({ dispatch }, props) => {
   const classes = useStyles();
   const [showLoginForm, setShowLoginForm] = useState(true);
   const [email, setEmail] = useState("");
@@ -120,16 +120,16 @@ const RegisterForm = ({ dispatch }) => {
     e.preventDefault();
     if (validateForm(false)) {
       await dispatch(
-        registerUserAsync(
+        registerUserAsync({
           userName,
           fName,
           lName,
           email,
-          "None",
-          new Date(),
+          postalCode: "None",
+          dateRegistered: new Date(),
           password,
-          false
-        )
+          isGoogleUser: false,
+          })
       );
     }
   };
@@ -178,7 +178,7 @@ const RegisterForm = ({ dispatch }) => {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <GoogleLogin />
+          <GoogleLogin fromButton={props.fromButton}/>
           <Typography component="h1" variant="h5">
             Or
           </Typography>

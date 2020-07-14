@@ -36,9 +36,9 @@ const GoogleBtn = ({
         postalCode,
         dateRegistered,
       });
-      if (!currentUser.isFailed && !currentUser.isFetching) {
-        closeModal();
-      }
+      // if (!currentUser.isFailed && !currentUser.isFetching) {
+      //   closeModal();
+      // }
     }
   };
 

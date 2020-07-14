@@ -9,7 +9,7 @@ import clsx from "clsx";
 import _ from "lodash";
 import { useHistory, useLocation } from "react-router-dom";
 
-import { openOfferModal } from "../../redux/actions/modalActions";
+import { openLoginModal, openOfferModal } from "../../redux/actions/modalActions";
 import ImageCarousel from "./ImageCarousel";
 
 const useStyles = makeStyles((theme) => ({
@@ -74,21 +74,20 @@ function ItemInfo(props) {
   };
 
   const chooseButton = (currentUser, fns) => {
-    let {openOfferingModal, editPosting} = fns;
+    let { openOfferingModal, editPosting, openLoginModal } = fns;
     if (currentUser === null) {
       return (
         <Button
           variant="contained"
           color="primary"
           onClick={() => {
-            openOfferingModal();
+            openLoginModal();
           }}
         >
           Make Offer
         </Button>
-      )
-    }
-    else if (currentUser._id !== itemDetail.ownerId) {
+      );
+    } else if (currentUser._id !== itemDetail.ownerId) {
       return (
         <Button
           variant="contained"
@@ -99,19 +98,15 @@ function ItemInfo(props) {
         >
           Make Offer
         </Button>
-      )
+      );
     } else {
       return (
-        <Button
-          onClick={editPosting}
-          variant="outlined"
-          color="primary"
-        >
+        <Button onClick={editPosting} variant="outlined" color="primary">
           Edit Posting
         </Button>
-      )
+      );
     }
-  }
+  };
 
   return (
     <React.Fragment>
@@ -120,28 +115,11 @@ function ItemInfo(props) {
       </Grid>
       <Grid item xs={4}>
         <Grid container alignItems="center" direction="column">
-          {/*{!currentUser || currentUser._id !== itemDetail.ownerId ? (*/}
-          {/*  <Button*/}
-          {/*    variant="contained"*/}
-          {/*    color="primary"*/}
-          {/*    onClick={() => {*/}
-          {/*      props.openOfferingModal();*/}
-          {/*    }}*/}
-          {/*    disabled={currentUser === null}*/}
-          {/*  >*/}
-          {/*    Make Offer*/}
-          {/*  </Button>*/}
-          {/*) : (*/}
-          {/*  <Button*/}
-          {/*    onClick={editPosting}*/}
-          {/*    // startIcon={<EditIcon />}*/}
-          {/*    variant="outlined"*/}
-          {/*    color="primary"*/}
-          {/*  >*/}
-          {/*    Edit Posting*/}
-          {/*  </Button>*/}
-          {/*)}*/}
-          {chooseButton(currentUser, { openOfferingModal : props.openOfferingModal, editPosting: editPosting})}
+          {chooseButton(currentUser, {
+            openOfferingModal: props.openOfferingModal,
+            editPosting: editPosting,
+            openLoginModal: props.openLoginModal,
+          })}
           <Box my={3} width="60%">
             <p className={classes.detailTitle}>
               Quantity: <span className={classes.qtyVal}>{quantity}</span>
@@ -181,9 +159,9 @@ function ItemInfo(props) {
   );
 }
 
-
 const mapDispatchToProps = (dispatch) => ({
   openOfferingModal: () => dispatch(openOfferModal()),
+  openLoginModal: () => dispatch(openLoginModal()),
 });
 
 const mapStateToProps = (state) => ({
