@@ -92,7 +92,6 @@ export const registerUserAsync = (user, openedFrom, postingOwnerId) => {
 
       localStorage.setItem("token", respData.token);
       dispatch(displaySuccess(USER_REGISTRATION_SUCCESS));
-      dispatch(closeModal());
       let result = dispatch(
         setUser({
           _id: respData.user._id,
@@ -141,7 +140,6 @@ export const loginUserAsync = (
     } catch (err) {
       if (googleInfo) {
         dispatch(displaySuccess(GOOGLE_LOGIN_SUCCESS));
-        dispatch(closeModal());
         return await dispatch(
           registerUserAsync({
             userName: googleInfo.userName,
@@ -173,7 +171,6 @@ export const loginUserAsync = (
 
       localStorage.setItem("token", respData.token);
       dispatch(displaySuccess(USER_LOGIN_SUCCESS));
-      dispatch(closeModal());
       let result = dispatch(
         setUser({
           _id: respData.user._id,

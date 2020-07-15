@@ -54,6 +54,7 @@ export const modalReducer = (state = initialState.modal, action) => {
       return {
         isOpen: state.isOpen,
         type: state.type,
+        openedFrom: state.openedFrom,
       };
   }
 };
