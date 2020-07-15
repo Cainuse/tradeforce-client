@@ -51,3 +51,5 @@ export const UPDATE_ITEM_DETAIL = "UPDATE_ITEM_DETAIL";
 export const OPEN_REVIEW_MODAL = "OPEN_REVIEW_MODAL";
 export const ADD_REVIEW = "ADD_REVIEW";
 export const SET_LOADING = "SET_LOADING";
+
+export const LOAD_USER_DETAIL = "LOAD_USER_DETAIL";
