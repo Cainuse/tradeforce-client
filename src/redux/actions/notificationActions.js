@@ -121,7 +121,7 @@ export const updateNotificationAsync = (_id, isRead) => {
   return async (dispatch) => {
     try {
       const notificationResp = await axios.patch(
-        `http://localhost:3001/api/notifications/updateOneNotification/${_id}`,
+        `http://localhost:3001/api/notifications/markAsRead/${_id}`,
         { isRead }
       );
       return dispatch(
@@ -149,7 +149,7 @@ export const updateAllNotificationsAsync = (userId, isRead) => {
   return async (dispatch) => {
     try {
       await axios.patch(
-        `http://localhost:3001/api/notifications/updateUserNotifications/${userId}`,
+        `http://localhost:3001/api/notifications/markAllAsRead/${userId}`,
         { isRead }
       );
       return dispatch(updateAllNotifications(isRead));

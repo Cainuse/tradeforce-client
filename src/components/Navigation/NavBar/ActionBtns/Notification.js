@@ -78,7 +78,7 @@ const Notification = ({
       <Tooltip title="Delete">
         <IconButton
           color="inherit"
-          aria-label="upload picture"
+          aria-label="delete notification"
           onClick={handleDeleteClick}
         >
           <DeleteIcon />

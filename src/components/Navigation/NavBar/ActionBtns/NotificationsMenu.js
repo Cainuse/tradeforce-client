@@ -8,7 +8,6 @@ import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 
 import Notification from "./Notification";
-import { setLoading } from "../../../../redux/actions/loadingActions";
 import {
   updateAllNotificationsAsync,
   removeAllNotificationsAsync,
@@ -55,19 +54,12 @@ const NotificationsMenu = ({ dispatch, notifications, currentUser }) => {
   };
 
   const retrieveNotifications = () => {
-    dispatch(setLoading(true));
-    dispatch(getNotificationsAsync(currentUser.user._id))
-      .then((res) => {
-        setMyNotifications(res.notifications);
-      })
-      .finally(() => {
-        dispatch(setLoading(false));
-      });
+    dispatch(getNotificationsAsync(currentUser.user._id)).then((res) => {
+      setMyNotifications(res.notifications);
+    });
   };
 
   const handleClickMarkAllAsRead = () => {
-    console.log(notifications);
-    console.log(markAllStatus);
     if (notifications.length > 0) {
       dispatch(
         updateAllNotificationsAsync(currentUser.user._id, markAllStatus)
