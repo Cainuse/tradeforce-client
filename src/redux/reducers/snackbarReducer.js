@@ -3,7 +3,6 @@ import {
   CLEAR_SNACKBAR,
   ERROR_SNACKBAR,
   SUCCESS_SNACKBAR,
-  UPDATE_ITEM_DETAIL,
   WARNING_SNACKBAR,
 } from "../constants/actionTypes";
 

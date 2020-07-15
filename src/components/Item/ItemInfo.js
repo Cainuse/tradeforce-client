@@ -16,6 +16,7 @@ import {
 import ImageCarousel from "./ImageCarousel";
 import { MAKE_OFFER_BUTTON } from "../../redux/constants/buttonTypes";
 import { displayWarning } from "../../redux/actions/snackbarActions";
+import { MAKE_OFFER_AS_UNSIGNED_IN_USER_ERROR } from "../../redux/constants/snackbarMessageTypes";
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -92,7 +93,7 @@ function ItemInfo(props) {
           color="primary"
           onClick={() => {
             displayWarning(
-              "Please sign in or register before making an offer."
+              MAKE_OFFER_AS_UNSIGNED_IN_USER_ERROR
             );
             openLoginModal(MAKE_OFFER_BUTTON);
           }}
