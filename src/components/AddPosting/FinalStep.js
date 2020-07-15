@@ -3,8 +3,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
-import { closeModal } from "../../redux/actions/modalActions";
-import { connect } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -21,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const FinalStep = (props) => {
-  const { closeModal } = props;
+  const { closeModal, id } = props;
 
   const classes = useStyles();
 
@@ -30,12 +28,12 @@ const FinalStep = (props) => {
       <div className={classes.form}>
         <Typography>You have successfully created a new posting.</Typography>
         <Link
-          to="/items/item=3"
+          to={`/items/item=${id}`}
           onClick={() => closeModal()}
           className={classes.link}
         >
           <Typography variant="h4" color="primary">
-            tradeforce.com/82W7&DI1
+            {`tradeforce.com/${id}`}
           </Typography>
         </Link>
         <Button
@@ -52,4 +50,4 @@ const FinalStep = (props) => {
   );
 };
 
-export default connect(null, { closeModal })(FinalStep);
+export default FinalStep;
