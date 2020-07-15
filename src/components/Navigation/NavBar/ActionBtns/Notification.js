@@ -26,8 +26,8 @@ const useStyles = makeStyles(() => ({
   rejectedIcon: {
     color: "red",
   },
-  actionBtns: {
-    display: "flex",
+  moreItems: {
+    textTransform: "none",
   },
 }));
 
@@ -39,6 +39,7 @@ const SeeMoreMenu = ({
   isRead,
 }) => {
   const [anchorEl, setAnchorEl] = useState(null);
+  const classes = useStyles();
   const open = Boolean(anchorEl);
 
   const handleClick = (event) => {
@@ -84,6 +85,7 @@ const SeeMoreMenu = ({
           <Button
             color="inherit"
             onClick={handleReadClick}
+            className={classes.moreItems}
             startIcon={isRead ? <MarkunreadIcon /> : <CheckBoxIcon />}
           >
             {isRead ? "Mark as unread" : "Mark as read"}
@@ -93,6 +95,7 @@ const SeeMoreMenu = ({
           <Button
             color="inherit"
             onClick={handleDeleteClick}
+            className={classes.moreItems}
             startIcon={<DeleteIcon />}
           >
             Delete
