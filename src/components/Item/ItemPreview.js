@@ -9,10 +9,8 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Rating from "./Rating";
-import {
-  loadItemDetail,
-  displayError,
-} from "../../redux/actions/postingActions";
+import { loadItemDetail } from "../../redux/actions/postingActions";
+import { displayError } from "../../redux/actions/snackbarActions";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 

@@ -4,8 +4,6 @@ import {
   LOAD_ITEM_DETAIL,
   UPDATE_ITEM_DETAIL,
   LOAD_POSTINGS,
-  ERROR_SNACKBAR,
-  SUCCESS_SNACKBAR,
 } from "../constants/actionTypes";
 import {
   ADD_POSTING_ERROR,
@@ -15,29 +13,16 @@ import {
   DELETE_POSTING_SUCCESS,
   UPDATE_POSTING_SUCCESS,
 } from "../constants/snackbarMessageTypes";
+import { displayError, displaySuccess } from "./snackbarActions";
 import { setLoading } from "./loadingActions";
 import axios from "axios";
 
 const BASE_URL = `${process.env.REACT_APP_BASE_URL}`;
 
-const displaySuccess = (msg) => {
-  return {
-    type: SUCCESS_SNACKBAR,
-    successMessage: msg,
-  };
-};
-
 const addPostingSuccess = (posting) => {
   return {
     type: ADD_POSTING,
     posting: posting,
-  };
-};
-
-export const displayError = (msg) => {
-  return {
-    type: ERROR_SNACKBAR,
-    errMessage: msg,
   };
 };
 
