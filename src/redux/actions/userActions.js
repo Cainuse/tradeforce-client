@@ -1,3 +1,5 @@
+import axios from "axios";
+
 import {
   SET_USER,
   UNSET_USER,
@@ -11,29 +13,8 @@ import {
 } from "../constants/snackbarMessageTypes";
 import { displayError, displaySuccess } from "./snackbarActions";
 import { closeModal, openOfferModal } from "./modalActions";
-import axios from "axios";
 import { MAKE_OFFER_BUTTON } from "../constants/buttonTypes";
 
-// export const setUser = (
-//   userId,
-//   userName,
-//   firstName,
-//   lastName,
-//   email,
-//   date,
-//   isGoogleUser
-// ) => {
-//   return {
-//     type: SET_USER,
-//     userId,
-//     userName,
-//     firstName,
-//     lastName,
-//     email,
-//     date,
-//     isGoogleUser,
-//   };
-// };
 
 export const setUser = (user) => {
   return {
@@ -104,13 +85,7 @@ export const registerUserAsync = (user, openedFrom, postingOwnerId) => {
           isGoogleUser: respData.user.isGoogleUser,
         })
       );
-      if (
-        openedFrom === MAKE_OFFER_BUTTON &&
-        postingOwnerId !== undefined &&
-        postingOwnerId !== respData.user._id
-      ) {
-        dispatch(openOfferModal());
-      }
+      handleAftermathModalBehaviour(dispatch, openedFrom, postingOwnerId, respData.user._id);
       return result;
     } catch (err) {
       // error occurred while saving user in db
@@ -183,15 +158,8 @@ export const loginUserAsync = (
           isGoogleUser: respData.user.isGoogleUser,
         })
       );
-      if (
-        openedFrom === MAKE_OFFER_BUTTON &&
-        postingOwnerId !== undefined &&
-        postingOwnerId !== respData.user._id
-      ) {
-        dispatch(openOfferModal());
-      }
+      handleAftermathModalBehaviour(dispatch, openedFrom, postingOwnerId, respData.user._id);
       return result;
-      // return dispatch(openOfferModal());
     } catch (err) {
       dispatch(isUserFailed());
       return dispatch(displayError(err.response.data.message));
@@ -231,3 +199,16 @@ export const authenticateUser = (token) => {
     }
   };
 };
+
+// Helper functions
+const handleAftermathModalBehaviour = (dispatch, openedFrom, postingOwnerId, userId) => {
+  if (
+    openedFrom === MAKE_OFFER_BUTTON &&
+    postingOwnerId !== undefined &&
+    postingOwnerId !== userId
+  ) {
+    dispatch(openOfferModal());
+  } else {
+    dispatch(closeModal());
+  }
+}
