@@ -24,8 +24,8 @@ const useStyles = makeStyles(() => ({
     padding: "5px",
   },
   notificationsList: {
-    width: "100%",
-    maxWidth: 430,
+    width: "25rem",
+    textOverflow: "auto",
     maxHeight: 300,
     overflow: "auto",
   },
@@ -130,7 +130,7 @@ const NotificationsMenu = ({ dispatch, notifications, currentUser }) => {
           vertical: "top",
           horizontal: "center",
         }}
-        id="customized-menu"
+        id="notifications-menu"
         anchorEl={anchorEl}
         keepMounted
         open={open}

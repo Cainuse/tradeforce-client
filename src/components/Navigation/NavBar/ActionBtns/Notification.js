@@ -5,12 +5,15 @@ import { makeStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import LocalOfferIcon from "@material-ui/icons/LocalOffer";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
-import RadioButtonUncheckedIcon from "@material-ui/icons/RadioButtonUnchecked";
-import RadioButtonCheckedIcon from "@material-ui/icons/RadioButtonChecked";
+import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import Tooltip from "@material-ui/core/Tooltip";
+import moment from "moment";
 import DeleteIcon from "@material-ui/icons/Delete";
 import CancelIcon from "@material-ui/icons/Cancel";
+import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
+import CheckBoxIcon from "@material-ui/icons/CheckBox";
+import MarkunreadIcon from "@material-ui/icons/Markunread";
+import Button from "@material-ui/core/Button";
 import {
   updateNotificationAsync,
   removeNotificationAsync,
@@ -28,6 +31,78 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
+const SeeMoreMenu = ({
+  dispatch,
+  handleDeleteClick,
+  onUpdateStatus,
+  _id,
+  isRead,
+}) => {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleReadClick = () => {
+    dispatch(updateNotificationAsync(_id, !isRead)).then(() => {
+      onUpdateStatus(_id, !isRead);
+    });
+  };
+
+  return (
+    <div>
+      <IconButton
+        aria-label="more"
+        aria-controls="more-menu"
+        aria-haspopup="true"
+        onClick={handleClick}
+      >
+        <MoreHorizIcon />
+      </IconButton>
+      <Menu
+        id="more-menu"
+        anchorEl={anchorEl}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "center",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "center",
+        }}
+        keepMounted
+        open={open}
+        onClose={handleClose}
+      >
+        <MenuItem onClick={handleClose}>
+          <Button
+            color="inherit"
+            onClick={handleReadClick}
+            startIcon={isRead ? <MarkunreadIcon /> : <CheckBoxIcon />}
+          >
+            {isRead ? "Mark as unread" : "Mark as read"}
+          </Button>
+        </MenuItem>
+        <MenuItem onClick={handleClose}>
+          <Button
+            color="inherit"
+            onClick={handleDeleteClick}
+            startIcon={<DeleteIcon />}
+          >
+            Delete
+          </Button>
+        </MenuItem>
+      </Menu>
+    </div>
+  );
+};
+
 const Notification = ({
   dispatch,
   _id,
@@ -41,12 +116,6 @@ const Notification = ({
   const classes = useStyles();
 
   const [isExisting, setIsExisting] = useState(true);
-
-  const handleReadClick = () => {
-    dispatch(updateNotificationAsync(_id, !isRead)).then(() => {
-      onUpdateStatus(_id, !isRead);
-    });
-  };
 
   const handleDeleteClick = () => {
     dispatch(removeNotificationAsync(_id)).then(() => {
@@ -65,25 +134,17 @@ const Notification = ({
           <CancelIcon className={classes.rejectedIcon} />
         )}
       </ListItemAvatar>
-      <ListItemText primary={content} secondary={date.toLocaleString()} />
-      <Tooltip title={isRead ? "Mark as unread" : "Mark as read"}>
-        <IconButton
-          color="inherit"
-          aria-label="Change read status"
-          onClick={handleReadClick}
-        >
-          {isRead ? <RadioButtonCheckedIcon /> : <RadioButtonUncheckedIcon />}
-        </IconButton>
-      </Tooltip>
-      <Tooltip title="Delete">
-        <IconButton
-          color="inherit"
-          aria-label="delete notification"
-          onClick={handleDeleteClick}
-        >
-          <DeleteIcon />
-        </IconButton>
-      </Tooltip>
+      <ListItemText
+        primary={content}
+        secondary={moment(date).format("MMMM Do YYYY, h:mm a")}
+      />
+      <SeeMoreMenu
+        dispatch={dispatch}
+        handleDeleteClick={handleDeleteClick}
+        onUpdateStatus={onUpdateStatus}
+        _id={_id}
+        isRead={isRead}
+      />
     </MenuItem>
   ) : null;
 };
