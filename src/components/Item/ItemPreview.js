@@ -75,7 +75,9 @@ const ItemPreview = ({
       <CardActionArea onClick={() => routeToItem(_id)}>
         <CardMedia
           className={classes.tradeItemCardImg}
-          image={images ? images : require("../../images/default.jpg")}
+          image={
+            images.length > 0 ? images[0] : require("../../images/default.jpg")
+          }
           title="Tradeforce"
         />
         <CardContent>
