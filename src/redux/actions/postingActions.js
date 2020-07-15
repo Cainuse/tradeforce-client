@@ -6,6 +6,7 @@ import {
   LOAD_POSTINGS,
 } from "../constants/actionTypes";
 import {
+  LOAD_ITEM_ERROR,
   LOAD_POSTING_ERROR,
   DELETE_POSTING_ERROR,
   UPDATE_POSTING_ERROR,
@@ -128,8 +129,11 @@ export const loadItemDetail = (itemId) => {
         ownerUsername,
       };
       dispatch(loadItemDetailSuccess(item));
+      return "success";
     } catch (error) {
-      throw new Error(error.response.status);
+      // throw new Error(error.response.status)
+      dispatch(displayError(LOAD_ITEM_ERROR));
+      return "error";
     } finally {
       dispatch(setLoading(false));
     }

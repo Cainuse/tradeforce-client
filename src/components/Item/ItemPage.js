@@ -29,10 +29,9 @@ const useStyles = (theme) => ({
 class ItemPage extends React.Component {
   async componentDidMount() {
     const itemId = this.props.location.pathname.split("=")[1];
-    try {
-      await this.props.loadItemDetail(itemId);
-    } catch (e) {
-      this.props.history.push("/PostingNotFound");
+    let response = await this.props.loadItemDetail(itemId);
+    if (response === "error") {
+      this.props.history.push("/OhNo!");
     }
   }
 

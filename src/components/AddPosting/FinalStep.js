@@ -2,7 +2,8 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import { Link } from "react-router-dom";
+import Link from "@material-ui/core/Link";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -19,19 +20,24 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const FinalStep = (props) => {
-  const { closeModal, id } = props;
-
+  const { closeModal, id, loadItemDetail } = props;
   const classes = useStyles();
+  const history = useHistory();
+
+  const close = async (e) => {
+    e.preventDefault();
+    let result = await loadItemDetail(id);
+    if (result === "success") {
+      history.push(`/items/item=${id}`);
+    }
+    closeModal();
+  };
 
   return (
     <div>
       <div className={classes.form}>
         <Typography>You have successfully created a new posting.</Typography>
-        <Link
-          to={`/items/item=${id}`}
-          onClick={() => closeModal()}
-          className={classes.link}
-        >
+        <Link href="#" onClick={close} className={classes.link}>
           <Typography variant="h4" color="primary">
             {`tradeforce.com/${id}`}
           </Typography>

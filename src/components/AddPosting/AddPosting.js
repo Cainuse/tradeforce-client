@@ -5,7 +5,7 @@ import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import { connect } from "react-redux";
-import { addPosting } from "../../redux/actions/postingActions";
+import { addPosting, loadItemDetail } from "../../redux/actions/postingActions";
 import { closeModal } from "../../redux/actions/modalActions";
 import { displayError } from "../../redux/actions/snackbarActions";
 import { ADD_POSTING_ERROR } from "../../redux/constants/snackbarMessageTypes";
@@ -269,7 +269,11 @@ class AddPosting extends React.Component {
         );
       case 4:
         return (
-          <FinalStep closeModal={this.props.closeModal} id={this.state._id} />
+          <FinalStep
+            closeModal={this.props.closeModal}
+            id={this.state._id}
+            loadItemDetail={this.props.loadItemDetail}
+          />
         );
       default:
         return null;
@@ -315,4 +319,5 @@ export default connect(mapStateToProps, {
   addPosting,
   closeModal,
   displayError,
+  loadItemDetail,
 })(withStyles(useStyles)(AddPosting));
