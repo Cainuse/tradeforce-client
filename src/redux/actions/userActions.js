@@ -15,7 +15,6 @@ import { displayError, displaySuccess } from "./snackbarActions";
 import { closeModal, openOfferModal } from "./modalActions";
 import { MAKE_OFFER_BUTTON } from "../constants/buttonTypes";
 
-
 export const setUser = (user) => {
   return {
     type: SET_USER,
@@ -85,7 +84,12 @@ export const registerUserAsync = (user, openedFrom, postingOwnerId) => {
           isGoogleUser: respData.user.isGoogleUser,
         })
       );
-      handleAftermathModalBehaviour(dispatch, openedFrom, postingOwnerId, respData.user._id);
+      handleAftermathModalBehaviour(
+        dispatch,
+        openedFrom,
+        postingOwnerId,
+        respData.user._id
+      );
       return result;
     } catch (err) {
       // error occurred while saving user in db
@@ -158,7 +162,12 @@ export const loginUserAsync = (
           isGoogleUser: respData.user.isGoogleUser,
         })
       );
-      handleAftermathModalBehaviour(dispatch, openedFrom, postingOwnerId, respData.user._id);
+      handleAftermathModalBehaviour(
+        dispatch,
+        openedFrom,
+        postingOwnerId,
+        respData.user._id
+      );
       return result;
     } catch (err) {
       dispatch(isUserFailed());
@@ -201,7 +210,12 @@ export const authenticateUser = (token) => {
 };
 
 // Helper functions
-const handleAftermathModalBehaviour = (dispatch, openedFrom, postingOwnerId, userId) => {
+const handleAftermathModalBehaviour = (
+  dispatch,
+  openedFrom,
+  postingOwnerId,
+  userId
+) => {
   if (
     openedFrom === MAKE_OFFER_BUTTON &&
     postingOwnerId !== undefined &&
@@ -211,4 +225,4 @@ const handleAftermathModalBehaviour = (dispatch, openedFrom, postingOwnerId, use
   } else {
     dispatch(closeModal());
   }
-}
+};

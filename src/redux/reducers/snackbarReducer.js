@@ -44,7 +44,7 @@ export const snackbarReducer = (state = initialState.snackbar, action) => {
           vertical: "bottom",
           horizontal: "center",
         },
-      }
+      };
     default:
       return state;
   }

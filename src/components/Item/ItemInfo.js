@@ -92,9 +92,7 @@ function ItemInfo(props) {
           variant="contained"
           color="primary"
           onClick={() => {
-            displayWarning(
-              MAKE_OFFER_AS_UNSIGNED_IN_USER_ERROR
-            );
+            displayWarning(MAKE_OFFER_AS_UNSIGNED_IN_USER_ERROR);
             openLoginModal(MAKE_OFFER_BUTTON);
           }}
         >
