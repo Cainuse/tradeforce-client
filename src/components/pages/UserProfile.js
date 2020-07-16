@@ -6,10 +6,7 @@ import UserDetails from "../User/UserDetails";
 import { connect } from "react-redux";
 import { displayError } from "../../redux/actions/snackbarActions";
 import { withRouter } from "react-router";
-import {
-  loadCurrentUserDetails,
-  loadUserDetails,
-} from "../../redux/actions/userDetailActions";
+import { loadUserDetails } from "../../redux/actions/userDetailActions";
 import { openReviewModal } from "../../redux/actions/modalActions";
 
 const useStyles = () => ({
@@ -41,19 +38,12 @@ const useStyles = () => ({
 
 class UserProfile extends React.Component {
   async componentDidMount() {
-    console.log("component did mount");
-    const {
-      location,
-      currentUser,
-      loadCurrentUserDetails,
-      loadUserDetails,
-      history,
-    } = this.props;
+    const { location, currentUser, loadUserDetails, history } = this.props;
     const userId = location.pathname.split("=")[1];
-    let response =
-      userId === currentUser._id
-        ? await loadCurrentUserDetails(userId)
-        : await loadUserDetails(userId);
+    let response = await loadUserDetails({
+      userId,
+      currentUserId: currentUser._id,
+    });
     if (response !== "success") {
       history.push("/UserNotFound");
     }
@@ -85,8 +75,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   displayError: (msg) => dispatch(displayError(msg)),
-  loadCurrentUserDetails: (userId) => dispatch(loadCurrentUserDetails(userId)),
-  loadUserDetails: (userId) => dispatch(loadUserDetails(userId)),
+  loadUserDetails: ({ userId, currentUserId }) =>
+    dispatch(loadUserDetails({ userId, currentUserId })),
   openReviewModal: () => dispatch(openReviewModal()),
 });
 
