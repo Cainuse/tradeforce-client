@@ -32,3 +32,8 @@ export const LOAD_USER_DETAILS_ERROR =
   "This profile could not be loaded. Please try again later";
 export const UPDATE_USER_ERROR =
   "Something went wrong. Your profile was not updated";
+
+/* ===== Review Success/Error ===== */
+export const ADD_REVIEW_SUCCESS = "Review was successfully added";
+export const ADD_REVIEW_ERROR =
+  "Review could not be saved. Please try again later";

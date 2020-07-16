@@ -22,7 +22,7 @@ export default function Review(props) {
           display="inline"
           flexGrow={1}
         >
-          {review.reviewerUsername}
+          {review.reviewUsername}
         </Box>
         <Box display="inline" alignContent="center">
           <Rating
