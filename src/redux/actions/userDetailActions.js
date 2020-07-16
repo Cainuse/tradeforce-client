@@ -34,12 +34,15 @@ const updateUserDetailSuccess = (user) => {
 };
 
 export const loadCurrentUserDetails = (userId) => {
+  console.log("load current user");
   return async (dispatch) => {
     try {
       dispatch(setLoading(true));
       // api call
-      let userDetails = axios.get(`${BASE_URL}/${userId}/complete`);
-      userDetails.postings = [];
+      let response = await axios.get(`${BASE_URL}/${userId}/complete`);
+      let userDetails = response.data;
+      userDetails.activePostings = [];
+      userDetails.inactivePostings = [];
       dispatch(loadUserDetailSuccess(userDetails));
     } catch (e) {
       if (e.response.status === 404) {
@@ -54,12 +57,21 @@ export const loadCurrentUserDetails = (userId) => {
 };
 
 export const loadUserDetails = (userId) => {
+  console.log("load other user");
   return async (dispatch) => {
     try {
       dispatch(setLoading(true));
       // api call
-      let userDetails = axios.get(`${BASE_URL}/${userId}/complete`);
-      userDetails.postings = [];
+      let response = await axios.get(`${BASE_URL}/${userId}/complete`);
+      let userDetails = response.data;
+      let activePostingResponse = await axios.get(
+        `${BASE_URL}/${userId}/postings/active`
+      );
+      let inactivePostingResponse = await axios.get(
+        `${BASE_URL}/${userId}/postings/inactive`
+      );
+      userDetails.activePostings = activePostingResponse.data;
+      userDetails.inactivePostings = inactivePostingResponse.data;
       dispatch(loadUserDetailSuccess(userDetails));
     } catch (e) {
       if (e.response.status === 404) {

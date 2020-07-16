@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import UserAvatar from "./UserAvatar";
-import shellstrop from "../../images/shellstrop.jpg";
+import defaultProfile from "../../images/placeholder-profile.png";
 import { displayError } from "../../redux/actions/snackbarActions";
 
 const useStyles = makeStyles((theme) => ({
@@ -15,21 +15,33 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     marginBottom: theme.spacing(5),
   },
-  username: {
+  name: {
     fontSize: "1.2rem",
     fontWeight: 400,
+  },
+  username: {
+    fontSize: ".9rem",
+    fontWeight: 300,
   },
 }));
 
 const ProfileCard = (props) => {
-  let { currentUser } = props;
+  let { userDetail } = props;
   const classes = useStyles();
 
   return (
     <div className={classes.profile}>
-      <UserAvatar isLargeAvatar={true} userProfileImgSrc={shellstrop} />
-      <Typography className={classes.name}>
-        {currentUser.user.userName}
+      <UserAvatar
+        isLargeAvatar={true}
+        userProfileImgSrc={
+          userDetail.profilePic ? userDetail.profilePic : defaultProfile
+        }
+      />
+      <Typography
+        className={classes.name}
+      >{`${userDetail.firstName} ${userDetail.lastName}`}</Typography>
+      <Typography className={classes.username}>
+        {userDetail.userName}
       </Typography>
     </div>
   );

@@ -18,14 +18,5 @@ export const initialState = {
   },
   error: null,
   itemDetail: {},
-  userDetail: {
-    _id: "5f03d321c8c1090b3a425982",
-    firstName: "Eleanor",
-    lastName: "Shellstrop",
-    userName: "shellstrop",
-    postalCode: "V3L0A5",
-    location: "New Westminster, BC",
-    postings: [],
-    reviews: [],
-  },
+  userDetail: {},
 };

@@ -8,10 +8,7 @@ import TabPanel from "./TabPanel";
 import TabLabel from "./TabLabel";
 import ReviewList from "../Review/ReviewList";
 import ItemPreviewList from "../Item/ItemPreviewList";
-import _ from "lodash";
 import Button from "@material-ui/core/Button";
-import { openReviewModal } from "../../redux/actions/modalActions";
-import { connect } from "react-redux";
 
 const useStyles = (theme) => ({
   root: {
@@ -42,15 +39,7 @@ class UserDetails extends React.Component {
   };
 
   render() {
-    const {
-      classes,
-      userDetail,
-      currentUser,
-      postings,
-      openReviewModal,
-    } = this.props;
-    let activePostings = _.filter(userDetail.postings, (val) => val.active);
-    let inactivePostings = _.filter(userDetail.postings, (val) => !val.active);
+    const { classes, userDetail, currentUser, openReviewModal } = this.props;
     return (
       <Paper className={classes.root}>
         <Tabs
@@ -63,14 +52,17 @@ class UserDetails extends React.Component {
         >
           <Tab
             label={
-              <TabLabel value={activePostings.length} title={"Item Postings"} />
+              <TabLabel
+                value={userDetail.activePostings.length}
+                title={"Item Postings"}
+              />
             }
             className={classes.tab}
           />
           <Tab
             label={
               <TabLabel
-                value={inactivePostings.length}
+                value={userDetail.inactivePostings.length}
                 title={"Items Traded"}
               />
             }
@@ -82,7 +74,7 @@ class UserDetails extends React.Component {
             }
             className={classes.tab}
           />
-          {userDetail.id === currentUser.id ? (
+          {userDetail._id === currentUser._id ? (
             <Tab
               label={<TabLabel value={6} title={"Offers"} />}
               className={classes.tab}
@@ -90,10 +82,10 @@ class UserDetails extends React.Component {
           ) : null}
         </Tabs>
         <TabPanel value={this.state.value} index={0}>
-          <ItemPreviewList items={activePostings} postings={postings} />
+          <ItemPreviewList items={userDetail.activePostings} />
         </TabPanel>
         <TabPanel value={this.state.value} index={1}>
-          <ItemPreviewList items={inactivePostings} postings={postings} />
+          <ItemPreviewList items={userDetail.inactivePostings} />
         </TabPanel>
         <TabPanel value={this.state.value} index={2}>
           {userDetail._id !== currentUser._id && (
@@ -120,6 +112,4 @@ class UserDetails extends React.Component {
   }
 }
 
-export default connect(null, { openReviewModal })(
-  withStyles(useStyles)(UserDetails)
-);
+export default withStyles(useStyles)(UserDetails);

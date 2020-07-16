@@ -27,7 +27,7 @@ function AccountBtn(props) {
   };
 
   const handleClickProfile = () => {
-    history.push("/profile");
+    history.push(`/profile/user=${props.currentUser.user._id}`);
     setAnchorEl(null);
   };
 
