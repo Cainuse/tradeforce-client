@@ -36,7 +36,8 @@ function CustomizedInputBase(props) {
   const history = useHistory();
   const [input, setInput] = useState("");
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     await props.loadPostingsByQuery(`search=${input}`);
     history.push({
       pathname: "/items",
@@ -49,7 +50,7 @@ function CustomizedInputBase(props) {
   };
 
   return (
-    <Paper className={classes.root}>
+    <Paper component="form" className={classes.root}>
       <IconButton className={classes.iconButton} aria-label="menu">
         <MenuIcon />
       </IconButton>
