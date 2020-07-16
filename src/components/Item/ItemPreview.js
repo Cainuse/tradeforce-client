@@ -9,8 +9,7 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Rating from "./Rating";
-import { loadItemDetail } from "../../redux/actions/postingActions";
-import { displayError } from "../../redux/actions/snackbarActions";
+import { clearOldItemDetails } from "../../redux/actions/postingActions";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 
@@ -27,7 +26,14 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const ItemPreview = ({ _id, title, date, location, images }) => {
+const ItemPreview = ({
+  _id,
+  title,
+  date,
+  location,
+  images,
+  clearOldItemDetails,
+}) => {
   const classes = useStyles();
   const history = useHistory();
 
@@ -58,6 +64,7 @@ const ItemPreview = ({ _id, title, date, location, images }) => {
   };
 
   const routeToItem = (itemId) => {
+    clearOldItemDetails();
     history.push({
       pathname: "/items/item=" + itemId,
     });
@@ -105,6 +112,6 @@ const mapStateToProps = (state) => ({
   error: state.error,
 });
 
-export default connect(mapStateToProps, { loadItemDetail, displayError })(
-  ItemPreview
-);
+export default connect(mapStateToProps, {
+  clearOldItemDetails,
+})(ItemPreview);
