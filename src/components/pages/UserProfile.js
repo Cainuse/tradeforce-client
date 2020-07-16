@@ -47,18 +47,15 @@ class UserProfile extends React.Component {
       currentUser,
       loadCurrentUserDetails,
       loadUserDetails,
-      displayError,
+      history,
     } = this.props;
     const userId = location.pathname.split("=")[1];
-    try {
-      if (userId === currentUser._id) {
-        await loadCurrentUserDetails(userId);
-      } else {
-        await loadUserDetails(userId);
-      }
-    } catch (e) {
-      console.log(e);
-      displayError("help");
+    let response =
+      userId === currentUser._id
+        ? await loadCurrentUserDetails(userId)
+        : await loadUserDetails(userId);
+    if (response !== "success") {
+      history.push("/UserNotFound");
     }
   }
 

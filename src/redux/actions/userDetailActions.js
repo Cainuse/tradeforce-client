@@ -44,12 +44,14 @@ export const loadCurrentUserDetails = (userId) => {
       userDetails.activePostings = [];
       userDetails.inactivePostings = [];
       dispatch(loadUserDetailSuccess(userDetails));
+      return "success";
     } catch (e) {
       if (e.response.status === 404) {
         dispatch(displayError(LOAD_USER_DETAILS_NOT_FOUND));
       } else {
         dispatch(displayError(LOAD_USER_DETAILS_ERROR));
       }
+      return "error";
     } finally {
       dispatch(setLoading(false));
     }
@@ -73,12 +75,14 @@ export const loadUserDetails = (userId) => {
       userDetails.activePostings = activePostingResponse.data;
       userDetails.inactivePostings = inactivePostingResponse.data;
       dispatch(loadUserDetailSuccess(userDetails));
+      return "success";
     } catch (e) {
       if (e.response.status === 404) {
         dispatch(displayError(LOAD_USER_DETAILS_NOT_FOUND));
       } else {
         dispatch(displayError(LOAD_USER_DETAILS_ERROR));
       }
+      return "error";
     } finally {
       dispatch(setLoading(false));
     }
