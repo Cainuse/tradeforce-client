@@ -119,13 +119,16 @@ export const loadItemDetail = (itemId) => {
       let userId = getItemResponse.data.ownerId
         ? getItemResponse.data.ownerId
         : 0;
-      let getUserInfo = await axios.get(`${BASE_URL}/users/${userId}`);
-      let ownerUsername = getUserInfo.data.userName
-        ? getUserInfo.data.userName
-        : "Unavailable";
+      let getUserInfo = await axios.get(`${BASE_URL}/users/${userId}/complete`);
+      let owner = {
+        ownerUsername: getUserInfo.data.userName
+          ? getUserInfo.data.userName
+          : "Unavailable",
+        ownerReviews: getUserInfo.data.reviews,
+      };
       let item = {
         ...getItemResponse.data,
-        ownerUsername,
+        ...owner,
       };
       dispatch(loadItemDetailSuccess(item));
     } catch (error) {
