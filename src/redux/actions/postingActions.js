@@ -4,6 +4,8 @@ import {
   LOAD_ITEM_DETAIL,
   UPDATE_ITEM_DETAIL,
   LOAD_POSTINGS,
+  CLEAR_OLD_ITEM_DETAILS,
+  CLEAR_OLD_POSTINGS,
 } from "../constants/actionTypes";
 import {
   ADD_POSTING_ERROR,
@@ -163,5 +165,17 @@ export const updateItemDetail = (itemId, details) => {
     } finally {
       dispatch(setLoading(false));
     }
+  };
+};
+
+export const clearOldPostings = () => {
+  return {
+    type: CLEAR_OLD_POSTINGS,
+  };
+};
+
+export const clearOldItemDetails = () => {
+  return {
+    type: CLEAR_OLD_ITEM_DETAILS,
   };
 };
