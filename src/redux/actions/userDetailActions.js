@@ -11,14 +11,6 @@ import axios from "axios";
 
 const BASE_URL = `${process.env.REACT_APP_BASE_URL}/users`;
 
-// TODO: remove addreview once dev merged
-export const addReview = (review) => {
-  return {
-    type: "ADD_REVIEW",
-    review,
-  };
-};
-
 const loadUserDetailSuccess = (user) => {
   return {
     type: LOAD_USER_DETAIL,
