@@ -74,7 +74,7 @@ class UserDetails extends React.Component {
             }
             className={classes.tab}
           />
-          {userDetail._id === currentUser._id ? (
+          {currentUser && userDetail._id === currentUser._id ? (
             <Tab
               label={<TabLabel value={6} title={"Offers"} />}
               className={classes.tab}
@@ -88,7 +88,7 @@ class UserDetails extends React.Component {
           <ItemPreviewList items={userDetail.inactivePostings} sizing={2} />
         </TabPanel>
         <TabPanel value={this.state.value} index={2}>
-          {userDetail._id !== currentUser._id && (
+          {currentUser && userDetail._id !== currentUser._id && (
             <div className={classes.reviewButtonContainer}>
               <Button
                 onClick={openReviewModal}

@@ -41,7 +41,7 @@ export const loadUserDetails = ({ userId, currentUserId }) => {
       let userDetails = response.data;
       if (userDetails) {
         let activePostingResponse =
-          userId === currentUserId
+          currentUserId && userId === currentUserId
             ? await axios.get(`${BASE_URL}/${userId}/postings/complete`)
             : await axios.get(`${BASE_URL}/${userId}/postings/active`);
         let inactivePostingResponse = await axios.get(

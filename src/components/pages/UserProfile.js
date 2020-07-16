@@ -42,7 +42,7 @@ class UserProfile extends React.Component {
     const userId = location.pathname.split("=")[1];
     let response = await loadUserDetails({
       userId,
-      currentUserId: currentUser._id,
+      currentUserId: currentUser ? currentUser._id : null,
     });
     if (response !== "success") {
       history.push("/UserNotFound");
