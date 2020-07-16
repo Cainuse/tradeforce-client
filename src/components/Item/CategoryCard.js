@@ -1,10 +1,12 @@
-import React, { Component } from "react";
+import React from "react";
 import Paper from "@material-ui/core/Paper";
-import { withStyles } from "@material-ui/core/styles";
-import { withRouter } from "react-router";
+import { makeStyles } from "@material-ui/core/styles";
+import { useHistory } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
+import { connect } from "react-redux";
+import { clearOldPostings } from "../../redux/actions/postingActions";
 
-const useStyles = (theme) => ({
+const useStyles = makeStyles((theme) => ({
   card: {
     display: "flex",
     width: "10vw",
@@ -22,37 +24,35 @@ const useStyles = (theme) => ({
   categoryName: {
     fontWeight: 300,
   },
-});
+}));
 
-class CategoryCard extends Component {
-  redirect = () => {
-    this.props.history.push({
+const CategoryCard = (props) => {
+  const { label, value, clearOldPostings } = props;
+  const classes = useStyles();
+  const history = useHistory();
+
+  const redirect = () => {
+    clearOldPostings();
+    history.push({
       pathname: "/items",
-      search: `category=${this.props.value}`,
+      search: `category=${value}`,
     });
   };
 
-  render() {
-    const { classes, label, value } = this.props;
-    return (
-      <div>
-        <Paper
-          elevation={0}
-          className={classes.card}
-          onClick={() => this.redirect()}
-        >
-          <img
-            src={require(`../../images/categories/${value}.jpg`)}
-            alt={label}
-            className={classes.image}
-          />
-          <Typography variant="h5" className={classes.categoryName}>
-            {label}
-          </Typography>
-        </Paper>
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      <Paper elevation={0} className={classes.card} onClick={() => redirect()}>
+        <img
+          src={require(`../../images/categories/${value}.jpg`)}
+          alt={label}
+          className={classes.image}
+        />
+        <Typography variant="h5" className={classes.categoryName}>
+          {label}
+        </Typography>
+      </Paper>
+    </div>
+  );
+};
 
-export default withRouter(withStyles(useStyles)(CategoryCard));
+export default connect(null, { clearOldPostings })(CategoryCard);

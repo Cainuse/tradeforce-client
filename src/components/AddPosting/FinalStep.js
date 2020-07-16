@@ -2,9 +2,8 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import { Link } from "react-router-dom";
-import { closeModal } from "../../redux/actions/modalActions";
-import { connect } from "react-redux";
+import Link from "@material-ui/core/Link";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -21,21 +20,26 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const FinalStep = (props) => {
-  const { closeModal } = props;
-
+  const { closeModal, id, loadItemDetail } = props;
   const classes = useStyles();
+  const history = useHistory();
+
+  const close = async (e) => {
+    e.preventDefault();
+    let result = await loadItemDetail(id);
+    if (result === "success") {
+      history.push(`/items/item=${id}`);
+    }
+    closeModal();
+  };
 
   return (
     <div>
       <div className={classes.form}>
         <Typography>You have successfully created a new posting.</Typography>
-        <Link
-          to="/items/item=3"
-          onClick={() => closeModal()}
-          className={classes.link}
-        >
+        <Link href="#" onClick={close} className={classes.link}>
           <Typography variant="h4" color="primary">
-            tradeforce.com/82W7&DI1
+            {`tradeforce.com/${id}`}
           </Typography>
         </Link>
         <Button
@@ -52,4 +56,4 @@ const FinalStep = (props) => {
   );
 };
 
-export default connect(null, { closeModal })(FinalStep);
+export default FinalStep;
