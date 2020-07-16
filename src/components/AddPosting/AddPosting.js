@@ -5,7 +5,10 @@ import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import { connect } from "react-redux";
-import { addPosting } from "../../redux/actions/postingActions";
+import { addPosting, loadItemDetail } from "../../redux/actions/postingActions";
+import { closeModal } from "../../redux/actions/modalActions";
+import { displayError } from "../../redux/actions/snackbarActions";
+import { ADD_POSTING_ERROR } from "../../redux/constants/snackbarMessageTypes";
 
 import DisplayStepper from "./DisplayStepper";
 import Step1 from "./Step1";
@@ -66,6 +69,7 @@ class AddPosting extends React.Component {
         condition: "",
         quantity: "",
       },
+      _id: "",
     };
   }
 
@@ -170,7 +174,7 @@ class AddPosting extends React.Component {
     this.setState({ activeStep: step });
   };
 
-  handleSubmit = () => {
+  handleSubmit = async () => {
     let submitted = _.pick(this.state, [
       "title",
       "description",
@@ -182,9 +186,13 @@ class AddPosting extends React.Component {
       "quantity",
     ]);
     this.resetPostingFields();
-    this.props.addPosting(submitted, this.props.currentUser);
-
-    this.setState({ activeStep: this.state.activeStep + 1 });
+    try {
+      let id = await this.props.addPosting(submitted, this.props.currentUser);
+      this.setState({ activeStep: this.state.activeStep + 1, _id: id });
+    } catch (e) {
+      this.props.closeModal();
+      this.props.displayError(ADD_POSTING_ERROR);
+    }
   };
 
   handleNext = () => {
@@ -260,7 +268,13 @@ class AddPosting extends React.Component {
           />
         );
       case 4:
-        return <FinalStep close={this.handleClose} />;
+        return (
+          <FinalStep
+            closeModal={this.props.closeModal}
+            id={this.state._id}
+            loadItemDetail={this.props.loadItemDetail}
+          />
+        );
       default:
         return null;
     }
@@ -301,6 +315,9 @@ const mapStateToProps = (state) => {
   return { currentUser: state.currentUser.user };
 };
 
-export default connect(mapStateToProps, { addPosting })(
-  withStyles(useStyles)(AddPosting)
-);
+export default connect(mapStateToProps, {
+  addPosting,
+  closeModal,
+  displayError,
+  loadItemDetail,
+})(withStyles(useStyles)(AddPosting));
