@@ -22,3 +22,8 @@ export const USER_REGISTRATION_SUCCESS =
 export const GOOGLE_LOGIN_SUCCESS = "Successfully logged in through Google!";
 export const USER_LOGIN_SUCCESS = "Successfully logged into the app!";
 export const USER_LOGOUT_SUCCESS = "Successfully logged out!";
+
+/* ===== Review Success/Error ===== */
+export const ADD_REVIEW_SUCCESS = "Review was successfully added";
+export const ADD_REVIEW_ERROR =
+  "Review could not be saved. Please try again later";
