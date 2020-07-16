@@ -9,6 +9,7 @@ import { IconButton } from "@material-ui/core";
 
 import { unsetUser } from "../../../../redux/actions/userActions";
 import GoogleLogoutBtn from "../../../Login/GoogleLogoutBtn";
+import { loadUserDetails } from "../../../../redux/actions/userDetailActions";
 
 const getLogoutMenuItem = (currentUser, handleClickLogout) => {
   if (currentUser.user.isGoogleUser) {
@@ -26,8 +27,16 @@ function AccountBtn(props) {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClickProfile = () => {
-    history.push(`/profile/user=${props.currentUser.user._id}`);
+  const handleClickProfile = async () => {
+    let response = await props.loadUserDetails({
+      userId: props.currentUser.user._id,
+      currentUserId: props.currentUser.user._id,
+    });
+    if (response === "success") {
+      history.push(`/profile/user=${props.currentUser.user._id}`);
+    } else {
+      history.push("/UserNotFound");
+    }
     setAnchorEl(null);
   };
 
@@ -81,6 +90,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   unsetUser: () => dispatch(unsetUser()),
+  loadUserDetails: ({ userId, currentUserId }) =>
+    dispatch(loadUserDetails({ userId, currentUserId })),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AccountBtn);
