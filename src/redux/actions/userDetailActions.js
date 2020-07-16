@@ -39,17 +39,22 @@ export const loadUserDetails = ({ userId, currentUserId }) => {
       dispatch(setLoading(true));
       let response = await axios.get(`${BASE_URL}/${userId}/complete`);
       let userDetails = response.data;
-      let activePostingResponse =
-        userId === currentUserId
-          ? await axios.get(`${BASE_URL}/${userId}/postings/complete`)
-          : await axios.get(`${BASE_URL}/${userId}/postings/active`);
-      let inactivePostingResponse = await axios.get(
-        `${BASE_URL}/${userId}/postings/inactive`
-      );
-      userDetails.activePostings = activePostingResponse.data;
-      userDetails.inactivePostings = inactivePostingResponse.data;
-      dispatch(loadUserDetailSuccess(userDetails));
-      return "success";
+      if (userDetails) {
+        let activePostingResponse =
+          userId === currentUserId
+            ? await axios.get(`${BASE_URL}/${userId}/postings/complete`)
+            : await axios.get(`${BASE_URL}/${userId}/postings/active`);
+        let inactivePostingResponse = await axios.get(
+          `${BASE_URL}/${userId}/postings/inactive`
+        );
+        userDetails.activePostings = activePostingResponse.data;
+        userDetails.inactivePostings = inactivePostingResponse.data;
+        dispatch(loadUserDetailSuccess(userDetails));
+        return "success";
+      } else {
+        dispatch(displayError(LOAD_USER_DETAILS_ERROR));
+        return "error";
+      }
     } catch (e) {
       if (e.response.status === 404) {
         dispatch(displayError(LOAD_USER_DETAILS_NOT_FOUND));
