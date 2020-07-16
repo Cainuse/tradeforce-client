@@ -141,7 +141,7 @@ class ReviewModal extends React.Component {
 
 const mapStateToProps = (state) => ({
   currentUser: state.currentUser.user,
-  userToBeReviewed: state.userDetail.userName,
+  userToBeReviewed: state.userDetail._id,
 });
 
 export default connect(mapStateToProps, { addReview, closeModal })(
