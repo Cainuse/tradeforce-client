@@ -15,6 +15,9 @@ import {
 } from "../../../../redux/actions/notificationActions";
 
 const useStyles = makeStyles(() => ({
+  iconBtn: {
+    padding: "1px",
+  },
   notificationsMenu: {
     border: "1rem",
     borderColor: "black",
@@ -117,6 +120,7 @@ const NotificationsMenu = ({ dispatch, notifications, currentUser }) => {
         aria-controls="notifications-menu"
         aria-haspopup="true"
         onClick={handleOpenNotifications}
+        className={classes.iconBtn}
       >
         <NotificationsNoneOutlinedIcon className={classes.notificationBtn} />
       </IconButton>
@@ -124,11 +128,11 @@ const NotificationsMenu = ({ dispatch, notifications, currentUser }) => {
         getContentAnchorEl={null}
         anchorOrigin={{
           vertical: "bottom",
-          horizontal: "center",
+          horizontal: "right",
         }}
         transformOrigin={{
           vertical: "top",
-          horizontal: "center",
+          horizontal: "right",
         }}
         id="notifications-menu"
         anchorEl={anchorEl}
@@ -136,6 +140,7 @@ const NotificationsMenu = ({ dispatch, notifications, currentUser }) => {
         open={open}
         className={classes.notificationsMenu}
         onClose={handleClose}
+        disableScrollLock={true}
       >
         <div className={classes.headingBtns}>
           <Button
@@ -145,7 +150,7 @@ const NotificationsMenu = ({ dispatch, notifications, currentUser }) => {
             {`Mark all as ${markAllStatus ? "read" : "unread"}`}
           </Button>
           <Button className={classes.headingBtn} onClick={handleClickDeleteAll}>
-            Delete all
+            Clear all
           </Button>
         </div>
         <Divider />

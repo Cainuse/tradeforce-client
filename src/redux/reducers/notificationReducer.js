@@ -1,6 +1,5 @@
 import { initialState } from "../constants/_initialState";
 import {
-  ADD_NOTIFICATION,
   REMOVE_NOTIFICATION,
   REMOVE_ALL_NOTIFICATIONS,
   UPDATE_NOTIFICATION,
@@ -15,18 +14,6 @@ export const notificationsReducer = (
   switch (action.type) {
     case GET_NOTIFICATIONS:
       return action.notifications;
-    case ADD_NOTIFICATION:
-      return [
-        ...state,
-        {
-          _id: action._id,
-          userId: action.userId,
-          type: action.notiType,
-          isRead: false,
-          date: new Date(),
-          content: action.content,
-        },
-      ];
     case REMOVE_NOTIFICATION:
       return state.filter((notification) => notification._id !== action._id);
     case REMOVE_ALL_NOTIFICATIONS:

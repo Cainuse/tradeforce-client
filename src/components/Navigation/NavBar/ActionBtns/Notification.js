@@ -4,11 +4,12 @@ import { ListItemAvatar, ListItemText } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import LocalOfferIcon from "@material-ui/icons/LocalOffer";
-import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import moment from "moment";
-import DeleteIcon from "@material-ui/icons/Delete";
+import ClearIcon from "@material-ui/icons/Clear";
+import CheckIcon from "@material-ui/icons/Check";
+import ErrorIcon from "@material-ui/icons/Error";
 import CancelIcon from "@material-ui/icons/Cancel";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
@@ -86,7 +87,7 @@ const SeeMoreMenu = ({
             color="inherit"
             onClick={handleReadClick}
             className={classes.moreItems}
-            startIcon={isRead ? <MarkunreadIcon /> : <CheckBoxIcon />}
+            startIcon={isRead ? <MarkunreadIcon /> : <CheckIcon />}
           >
             {isRead ? "Mark as unread" : "Mark as read"}
           </Button>
@@ -96,9 +97,9 @@ const SeeMoreMenu = ({
             color="inherit"
             onClick={handleDeleteClick}
             className={classes.moreItems}
-            startIcon={<DeleteIcon />}
+            startIcon={<ClearIcon />}
           >
-            Delete
+            Clear
           </Button>
         </MenuItem>
       </Menu>
@@ -126,17 +127,21 @@ const Notification = ({
     });
   };
 
+  const getItemAvatar = (type) => {
+    if (type === "newOffering") {
+      return <LocalOfferIcon color="primary" />;
+    } else if (type === "offeringAccepted") {
+      return <CheckBoxIcon className={classes.acceptedIcon} />;
+    } else if (type === "offeringRejected") {
+      return <CancelIcon className={classes.rejectedIcon} />;
+    } else {
+      return <ErrorIcon />;
+    }
+  };
+
   return isExisting ? (
     <MenuItem selected={!isRead} divider={true} key={key}>
-      <ListItemAvatar>
-        {type === "newOffering" ? (
-          <LocalOfferIcon color="primary" />
-        ) : type === "offeringAccepted" ? (
-          <CheckCircleIcon className={classes.acceptedIcon} />
-        ) : (
-          <CancelIcon className={classes.rejectedIcon} />
-        )}
-      </ListItemAvatar>
+      <ListItemAvatar>{getItemAvatar(type)}</ListItemAvatar>
       <ListItemText
         primary={content}
         secondary={moment(date).format("MMMM Do YYYY, h:mm a")}

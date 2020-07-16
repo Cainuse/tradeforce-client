@@ -1,5 +1,4 @@
 import {
-  ADD_NOTIFICATION,
   REMOVE_NOTIFICATION,
   REMOVE_ALL_NOTIFICATIONS,
   UPDATE_NOTIFICATION,
@@ -24,42 +23,6 @@ export const getNotificationsAsync = (userId) => {
         `http://localhost:3001/api/notifications/findByUserId/${userId}`
       );
       return dispatch(getNotifications(myNotifications.data));
-    } catch (err) {
-      // error occurred while saving notification in db
-      return dispatch(displayError(err.response.data.message));
-    }
-  };
-};
-
-export const addNotification = (_id, userId, type, content) => {
-  return {
-    type: ADD_NOTIFICATION,
-    _id,
-    userId,
-    notiType: type,
-    content,
-  };
-};
-
-export const addNotificationAsync = (userId, type, content) => {
-  return async (dispatch) => {
-    try {
-      const notificationResp = await axios.post(
-        "http://localhost:3001/api/notifications",
-        {
-          userId,
-          type,
-          content,
-        }
-      );
-      return dispatch(
-        addNotification(
-          notificationResp.data._id,
-          notificationResp.data.userId,
-          notificationResp.data.type,
-          notificationResp.data.content
-        )
-      );
     } catch (err) {
       // error occurred while saving notification in db
       return dispatch(displayError(err.response.data.message));
