@@ -18,9 +18,6 @@ const addReviewSuccess = (review) => {
 export const addReview = ({ review, userToBeReviewed }) => {
   return async (dispatch) => {
     try {
-      // api call
-      // console.log(`${BASE_URL}/users/${userToBeReviewed}/reviews`);
-      // console.log(review);
       await axios.post(`${BASE_URL}/users/${userToBeReviewed}/reviews`, review);
       dispatch(addReviewSuccess(review));
       dispatch(displaySuccess(ADD_REVIEW_SUCCESS));
