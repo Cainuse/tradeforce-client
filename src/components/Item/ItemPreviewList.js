@@ -11,20 +11,20 @@ let useStyles = makeStyles({
 
 const ItemPreviewList = (props) => {
   let classes = useStyles();
-  let { items } = props;
+  let { items, sizing } = props;
 
   return (
     <Grid
       container
       direction={"row"}
-      spacing={3}
+      spacing={4}
       className={classes.itemPreviewContainer}
       alignContent={"center"}
       alignItems={"center"}
     >
       {items.map((item, index) => {
         return (
-          <Grid key={index} item xs={3}>
+          <Grid key={index} item xs={sizing}>
             <ItemPreview
               _id={item._id}
               title={item.title}

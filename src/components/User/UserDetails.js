@@ -82,10 +82,10 @@ class UserDetails extends React.Component {
           ) : null}
         </Tabs>
         <TabPanel value={this.state.value} index={0}>
-          <ItemPreviewList items={userDetail.activePostings} />
+          <ItemPreviewList items={userDetail.activePostings} sizing={2} />
         </TabPanel>
         <TabPanel value={this.state.value} index={1}>
-          <ItemPreviewList items={userDetail.inactivePostings} />
+          <ItemPreviewList items={userDetail.inactivePostings} sizing={2} />
         </TabPanel>
         <TabPanel value={this.state.value} index={2}>
           {userDetail._id !== currentUser._id && (
