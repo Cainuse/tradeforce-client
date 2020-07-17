@@ -7,7 +7,7 @@ import {
   ThemeProvider,
 } from "@material-ui/core/styles";
 import NavBar from "./Navigation/NavBar/NavBar";
-import NavFlyout from "./Navigation/NavFlyout";
+import NavDrawer from "./Navigation/NavDrawer";
 import PathRouter from "./PathRouter";
 import ModalContainer from "./ModalContainer";
 import FeedbackSnackbar from "./FeedbackSnackbar";
@@ -79,7 +79,7 @@ const App = ({ dispatch }) => {
           <ModalContainer />
           <FeedbackSnackbar />
           <div className={classes.flyoutRoot}>
-            <NavFlyout />
+            <NavDrawer />
           </div>
         </div>
       </ThemeProvider>

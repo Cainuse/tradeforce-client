@@ -7,7 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import Rating from "@material-ui/lab/Rating";
 import Button from "@material-ui/core/Button";
 import { connect } from "react-redux";
-import { addReview } from "../../redux/actions/userDetailActions";
+import { addReview } from "../../redux/actions/reviewActions";
 import { closeModal } from "../../redux/actions/modalActions";
 
 const useStyles = (theme) => ({
@@ -62,11 +62,12 @@ class ReviewModal extends React.Component {
   };
 
   handleSubmit = () => {
+    let { currentUser, userToBeReviewed } = this.props;
     let review = {
       ...this.state,
-      reviewerUsername: this.props.currentUser.userName,
+      reviewUsername: currentUser.userName,
     };
-    this.props.addReview(review);
+    this.props.addReview({ review, userToBeReviewed });
     this.props.closeModal();
   };
 
@@ -140,6 +141,7 @@ class ReviewModal extends React.Component {
 
 const mapStateToProps = (state) => ({
   currentUser: state.currentUser.user,
+  userToBeReviewed: state.userDetail._id,
 });
 
 export default connect(mapStateToProps, { addReview, closeModal })(
