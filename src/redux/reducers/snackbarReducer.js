@@ -3,6 +3,7 @@ import {
   CLEAR_SNACKBAR,
   ERROR_SNACKBAR,
   SUCCESS_SNACKBAR,
+  WARNING_SNACKBAR,
 } from "../constants/actionTypes";
 
 export const snackbarReducer = (state = initialState.snackbar, action) => {
@@ -29,6 +30,16 @@ export const snackbarReducer = (state = initialState.snackbar, action) => {
         isOpen: true,
         type: "error",
         message: action.errMessage,
+        position: {
+          vertical: "bottom",
+          horizontal: "center",
+        },
+      };
+    case WARNING_SNACKBAR:
+      return {
+        isOpen: true,
+        type: "warning",
+        message: action.warningMessage,
         position: {
           vertical: "bottom",
           horizontal: "center",

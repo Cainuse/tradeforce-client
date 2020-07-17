@@ -13,6 +13,7 @@ import {
   openLoginModal,
 } from "../../../../redux/actions/modalActions";
 import AccountBtn from "./AccountBtn";
+import { LOGIN_REGISTER_BUTTON } from "../../../../redux/constants/buttonTypes";
 
 const loggedOutStyles = makeStyles(() => ({
   loginBtn: {
@@ -83,7 +84,7 @@ const LoginBtn = (props) => {
       type="button"
       color="inherit"
       className={classes.loginBtn}
-      onClick={() => props.openLoginModal()}
+      onClick={() => props.openLoginModal(LOGIN_REGISTER_BUTTON)}
     >
       Login/Register
     </Button>

@@ -4,6 +4,7 @@ export const initialState = {
   modal: {
     isOpen: false,
     type: "",
+    openedFrom: "",
   },
   snackbar: {
     isOpen: false,
