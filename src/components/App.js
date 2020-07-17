@@ -65,7 +65,7 @@ const App = ({ dispatch }) => {
     } else {
       toRender(true);
     }
-  }, []);
+  }, [dispatch]);
 
   return !render ? (
     <Loader />

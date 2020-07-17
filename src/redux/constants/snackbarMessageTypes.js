@@ -1,3 +1,7 @@
+/* ===== Make Offering Errors ===== */
+export const MAKE_OFFER_AS_UNSIGNED_IN_USER_ERROR =
+  "Please sign in or register before making an offer.";
+
 /* ===== Posting Errors ===== */
 export const ADD_POSTING_ERROR =
   "Something went wrong. Posting was not created";
