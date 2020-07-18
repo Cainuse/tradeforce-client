@@ -41,3 +41,8 @@ export const UPDATE_USER_ERROR =
 export const ADD_REVIEW_SUCCESS = "Review was successfully added";
 export const ADD_REVIEW_ERROR =
   "Review could not be saved. Please try again later";
+
+/* ===== Offering Success/Error ===== */
+export const ADD_OFFER_SUCCESS = "Offer was successfully made";
+export const ADD_OFFER_ERROR =
+  "Offer could not be made. Please try again later";
