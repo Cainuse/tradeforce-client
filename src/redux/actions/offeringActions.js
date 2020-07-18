@@ -16,6 +16,16 @@ export const makeOffer = (offering, postId) => {
   };
 };
 
-// export const makeOffer = (offering, postId) => {
-
-// }
+export const makeOfferAPI = (offering, postId) => {
+  return async (dispatch) => {
+    try {
+      dispatch(setLoading(true));
+      // api call
+      dispatch(displaySuccess(ADD_OFFER_SUCCESS));
+    } catch (e) {
+      dispatch(displayError(ADD_OFFER_ERROR));
+    } finally {
+      dispatch(setLoading(false));
+    }
+  };
+};

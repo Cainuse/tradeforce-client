@@ -172,12 +172,11 @@ class AddOffering extends React.Component {
         this.state.comment,
         this.state.addedItems,
         this.props.currentUser,
-        this.props.itemDetail._id,
+        this.props.itemDetail._id
       );
 
       let id = this.props.itemDetail._id;
       this.props.makeOffer(offering, id);
-      this.props.displaySuccess("Offer successfully made");
       this.resetFormState();
       setTimeout(() => {
         this.props.closeModal();
