@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const RegisterForm = ({ dispatch }) => {
+const RegisterForm = ({ dispatch, modal, itemDetail }, props) => {
   const classes = useStyles();
   const [showLoginForm, setShowLoginForm] = useState(true);
   const [email, setEmail] = useState("");
@@ -121,14 +121,18 @@ const RegisterForm = ({ dispatch }) => {
     if (validateForm(false)) {
       await dispatch(
         registerUserAsync(
-          userName,
-          fName,
-          lName,
-          email,
-          "None",
-          new Date(),
-          password,
-          false
+          {
+            userName: userName,
+            firstName: fName,
+            lastName: lName,
+            email: email,
+            postalCode: "None",
+            dateRegistered: new Date(),
+            password: password,
+            isGoogleUser: false,
+          },
+          modal.openedFrom,
+          itemDetail.ownerId
         )
       );
     }
@@ -137,7 +141,15 @@ const RegisterForm = ({ dispatch }) => {
   const handleSubmitLogin = async (e) => {
     e.preventDefault();
     if (validateForm(true)) {
-      await dispatch(loginUserAsync(email, password, false));
+      await dispatch(
+        loginUserAsync(
+          email,
+          password,
+          false,
+          modal.openedFrom,
+          itemDetail.ownerId
+        )
+      );
     }
   };
 
@@ -178,7 +190,7 @@ const RegisterForm = ({ dispatch }) => {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <GoogleLogin />
+          <GoogleLogin fromButton={props.fromButton} />
           <Typography component="h1" variant="h5">
             Or
           </Typography>
@@ -349,6 +361,8 @@ const RegisterForm = ({ dispatch }) => {
 
 const mapStateToProps = (state) => ({
   currentUser: state.currentUser,
+  modal: state.modal,
+  itemDetail: state.itemDetail,
 });
 
 export default connect(mapStateToProps)(RegisterForm);

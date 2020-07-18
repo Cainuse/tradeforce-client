@@ -4,9 +4,11 @@ import {
   LOAD_ITEM_DETAIL,
   UPDATE_ITEM_DETAIL,
   LOAD_POSTINGS,
+  CLEAR_OLD_ITEM_DETAILS,
+  CLEAR_OLD_POSTINGS,
 } from "../constants/actionTypes";
 import {
-  ADD_POSTING_ERROR,
+  LOAD_ITEM_ERROR,
   LOAD_POSTING_ERROR,
   DELETE_POSTING_ERROR,
   UPDATE_POSTING_ERROR,
@@ -72,8 +74,9 @@ export const addPosting = (posting, currentUser) => {
         postingRequest
       );
       dispatch(addPostingSuccess(postingResponse.data));
+      return postingResponse.data._id;
     } catch (error) {
-      dispatch(displayError(ADD_POSTING_ERROR));
+      throw new Error();
     } finally {
       dispatch(setLoading(false));
     }
@@ -119,17 +122,23 @@ export const loadItemDetail = (itemId) => {
       let userId = getItemResponse.data.ownerId
         ? getItemResponse.data.ownerId
         : 0;
-      let getUserInfo = await axios.get(`${BASE_URL}/users/${userId}`);
-      let ownerUsername = getUserInfo.data.userName
-        ? getUserInfo.data.userName
-        : "Unavailable";
+      let getUserInfo = await axios.get(`${BASE_URL}/users/${userId}/complete`);
+      let owner = {
+        ownerUsername: getUserInfo.data.userName
+          ? getUserInfo.data.userName
+          : "Unavailable",
+        ownerReviews: getUserInfo.data.reviews,
+      };
       let item = {
         ...getItemResponse.data,
-        ownerUsername,
+        ...owner,
       };
       dispatch(loadItemDetailSuccess(item));
+      return "success";
     } catch (error) {
-      throw new Error(error.response.status);
+      // throw new Error(error.response.status)
+      dispatch(displayError(LOAD_ITEM_ERROR));
+      return "error";
     } finally {
       dispatch(setLoading(false));
     }
@@ -163,5 +172,17 @@ export const updateItemDetail = (itemId, details) => {
     } finally {
       dispatch(setLoading(false));
     }
+  };
+};
+
+export const clearOldPostings = () => {
+  return {
+    type: CLEAR_OLD_POSTINGS,
+  };
+};
+
+export const clearOldItemDetails = () => {
+  return {
+    type: CLEAR_OLD_ITEM_DETAILS,
   };
 };

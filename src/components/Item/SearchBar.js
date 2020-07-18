@@ -9,7 +9,10 @@ import SearchIcon from "@material-ui/icons/Search";
 import DirectionsIcon from "@material-ui/icons/Directions";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
-import { loadPostingsByQuery } from "../../redux/actions/postingActions";
+import {
+  loadPostingsByQuery,
+  clearOldPostings,
+} from "../../redux/actions/postingActions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,6 +41,7 @@ function CustomizedInputBase(props) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    props.clearOldPostings();
     await props.loadPostingsByQuery(`search=${input}`);
     history.push({
       pathname: "/items",
@@ -80,4 +84,6 @@ function CustomizedInputBase(props) {
   );
 }
 
-export default connect(null, { loadPostingsByQuery })(CustomizedInputBase);
+export default connect(null, { loadPostingsByQuery, clearOldPostings })(
+  CustomizedInputBase
+);

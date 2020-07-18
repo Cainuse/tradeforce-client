@@ -9,6 +9,6 @@ export const errorReducer = (state = initialState.error, action) => {
         hasError: true,
       };
     default:
-      return null;
+      return state;
   }
 };

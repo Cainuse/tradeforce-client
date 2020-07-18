@@ -1,12 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
-import ItemPreview from "../Item/ItemPreview";
-import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
 import SearchBar from "../Item/SearchBar";
 import { withStyles } from "@material-ui/core/styles";
 import { loadPostingsByQuery } from "../../redux/actions/postingActions";
 import { withRouter } from "react-router";
+import ItemPreviewList from "../Item/ItemPreviewList";
 
 const useStyles = (theme) => ({
   root: {
@@ -38,21 +37,7 @@ class ItemResults extends React.Component {
         <div className={classes.search}>
           <SearchBar />
         </div>
-        <Grid container direction={"row"} spacing={4}>
-          {postings.map((item, index) => {
-            return (
-              <Grid key={index} item xs={3}>
-                <ItemPreview
-                  _id={item._id}
-                  title={item.title}
-                  date={item.date}
-                  location={item.location}
-                  images={item.images}
-                />
-              </Grid>
-            );
-          })}
-        </Grid>
+        <ItemPreviewList items={postings} sizing={3} />
       </Container>
     );
   }

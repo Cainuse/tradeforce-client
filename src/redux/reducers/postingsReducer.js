@@ -5,6 +5,7 @@ import {
   DELETE_POSTING,
   LOAD_POSTINGS,
   MAKE_OFFER,
+  CLEAR_OLD_POSTINGS,
 } from "../constants/actionTypes";
 
 const addPosting = (state, action) => {
@@ -52,6 +53,10 @@ const makeOffer = (state, action) => {
   return newState;
 };
 
+const clearPostings = () => {
+  return [];
+};
+
 export const postingsReducer = (state = initialState.postings, action) => {
   switch (action.type) {
     case ADD_POSTING:
@@ -64,6 +69,8 @@ export const postingsReducer = (state = initialState.postings, action) => {
       return loadPostings(action);
     case MAKE_OFFER:
       return makeOffer(state, action);
+    case CLEAR_OLD_POSTINGS:
+      return clearPostings();
     default:
       return state;
   }

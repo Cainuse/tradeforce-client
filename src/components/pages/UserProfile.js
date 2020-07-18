@@ -1,12 +1,15 @@
 import React from "react";
 import ProfileCard from "../User/ProfileCard";
-import { makeStyles } from "@material-ui/core";
+import { withStyles } from "@material-ui/core";
 import hero from "../../images/hero.png";
 import UserDetails from "../User/UserDetails";
 import { connect } from "react-redux";
 import { displayError } from "../../redux/actions/snackbarActions";
+import { withRouter } from "react-router";
+import { loadUserDetails } from "../../redux/actions/userDetailActions";
+import { openReviewModal } from "../../redux/actions/modalActions";
 
-const useStyles = makeStyles(() => ({
+const useStyles = () => ({
   hero: {
     position: "relative",
     height: "20vh",
@@ -31,14 +34,25 @@ const useStyles = makeStyles(() => ({
     top: 0,
   },
   box: {},
-}));
+});
 
-const UserProfile = (props) => {
-  let { userDetail, currentUser, postings } = props;
-  const classes = useStyles();
+class UserProfile extends React.Component {
+  async componentDidMount() {
+    const { location, currentUser, loadUserDetails, history } = this.props;
+    const userId = location.pathname.split("=")[1];
+    let response = await loadUserDetails({
+      userId,
+      currentUserId: currentUser ? currentUser._id : null,
+    });
+    if (response !== "success") {
+      history.push("/UserNotFound");
+    }
+  }
 
-  if (currentUser.user) {
-    return (
+  render() {
+    let { userDetail, currentUser, classes, openReviewModal } = this.props;
+
+    return Object.keys(userDetail).length !== 0 ? (
       <div>
         <div className={classes.hero}></div>
         <div className={classes.container}>
@@ -46,25 +60,27 @@ const UserProfile = (props) => {
           <UserDetails
             userDetail={userDetail}
             currentUser={currentUser}
-            postings={postings}
+            openReviewModal={openReviewModal}
           />
         </div>
       </div>
-    );
+    ) : null;
   }
-
-  props.displayError("User is logged out. Profile page does not exist.");
-  return null;
-};
+}
 
 const mapStateToProps = (state) => ({
   userDetail: state.userDetail,
-  currentUser: state.currentUser,
-  postings: state.postings,
+  currentUser: state.currentUser.user,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   displayError: (msg) => dispatch(displayError(msg)),
+  loadUserDetails: ({ userId, currentUserId }) =>
+    dispatch(loadUserDetails({ userId, currentUserId })),
+  openReviewModal: () => dispatch(openReviewModal()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserProfile);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(withStyles(useStyles)(UserProfile)));
