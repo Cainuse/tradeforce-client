@@ -12,6 +12,10 @@ import {
   displayError,
   displaySuccess,
 } from "../../redux/actions/snackbarActions";
+import {
+  MAKE_OFFER_NO_COMMENT_AND_NO_ADDEDITEMS_ERROR,
+  MAKE_OFFER_SUCCESS
+} from "../../redux/constants/snackbarMessageTypes";
 
 const useStyles = (theme) => ({
   paper: {
@@ -177,14 +181,14 @@ class AddOffering extends React.Component {
 
       let id = this.props.itemDetail._id;
       this.props.makeOffer(offering, id);
-      this.props.displaySuccess("Offer successfully made");
+      this.props.displaySuccess(MAKE_OFFER_SUCCESS);
       this.resetFormState();
       setTimeout(() => {
         this.props.closeModal();
       }, 700);
     } else {
       this.props.displayError(
-        "An offer must have either must have either a comment or an item"
+        MAKE_OFFER_NO_COMMENT_AND_NO_ADDEDITEMS_ERROR
       );
     }
   };
