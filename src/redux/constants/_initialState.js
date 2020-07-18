@@ -20,4 +20,5 @@ export const initialState = {
   error: null,
   itemDetail: {},
   userDetail: {},
+  notifications: [],
 };
