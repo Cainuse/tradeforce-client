@@ -7,8 +7,7 @@ import {
 import { displaySuccess, displayError } from "./snackbarActions";
 import { setLoading } from "./loadingActions";
 
-// POST /:postingId/offerings
-export const makeOffer = (offering, postId) => {
+const makeOfferSuccess = (offering, postId) => {
   return {
     type: MAKE_OFFER,
     offering: offering,
@@ -16,11 +15,15 @@ export const makeOffer = (offering, postId) => {
   };
 };
 
-export const makeOfferAPI = (offering, postId) => {
+export const makeOffer = (offering, postId) => {
   return async (dispatch) => {
     try {
       dispatch(setLoading(true));
-      // api call
+      const offeringResponse = await axios.post(
+        `/api/postings/${postId}/offerings`,
+        offering
+      );
+      dispatch(makeOfferSuccess(offeringResponse.data._id, postId));
       dispatch(displaySuccess(ADD_OFFER_SUCCESS));
     } catch (e) {
       dispatch(displayError(ADD_OFFER_ERROR));
