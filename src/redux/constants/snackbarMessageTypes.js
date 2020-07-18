@@ -46,3 +46,5 @@ export const ADD_REVIEW_ERROR =
 export const ADD_OFFER_SUCCESS = "Offer was successfully made";
 export const ADD_OFFER_ERROR =
   "Offer could not be made. Please try again later";
+export const ADD_OFFER_MISSING_INFO_ERROR =
+  "An offer must have either a comment or an item";

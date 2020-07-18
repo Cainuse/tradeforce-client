@@ -12,6 +12,7 @@ import {
   displayError,
   displaySuccess,
 } from "../../redux/actions/snackbarActions";
+import { ADD_OFFER_MISSING_INFO_ERROR } from "../../redux/constants/snackbarMessageTypes";
 
 const useStyles = (theme) => ({
   paper: {
@@ -182,9 +183,7 @@ class AddOffering extends React.Component {
         this.props.closeModal();
       }, 700);
     } else {
-      this.props.displayError(
-        "An offer must have either must have either a comment or an item"
-      );
+      this.props.displayError(ADD_OFFER_MISSING_INFO_ERROR);
     }
   };
 
