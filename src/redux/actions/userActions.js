@@ -1,3 +1,5 @@
+import axios from "axios";
+
 import {
   SET_USER,
   UNSET_USER,
@@ -10,27 +12,13 @@ import {
   USER_LOGIN_SUCCESS,
 } from "../constants/snackbarMessageTypes";
 import { displayError, displaySuccess } from "./snackbarActions";
-import { closeModal } from "./modalActions";
-import axios from "axios";
+import { closeModal, openOfferModal } from "./modalActions";
+import { MAKE_OFFER_BUTTON } from "../constants/buttonTypes";
 
-export const setUser = (
-  userId,
-  userName,
-  firstName,
-  lastName,
-  email,
-  date,
-  isGoogleUser
-) => {
+export const setUser = (user) => {
   return {
     type: SET_USER,
-    userId,
-    userName,
-    firstName,
-    lastName,
-    email,
-    date,
-    isGoogleUser,
+    user,
   };
 };
 
@@ -52,16 +40,18 @@ export const isUserFailed = () => {
   };
 };
 
-export const registerUserAsync = (
-  userName,
-  firstName,
-  lastName,
-  email,
-  postalCode,
-  dateRegistered,
-  password,
-  isGoogleUser
-) => {
+export const registerUserAsync = (user, openedFrom, postingOwnerId) => {
+  let {
+    userName,
+    firstName,
+    lastName,
+    email,
+    postalCode,
+    dateRegistered,
+    password,
+    isGoogleUser,
+  } = user;
+
   return async (dispatch) => {
     try {
       dispatch(isUserFetching());
@@ -82,18 +72,25 @@ export const registerUserAsync = (
 
       localStorage.setItem("token", respData.token);
       dispatch(displaySuccess(USER_REGISTRATION_SUCCESS));
-      dispatch(closeModal());
-      return dispatch(
-        setUser(
-          respData.user._id,
-          respData.user.userName,
-          respData.user.firstName,
-          respData.user.lastName,
-          respData.user.email,
-          respData.user.dateRegistered,
-          respData.user.isGoogleUser
-        )
+      let result = dispatch(
+        setUser({
+          _id: respData.user._id,
+          userName: respData.user.userName,
+          firstName: respData.user.firstName,
+          lastName: respData.user.lastName,
+          email: respData.user.email,
+          postalCode: "None",
+          dateRegistered: respData.user.dateRegistered,
+          isGoogleUser: respData.user.isGoogleUser,
+        })
       );
+      handleAftermathModalBehaviour(
+        dispatch,
+        openedFrom,
+        postingOwnerId,
+        respData.user._id
+      );
+      return result;
     } catch (err) {
       // error occurred while saving user in db
       dispatch(isUserFailed());
@@ -102,7 +99,13 @@ export const registerUserAsync = (
   };
 };
 
-export const loginUserAsync = (email, password, googleInfo) => {
+export const loginUserAsync = (
+  email,
+  password,
+  googleInfo,
+  openedFrom,
+  postingOwnerId
+) => {
   return async (dispatch) => {
     dispatch(isUserFetching());
 
@@ -116,18 +119,17 @@ export const loginUserAsync = (email, password, googleInfo) => {
     } catch (err) {
       if (googleInfo) {
         dispatch(displaySuccess(GOOGLE_LOGIN_SUCCESS));
-        dispatch(closeModal());
-        return dispatch(
-          registerUserAsync(
-            googleInfo.userName,
-            googleInfo.givenName,
-            googleInfo.familyName,
-            email,
-            "None",
-            googleInfo.dateRegistered,
-            password,
-            true
-          )
+        return await dispatch(
+          registerUserAsync({
+            userName: googleInfo.userName,
+            firstName: googleInfo.givenName,
+            lastName: googleInfo.familyName,
+            email: email,
+            postalCode: "None",
+            dateRegistered: googleInfo.dateRegistered,
+            password: password,
+            isGoogleUser: true,
+          })
         );
       }
       dispatch(isUserFailed());
@@ -148,18 +150,25 @@ export const loginUserAsync = (email, password, googleInfo) => {
 
       localStorage.setItem("token", respData.token);
       dispatch(displaySuccess(USER_LOGIN_SUCCESS));
-      dispatch(closeModal());
-      return dispatch(
-        setUser(
-          respData.user._id,
-          respData.user.userName,
-          respData.user.firstName,
-          respData.user.lastName,
-          respData.user.email,
-          respData.user.dateRegistered,
-          respData.user.isGoogleUser
-        )
+      let result = dispatch(
+        setUser({
+          _id: respData.user._id,
+          userName: respData.user.userName,
+          firstName: respData.user.firstName,
+          lastName: respData.user.lastName,
+          email: respData.user.email,
+          postalCode: "None",
+          dateRegistered: respData.user.dateRegistered,
+          isGoogleUser: respData.user.isGoogleUser,
+        })
       );
+      handleAftermathModalBehaviour(
+        dispatch,
+        openedFrom,
+        postingOwnerId,
+        respData.user._id
+      );
+      return result;
     } catch (err) {
       dispatch(isUserFailed());
       return dispatch(displayError(err.response.data.message));
@@ -182,19 +191,38 @@ export const authenticateUser = (token) => {
       );
       const user = resp.data;
       return dispatch(
-        setUser(
-          user._id,
-          user.userName,
-          user.firstName,
-          user.lastName,
-          user.email,
-          user.dateRegistered,
-          user.isGoogleUser
-        )
+        setUser({
+          _id: user._id,
+          userName: user.userName,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          email: user.email,
+          postalCode: "None",
+          dateRegistered: user.dateRegistered,
+          isGoogleUser: user.isGoogleUser,
+        })
       );
     } catch (err) {
       dispatch(isUserFailed());
       return dispatch(displayError(err.response.data.message));
     }
   };
+};
+
+// Helper functions
+const handleAftermathModalBehaviour = (
+  dispatch,
+  openedFrom,
+  postingOwnerId,
+  userId
+) => {
+  if (
+    openedFrom === MAKE_OFFER_BUTTON &&
+    postingOwnerId !== undefined &&
+    postingOwnerId !== userId
+  ) {
+    dispatch(openOfferModal());
+  } else {
+    dispatch(closeModal());
+  }
 };

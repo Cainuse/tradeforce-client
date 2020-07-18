@@ -24,9 +24,10 @@ export const openPostingModal = () => {
   };
 };
 
-export const openLoginModal = () => {
+export const openLoginModal = (openedFrom) => {
   return {
     type: OPEN_LOGIN_MODAL,
+    openedFrom,
   };
 };
 

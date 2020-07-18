@@ -13,12 +13,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const GoogleBtn = ({
-  loginUserAsync,
-  closeModal,
-  displayError,
-  currentUser,
-}) => {
+const GoogleBtn = ({ loginUserAsync, displayError, modal, itemDetail }) => {
   const classes = useStyles();
 
   const login = async (response) => {
@@ -29,16 +24,19 @@ const GoogleBtn = ({
     const dateRegistered = new Date();
 
     if (response.accessToken) {
-      await loginUserAsync(email, password, {
-        userName,
-        givenName,
-        familyName,
-        postalCode,
-        dateRegistered,
-      });
-      if (!currentUser.isFailed && !currentUser.isFetching) {
-        closeModal();
-      }
+      await loginUserAsync(
+        email,
+        password,
+        {
+          userName,
+          givenName,
+          familyName,
+          postalCode,
+          dateRegistered,
+        },
+        modal.openedFrom,
+        itemDetail.ownerId
+      );
     }
   };
 
@@ -62,11 +60,15 @@ const GoogleBtn = ({
 
 const mapStateToProps = (state) => ({
   currentUser: state.currentUser,
+  modal: state.modal,
+  itemDetail: state.itemDetail,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  loginUserAsync: (email, passsword, googleInfoObj) =>
-    dispatch(loginUserAsync(email, passsword, googleInfoObj)),
+  loginUserAsync: (email, password, googleInfoObj, openedFrom, postingId) =>
+    dispatch(
+      loginUserAsync(email, password, googleInfoObj, openedFrom, postingId)
+    ),
   unsetUser: () => dispatch(unsetUser()),
   closeModal: () => dispatch(closeModal()),
   displayError: (msg) => dispatch(displayError(msg)),
