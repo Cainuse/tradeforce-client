@@ -4,10 +4,9 @@ import Rating from "@material-ui/lab/Rating";
 import Link from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
+import _ from "lodash";
 
 import ReviewList from "../Review/ReviewList";
-
-const preventDefault = (event) => event.preventDefault();
 
 const useStyles = makeStyles((theme) => ({
   reviewHeader: {
@@ -26,12 +25,25 @@ const useStyles = makeStyles((theme) => ({
 export default function ReviewSection(props) {
   let { itemDetail } = props;
   const classes = useStyles();
+  const calculateAverageReview = () => {
+    if (itemDetail.ownerReviews.length > 0) {
+      let totalRatingValue = _.reduce(
+        itemDetail.ownerReviews,
+        (acc, review) => acc + review.rating,
+        0
+      );
+      return totalRatingValue / itemDetail.ownerReviews.length;
+    }
+    return 0;
+  };
+
+  const averageRating = calculateAverageReview();
+
   return (
     <Box>
       <Box display="flex" alignItems="center" className={classes.reviewHeader}>
         <Link
-          href=""
-          onClick={preventDefault}
+          href={`/profile/user=${itemDetail.ownerId}`}
           color="inherit"
           variant="h6"
           className={classes.sellerName}
@@ -41,12 +53,16 @@ export default function ReviewSection(props) {
         <Typography variant="h6">Reviews</Typography>
         <Rating
           name="half-rating-read"
-          defaultValue={4.5}
+          value={averageRating}
           precision={0.5}
           readOnly
         />
       </Box>
-      <ReviewList elevation={0} colour={"#EBEEF1"} reviews={[]} />
+      <ReviewList
+        elevation={0}
+        colour={"#EBEEF1"}
+        reviews={itemDetail.ownerReviews}
+      />
     </Box>
   );
 }

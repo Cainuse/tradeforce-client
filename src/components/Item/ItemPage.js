@@ -44,7 +44,7 @@ class ItemPage extends React.Component {
     return Object.keys(itemDetail).length !== 0 ? (
       <div>
         <div className={classes.buttonHeader}>
-          <Button onClick={this.redirect}>&lt; Back to Search</Button>
+          <Button onClick={this.redirect}>&lt; Back</Button>
         </div>
         <Container className={classes.root}>
           <ItemDetailContainer itemDetail={itemDetail} />

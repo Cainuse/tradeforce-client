@@ -41,6 +41,10 @@ export const loadUserDetails = ({ userId, currentUserId }) => {
         );
         userDetails.activePostings = activePostingResponse.data;
         userDetails.inactivePostings = inactivePostingResponse.data;
+        userDetails.offersSent =
+          currentUserId && userId === currentUserId
+            ? await axios.get(`${BASE_URL}/${userId}/offerings/active`)
+            : [];
         dispatch(loadUserDetailSuccess(userDetails));
         return "success";
       } else {
