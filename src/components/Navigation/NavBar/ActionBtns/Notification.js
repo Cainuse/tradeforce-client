@@ -7,6 +7,7 @@ import LocalOfferIcon from "@material-ui/icons/LocalOffer";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import moment from "moment";
+import Typography from "@material-ui/core/Typography";
 import ClearIcon from "@material-ui/icons/Clear";
 import CheckIcon from "@material-ui/icons/Check";
 import ErrorIcon from "@material-ui/icons/Error";
@@ -142,16 +143,22 @@ const Notification = ({
   return isExisting ? (
     <MenuItem selected={!isRead} divider={true} key={key}>
       <ListItemAvatar>{getItemAvatar(type)}</ListItemAvatar>
+
       <ListItemText
         primary={content}
+        primaryTypographyProps={{
+          style: { whiteSpace: "normal", wordWrap: "break-word" },
+        }}
         secondary={moment(date).format("MMMM Do YYYY, h:mm a")}
       />
+
       <SeeMoreMenu
         dispatch={dispatch}
         handleDeleteClick={handleDeleteClick}
         onUpdateStatus={onUpdateStatus}
         _id={_id}
         isRead={isRead}
+        className={classes.seeMoreMenu}
       />
     </MenuItem>
   ) : null;

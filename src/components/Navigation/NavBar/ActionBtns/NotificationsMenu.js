@@ -27,8 +27,8 @@ const useStyles = makeStyles(() => ({
     padding: "5px",
   },
   notificationsList: {
-    width: "25rem",
-    textOverflow: "auto",
+    width: "26rem",
+    padding: "0",
     maxHeight: 300,
     overflow: "auto",
   },
