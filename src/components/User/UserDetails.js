@@ -9,28 +9,29 @@ import TabLabel from "./TabLabel";
 import ReviewList from "../Review/ReviewList";
 import ItemPreviewList from "../Item/ItemPreviewList";
 import Button from "@material-ui/core/Button";
+import { calculateTotalNumOffersReceived } from "../Offering/OfferingHelpers";
 
 const useStyles = (theme) => ({
   root: {
-    flexGrow: 1,
+    flexGrow: 1
   },
   tab: {
-    margin: theme.spacing(0, 5),
+    margin: theme.spacing(0, 5)
   },
   reviewButton: {
-    color: theme.palette.primary.main,
+    color: theme.palette.primary.main
   },
   reviewButtonContainer: {
     display: "flex",
-    justifyContent: "flex-end",
-  },
+    justifyContent: "flex-end"
+  }
 });
 
 class UserDetails extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: 0,
+      value: 0
     };
   }
 
@@ -40,6 +41,9 @@ class UserDetails extends React.Component {
 
   render() {
     const { classes, userDetail, currentUser, openReviewModal } = this.props;
+    const { activePostings, offersSent } = userDetail;
+    const offersSentArray = offersSent.data;
+
     return (
       <Paper className={classes.root}>
         <Tabs
@@ -70,22 +74,28 @@ class UserDetails extends React.Component {
           />
           <Tab
             label={
-              <TabLabel value={userDetail.reviews.length} title={"Reviews"} />
+              <TabLabel value={userDetail.reviews.length} title={"Reviews"}/>
             }
             className={classes.tab}
           />
           {currentUser && userDetail._id === currentUser._id ? (
-            <Tab
-              label={<TabLabel value={6} title={"Offers"} />}
-              className={classes.tab}
-            />
+            <React.Fragment>
+              <Tab
+                label={<TabLabel value={calculateTotalNumOffersReceived(activePostings)} title={"Offers Received"}/>}
+                className={classes.tab}
+              />
+              <Tab
+                label={<TabLabel value={offersSentArray.length} title={"Offers Sent"}/>}
+                className={classes.tab}
+              />
+            </React.Fragment>
           ) : null}
         </Tabs>
         <TabPanel value={this.state.value} index={0}>
-          <ItemPreviewList items={userDetail.activePostings} sizing={2} />
+          <ItemPreviewList items={userDetail.activePostings} sizing={2}/>
         </TabPanel>
         <TabPanel value={this.state.value} index={1}>
-          <ItemPreviewList items={userDetail.inactivePostings} sizing={2} />
+          <ItemPreviewList items={userDetail.inactivePostings} sizing={2}/>
         </TabPanel>
         <TabPanel value={this.state.value} index={2}>
           {currentUser && userDetail._id !== currentUser._id && (
@@ -105,7 +115,7 @@ class UserDetails extends React.Component {
           />
         </TabPanel>
         <TabPanel value={this.state.value} index={3}>
-          Item Three
+          Hi
         </TabPanel>
       </Paper>
     );
