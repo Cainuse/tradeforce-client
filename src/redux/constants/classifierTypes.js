@@ -1,5 +1,5 @@
 export const categories = [
-  { value: "", label: "" },
+  { value: "all", label: "All" },
   { value: "clothing", label: "Clothing" },
   { value: "electronics", label: "Electronics" },
   { value: "food drink", label: "Food/Drink" },

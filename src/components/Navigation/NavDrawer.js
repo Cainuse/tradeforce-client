@@ -41,13 +41,9 @@ const NavDrawer = (props) => {
     >
       <div className={classes.linkContainer}>
         {categories.map((category, index) => {
-          if (index === 0) {
-            category = { value: "all", label: "All" };
-          }
           return (
             <Link
-              href={`items?category=${category.value}`}
-              onClick={props.preventDefault}
+              href={`/items?category=${category.value}`}
               key={index}
               className={classes.links}
             >
