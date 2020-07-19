@@ -79,16 +79,16 @@ class UserDetails extends React.Component {
             className={classes.tab}
           />
           {currentUser && userDetail._id === currentUser._id ? (
-            <React.Fragment>
               <Tab
                 label={<TabLabel value={calculateTotalNumOffersReceived(activePostings)} title={"Offers Received"}/>}
                 className={classes.tab}
               />
-              <Tab
-                label={<TabLabel value={offersSentArray.length} title={"Offers Sent"}/>}
-                className={classes.tab}
-              />
-            </React.Fragment>
+          ) : null}
+          {currentUser && userDetail._id === currentUser._id ? (
+            <Tab
+              label={<TabLabel value={offersSentArray.length} title={"Offers Sent"}/>}
+              className={classes.tab}
+            />
           ) : null}
         </Tabs>
         <TabPanel value={this.state.value} index={0}>
