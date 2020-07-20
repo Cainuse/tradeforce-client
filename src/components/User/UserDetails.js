@@ -10,6 +10,7 @@ import ReviewList from "../Review/ReviewList";
 import ItemPreviewList from "../Item/ItemPreviewList";
 import Button from "@material-ui/core/Button";
 import { calculateTotalNumOffersReceived } from "../Offering/OfferingHelpers";
+import { OffersReceived } from "../Offering/OffersReceived";
 
 const useStyles = (theme) => ({
   root: {
@@ -28,10 +29,11 @@ const useStyles = (theme) => ({
 });
 
 class UserDetails extends React.Component {
+  //TODO: Change value: 3 back to 0 in state
   constructor(props) {
     super(props);
     this.state = {
-      value: 0
+      value: 3
     };
   }
 
@@ -115,7 +117,7 @@ class UserDetails extends React.Component {
           />
         </TabPanel>
         <TabPanel value={this.state.value} index={3}>
-          Hi
+          <OffersReceived activePostings={activePostings} />
         </TabPanel>
       </Paper>
     );
