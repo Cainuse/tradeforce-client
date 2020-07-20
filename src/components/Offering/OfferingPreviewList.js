@@ -6,7 +6,6 @@ import { OfferingPreview } from "./OfferingPreview";
 
 export const OfferingPreviewList = (props) => {
   let { offerings } = props;
-  console.log(offerings);
 
   return (
     <Grid container alignContent={"center"} justify={"flex-start"}>

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Grid, Typography, Link, Collapse } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import { OfferingPreviewList } from "./OfferingPreviewList";
 
 const useStyles = makeStyles((theme) => ({
   allOffersContainer: {
@@ -56,7 +57,7 @@ export const OffersReceived = (props) => {
             </Grid>
             <Grid item xs={12}>
               <Collapse in={index === expanded}>
-                HI
+                <OfferingPreviewList offerings={offerings}/>
 
               </Collapse>
             </Grid>
