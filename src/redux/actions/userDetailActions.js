@@ -18,10 +18,11 @@ const loadUserDetailSuccess = (user) => {
   };
 };
 
-const updateUserDetailSuccess = (user) => {
+const updateUserDetailSuccess = (userId, details) => {
   return {
     type: UPDATE_USER_DETAIL,
-    user,
+    userId: userId,
+    details: details,
   };
 };
 
@@ -64,12 +65,12 @@ export const loadUserDetails = ({ userId, currentUserId }) => {
   };
 };
 
-export const updateUserDetails = () => {
+export const updateUserDetails = (userId, details) => {
   return async (dispatch) => {
     try {
       dispatch(setLoading(true));
-      // api call
-      dispatch(updateUserDetailSuccess());
+      await axios.patch(`${BASE_URL}/${userId}`, details);
+      dispatch(updateUserDetailSuccess(userId, details));
       dispatch(displaySuccess(UPDATE_USER_SUCCESS));
     } catch (e) {
       dispatch(displayError(UPDATE_USER_ERROR));

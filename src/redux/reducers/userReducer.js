@@ -4,6 +4,7 @@ import {
   UNSET_USER,
   IS_USER_FETCHING,
   IS_USER_FAILED,
+  UPDATE_USER_DETAIL,
 } from "../constants/actionTypes";
 
 export const userReducer = (state = initialState.currentUser, action) => {
@@ -31,6 +32,23 @@ export const userReducer = (state = initialState.currentUser, action) => {
         isFetching: state.isFetching,
         isFailed: true,
         user: state.user,
+      };
+    case UPDATE_USER_DETAIL:
+      return {
+        isFetching: state.isFetching,
+        isFailed: state.isFailed,
+        user: {
+          ...state.user,
+          firstName: action.details.firstName
+            ? action.details.firstName
+            : state.user.firstName,
+          lastName: action.details.lastName
+            ? action.details.lastName
+            : state.user.lastName,
+          postalCode: action.details.postalCode
+            ? action.details.postalCode
+            : state.user.postalCode,
+        },
       };
     default:
       return state;
