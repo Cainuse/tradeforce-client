@@ -7,6 +7,8 @@ import {
 import { displaySuccess, displayError } from "./snackbarActions";
 import { setLoading } from "./loadingActions";
 
+const BASE_URL = `${process.env.REACT_APP_BASE_URL}`;
+
 const makeOfferSuccess = (offering, postId) => {
   return {
     type: MAKE_OFFER,
@@ -20,7 +22,7 @@ export const makeOffer = (offering, postId) => {
     try {
       dispatch(setLoading(true));
       const offeringResponse = await axios.post(
-        `/api/postings/${postId}/offerings`,
+        `${BASE_URL}/postings/${postId}/offerings`,
         offering
       );
       dispatch(makeOfferSuccess(offeringResponse.data._id, postId));

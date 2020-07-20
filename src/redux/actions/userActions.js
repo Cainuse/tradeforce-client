@@ -15,6 +15,8 @@ import { displayError, displaySuccess } from "./snackbarActions";
 import { closeModal, openOfferModal } from "./modalActions";
 import { MAKE_OFFER_BUTTON } from "../constants/buttonTypes";
 
+const BASE_URL = `${process.env.REACT_APP_BASE_URL}/users`;
+
 export const setUser = (user) => {
   return {
     type: SET_USER,
@@ -55,19 +57,16 @@ export const registerUserAsync = (user, openedFrom, postingOwnerId) => {
   return async (dispatch) => {
     try {
       dispatch(isUserFetching());
-      const createUserResp = await axios.post(
-        "http://localhost:3001/api/users",
-        {
-          userName,
-          firstName,
-          lastName,
-          email,
-          postalCode,
-          dateRegistered,
-          password,
-          isGoogleUser,
-        }
-      );
+      const createUserResp = await axios.post(BASE_URL, {
+        userName,
+        firstName,
+        lastName,
+        email,
+        postalCode,
+        dateRegistered,
+        password,
+        isGoogleUser,
+      });
       const respData = createUserResp.data;
 
       localStorage.setItem("token", respData.token);
@@ -113,9 +112,7 @@ export const loginUserAsync = (
 
     try {
       // check if email exists in db
-      user = await axios.get(
-        `http://localhost:3001/api/users/findUser/${email}`
-      );
+      user = await axios.get(`${BASE_URL}/findUser/${email}`);
     } catch (err) {
       if (googleInfo) {
         dispatch(displaySuccess(GOOGLE_LOGIN_SUCCESS));
@@ -138,14 +135,11 @@ export const loginUserAsync = (
 
     try {
       // authenticate user
-      const authUserResp = await axios.post(
-        "http://localhost:3001/api/users/login",
-        {
-          email,
-          password,
-          isGoogleLogin: user.data.isGoogleUser,
-        }
-      );
+      const authUserResp = await axios.post(`${BASE_URL}/login`, {
+        email,
+        password,
+        isGoogleLogin: user.data.isGoogleUser,
+      });
       const respData = authUserResp.data;
 
       localStorage.setItem("token", respData.token);
@@ -184,11 +178,7 @@ export const authenticateUser = (token) => {
           "auth-token": token,
         },
       };
-      const resp = await axios.post(
-        "http://localhost:3001/api/users/authenticate",
-        {},
-        config
-      );
+      const resp = await axios.post(`${BASE_URL}/authenticate`, {}, config);
       const user = resp.data;
       return dispatch(
         setUser({

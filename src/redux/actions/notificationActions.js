@@ -9,6 +9,8 @@ import axios from "axios";
 
 import { displayError } from "./snackbarActions";
 
+const BASE_URL = `${process.env.REACT_APP_BASE_URL}/notifications`;
+
 export const getNotifications = (notifications) => {
   return {
     type: GET_NOTIFICATIONS,
@@ -20,7 +22,7 @@ export const getNotificationsAsync = (userId) => {
   return async (dispatch) => {
     try {
       const myNotifications = await axios.get(
-        `http://localhost:3001/api/notifications/findByUserId/${userId}`
+        `${BASE_URL}/findByUserId/${userId}`
       );
       return dispatch(getNotifications(myNotifications.data));
     } catch (err) {
@@ -40,9 +42,7 @@ export const removeNotification = (_id) => {
 export const removeNotificationAsync = (_id) => {
   return async (dispatch) => {
     try {
-      await axios.delete(
-        `http://localhost:3001/api/notifications/removeOneNotification/${_id}`
-      );
+      await axios.delete(`${BASE_URL}/removeOneNotification/${_id}`);
       return dispatch(removeNotification(_id));
     } catch (err) {
       // error occurred while deleting notification in db
@@ -61,9 +61,7 @@ export const removeAllNotifications = () => {
 export const removeAllNotificationsAsync = (userId) => {
   return async (dispatch) => {
     try {
-      await axios.delete(
-        `http://localhost:3001/api/notifications/removeUserNotifications/${userId}`
-      );
+      await axios.delete(`${BASE_URL}/removeUserNotifications/${userId}`);
       return dispatch(removeAllNotifications());
     } catch (err) {
       // error occurred while deleting notification in db
@@ -84,7 +82,7 @@ export const updateNotificationAsync = (_id, isRead) => {
   return async (dispatch) => {
     try {
       const notificationResp = await axios.patch(
-        `http://localhost:3001/api/notifications/markAsRead/${_id}`,
+        `${BASE_URL}/markAsRead/${_id}`,
         { isRead }
       );
       return dispatch(
@@ -111,10 +109,7 @@ export const updateAllNotifications = (isRead) => {
 export const updateAllNotificationsAsync = (userId, isRead) => {
   return async (dispatch) => {
     try {
-      await axios.patch(
-        `http://localhost:3001/api/notifications/markAllAsRead/${userId}`,
-        { isRead }
-      );
+      await axios.patch(`${BASE_URL}/markAllAsRead/${userId}`, { isRead });
       return dispatch(updateAllNotifications(isRead));
     } catch (err) {
       // error occurred while deleting notification in db
