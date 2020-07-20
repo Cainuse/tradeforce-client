@@ -46,8 +46,7 @@ const NavDrawer = (props) => {
           }
           return (
             <Link
-              href={`items?category=${category.value}`}
-              onClick={props.preventDefault}
+              href={`/items?category=${category.value}`}
               key={index}
               className={classes.links}
             >
