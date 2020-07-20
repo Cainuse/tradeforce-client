@@ -15,6 +15,9 @@ export const OPEN_POSTING_MODAL = "OPEN_POSTING_MODAL";
  * Offering Action Types
  **/
 export const MAKE_OFFER = "MAKE_OFFER";
+export const ACCEPT_OFFER = "ACCEPT_OFFER";
+export const DECLINE_OFFER = "DECLINE_OFFER";
+export const RESCIND_OFFER = "RESCIND_OFFER";
 
 /**
  * Snackbar Action Types
