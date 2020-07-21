@@ -21,12 +21,15 @@ const useStyles = makeStyles(() => ({
     paddingRight: "5px",
   },
   acceptBtn: {
-    backgroundColor: "green",
-    color: "white",
+    // backgroundColor: "green",
+    color: "green",
+    borderColor: "green",
   },
   declineBtn: {
-    backgroundColor: "red",
-    color: "white",
+    // backgroundColor: "red",
+    color: "red",
+    borderColor: "red",
+
   },
   offerHeader: {
     // padding: "10px"
@@ -96,29 +99,51 @@ export const OfferingPreview = (props) => {
         title="Tradeforce"
       />
 
+      {/*<CardContent className={classes.cardContentRoot}>*/}
+      {/*  <CardActions>*/}
+      {/*    <Grid container item xs={12} justify={"space-between"}>*/}
+      {/*      <Grid item xs={3}>*/}
+      {/*      <Button >*/}
+      {/*        Details*/}
+      {/*      </Button>*/}
+      {/*      </Grid>*/}
+      {/*      <Grid container item xs={9} justify={"flex-end"}>*/}
+      {/*        <Grid container item xs={4} justify={"flex-end"} className={classes.acceptBtnContainer}>*/}
+      {/*          <Button variant={"contained"} className={classes.acceptBtn}>*/}
+      {/*            Accept*/}
+      {/*          </Button>*/}
+      {/*        </Grid>*/}
+      {/*        <Grid container item xs={4} justify={"flex-end"}>*/}
+      {/*          <Button variant={"contained"} className={classes.declineBtn}>*/}
+      {/*            Decline*/}
+      {/*          </Button>*/}
+      {/*        </Grid>*/}
+      {/*      </Grid>*/}
+      {/*    </Grid>*/}
+      {/*  </CardActions>*/}
+      {/*</CardContent>*/}
       <CardContent className={classes.cardContentRoot}>
         <CardActions>
           <Grid container item xs={12} justify={"space-between"}>
             <Grid item xs={3}>
-            <Button >
-              Details
-            </Button>
+              <Button >
+                Details
+              </Button>
             </Grid>
             <Grid container item xs={9} justify={"flex-end"}>
               <Grid container item xs={4} justify={"flex-end"} className={classes.acceptBtnContainer}>
-                <Button variant={"contained"} className={classes.acceptBtn}>
+                <Button variant={"outlined"} className={classes.acceptBtn}>
                   Accept
                 </Button>
               </Grid>
               <Grid container item xs={4} justify={"flex-end"}>
-                <Button variant={"contained"} className={classes.declineBtn}>
+                <Button variant={"outlined"} className={classes.declineBtn}>
                   Decline
                 </Button>
               </Grid>
             </Grid>
           </Grid>
         </CardActions>
-
       </CardContent>
     </Card>
   );
