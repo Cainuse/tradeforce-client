@@ -8,6 +8,7 @@ import UserAvatar from "../User/UserAvatar";
 import defaultProfile from "../../images/placeholder-profile.png";
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';import CancelIcon from '@material-ui/icons/Cancel';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import AcceptIconButton from "./AcceptIconButton";
 
 const useStyles = makeStyles((theme) => ({
   cardRoot: {
@@ -106,9 +107,10 @@ export const OfferingPreview = (props) => {
             </Grid>
             <Grid container item xs={8} justify={"flex-end"}>
               <Grid container item xs={4} justify={"flex-end"} >
-                <IconButton className={classes.acceptBtn}>
-                  <CheckCircleOutlineIcon className={classes.actionBtnIcon}/>
-                </IconButton>
+                {/*<IconButton className={classes.acceptBtn}>*/}
+                {/*  <CheckCircleOutlineIcon className={classes.actionBtnIcon}/>*/}
+                {/*</IconButton>*/}
+                <AcceptIconButton />
               </Grid>
               <Grid container item xs={4} justify={"flex-end"}>
                 <IconButton className={classes.declineBtn}>
