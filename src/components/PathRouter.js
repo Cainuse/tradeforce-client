@@ -7,6 +7,7 @@ import UserProfile from "./pages/UserProfile";
 import EditItemDetailsPage from "./pages/EditItemDetailsPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import ScrollToTop from "./ScrollToTop";
+import EditUserProfilePage from "./pages/EditUserProfilePage";
 
 const PathRouter = () => {
   return (
@@ -24,6 +25,9 @@ const PathRouter = () => {
         </Route>
         <Route path="/items">
           <ItemResults />
+        </Route>
+        <Route exact path="/profile/user=:id/edit">
+          <EditUserProfilePage />
         </Route>
         <Route exact path="/profile/user=:id">
           <UserProfile />
