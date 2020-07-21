@@ -6,7 +6,6 @@ import UserAvatar from "./UserAvatar";
 import defaultProfile from "../../images/placeholder-profile.png";
 import { displayError } from "../../redux/actions/snackbarActions";
 import Button from "@material-ui/core/Button";
-import EditIcon from "@material-ui/icons/Edit";
 import Rating from "@material-ui/lab/Rating";
 import _ from "lodash";
 import { useHistory, useLocation } from "react-router-dom";
@@ -72,11 +71,7 @@ const ProfileCard = (props) => {
         {userDetail.userName}
       </Typography>
       {userDetail._id === currentUser._id ? (
-        <Button
-          onClick={redirectToEditPage}
-          endIcon={<EditIcon />}
-          className={classes.editButton}
-        >
+        <Button onClick={redirectToEditPage} className={classes.editButton}>
           Edit
         </Button>
       ) : (
