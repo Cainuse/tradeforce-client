@@ -70,17 +70,16 @@ const ProfileCard = (props) => {
       <Typography className={classes.username}>
         {userDetail.userName}
       </Typography>
-      {currentUser && userDetail._id === currentUser._id ? (
+      <Rating
+        name="half-rating-read"
+        value={averageRating}
+        precision={0.5}
+        readOnly
+      />
+      {currentUser && userDetail._id === currentUser._id && (
         <Button onClick={redirectToEditPage} className={classes.editButton}>
           Edit
         </Button>
-      ) : (
-        <Rating
-          name="half-rating-read"
-          value={averageRating}
-          precision={0.5}
-          readOnly
-        />
       )}
     </div>
   );
