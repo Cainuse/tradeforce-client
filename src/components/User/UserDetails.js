@@ -44,7 +44,6 @@ class UserDetails extends React.Component {
   render() {
     const { classes, userDetail, currentUser, openReviewModal } = this.props;
     const { activePostings, offersSent } = userDetail;
-    const offersSentArray = offersSent.data;
 
     return (
       <Paper className={classes.root}>
@@ -88,7 +87,7 @@ class UserDetails extends React.Component {
           ) : null}
           {currentUser && userDetail._id === currentUser._id ? (
             <Tab
-              label={<TabLabel value={offersSentArray.length} title={"Offers Sent"}/>}
+              label={<TabLabel value={offersSent.length} title={"Offers Sent"}/>}
               className={classes.tab}
             />
           ) : null}

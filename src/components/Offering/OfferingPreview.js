@@ -9,6 +9,8 @@ import defaultProfile from "../../images/placeholder-profile.png";
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';import CancelIcon from '@material-ui/icons/Cancel';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import AcceptIconButton from "./AcceptIconButton";
+import { HoverPopoverHOC } from "../HigherOrderComponents/HoverPopoverHOC";
+import DeclineIconButton from "./DeclineIconButton";
 
 const useStyles = makeStyles((theme) => ({
   cardRoot: {
@@ -18,17 +20,6 @@ const useStyles = makeStyles((theme) => ({
     "&:last-child": {
       paddingBottom: "16px",
     },
-  },
-  acceptBtn: {
-    color: theme.palette.primary.main,
-    borderColor: theme.palette.primary.main,
-  },
-  actionBtnIcon: {
-    fontSize: "1.7rem",
-  },
-  declineBtn: {
-    color: "#b90202",
-    borderColor: "#b90202",
   },
   offerHeader: {
     "& .MuiCardHeader-avatar": {
@@ -107,15 +98,10 @@ export const OfferingPreview = (props) => {
             </Grid>
             <Grid container item xs={8} justify={"flex-end"}>
               <Grid container item xs={4} justify={"flex-end"} >
-                {/*<IconButton className={classes.acceptBtn}>*/}
-                {/*  <CheckCircleOutlineIcon className={classes.actionBtnIcon}/>*/}
-                {/*</IconButton>*/}
                 <AcceptIconButton />
               </Grid>
               <Grid container item xs={4} justify={"flex-end"}>
-                <IconButton className={classes.declineBtn}>
-                  <HighlightOffIcon className={classes.actionBtnIcon}/>
-                </IconButton>
+                <DeclineIconButton />
               </Grid>
             </Grid>
           </Grid>
