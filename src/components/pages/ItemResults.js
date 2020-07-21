@@ -14,7 +14,7 @@ const useStyles = (theme) => ({
     alignItems: "center",
   },
   search: {
-    margin: theme.spacing(7, 0),
+    margin: theme.spacing(7, 0, 0, 1),
     width: "100%",
     display: "flex",
     flexDirection: "column",
