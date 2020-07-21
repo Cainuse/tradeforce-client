@@ -10,6 +10,7 @@ import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
+import _ from "lodash";
 
 const useStyles = (theme) => ({
   buttonHeader: {
@@ -30,7 +31,6 @@ class EditUserProfilePage extends React.Component {
   constructor(props) {
     super(props);
     const { userDetail } = props;
-    console.log(userDetail);
     this.state = {
       firstName: userDetail.firstName,
       lastName: userDetail.lastName,
@@ -46,6 +46,12 @@ class EditUserProfilePage extends React.Component {
     history.goBack();
   };
 
+  updateChangedFields = (field) => {
+    if (!_.includes(this.state.changedFields, field)) {
+      this.setState({ changedFields: [...this.state.changedFields, field] });
+    }
+  };
+
   handleConfirmationClose = () => {
     this.setState({ confirmationOpen: false });
   };
@@ -57,10 +63,16 @@ class EditUserProfilePage extends React.Component {
   handleInputChange = (e) => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
+    this.updateChangedFields(name);
+  };
+
+  handleSubmit = async () => {
+    let details = _.pick(this.state, this.state.changedFields);
+    await this.props.updateUserDetails(this.props.userDetail._id, details);
   };
 
   render() {
-    const { userDetail, classes } = this.props;
+    const { classes } = this.props;
     const { firstName, lastName, profilePic, location } = this.state;
     return (
       <div>
@@ -82,13 +94,11 @@ class EditUserProfilePage extends React.Component {
           <div>
             <UserAvatar
               isLargeAvatar={true}
-              userProfileImgSrc={
-                userDetail.profilePic ? userDetail.profilePic : defaultProfile
-              }
+              userProfileImgSrc={profilePic ? profilePic : defaultProfile}
             />
           </div>
-          <Grid container>
-            <Grid item xs={6}>
+          <Grid container spacing={1}>
+            <Grid item xs={12} sm={6}>
               <TextField
                 required
                 label="First Name"
@@ -100,7 +110,7 @@ class EditUserProfilePage extends React.Component {
                 defaultValue={firstName}
               />
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} sm={6}>
               <TextField
                 required
                 label="Last Name"
@@ -112,7 +122,35 @@ class EditUserProfilePage extends React.Component {
                 defaultValue={lastName}
               />
             </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                required
+                label="Location"
+                fullWidth
+                margin="dense"
+                variant="outlined"
+                name="location"
+                onChange={this.handleInputChange}
+                defaultValue={location}
+              />
+            </Grid>
           </Grid>
+          <div className={classes.buttonHeader}>
+            <Button
+              onClick={() => this.handleConfirmationOpen("redirect")}
+              variant="outlined"
+              className={classes.cancelButton}
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={this.handleSubmit}
+              variant="contained"
+              color="primary"
+            >
+              Save
+            </Button>
+          </div>
         </Container>
       </div>
     );
