@@ -17,6 +17,17 @@ const useStyles = makeStyles(() => ({
       paddingBottom: "16px",
     },
   },
+  acceptBtnContainer: {
+    paddingRight: "5px",
+  },
+  acceptBtn: {
+    backgroundColor: "green",
+    color: "white",
+  },
+  declineBtn: {
+    backgroundColor: "red",
+    color: "white",
+  },
   offerHeader: {
     // padding: "10px"
     "& .MuiCardHeader-avatar": {
@@ -94,13 +105,13 @@ export const OfferingPreview = (props) => {
             </Button>
             </Grid>
             <Grid container item xs={9} justify={"flex-end"}>
-              <Grid container item xs={4} justify={"flex-end"}>
-                <Button>
+              <Grid container item xs={4} justify={"flex-end"} className={classes.acceptBtnContainer}>
+                <Button variant={"contained"} className={classes.acceptBtn}>
                   Accept
                 </Button>
               </Grid>
               <Grid container item xs={4} justify={"flex-end"}>
-                <Button>
+                <Button variant={"contained"} className={classes.declineBtn}>
                   Decline
                 </Button>
               </Grid>
