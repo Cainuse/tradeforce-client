@@ -10,13 +10,15 @@ import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
+import IconButton from "@material-ui/core/IconButton";
+import EditIcon from "@material-ui/icons/Edit";
 import _ from "lodash";
 
 const useStyles = (theme) => ({
   buttonHeader: {
     display: "flex",
     justifyContent: "space-between",
-    margin: theme.spacing(1),
+    margin: theme.spacing(3, 1),
   },
   section: {
     margin: theme.spacing(2, 0),
@@ -24,6 +26,28 @@ const useStyles = (theme) => ({
   cancelButton: {
     color: "#AD343E",
     borderColor: "#AD343E",
+  },
+  profileImage: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    margin: theme.spacing(3, 0),
+  },
+  removeImgBtn: {
+    margin: theme.spacing(1, 0, 0, 0),
+    textTransform: "none",
+    fontWeight: 300,
+  },
+  editProfilePic: {
+    backgroundColor: theme.palette.primary.main,
+    color: "white",
+    margin: theme.spacing(-4, 0, 0, 13),
+    "&:hover, &.Mui-focusVisible": {
+      backgroundColor: theme.palette.primary.dark,
+    },
+  },
+  input: {
+    display: "none",
   },
 });
 
@@ -69,6 +93,23 @@ class EditUserProfilePage extends React.Component {
   handleSubmit = async () => {
     let details = _.pick(this.state, this.state.changedFields);
     await this.props.updateUserDetails(this.props.userDetail._id, details);
+    this.redirect();
+  };
+
+  handleRemoveProfileImage = () => {
+    this.setState({ profilePic: "" });
+    this.updateChangedFields("profilePic");
+    this.fileInput.value = "";
+  };
+
+  handleImageUpload = (e) => {
+    let file = e.target.files[0];
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      this.setState({ profilePic: reader.result });
+      this.updateChangedFields("profilePic");
+    };
   };
 
   render() {
@@ -91,10 +132,29 @@ class EditUserProfilePage extends React.Component {
           </Button>
         </div>
         <Container>
-          <div>
+          <div className={classes.profileImage}>
             <UserAvatar
               isLargeAvatar={true}
               userProfileImgSrc={profilePic ? profilePic : defaultProfile}
+            />
+            <IconButton
+              className={classes.editProfilePic}
+              size="small"
+              onClick={() => this.fileInput.click()}
+            >
+              <EditIcon fontSize="inherit" />
+            </IconButton>
+            <Button
+              className={classes.removeImgBtn}
+              onClick={this.handleRemoveProfileImage}
+            >
+              Remove Image
+            </Button>
+            <input
+              type="file"
+              className={classes.input}
+              ref={(fileInput) => (this.fileInput = fileInput)}
+              onChange={this.handleImageUpload}
             />
           </div>
           <Grid container spacing={1}>

@@ -70,7 +70,7 @@ const ProfileCard = (props) => {
       <Typography className={classes.username}>
         {userDetail.userName}
       </Typography>
-      {userDetail._id === currentUser._id ? (
+      {currentUser && userDetail._id === currentUser._id ? (
         <Button onClick={redirectToEditPage} className={classes.editButton}>
           Edit
         </Button>
