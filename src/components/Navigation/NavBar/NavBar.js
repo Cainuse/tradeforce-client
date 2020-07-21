@@ -54,7 +54,7 @@ function CreateNavBar(props) {
 
   return (
     <div className={classes.navBarRoot}>
-      <AppBar position="static" className={classes.appBar}>
+      <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <IconButton
             edge="start"
@@ -69,6 +69,7 @@ function CreateNavBar(props) {
           <ActionItems isLoggedIn={props.isLoggedIn} />
         </Toolbar>
       </AppBar>
+      <Toolbar />
     </div>
   );
 }
