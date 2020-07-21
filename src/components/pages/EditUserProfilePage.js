@@ -62,8 +62,42 @@ class EditUserProfilePage extends React.Component {
       location: userDetail.location,
       changedFields: [],
       confirmationOpen: false,
+      errors: {
+        firstName: "",
+        lastName: "",
+        location: "",
+        userName: "",
+      },
     };
   }
+
+  isFormInvalid = () => {
+    let inputFields = _.pick(this.state, ["firstName", "lastName", "location"]);
+    let haveEmptyFields = _.values(inputFields).some((val) => val.length === 0);
+    let haveErrors = _.values(this.state.errors).some((val) => val.length > 0);
+    return haveEmptyFields || haveErrors;
+  };
+
+  validateInput = ([key, value]) => {
+    let errors = this.state.errors;
+    switch (key) {
+      case "firstName":
+        errors.firstName =
+          value.length > 0 ? "" : "First name cannot be left blank";
+        break;
+      case "lastName":
+        errors.lastName =
+          value.length > 0 ? "" : "Last name cannot be left blank";
+        break;
+      case "location":
+        errors.location =
+          value.length > 0 ? "" : "Location cannot be left blank";
+        break;
+      default:
+        break;
+    }
+    this.setState({ errors: errors });
+  };
 
   redirect = () => {
     const { history } = this.props;
@@ -86,14 +120,19 @@ class EditUserProfilePage extends React.Component {
 
   handleInputChange = (e) => {
     const { name, value } = e.target;
+    this.validateInput([name, value]);
     this.setState({ [name]: value });
     this.updateChangedFields(name);
   };
 
   handleSubmit = async () => {
-    let details = _.pick(this.state, this.state.changedFields);
-    await this.props.updateUserDetails(this.props.userDetail._id, details);
-    this.redirect();
+    if (!this.isFormInvalid()) {
+      let details = _.pick(this.state, this.state.changedFields);
+      await this.props.updateUserDetails(this.props.userDetail._id, details);
+      this.redirect();
+    } else {
+      window.alert("Please fill required fields");
+    }
   };
 
   handleRemoveProfileImage = () => {
@@ -114,7 +153,7 @@ class EditUserProfilePage extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { firstName, lastName, profilePic, location } = this.state;
+    const { firstName, lastName, profilePic, location, errors } = this.state;
     return (
       <div>
         {this.state.confirmationOpen && (
@@ -168,6 +207,8 @@ class EditUserProfilePage extends React.Component {
                 name="firstName"
                 onChange={this.handleInputChange}
                 defaultValue={firstName}
+                error={!!errors.firstName}
+                helperText={errors.firstName}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -180,6 +221,8 @@ class EditUserProfilePage extends React.Component {
                 name="lastName"
                 onChange={this.handleInputChange}
                 defaultValue={lastName}
+                error={!!errors.lastName}
+                helperText={errors.lastName}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -192,6 +235,8 @@ class EditUserProfilePage extends React.Component {
                 name="location"
                 onChange={this.handleInputChange}
                 defaultValue={location}
+                error={!!errors.location}
+                helperText={errors.location}
               />
             </Grid>
           </Grid>
