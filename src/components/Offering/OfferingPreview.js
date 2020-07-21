@@ -2,14 +2,15 @@ import React, { useEffect, useState } from "react";
 import { getUserByIdAysnc } from "../../redux/actions/userActions";
 import { useDispatch } from "react-redux";
 import { Card, CardActionArea, CardHeader, CardMedia, CardContent, CardActions } from "@material-ui/core";
-import { Link, Button, Grid } from "@material-ui/core";
+import { Link, Button, Grid, IconButton } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import UserAvatar from "../User/UserAvatar";
 import defaultProfile from "../../images/placeholder-profile.png";
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';import CancelIcon from '@material-ui/icons/Cancel';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   cardRoot: {
-    // maxWidth: "350px"
     minWidth: "300px",
   },
   cardContentRoot: {
@@ -17,22 +18,18 @@ const useStyles = makeStyles(() => ({
       paddingBottom: "16px",
     },
   },
-  acceptBtnContainer: {
-    paddingRight: "5px",
-  },
   acceptBtn: {
-    // backgroundColor: "green",
-    color: "green",
-    borderColor: "green",
+    color: theme.palette.primary.main,
+    borderColor: theme.palette.primary.main,
+  },
+  actionBtnIcon: {
+    fontSize: "1.7rem",
   },
   declineBtn: {
-    // backgroundColor: "red",
-    color: "red",
-    borderColor: "red",
-
+    color: "#b90202",
+    borderColor: "#b90202",
   },
   offerHeader: {
-    // padding: "10px"
     "& .MuiCardHeader-avatar": {
       marginRight: "10px",
     }
@@ -99,47 +96,24 @@ export const OfferingPreview = (props) => {
         title="Tradeforce"
       />
 
-      {/*<CardContent className={classes.cardContentRoot}>*/}
-      {/*  <CardActions>*/}
-      {/*    <Grid container item xs={12} justify={"space-between"}>*/}
-      {/*      <Grid item xs={3}>*/}
-      {/*      <Button >*/}
-      {/*        Details*/}
-      {/*      </Button>*/}
-      {/*      </Grid>*/}
-      {/*      <Grid container item xs={9} justify={"flex-end"}>*/}
-      {/*        <Grid container item xs={4} justify={"flex-end"} className={classes.acceptBtnContainer}>*/}
-      {/*          <Button variant={"contained"} className={classes.acceptBtn}>*/}
-      {/*            Accept*/}
-      {/*          </Button>*/}
-      {/*        </Grid>*/}
-      {/*        <Grid container item xs={4} justify={"flex-end"}>*/}
-      {/*          <Button variant={"contained"} className={classes.declineBtn}>*/}
-      {/*            Decline*/}
-      {/*          </Button>*/}
-      {/*        </Grid>*/}
-      {/*      </Grid>*/}
-      {/*    </Grid>*/}
-      {/*  </CardActions>*/}
-      {/*</CardContent>*/}
       <CardContent className={classes.cardContentRoot}>
         <CardActions>
           <Grid container item xs={12} justify={"space-between"}>
-            <Grid item xs={3}>
+            <Grid container item xs={4} alignContent={"center"}>
               <Button >
                 Details
               </Button>
             </Grid>
-            <Grid container item xs={9} justify={"flex-end"}>
-              <Grid container item xs={4} justify={"flex-end"} className={classes.acceptBtnContainer}>
-                <Button variant={"outlined"} className={classes.acceptBtn}>
-                  Accept
-                </Button>
+            <Grid container item xs={8} justify={"flex-end"}>
+              <Grid container item xs={4} justify={"flex-end"} >
+                <IconButton className={classes.acceptBtn}>
+                  <CheckCircleOutlineIcon className={classes.actionBtnIcon}/>
+                </IconButton>
               </Grid>
               <Grid container item xs={4} justify={"flex-end"}>
-                <Button variant={"outlined"} className={classes.declineBtn}>
-                  Decline
-                </Button>
+                <IconButton className={classes.declineBtn}>
+                  <HighlightOffIcon className={classes.actionBtnIcon}/>
+                </IconButton>
               </Grid>
             </Grid>
           </Grid>
@@ -148,7 +122,6 @@ export const OfferingPreview = (props) => {
     </Card>
   );
 
-  // return( <img src={offerPreviewImgSrc} alt={"test"}/>)
 };
 
 
