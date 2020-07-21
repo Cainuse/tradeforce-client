@@ -41,7 +41,7 @@ export const OfferingPreview = (props) => {
   const dispatch = useDispatch();
   const [offerer, setOfferer] = useState({});
   let classes = useStyles();
-  let { offer, index } = props;
+  let { offer, index, fns } = props;
   let { offeredItems } = offer;
   let defaultImg = require("../../images/default.jpg");
   let previewImg;
@@ -98,10 +98,10 @@ export const OfferingPreview = (props) => {
             </Grid>
             <Grid container item xs={8} justify={"flex-end"}>
               <Grid container item xs={4} justify={"flex-end"} >
-                <AcceptIconButton />
+                <AcceptIconButton fns={fns}/>
               </Grid>
               <Grid container item xs={4} justify={"flex-end"}>
-                <DeclineIconButton />
+                <DeclineIconButton fns={fns}/>
               </Grid>
             </Grid>
           </Grid>

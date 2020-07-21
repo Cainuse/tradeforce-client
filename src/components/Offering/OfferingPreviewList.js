@@ -5,15 +5,14 @@ import { OfferingPreview } from "./OfferingPreview";
 // import  OfferingPreview  from "./OfferingPreview";
 
 export const OfferingPreviewList = (props) => {
-  let { offerings } = props;
+  let { offerings, fns } = props;
 
   return (
     <Grid container alignContent={"center"} justify={"flex-start"}>
       {offerings.map((offer, index) => {
         return (
           <Grid item key={index}>
-            <OfferingPreview offer={offer} index={index}/>
-
+            <OfferingPreview offer={offer} index={index} fns={fns}/>
           </Grid>
         );
       })}
