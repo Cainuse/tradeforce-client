@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
 
 function AcceptIconButton(props) {
   let classes = useStyles();
-  let { onMouseEnter, onMouseLeave, fns, offerInfo } = props;
+  let { offerInfo, fns, onMouseEnter, onMouseLeave } = props;
   let { handleConfirmationOpen, setOfferInfoToActUpon } = fns;
   return (
     <React.Fragment>

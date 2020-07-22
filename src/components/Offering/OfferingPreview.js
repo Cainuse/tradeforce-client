@@ -72,14 +72,13 @@ export const OfferingPreview = (props) => {
   }, [dispatch, offer.userId]);
 
 
+  //set previewImage
   if (offeredItems.length > 0) {
     let firstItem = offeredItems[0];
     previewImg = firstItem.images.length > 0 ? firstItem.images[0] : defaultImg;
   } else {
     previewImg = defaultImg;
   }
-
-  console.log(offer);
 
   return (
     <Card elevation={2} className={classes.cardRoot}>

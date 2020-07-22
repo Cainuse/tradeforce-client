@@ -16,7 +16,7 @@ const useStyles = makeStyles(() => ({
 
 function DeclineIconButton(props) {
   let classes = useStyles();
-  let { onMouseEnter, onMouseLeave, fns, offerInfo } = props;
+  let { offerInfo, fns, onMouseEnter, onMouseLeave } = props;
   let { handleConfirmationOpen, setOfferInfoToActUpon } = fns;
 
   return (
