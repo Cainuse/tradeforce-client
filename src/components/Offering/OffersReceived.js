@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Grid, Typography, Link, Collapse } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+
 import { OfferingPreviewList } from "./OfferingPreviewList";
-import ConfirmationDialog from "../ConfirmationDialog";
 import { acceptOffer, declineOffer } from "../../redux/actions/offeringActions";
 import { getAllPendingOffers } from "./OfferingHelpers";
+import ConfirmationDialog from "../ConfirmationDialog";
 
 const useStyles = makeStyles((theme) => ({
   allOffersContainer: {

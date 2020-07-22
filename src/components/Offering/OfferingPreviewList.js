@@ -2,7 +2,6 @@ import React from "react";
 import { Grid } from "@material-ui/core";
 
 import { OfferingPreview } from "./OfferingPreview";
-// import  OfferingPreview  from "./OfferingPreview";
 
 export const OfferingPreviewList = (props) => {
   let { pendingOffers, fns, activePosting } = props;

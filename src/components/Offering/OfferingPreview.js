@@ -36,7 +36,6 @@ const useStyles = makeStyles(() => ({
     height: "0",
     paddingTop: "56.25%",
   },
-  detailsBtn: {},
 }));
 
 export const OfferingPreview = (props) => {
