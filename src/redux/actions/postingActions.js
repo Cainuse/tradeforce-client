@@ -103,7 +103,7 @@ export const loadPostingsByQuery = (query) => {
       dispatch(setLoading(true));
       let url = query
         ? `${BASE_URL}/postings/search/${query}`
-        : `${BASE_URL}/postings`;
+        : `${BASE_URL}/postings/active`;
       let postingResponse = await axios.get(url);
       dispatch(loadAllPostingsSuccess(postingResponse.data));
     } catch (error) {

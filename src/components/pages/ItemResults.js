@@ -6,6 +6,7 @@ import { withStyles } from "@material-ui/core/styles";
 import { loadPostingsByQuery } from "../../redux/actions/postingActions";
 import { withRouter } from "react-router";
 import ItemPreviewList from "../Item/ItemPreviewList";
+import Typography from "@material-ui/core/Typography";
 
 const useStyles = (theme) => ({
   root: {
@@ -14,7 +15,7 @@ const useStyles = (theme) => ({
     alignItems: "center",
   },
   search: {
-    margin: theme.spacing(7, 0),
+    margin: theme.spacing(7, 0, 3, 0),
     width: "100%",
     display: "flex",
     flexDirection: "column",
@@ -30,14 +31,20 @@ class ItemResults extends React.Component {
   }
 
   render() {
-    const { classes, postings } = this.props;
+    const { classes, postings, loading } = this.props;
 
     return (
       <Container className={classes.root}>
         <div className={classes.search}>
           <SearchBar />
         </div>
-        <ItemPreviewList items={postings} sizing={3} />
+        {postings.length > 0 ? (
+          <ItemPreviewList items={postings} sizing={3} />
+        ) : loading ? null : (
+          <Typography className={classes.noResults}>
+            No results were found
+          </Typography>
+        )}
       </Container>
     );
   }
@@ -45,6 +52,7 @@ class ItemResults extends React.Component {
 
 const mapStateToProps = (state) => ({
   postings: state.postings,
+  loading: state.loading,
 });
 
 export default connect(mapStateToProps, { loadPostingsByQuery })(

@@ -76,7 +76,9 @@ const ItemPreview = ({
         <CardMedia
           className={classes.tradeItemCardImg}
           image={
-            images.length > 0 ? images[0] : require("../../images/default.jpg")
+            images.length > 0 && images[0]
+              ? images[0]
+              : require("../../images/default.jpg")
           }
           title="Tradeforce"
         />
