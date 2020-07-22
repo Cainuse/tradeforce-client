@@ -19,6 +19,7 @@ import { categories, conditions } from "../../redux/constants/classifierTypes";
 import Button from "@material-ui/core/Button";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import clsx from "clsx";
+import Badge from "@material-ui/core/Badge";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,14 +33,10 @@ const useStyles = makeStyles((theme) => ({
   input: {
     marginLeft: theme.spacing(1),
     flex: 1,
-    width: "89%",
+    width: "87%",
   },
   iconButton: {
     padding: 10,
-  },
-  divider: {
-    height: 28,
-    margin: 4,
   },
   formControl: {
     margin: theme.spacing(1),
@@ -70,6 +67,7 @@ function CustomizedInputBase(props) {
   const [category, setCategory] = useState("any");
   const [condition, setCondition] = useState("any");
   const [isOptionOpen, setOptionOpen] = useState(false);
+  const [noActiveOptions, setNoActiveOptions] = useState(true);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -101,6 +99,14 @@ function CustomizedInputBase(props) {
     }
   };
 
+  const checkActiveOptions = () => {
+    if (category !== "any" || condition !== "any") {
+      setNoActiveOptions(false);
+    } else {
+      setNoActiveOptions(true);
+    }
+  };
+
   const clearForm = () => {
     setInput("");
     setCondition("any");
@@ -108,18 +114,35 @@ function CustomizedInputBase(props) {
   };
 
   const toggleOptionMenu = () => {
+    if (isOptionOpen) {
+      checkActiveOptions();
+    }
     setOptionOpen(!isOptionOpen);
   };
 
   return (
     <div className={classes.root}>
-      <Paper component="form" className={classes.searc}>
+      <Paper component="form" className={classes.search}>
         <IconButton
           className={classes.iconButton}
           aria-label="menu"
           onClick={toggleOptionMenu}
         >
-          {isOptionOpen ? <CloseIcon /> : <MenuIcon />}
+          {isOptionOpen ? (
+            <CloseIcon />
+          ) : (
+            <Badge
+              color="primary"
+              variant="dot"
+              invisible={noActiveOptions}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "right",
+              }}
+            >
+              <MenuIcon />
+            </Badge>
+          )}
         </IconButton>
         <InputBase
           className={classes.input}
