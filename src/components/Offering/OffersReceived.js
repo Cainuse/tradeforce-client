@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Grid, Typography, Link, Collapse } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { OfferingPreviewList } from "./OfferingPreviewList";
 import ConfirmationDialog from "../ConfirmationDialog";
-import { acceptOffer } from "../../redux/actions/offeringActions";
+import { acceptOffer, declineOffer } from "../../redux/actions/offeringActions";
 import { getAllPendingOffers } from "./OfferingHelpers";
 
 const useStyles = makeStyles((theme) => ({
@@ -37,8 +37,15 @@ export const OffersReceived = (props) => {
   let [confirmationOpen, setConfirmationOpen] = useState(false);
   let [confirmationType, setConfirmationType] = useState("");
 
-  // offerInfo: {offerId, offerer, posting}
+  /** offerInfo: {offerId, offerer, posting} */
   let [offerInfoToActUpon, setOfferInfoToActUpon] = useState({});
+
+
+  const handleAcceptOffer = async () => {
+    let { offerId } = offerInfoToActUpon;
+    await dispatch(acceptOffer(offerId))
+    handleConfirmationClose();
+  }
 
   const handleConfirmationOpen = (type) => {
     setConfirmationOpen(true);
@@ -51,10 +58,15 @@ export const OffersReceived = (props) => {
     setOfferInfoToActUpon({});
   };
 
-  const handleAcceptOffer = async () => {
+  const handleDeclineOffer = async () => {
     let { offerId } = offerInfoToActUpon;
-    await dispatch(acceptOffer(offerId))
+    await dispatch(declineOffer(offerId));
+    handleConfirmationClose();
   }
+
+  const handleExpand = (index) => {
+    expanded === index ? setExpanded(-1) : setExpanded(index);
+  };
 
   const selectConfirmationToDisplay = () => {
     let {offerer, posting} = offerInfoToActUpon;
@@ -65,10 +77,7 @@ export const OffersReceived = (props) => {
           return (
             <ConfirmationDialog
               open={confirmationOpen}
-              submitAction={ async () => {
-                await handleAcceptOffer();
-                handleConfirmationClose();
-              }}
+              submitAction={handleAcceptOffer}
               submitName={"Accept Offer"}
               dialogMessage={
                 `All other offers for your post "${posting.title}" will be declined. This action cannot be undone.`
@@ -81,7 +90,7 @@ export const OffersReceived = (props) => {
           return (
             <ConfirmationDialog
               open={confirmationOpen}
-              submitAction={null}
+              submitAction={handleDeclineOffer}
               submitName={"Decline Offer"}
               dialogMessage={"This action cannot be undone."}
               dialogTitle={`Are you sure you want to decline ${offerer.userName}'s offer?`}
@@ -93,10 +102,6 @@ export const OffersReceived = (props) => {
       }
     }
     return null;
-  };
-
-  const handleExpand = (index) => {
-    expanded === index ? setExpanded(-1) : setExpanded(index);
   };
 
   const renderAllOfferings = () => {
@@ -144,7 +149,6 @@ export const OffersReceived = (props) => {
   return (
     <Grid
       container
-      // spacing={4}
       justify={"center"}
       alignContent={"flex-start"}
       className={classes.allOffersContainer}
