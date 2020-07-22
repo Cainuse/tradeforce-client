@@ -7,22 +7,22 @@ import ConfirmationDialog from "../ConfirmationDialog";
 const useStyles = makeStyles((theme) => ({
   allOffersContainer: {
     padding: "40px",
-    minHeight: "50vh"
+    minHeight: "50vh",
   },
   postingOffers: {
-    paddingBottom: "35px"
+    paddingBottom: "35px",
   },
   postingTitle: {
     fontSize: "1.5rem",
-    color: theme.palette.primary.main
+    color: theme.palette.primary.main,
   },
   numOffering: {
     fontSize: "1.5rem",
-    color: theme.palette.primary.main
+    color: theme.palette.primary.main,
   },
   title: {
-    display: "inherit"
-  }
+    display: "inherit",
+  },
 }));
 
 export const OffersReceived = (props) => {
@@ -32,7 +32,6 @@ export const OffersReceived = (props) => {
 
   let [confirmationOpen, setConfirmationOpen] = useState(false);
   let [confirmationType, setConfirmationType] = useState("");
-
 
   const handleConfirmationOpen = (type) => {
     setConfirmationOpen(true);
@@ -53,7 +52,9 @@ export const OffersReceived = (props) => {
               open={confirmationOpen}
               submitAction={null}
               submitName={"Accept Offer"}
-              dialogMessage={"All other offers for this post will be declined. This action cannot be undone."}
+              dialogMessage={
+                "All other offers for this post will be declined. This action cannot be undone."
+              }
               dialogTitle={"Are you sure you want to accept this offer?"}
             />
           );
@@ -70,9 +71,9 @@ export const OffersReceived = (props) => {
         default:
           return null;
       }
-    } return null;
+    }
+    return null;
   };
-
 
   const handleExpand = (index) => {
     expanded === index ? setExpanded(-1) : setExpanded(index);
@@ -85,8 +86,13 @@ export const OffersReceived = (props) => {
       if (offerings.length > 0) {
         return (
           <React.Fragment key={index}>
-            {confirmationOpen && selectConfirmationToDisplay()}
-            <Grid container key={index} className={classes.postingOffers} spacing={1}>
+            {/* {confirmationOpen && selectConfirmationToDisplay()} */}
+            <Grid
+              container
+              key={index}
+              className={classes.postingOffers}
+              spacing={1}
+            >
               <Grid container item xs={12} key={index} justify={"center"}>
                 <Grid item xs={10} className={classes.title}>
                   <Typography className={classes.postingTitle}>
@@ -97,33 +103,38 @@ export const OffersReceived = (props) => {
                   </Typography>
                 </Grid>
                 <Grid container item xs={2} justify={"center"}>
-                  {expanded === index ?
-                    <Link onClick={() => handleExpand(index)}>(Collapse)</Link> :
-                    <Link onClick={() => handleExpand(index)}> (Expand) </Link>}
+                  {expanded === index ? (
+                    <Link onClick={() => handleExpand(index)}>(Collapse)</Link>
+                  ) : (
+                    <Link onClick={() => handleExpand(index)}> (Expand) </Link>
+                  )}
                 </Grid>
               </Grid>
               <Grid item xs={12}>
                 <Collapse in={index === expanded}>
-                  <OfferingPreviewList offerings={offerings}
-                                       fns={{handleConfirmationOpen, handleConfirmationClose}}
+                  <OfferingPreviewList
+                    offerings={offerings}
+                    fns={{ handleConfirmationOpen, handleConfirmationClose }}
                   />
                 </Collapse>
               </Grid>
             </Grid>
-          </React.Fragment>);
+          </React.Fragment>
+        );
       }
       return null;
     });
-
   };
 
   return (
-    <Grid container
+    <Grid
+      container
       // spacing={4}
-          justify={"center"}
-          alignContent={"flex-start"}
-          className={classes.allOffersContainer}
+      justify={"center"}
+      alignContent={"flex-start"}
+      className={classes.allOffersContainer}
     >
+      {confirmationOpen && selectConfirmationToDisplay()}
       {renderAllOfferings()}
     </Grid>
   );
