@@ -29,11 +29,10 @@ const useStyles = (theme) => ({
 });
 
 class UserDetails extends React.Component {
-  //TODO: Change value: 3 back to 0 in state
   constructor(props) {
     super(props);
     this.state = {
-      value: 3
+      value: 0
     };
   }
 
