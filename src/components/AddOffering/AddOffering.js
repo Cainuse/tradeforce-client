@@ -358,7 +358,6 @@ const mapDispatchToProps = (dispatch) => ({
   makeOffer: (offering, postingId) => dispatch(makeOffer(offering, postingId)),
   closeModal: () => dispatch(closeModal()),
   displayError: (errMessage) => dispatch(displayError(errMessage)),
-  displaySuccess: (successMessage) => dispatch(displaySuccess(successMessage)),
 });
 
 export default connect(
