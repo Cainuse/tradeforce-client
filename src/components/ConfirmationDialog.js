@@ -7,29 +7,25 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 
 class ConfirmationDialog extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isOpen: props.open,
-    };
-  }
-
-  handleConfirmationClose = () => {
-    this.setState({ isOpen: false });
-  };
-
   render() {
-    const { submitAction, submitName, dialogMessage, dialogTitle } = this.props;
+    const {
+      open,
+      submitAction,
+      submitName,
+      dialogMessage,
+      dialogTitle,
+      handleClose,
+    } = this.props;
 
     return (
-      <Dialog open={this.state.isOpen} onClose={this.handleConfirmationClose}>
+      <Dialog open={open} onClose={handleClose}>
         <DialogTitle id="alert-dialog-title">{dialogTitle}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             {dialogMessage}
           </DialogContentText>
           <DialogActions>
-            <Button onClick={this.handleConfirmationClose} color="primary">
+            <Button onClick={handleClose} color="primary">
               Cancel
             </Button>
             <Button onClick={submitAction} color="primary">

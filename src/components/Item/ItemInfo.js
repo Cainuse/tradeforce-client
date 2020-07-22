@@ -9,8 +9,14 @@ import clsx from "clsx";
 import _ from "lodash";
 import { useHistory, useLocation } from "react-router-dom";
 
-import { openOfferModal } from "../../redux/actions/modalActions";
+import {
+  openLoginModal,
+  openOfferModal,
+} from "../../redux/actions/modalActions";
 import ImageCarousel from "./ImageCarousel";
+import { MAKE_OFFER_BUTTON } from "../../redux/constants/buttonTypes";
+import { displayWarning } from "../../redux/actions/snackbarActions";
+import { MAKE_OFFER_AS_UNSIGNED_IN_USER_ERROR } from "../../redux/constants/snackbarMessageTypes";
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -73,6 +79,47 @@ function ItemInfo(props) {
     history.push(location.pathname + "/edit");
   };
 
+  const chooseButton = (currentUser, fns) => {
+    let {
+      openOfferingModal,
+      editPosting,
+      openLoginModal,
+      displayWarning,
+    } = fns;
+    if (currentUser === null) {
+      return (
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => {
+            displayWarning(MAKE_OFFER_AS_UNSIGNED_IN_USER_ERROR);
+            openLoginModal(MAKE_OFFER_BUTTON);
+          }}
+        >
+          Make Offer
+        </Button>
+      );
+    } else if (currentUser._id !== itemDetail.ownerId) {
+      return (
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => {
+            openOfferingModal();
+          }}
+        >
+          Make Offer
+        </Button>
+      );
+    } else {
+      return (
+        <Button onClick={editPosting} variant="outlined" color="primary">
+          Edit Posting
+        </Button>
+      );
+    }
+  };
+
   return (
     <React.Fragment>
       <Grid item xs={7}>
@@ -80,27 +127,12 @@ function ItemInfo(props) {
       </Grid>
       <Grid item xs={4}>
         <Grid container alignItems="center" direction="column">
-          {!currentUser || currentUser._id !== itemDetail.ownerId ? (
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => {
-                props.openOfferingModal();
-              }}
-              disabled={currentUser === null}
-            >
-              Make Offer
-            </Button>
-          ) : (
-            <Button
-              onClick={editPosting}
-              // startIcon={<EditIcon />}
-              variant="outlined"
-              color="primary"
-            >
-              Edit Posting
-            </Button>
-          )}
+          {chooseButton(currentUser, {
+            openOfferingModal: props.openOfferingModal,
+            editPosting: editPosting,
+            openLoginModal: props.openLoginModal,
+            displayWarning: props.displayWarning,
+          })}
           <Box my={3} width="60%">
             <p className={classes.detailTitle}>
               Quantity: <span className={classes.qtyVal}>{quantity}</span>
@@ -142,6 +174,8 @@ function ItemInfo(props) {
 
 const mapDispatchToProps = (dispatch) => ({
   openOfferingModal: () => dispatch(openOfferModal()),
+  openLoginModal: (openedFrom) => dispatch(openLoginModal(openedFrom)),
+  displayWarning: (warningMessage) => dispatch(displayWarning(warningMessage)),
 });
 
 const mapStateToProps = (state) => ({

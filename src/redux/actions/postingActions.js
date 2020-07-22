@@ -4,8 +4,18 @@ import {
   LOAD_ITEM_DETAIL,
   UPDATE_ITEM_DETAIL,
   LOAD_POSTINGS,
-  ERROR_SNACKBAR,
+  CLEAR_OLD_ITEM_DETAILS,
+  CLEAR_OLD_POSTINGS,
 } from "../constants/actionTypes";
+import {
+  LOAD_ITEM_ERROR,
+  LOAD_POSTING_ERROR,
+  DELETE_POSTING_ERROR,
+  UPDATE_POSTING_ERROR,
+  DELETE_POSTING_SUCCESS,
+  UPDATE_POSTING_SUCCESS,
+} from "../constants/snackbarMessageTypes";
+import { displayError, displaySuccess } from "./snackbarActions";
 import { setLoading } from "./loadingActions";
 import axios from "axios";
 
@@ -15,13 +25,6 @@ const addPostingSuccess = (posting) => {
   return {
     type: ADD_POSTING,
     posting: posting,
-  };
-};
-
-export const displayError = (msg) => {
-  return {
-    type: ERROR_SNACKBAR,
-    errMessage: msg,
   };
 };
 
@@ -71,8 +74,9 @@ export const addPosting = (posting, currentUser) => {
         postingRequest
       );
       dispatch(addPostingSuccess(postingResponse.data));
+      return postingResponse.data._id;
     } catch (error) {
-      dispatch(displayError("Something went wrong. Posting was not created"));
+      throw new Error();
     } finally {
       dispatch(setLoading(false));
     }
@@ -86,7 +90,7 @@ export const loadAllPostings = () => {
       let postingResponse = await axios.get(`${BASE_URL}/postings`);
       dispatch(loadAllPostingsSuccess(postingResponse.data));
     } catch (error) {
-      dispatch(displayError("Something went wrong. Posting was not deleted"));
+      dispatch(displayError(LOAD_POSTING_ERROR));
     } finally {
       dispatch(setLoading(false));
     }
@@ -103,9 +107,7 @@ export const loadPostingsByQuery = (query) => {
       let postingResponse = await axios.get(url);
       dispatch(loadAllPostingsSuccess(postingResponse.data));
     } catch (error) {
-      dispatch(
-        displayError("Something went wrong. Postings could not be loaded")
-      );
+      dispatch(displayError(LOAD_POSTING_ERROR));
     } finally {
       dispatch(setLoading(false));
     }
@@ -120,17 +122,23 @@ export const loadItemDetail = (itemId) => {
       let userId = getItemResponse.data.ownerId
         ? getItemResponse.data.ownerId
         : 0;
-      let getUserInfo = await axios.get(`${BASE_URL}/users/${userId}`);
-      let ownerUsername = getUserInfo.data.userName
-        ? getUserInfo.data.userName
-        : "Unavailable";
+      let getUserInfo = await axios.get(`${BASE_URL}/users/${userId}/complete`);
+      let owner = {
+        ownerUsername: getUserInfo.data.userName
+          ? getUserInfo.data.userName
+          : "Unavailable",
+        ownerReviews: getUserInfo.data.reviews,
+      };
       let item = {
         ...getItemResponse.data,
-        ownerUsername,
+        ...owner,
       };
       dispatch(loadItemDetailSuccess(item));
+      return "success";
     } catch (error) {
-      throw new Error(error.response.status);
+      // throw new Error(error.response.status)
+      dispatch(displayError(LOAD_ITEM_ERROR));
+      return "error";
     } finally {
       dispatch(setLoading(false));
     }
@@ -143,8 +151,9 @@ export const deletePosting = (itemId) => {
       dispatch(setLoading(true));
       await axios.delete(`${BASE_URL}/postings/${itemId}`);
       dispatch(deletePostingSuccess(itemId));
+      dispatch(displaySuccess(DELETE_POSTING_SUCCESS));
     } catch (error) {
-      dispatch(displayError("Something went wrong. Posting was not deleted"));
+      dispatch(displayError(DELETE_POSTING_ERROR));
     } finally {
       dispatch(setLoading(false));
     }
@@ -157,10 +166,23 @@ export const updateItemDetail = (itemId, details) => {
       dispatch(setLoading(true));
       await axios.patch(`${BASE_URL}/postings/${itemId}`, details);
       dispatch(updateItemDetailSuccess(itemId, details));
+      dispatch(displaySuccess(UPDATE_POSTING_SUCCESS));
     } catch (error) {
-      dispatch(displayError("Something went wrong. Posting was not updated"));
+      dispatch(displayError(UPDATE_POSTING_ERROR));
     } finally {
       dispatch(setLoading(false));
     }
+  };
+};
+
+export const clearOldPostings = () => {
+  return {
+    type: CLEAR_OLD_POSTINGS,
+  };
+};
+
+export const clearOldItemDetails = () => {
+  return {
+    type: CLEAR_OLD_ITEM_DETAILS,
   };
 };

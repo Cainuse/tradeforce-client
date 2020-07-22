@@ -187,6 +187,7 @@ class EditItemDetailsPage extends React.Component {
             submitName={"Delete"}
             dialogMessage={"This action cannot be undone"}
             dialogTitle={"Are you sure you want to delete this posting?"}
+            handleClose={this.handleConfirmationClose}
           />
         );
       default:
@@ -197,6 +198,7 @@ class EditItemDetailsPage extends React.Component {
             submitName={"OK"}
             dialogMessage={"Any changes will not be saved"}
             dialogTitle={"Are you sure you want to leave this page?"}
+            handleClose={this.handleConfirmationClose}
           />
         );
     }

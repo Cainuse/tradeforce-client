@@ -1,16 +1,10 @@
 import { initialState } from "../constants/_initialState";
 import {
   CLEAR_SNACKBAR,
-  DELETE_POSTING,
   ERROR_SNACKBAR,
   SUCCESS_SNACKBAR,
-  UPDATE_ITEM_DETAIL,
+  WARNING_SNACKBAR,
 } from "../constants/actionTypes";
-
-const defaultSnackBarPosition = {
-  vertical: "bottom",
-  horizontal: "center",
-};
 
 export const snackbarReducer = (state = initialState.snackbar, action) => {
   switch (action.type) {
@@ -20,20 +14,6 @@ export const snackbarReducer = (state = initialState.snackbar, action) => {
         type: "",
         message: "",
         position: {},
-      };
-    case DELETE_POSTING:
-      return {
-        isOpen: true,
-        type: "success",
-        message: "Posting successfully deleted",
-        position: defaultSnackBarPosition,
-      };
-    case UPDATE_ITEM_DETAIL:
-      return {
-        isOpen: true,
-        type: "success",
-        message: "Posting successfully updated",
-        position: defaultSnackBarPosition,
       };
     case SUCCESS_SNACKBAR:
       return {
@@ -50,6 +30,16 @@ export const snackbarReducer = (state = initialState.snackbar, action) => {
         isOpen: true,
         type: "error",
         message: action.errMessage,
+        position: {
+          vertical: "bottom",
+          horizontal: "center",
+        },
+      };
+    case WARNING_SNACKBAR:
+      return {
+        isOpen: true,
+        type: "warning",
+        message: action.warningMessage,
         position: {
           vertical: "bottom",
           horizontal: "center",

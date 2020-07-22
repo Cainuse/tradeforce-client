@@ -29,10 +29,9 @@ const useStyles = (theme) => ({
 class ItemPage extends React.Component {
   async componentDidMount() {
     const itemId = this.props.location.pathname.split("=")[1];
-    try {
-      await this.props.loadItemDetail(itemId);
-    } catch (e) {
-      this.props.history.push("/PostingNotFound");
+    let response = await this.props.loadItemDetail(itemId);
+    if (response === "error") {
+      this.props.history.push("/OhNo!");
     }
   }
 
@@ -45,7 +44,7 @@ class ItemPage extends React.Component {
     return Object.keys(itemDetail).length !== 0 ? (
       <div>
         <div className={classes.buttonHeader}>
-          <Button onClick={this.redirect}>&lt; Back to Search</Button>
+          <Button onClick={this.redirect}>&lt; Back</Button>
         </div>
         <Container className={classes.root}>
           <ItemDetailContainer itemDetail={itemDetail} />
