@@ -5,6 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { OfferingPreviewList } from "./OfferingPreviewList";
 import ConfirmationDialog from "../ConfirmationDialog";
 import { acceptOffer } from "../../redux/actions/offeringActions";
+import { getAllPendingOffers } from "./OfferingHelpers";
 
 const useStyles = makeStyles((theme) => ({
   allOffersContainer: {
@@ -100,9 +101,9 @@ export const OffersReceived = (props) => {
 
   const renderAllOfferings = () => {
     return activePostings.map((activePosting, index) => {
-      let offerings = activePosting.offerings;
+      let pendingOffers = getAllPendingOffers(activePosting.offerings);
 
-      if (offerings.length > 0) {
+      if (pendingOffers.length > 0) {
         return (
           <React.Fragment key={index}>
             <Grid container key={index} className={classes.postingOffers} spacing={4}>
@@ -112,7 +113,7 @@ export const OffersReceived = (props) => {
                     Posting: {activePosting.title}
                   </Typography>
                   <Typography className={classes.numOffering}>
-                    &nbsp;(Offers: {offerings.length})
+                    &nbsp;(Offers: {pendingOffers.length})
                   </Typography>
                 </Grid>
                 <Grid container item xs={2} justify={"center"}>
@@ -126,7 +127,7 @@ export const OffersReceived = (props) => {
               <Grid container item xs={12} >
                 <Collapse in={index === expanded}>
                   <OfferingPreviewList
-                    offerings={offerings}
+                    pendingOffers={pendingOffers}
                     activePosting={activePosting}
                     fns={{ handleConfirmationOpen, setOfferInfoToActUpon }}
                   />

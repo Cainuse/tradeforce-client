@@ -26,8 +26,8 @@ function AcceptIconButton(props) {
         onMouseLeave={onMouseLeave}
         onMouseEnter={onMouseEnter}
         onClick={() => {
-          handleConfirmationOpen("accept");
           setOfferInfoToActUpon(offerInfo);
+          handleConfirmationOpen("accept");
         }}
       >
         <CheckCircleOutlineIcon className={classes.actionBtnIcon} />

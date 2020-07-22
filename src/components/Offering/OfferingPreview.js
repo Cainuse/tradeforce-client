@@ -37,10 +37,9 @@ const useStyles = makeStyles(() => ({
 export const OfferingPreview = (props) => {
   const dispatch = useDispatch();
   let classes = useStyles();
+
   let { offer, fns, activePosting } = props;
   let { offeredItems } = offer;
-  let defaultImg = require("../../images/default.jpg");
-  let previewImg;
 
   const [offerer, setOfferer] = useState({});
 
@@ -49,6 +48,10 @@ export const OfferingPreview = (props) => {
     offerer: offerer,
     posting: activePosting
   };
+
+  let defaultImg = require("../../images/default.jpg");
+  let previewImg;
+
 
   useEffect(() => {
     let isMounted = true;

@@ -9,7 +9,7 @@ import TabLabel from "./TabLabel";
 import ReviewList from "../Review/ReviewList";
 import ItemPreviewList from "../Item/ItemPreviewList";
 import Button from "@material-ui/core/Button";
-import { calculateTotalNumOffersReceived } from "../Offering/OfferingHelpers";
+import { calculateTotalPendingOffersReceived } from "../Offering/OfferingHelpers";
 import { OffersReceived } from "../Offering/OffersReceived";
 
 const useStyles = (theme) => ({
@@ -81,7 +81,8 @@ class UserDetails extends React.Component {
           />
           {currentUser && userDetail._id === currentUser._id ? (
               <Tab
-                label={<TabLabel value={calculateTotalNumOffersReceived(activePostings)} title={"Offers Received"}/>}
+                label={<TabLabel value={calculateTotalPendingOffersReceived(activePostings)}
+                                 title={"Offers Received"}/>}
                 className={classes.tab}
               />
           ) : null}

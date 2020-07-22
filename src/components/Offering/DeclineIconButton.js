@@ -24,8 +24,8 @@ function DeclineIconButton(props) {
                 onMouseEnter={onMouseEnter}
                 onMouseLeave={onMouseLeave}
                 onClick={() => {
-                  handleConfirmationOpen("decline");
                   setOfferInfoToActUpon(offerInfo);
+                  handleConfirmationOpen("decline");
                 }}
     >
       <HighlightOffIcon className={classes.actionBtnIcon}/>
