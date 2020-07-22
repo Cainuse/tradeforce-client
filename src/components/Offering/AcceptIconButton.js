@@ -33,4 +33,5 @@ function AcceptIconButton(props) {
   );
 }
 
-export default HoverPopoverHOC("Accept Offer.")(AcceptIconButton);
+
+export default HoverPopoverHOC("Accept Offer")(AcceptIconButton);

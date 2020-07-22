@@ -48,15 +48,24 @@ export const OfferingPreview = (props) => {
 
 
   useEffect(() => {
+    let mounted = true;
+
     async function getOfferer() {
       let user = await dispatch(getUserByIdAysnc(offer.userId));
-      setOfferer(user);
-      return user;
+      if (mounted) {
+        setOfferer(user);
+        return user;
+      }
     }
-
     getOfferer();
+
+    return () => {
+      mounted = false;
+    }
   }, [dispatch, offer.userId]);
 
+
+  
   if (offeredItems.length > 0) {
     let firstItem = offeredItems[0];
     previewImg = firstItem.images.length > 0 ? firstItem.images[0] : defaultImg;

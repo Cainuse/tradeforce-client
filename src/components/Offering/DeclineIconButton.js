@@ -29,4 +29,4 @@ function DeclineIconButton(props) {
 }
 
 
-export default HoverPopoverHOC("Decline Offer.")(DeclineIconButton);
+export default HoverPopoverHOC("Decline Offer")(DeclineIconButton);

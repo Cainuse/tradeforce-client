@@ -86,13 +86,7 @@ export const OffersReceived = (props) => {
       if (offerings.length > 0) {
         return (
           <React.Fragment key={index}>
-            {/* {confirmationOpen && selectConfirmationToDisplay()} */}
-            <Grid
-              container
-              key={index}
-              className={classes.postingOffers}
-              spacing={1}
-            >
+            <Grid container key={index} className={classes.postingOffers} spacing={1}>
               <Grid container item xs={12} key={index} justify={"center"}>
                 <Grid item xs={10} className={classes.title}>
                   <Typography className={classes.postingTitle}>
