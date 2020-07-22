@@ -46,6 +46,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: "rgba(255, 255, 255, 0.6)",
   },
   optionsHidden: {
     visibility: "hidden",
