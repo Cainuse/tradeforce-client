@@ -1,7 +1,3 @@
-/* ===== Make Offering Errors ===== */
-export const MAKE_OFFER_AS_UNSIGNED_IN_USER_ERROR =
-  "Please sign in or register before making an offer.";
-
 /* ===== Posting Errors ===== */
 export const ADD_POSTING_ERROR =
   "Something went wrong. Posting was not created";
@@ -59,3 +55,5 @@ export const DECLINE_OFFER_ERROR =
   "Offer could not be declined. Please try again later";
 export const RESCIND_OFFER_ERROR =
   "Offer could not be rescinded. Please try again later";
+export const MAKE_OFFER_AS_UNSIGNED_IN_USER_ERROR =
+  "Please sign in or register before making an offer.";
