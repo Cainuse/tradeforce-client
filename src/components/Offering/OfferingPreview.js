@@ -95,7 +95,7 @@ export const OfferingPreview = (props) => {
             }
           />
         }
-        title={<Link>{`${offerer.userName}`}</Link>}
+        title={`${offerer.userName}`}
         subheader={`has made you an offer of ${offeredItems.length} items`}
       />
       <CardMedia
