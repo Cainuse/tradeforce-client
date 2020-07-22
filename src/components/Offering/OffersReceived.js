@@ -4,6 +4,7 @@ import { Grid, Typography, Link, Collapse } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { OfferingPreviewList } from "./OfferingPreviewList";
 import ConfirmationDialog from "../ConfirmationDialog";
+import { acceptOffer } from "../../redux/actions/offeringActions";
 
 const useStyles = makeStyles((theme) => ({
   allOffersContainer: {
@@ -50,11 +51,12 @@ export const OffersReceived = (props) => {
   };
 
   const handleAcceptOffer = async () => {
-
+    let { offerId } = offerInfoToActUpon;
+    await dispatch(acceptOffer(offerId))
   }
 
   const selectConfirmationToDisplay = () => {
-    let {offerId, offerer, posting} = offerInfoToActUpon;
+    let {offerer, posting} = offerInfoToActUpon;
 
     if (confirmationOpen) {
       switch (confirmationType) {
@@ -62,7 +64,10 @@ export const OffersReceived = (props) => {
           return (
             <ConfirmationDialog
               open={confirmationOpen}
-              submitAction={null}
+              submitAction={ async () => {
+                await handleAcceptOffer();
+                handleConfirmationClose();
+              }}
               submitName={"Accept Offer"}
               dialogMessage={
                 `All other offers for your post "${posting.title}" will be declined. This action cannot be undone.`
@@ -100,7 +105,7 @@ export const OffersReceived = (props) => {
       if (offerings.length > 0) {
         return (
           <React.Fragment key={index}>
-            <Grid container key={index} className={classes.postingOffers} spacing={1}>
+            <Grid container key={index} className={classes.postingOffers} spacing={4}>
               <Grid container item xs={12} key={index} justify={"center"}>
                 <Grid item xs={10} className={classes.title}>
                   <Typography className={classes.postingTitle}>
@@ -118,7 +123,7 @@ export const OffersReceived = (props) => {
                   )}
                 </Grid>
               </Grid>
-              <Grid item xs={12}>
+              <Grid container item xs={12} >
                 <Collapse in={index === expanded}>
                   <OfferingPreviewList
                     offerings={offerings}

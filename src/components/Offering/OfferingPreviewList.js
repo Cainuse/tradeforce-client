@@ -8,10 +8,10 @@ export const OfferingPreviewList = (props) => {
   let { offerings, fns, activePosting } = props;
 
   return (
-    <Grid container alignContent={"center"} justify={"flex-start"}>
+    <Grid container alignContent={"center"} justify={"start"} spacing={2}>
       {offerings.map((offer, index) => {
         return (
-          <Grid item key={index}>
+          <Grid item key={index} >
             <OfferingPreview offer={offer} index={index} fns={fns} activePosting={activePosting}/>
           </Grid>
         );
