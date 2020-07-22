@@ -20,8 +20,8 @@ const loadUserDetails = (action) => {
 };
 
 const updateUserDetails = (state, action) => {
-  if (state._id === action.user._id) {
-    return { ...state, ...action.user };
+  if (state._id === action.userId) {
+    return { ...state, ...action.details };
   }
   return state;
 };
