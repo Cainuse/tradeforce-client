@@ -14,6 +14,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
+
+/**
+ * Code from https://material-ui.com/components/popover/#MouseOverPopover.js
+ * */
+
 export const HoverPopoverHOC = (hoverMessage) => (WrappedComponent) => {
   return function HoverPopoverHOC(props) {
     const classes = useStyles();
