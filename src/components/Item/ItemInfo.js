@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
   detailTitle: {
     fontWeight: 400,
     color: theme.palette.primary.main,
-    fontSize: "1.2rem",
+    fontSize: "1.1rem",
     fontFamily: "Montserrat",
   },
   qtyVal: {
@@ -64,16 +64,17 @@ const useStyles = makeStyles((theme) => ({
 
 function ItemInfo(props) {
   let { itemDetail, currentUser } = props;
-  let { images, quantity, condition, requestedItems, tags } = itemDetail;
+  let {
+    images,
+    quantity,
+    condition,
+    requestedItems,
+    tags,
+    category,
+  } = itemDetail;
   const classes = useStyles();
   const history = useHistory();
   const location = useLocation();
-  // const pathItems = location.pathname.split("/");
-  // const parentPath = location.pathname.substring(
-  //   0,
-  //   location.pathname.lastIndexOf("/")
-  // );
-  // const parentPath = "/" + pathItems[1];
 
   const editPosting = () => {
     history.push(location.pathname + "/edit");
@@ -86,7 +87,13 @@ function ItemInfo(props) {
       openLoginModal,
       displayWarning,
     } = fns;
-    if (currentUser === null) {
+    if (!itemDetail.active) {
+      return (
+        <Button disabled variant="contained">
+          No Longer Available
+        </Button>
+      );
+    } else if (currentUser === null) {
       return (
         <Button
           variant="contained"
@@ -136,6 +143,10 @@ function ItemInfo(props) {
           <Box my={3} width="60%">
             <p className={classes.detailTitle}>
               Quantity: <span className={classes.qtyVal}>{quantity}</span>
+            </p>
+            <p className={classes.detailTitle}>
+              Category:{" "}
+              <span className={classes.qtyVal}>{_.startCase(category)}</span>
             </p>
             <p className={classes.detailTitle}>
               Condition:{" "}
