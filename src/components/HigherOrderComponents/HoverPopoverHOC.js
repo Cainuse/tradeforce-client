@@ -10,6 +10,8 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     padding: theme.spacing(1),
+    background: "rgba(5, 5, 5, 0.7)",
+    color: "white",
   },
 }));
 
