@@ -11,8 +11,13 @@ export const OfferingPreviewList = (props) => {
     <Grid container alignContent={"center"} justify={"flex-start"} spacing={2}>
       {pendingOffers.map((offer, index) => {
         return (
-          <Grid item key={index} >
-            <OfferingPreview offer={offer} index={index} fns={fns} activePosting={activePosting}/>
+          <Grid item key={index}>
+            <OfferingPreview
+              offer={offer}
+              index={index}
+              fns={fns}
+              activePosting={activePosting}
+            />
           </Grid>
         );
       })}

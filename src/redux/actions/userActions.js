@@ -200,7 +200,7 @@ export const authenticateUser = (token) => {
 };
 
 export const getUserByIdAysnc = (userId) => {
-  return async dispatch => {
+  return async (dispatch) => {
     try {
       let response = await axios.get(`${BASE_URL}/${userId}`);
       let user = response.data;
@@ -208,8 +208,8 @@ export const getUserByIdAysnc = (userId) => {
     } catch (e) {
       return dispatch(displayError(e.response.data.message));
     }
-  }
-}
+  };
+};
 
 // Helper functions
 const handleAftermathModalBehaviour = (

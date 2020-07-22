@@ -6,12 +6,12 @@ import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 
 const useStyles = makeStyles(() => ({
   actionBtnIcon: {
-    fontSize: "1.7rem"
+    fontSize: "1.7rem",
   },
   declineBtn: {
     color: "#b90202",
-    borderColor: "#b90202"
-  }
+    borderColor: "#b90202",
+  },
 }));
 
 function DeclineIconButton(props) {
@@ -20,18 +20,18 @@ function DeclineIconButton(props) {
   let { handleConfirmationOpen, setOfferInfoToActUpon } = fns;
 
   return (
-    <IconButton className={classes.declineBtn}
-                onMouseEnter={onMouseEnter}
-                onMouseLeave={onMouseLeave}
-                onClick={() => {
-                  setOfferInfoToActUpon(offerInfo);
-                  handleConfirmationOpen("decline");
-                }}
+    <IconButton
+      className={classes.declineBtn}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      onClick={() => {
+        setOfferInfoToActUpon(offerInfo);
+        handleConfirmationOpen("decline");
+      }}
     >
-      <HighlightOffIcon className={classes.actionBtnIcon}/>
+      <HighlightOffIcon className={classes.actionBtnIcon} />
     </IconButton>
   );
 }
-
 
 export default HoverPopoverHOC("Decline Offer")(DeclineIconButton);

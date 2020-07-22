@@ -40,12 +40,11 @@ export const OffersReceived = (props) => {
   /** offerInfo: {offerId, offerer, posting} */
   let [offerInfoToActUpon, setOfferInfoToActUpon] = useState({});
 
-
   const handleAcceptOffer = async () => {
     let { offerId } = offerInfoToActUpon;
-    await dispatch(acceptOffer(offerId))
+    await dispatch(acceptOffer(offerId));
     handleConfirmationClose();
-  }
+  };
 
   const handleConfirmationOpen = (type) => {
     setConfirmationOpen(true);
@@ -62,14 +61,14 @@ export const OffersReceived = (props) => {
     let { offerId } = offerInfoToActUpon;
     await dispatch(declineOffer(offerId));
     handleConfirmationClose();
-  }
+  };
 
   const handleExpand = (index) => {
     expanded === index ? setExpanded(-1) : setExpanded(index);
   };
 
   const selectConfirmationToDisplay = () => {
-    let {offerer, posting} = offerInfoToActUpon;
+    let { offerer, posting } = offerInfoToActUpon;
 
     if (confirmationOpen) {
       switch (confirmationType) {
@@ -79,9 +78,7 @@ export const OffersReceived = (props) => {
               open={confirmationOpen}
               submitAction={handleAcceptOffer}
               submitName={"Accept Offer"}
-              dialogMessage={
-                `All other offers for your post "${posting.title}" will be declined. This action cannot be undone.`
-              }
+              dialogMessage={`All other offers for your post "${posting.title}" will be declined. This action cannot be undone.`}
               dialogTitle={`Are you sure you want to accept ${offerer.userName}'s offer?`}
               handleClose={handleConfirmationClose}
             />
@@ -111,7 +108,12 @@ export const OffersReceived = (props) => {
       if (pendingOffers.length > 0) {
         return (
           <React.Fragment key={index}>
-            <Grid container key={index} className={classes.postingOffers} spacing={4}>
+            <Grid
+              container
+              key={index}
+              className={classes.postingOffers}
+              spacing={4}
+            >
               <Grid container item xs={12} key={index} justify={"center"}>
                 <Grid item xs={10} className={classes.title}>
                   <Typography className={classes.postingTitle}>
@@ -129,7 +131,7 @@ export const OffersReceived = (props) => {
                   )}
                 </Grid>
               </Grid>
-              <Grid container item xs={12} >
+              <Grid container item xs={12}>
                 <Collapse in={index === expanded}>
                   <OfferingPreviewList
                     pendingOffers={pendingOffers}
