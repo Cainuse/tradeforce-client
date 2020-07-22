@@ -163,6 +163,7 @@ class EditUserProfilePage extends React.Component {
             submitName={"OK"}
             dialogMessage={"Any changes will not be saved"}
             dialogTitle={"Are you sure you want to leave this page?"}
+            handleClose={this.handleConfirmationClose}
           />
         )}
         <div className={classes.buttonHeader}>
