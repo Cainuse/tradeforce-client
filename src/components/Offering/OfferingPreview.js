@@ -1,71 +1,74 @@
 import React, { useEffect, useState } from "react";
 import { getUserByIdAysnc } from "../../redux/actions/userActions";
 import { useDispatch } from "react-redux";
-import { Card, CardActionArea, CardHeader, CardMedia, CardContent, CardActions } from "@material-ui/core";
-import { Link, Button, Grid, IconButton } from "@material-ui/core";
+import { Card, CardHeader, CardMedia, CardContent, CardActions } from "@material-ui/core";
+import { Link, Button, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import UserAvatar from "../User/UserAvatar";
 import defaultProfile from "../../images/placeholder-profile.png";
-import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';import CancelIcon from '@material-ui/icons/Cancel';
-import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import AcceptIconButton from "./AcceptIconButton";
-import { HoverPopoverHOC } from "../HigherOrderComponents/HoverPopoverHOC";
 import DeclineIconButton from "./DeclineIconButton";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   cardRoot: {
-    minWidth: "300px",
+    minWidth: "300px"
   },
   cardContentRoot: {
     "&:last-child": {
-      paddingBottom: "16px",
-    },
+      paddingBottom: "16px"
+    }
   },
   offerHeader: {
     "& .MuiCardHeader-avatar": {
-      marginRight: "10px",
+      marginRight: "10px"
     }
   },
   avatar: {
-    marginRight: "10px",
+    marginRight: "10px"
   },
   previewImg: {
     height: "0",
     paddingTop: "56.25%"
   },
-  detailsBtn: {
-    // padding: "0px",
-  },
+  detailsBtn: {}
 }));
+
+
 export const OfferingPreview = (props) => {
   const dispatch = useDispatch();
-  const [offerer, setOfferer] = useState({});
   let classes = useStyles();
-  let { offer, index, fns } = props;
+  let { offer, fns, activePosting } = props;
   let { offeredItems } = offer;
   let defaultImg = require("../../images/default.jpg");
   let previewImg;
 
+  const [offerer, setOfferer] = useState({});
+
+  let offerInfo = {
+    offerId: offer._id,
+    offerer: offerer,
+    posting: activePosting
+  };
 
   useEffect(() => {
-    let mounted = true;
+    let isMounted = true;
 
     async function getOfferer() {
       let user = await dispatch(getUserByIdAysnc(offer.userId));
-      if (mounted) {
+      if (isMounted) {
         setOfferer(user);
         return user;
       }
     }
+
     getOfferer();
 
     return () => {
-      mounted = false;
-    }
+      isMounted = false;
+    };
   }, [dispatch, offer.userId]);
 
 
-  
   if (offeredItems.length > 0) {
     let firstItem = offeredItems[0];
     previewImg = firstItem.images.length > 0 ? firstItem.images[0] : defaultImg;
@@ -101,16 +104,17 @@ export const OfferingPreview = (props) => {
         <CardActions>
           <Grid container item xs={12} justify={"space-between"}>
             <Grid container item xs={4} alignContent={"center"}>
-              <Button >
+              <Button>
                 Details
               </Button>
             </Grid>
             <Grid container item xs={8} justify={"flex-end"}>
-              <Grid container item xs={4} justify={"flex-end"} >
-                <AcceptIconButton fns={fns}/>
+              <Grid container item xs={4} justify={"flex-end"}>
+                <AcceptIconButton fns={fns}
+                                  offerInfo={offerInfo}/>
               </Grid>
               <Grid container item xs={4} justify={"flex-end"}>
-                <DeclineIconButton fns={fns}/>
+                <DeclineIconButton fns={fns} offerInfo={offerInfo}/>
               </Grid>
             </Grid>
           </Grid>

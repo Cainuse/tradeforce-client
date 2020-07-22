@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { Grid, Typography, Link, Collapse } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { OfferingPreviewList } from "./OfferingPreviewList";
@@ -27,11 +28,15 @@ const useStyles = makeStyles((theme) => ({
 
 export const OffersReceived = (props) => {
   let classes = useStyles();
+  let dispatch = useDispatch();
   let { activePostings } = props;
-  let [expanded, setExpanded] = useState(-1);
 
+  let [expanded, setExpanded] = useState(-1);
   let [confirmationOpen, setConfirmationOpen] = useState(false);
   let [confirmationType, setConfirmationType] = useState("");
+
+  // offerInfo: {offerId, offerer, posting}
+  let [offerInfoToActUpon, setOfferInfoToActUpon] = useState({});
 
   const handleConfirmationOpen = (type) => {
     setConfirmationOpen(true);
@@ -41,9 +46,16 @@ export const OffersReceived = (props) => {
   const handleConfirmationClose = () => {
     setConfirmationOpen(false);
     setConfirmationType("");
+    setOfferInfoToActUpon({});
   };
 
+  const handleAcceptOffer = async () => {
+
+  }
+
   const selectConfirmationToDisplay = () => {
+    let {offerId, offerer, posting} = offerInfoToActUpon;
+
     if (confirmationOpen) {
       switch (confirmationType) {
         case "accept":
@@ -53,9 +65,10 @@ export const OffersReceived = (props) => {
               submitAction={null}
               submitName={"Accept Offer"}
               dialogMessage={
-                "All other offers for this post will be declined. This action cannot be undone."
+                `All other offers for your post "${posting.title}" will be declined. This action cannot be undone.`
               }
-              dialogTitle={"Are you sure you want to accept this offer?"}
+              dialogTitle={`Are you sure you want to accept ${offerer.userName}'s offer?`}
+              handleClose={handleConfirmationClose}
             />
           );
         case "decline":
@@ -65,7 +78,8 @@ export const OffersReceived = (props) => {
               submitAction={null}
               submitName={"Decline Offer"}
               dialogMessage={"This action cannot be undone."}
-              dialogTitle={"Are you sure you want to decline this offer?"}
+              dialogTitle={`Are you sure you want to decline ${offerer.userName}'s offer?`}
+              handleClose={handleConfirmationClose}
             />
           );
         default:
@@ -108,7 +122,8 @@ export const OffersReceived = (props) => {
                 <Collapse in={index === expanded}>
                   <OfferingPreviewList
                     offerings={offerings}
-                    fns={{ handleConfirmationOpen, handleConfirmationClose }}
+                    activePosting={activePosting}
+                    fns={{ handleConfirmationOpen, setOfferInfoToActUpon }}
                   />
                 </Collapse>
               </Grid>
@@ -128,7 +143,7 @@ export const OffersReceived = (props) => {
       alignContent={"flex-start"}
       className={classes.allOffersContainer}
     >
-      {confirmationOpen && selectConfirmationToDisplay()}
+      {selectConfirmationToDisplay()}
       {renderAllOfferings()}
     </Grid>
   );

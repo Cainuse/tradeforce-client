@@ -17,15 +17,18 @@ const useStyles = makeStyles((theme) => ({
 
 function AcceptIconButton(props) {
   let classes = useStyles();
-  let { onMouseEnter, onMouseLeave, fns } = props;
-  let { handleConfirmationOpen } = fns;
+  let { onMouseEnter, onMouseLeave, fns, offerInfo } = props;
+  let { handleConfirmationOpen, setOfferInfoToActUpon } = fns;
   return (
     <React.Fragment>
       <IconButton
         className={classes.acceptBtn}
         onMouseLeave={onMouseLeave}
         onMouseEnter={onMouseEnter}
-        onClick={() => handleConfirmationOpen("accept")}
+        onClick={() => {
+          handleConfirmationOpen("accept");
+          setOfferInfoToActUpon(offerInfo);
+        }}
       >
         <CheckCircleOutlineIcon className={classes.actionBtnIcon} />
       </IconButton>
