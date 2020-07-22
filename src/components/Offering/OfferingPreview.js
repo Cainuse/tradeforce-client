@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { getUserByIdAysnc } from "../../redux/actions/userActions";
 import { useDispatch } from "react-redux";
 import {
   Card,
@@ -8,12 +7,14 @@ import {
   CardContent,
   CardActions,
 } from "@material-ui/core";
-import { Link, Button, Grid } from "@material-ui/core";
+import { Button, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import UserAvatar from "../User/UserAvatar";
 import defaultProfile from "../../images/placeholder-profile.png";
 import AcceptIconButton from "./AcceptIconButton";
 import DeclineIconButton from "./DeclineIconButton";
+import { getUserByIdAysnc } from "../../redux/actions/userActions";
+
 
 const useStyles = makeStyles(() => ({
   cardRoot: {
