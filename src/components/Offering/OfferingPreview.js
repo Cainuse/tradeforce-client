@@ -14,6 +14,7 @@ import defaultProfile from "../../images/placeholder-profile.png";
 import AcceptIconButton from "./AcceptIconButton";
 import DeclineIconButton from "./DeclineIconButton";
 import { getUserByIdAysnc } from "../../redux/actions/userActions";
+import { openOfferDetailsModal } from "../../redux/actions/modalActions";
 
 
 const useStyles = makeStyles(() => ({
@@ -75,6 +76,10 @@ export const OfferingPreview = (props) => {
     };
   }, [dispatch, offer.userId]);
 
+  const handleClickDetails = () => {
+    dispatch(openOfferDetailsModal());
+  }
+
   //set previewImage
   if (offeredItems.length > 0) {
     let firstItem = offeredItems[0];
@@ -109,7 +114,7 @@ export const OfferingPreview = (props) => {
         <CardActions>
           <Grid container item xs={12} justify={"space-between"}>
             <Grid container item xs={4} alignContent={"center"}>
-              <Button>Details</Button>
+              <Button onClick={handleClickDetails}>Details</Button>
             </Grid>
             <Grid container item xs={8} justify={"flex-end"}>
               <Grid container item xs={4} justify={"flex-end"}>
