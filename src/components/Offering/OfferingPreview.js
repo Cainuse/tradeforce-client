@@ -5,7 +5,7 @@ import {
   CardHeader,
   CardMedia,
   CardContent,
-  CardActions,
+  CardActions
 } from "@material-ui/core";
 import { Button, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
@@ -19,25 +19,25 @@ import { openOfferDetailsModal } from "../../redux/actions/modalActions";
 
 const useStyles = makeStyles(() => ({
   cardRoot: {
-    minWidth: "300px",
+    minWidth: "300px"
   },
   cardContentRoot: {
     "&:last-child": {
-      paddingBottom: "16px",
-    },
+      paddingBottom: "16px"
+    }
   },
   offerHeader: {
     "& .MuiCardHeader-avatar": {
-      marginRight: "10px",
-    },
+      marginRight: "10px"
+    }
   },
   avatar: {
-    marginRight: "10px",
+    marginRight: "10px"
   },
   previewImg: {
     height: "0",
-    paddingTop: "56.25%",
-  },
+    paddingTop: "56.25%"
+  }
 }));
 
 export const OfferingPreview = (props) => {
@@ -52,7 +52,7 @@ export const OfferingPreview = (props) => {
   let offerInfo = {
     offerId: offer._id,
     offerer: offerer,
-    posting: activePosting,
+    posting: activePosting
   };
 
   let defaultImg = require("../../images/default.jpg");
@@ -76,9 +76,9 @@ export const OfferingPreview = (props) => {
     };
   }, [dispatch, offer.userId]);
 
-  const handleClickDetails = () => {
-    dispatch(openOfferDetailsModal());
-  }
+  const handleClickDetails = (contentInfo) => {
+    dispatch(openOfferDetailsModal(contentInfo));
+  };
 
   //set previewImage
   if (offeredItems.length > 0) {
@@ -87,6 +87,15 @@ export const OfferingPreview = (props) => {
   } else {
     previewImg = defaultImg;
   }
+
+  //set contentInfo for offeringDetailsModal
+  let contentInfo = {
+    offeringInfo: {
+      offer,
+      offerer
+    },
+    postingInfo: activePosting
+  };
 
   return (
     <Card elevation={2} className={classes.cardRoot}>
@@ -114,14 +123,14 @@ export const OfferingPreview = (props) => {
         <CardActions>
           <Grid container item xs={12} justify={"space-between"}>
             <Grid container item xs={4} alignContent={"center"}>
-              <Button onClick={handleClickDetails}>Details</Button>
+              <Button onClick={() => handleClickDetails(contentInfo)}>Details</Button>
             </Grid>
             <Grid container item xs={8} justify={"flex-end"}>
               <Grid container item xs={4} justify={"flex-end"}>
-                <AcceptIconButton fns={fns} offerInfo={offerInfo} />
+                <AcceptIconButton fns={fns} offerInfo={offerInfo}/>
               </Grid>
               <Grid container item xs={4} justify={"flex-end"}>
-                <DeclineIconButton fns={fns} offerInfo={offerInfo} />
+                <DeclineIconButton fns={fns} offerInfo={offerInfo}/>
               </Grid>
             </Grid>
           </Grid>

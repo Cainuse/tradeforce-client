@@ -1,14 +1,22 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Button, Grid, Paper, Typography } from "@material-ui/core";
 import OfferContents from "../AddOffering/OfferingContents";
 import { makeStyles } from "@material-ui/core/styles";
 
-let useStyles = makeStyles((theme) => ({}));
+let useStyles = makeStyles((theme) => ({
+  paper: {
+    width: "100%",
+  },
+}));
 
 export const OfferingDetails = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const contentInfo = useSelector((state) => {
+    return state.modal.contentInfo;
+  })
+  console.log(contentInfo);
 
   return (
     <Paper className={classes.paper}>

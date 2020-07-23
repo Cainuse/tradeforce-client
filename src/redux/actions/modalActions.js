@@ -18,9 +18,20 @@ export const openOfferModal = () => {
   };
 };
 
-export const openOfferDetailsModal = () => {
+
+/**
+ *   contentInfo = {
+ *      offeringInfo: {
+ *        offer,
+ *        offerer
+ *      },
+ *      postingInfo: activePosting,
+ *   }
+ */
+export const openOfferDetailsModal = (contentInfo) => {
   return {
     type: OPEN_OFFER_DETAILS_MODAL,
+    contentInfo,
   }
 }
 
