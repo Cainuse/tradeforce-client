@@ -6,7 +6,7 @@ import {
   Collapse,
   Grid,
   IconButton,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { makeStyles } from "@material-ui/core/styles";
@@ -15,35 +15,35 @@ import ItemImagesPreview from "../AddOffering/AddItems/ItemImagesPreview";
 
 const useStyles = makeStyles((theme) => ({
   itemContainer: {
-    paddingTop: "6px"
+    paddingTop: "6px",
   },
   itemCard: {
     borderLeftColor: "#346bc2",
     borderLeft: "solid",
     borderWidth: "4px",
-    backgroundColor: "#fafafa"
+    backgroundColor: "#fafafa",
   },
   itemCardOpen: {
     backgroundColor: "#f6f6f6",
     borderLeftColor: "#6AB547",
     borderLeft: "solid",
-    borderWidth: "4px"
+    borderWidth: "4px",
   },
   itemName: {
     "&:last-child": {
-      paddingBottom: "16px"
-    }
+      paddingBottom: "16px",
+    },
   },
   staticLabel: {
     fontWeight: 500,
     textTransform: "capitalize",
-    color: "#274C77"
+    color: "#274C77",
   },
   staticLabelQtyContainer: {
-    paddingLeft: "7.5%"
+    paddingLeft: "7.5%",
   },
   itemInfo: {
-    textTransform: "capitalize"
+    textTransform: "capitalize",
   },
   expandableCard: {
     borderTop: "1px solid lightgrey",
@@ -52,26 +52,26 @@ const useStyles = makeStyles((theme) => ({
   expandIconContainer: {
     display: "inline-grid",
     justifyItems: "center",
-    alignContent: "center"
+    alignContent: "center",
   },
   expand: {
     transform: "rotate(0deg)",
     marginLeft: "auto",
     transition: theme.transitions.create("transform", {
-      duration: theme.transitions.duration.shortest
-    })
+      duration: theme.transitions.duration.shortest,
+    }),
   },
   expandOpen: {
-    transform: "rotate(180deg)"
+    transform: "rotate(180deg)",
   },
   deleteIconContainer: {
     alignSelf: "flex-start",
     marginTop: "3px",
-    marginLeft: "2px"
+    marginLeft: "2px",
   },
   deleteIcon: {
-    color: "#b8061d"
-  }
+    color: "#b8061d",
+  },
 }));
 
 const imageSection = (classes, images) => {
@@ -89,7 +89,7 @@ const imageSection = (classes, images) => {
         <Typography className={classes.staticLabel}>Images:</Typography>
       </Grid>
       <Grid container item xs={12}>
-        <ItemImagesPreview images={images}/>
+        <ItemImagesPreview images={images} />
       </Grid>
     </React.Fragment>
   );
@@ -97,10 +97,9 @@ const imageSection = (classes, images) => {
 
 export const OfferItemList = (props) => {
   let classes = useStyles();
-  let { expandedPanelIdx, items, handleExpand, } = props;
+  let { expandedPanelIdx, items, handleExpand } = props;
 
   return items.map((item, index) => {
-
     let isExpanded = expandedPanelIdx === index;
 
     return (
@@ -163,11 +162,11 @@ export const OfferItemList = (props) => {
                     aria-expanded={isExpanded}
                     aria-label="show more"
                   >
-                    <ExpandMoreIcon/>
+                    <ExpandMoreIcon />
                   </IconButton>
                 </Grid>
 
-                <Collapse in={isExpanded} style={{width: "100%"}}>
+                <Collapse in={isExpanded} style={{ width: "100%" }}>
                   <CardContent className={classes.expandableCard}>
                     <Grid container item xs={12} spacing={3}>
                       <Grid container item xs={6} sm={6}>

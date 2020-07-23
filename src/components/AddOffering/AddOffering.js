@@ -8,10 +8,7 @@ import OfferContents from "./OfferingContents";
 import { makeOffer } from "../../redux/actions/offeringActions";
 import { offeringStatus } from "../constants/OfferingConstants";
 import { closeModal } from "../../redux/actions/modalActions";
-import {
-  displayError,
-  displaySuccess,
-} from "../../redux/actions/snackbarActions";
+import { displayError } from "../../redux/actions/snackbarActions";
 import { ADD_OFFER_MISSING_INFO_ERROR } from "../../redux/constants/snackbarMessageTypes";
 
 const useStyles = (theme) => ({

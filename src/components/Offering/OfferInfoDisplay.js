@@ -5,25 +5,24 @@ import { makeStyles } from "@material-ui/core/styles";
 import { OfferItemList } from "./OfferItemsList";
 
 const useStyles = makeStyles((theme) => ({
-    sectionTitle: {
-      fontWeight: "300",
-      fontSize: "1.3rem"
-    },
-    subSectionContainer: {
-      paddingBottom: "8px"
-    },
-    staticTitle: {
-      color: theme.palette.primary.main,
-      textTransform: "uppercase",
-      fontWeight: 500
-    },
-    offerSection: {
-      paddingTop: "30px"
-    }
-  })
-);
+  sectionTitle: {
+    fontWeight: "300",
+    fontSize: "1.3rem",
+  },
+  subSectionContainer: {
+    paddingBottom: "8px",
+  },
+  staticTitle: {
+    color: theme.palette.primary.main,
+    textTransform: "uppercase",
+    fontWeight: 500,
+  },
+  offerSection: {
+    paddingTop: "30px",
+  },
+}));
 
-export const OfferInfoDisplay = props => {
+export const OfferInfoDisplay = (props) => {
   let { offer } = props;
   let classes = useStyles();
   let items = offer.offeredItems;
@@ -40,20 +39,37 @@ export const OfferInfoDisplay = props => {
         <Typography className={classes.sectionTitle}>Offer:</Typography>
       </Grid>
 
-      <Grid container item xs={12} alignContent={"center"} style={{paddingBottom: "8px"}}>
+      <Grid
+        container
+        item
+        xs={12}
+        alignContent={"center"}
+        style={{ paddingBottom: "8px" }}
+      >
         <Grid container item xs={2}>
-          <Typography className={classes.staticTitle} style={{ marginRight: "4px" }}>Comment:</Typography>
+          <Typography
+            className={classes.staticTitle}
+            style={{ marginRight: "4px" }}
+          >
+            Comment:
+          </Typography>
         </Grid>
         <Grid container item xs={10}>
-          <Typography>{offer.comment === "" ? "N/A" : offer.comment}</Typography>
+          <Typography>
+            {offer.comment === "" ? "N/A" : offer.comment}
+          </Typography>
         </Grid>
       </Grid>
 
-      <Grid container item xs={12}  style={{paddingBottom: "8px"}}>
+      <Grid container item xs={12} style={{ paddingBottom: "8px" }}>
         <Grid container item xs={12}>
           <Grid container item xs={2}>
-            <Typography className={classes.staticTitle}
-                        style={{ marginRight: "4px", paddingBottom: "5px" }}>Items:</Typography>
+            <Typography
+              className={classes.staticTitle}
+              style={{ marginRight: "4px", paddingBottom: "5px" }}
+            >
+              Items:
+            </Typography>
           </Grid>
           {items.length === 0 ? (
             <Grid container item xs={10}>
@@ -71,7 +87,6 @@ export const OfferInfoDisplay = props => {
             />
           </Grid>
         ) : null}
-
       </Grid>
     </Grid>
   );

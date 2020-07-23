@@ -4,18 +4,21 @@ import {
   OPEN_OFFER_MODAL,
   OPEN_POSTING_MODAL,
   OPEN_LOGIN_MODAL,
-  OPEN_REVIEW_MODAL, OPEN_OFFER_DETAILS_MODAL
+  OPEN_REVIEW_MODAL,
+  OPEN_OFFER_DETAILS_MODAL,
 } from "../constants/actionTypes";
 import {
   OFFER_MODAL,
   POSTING_MODAL,
   LOGIN_MODAL,
-  REVIEW_MODAL, OFFER_DETAILS_MODAL
+  REVIEW_MODAL,
+  OFFER_DETAILS_MODAL,
 } from "../constants/modalTypes";
 import {
   ADD_POSTING_BUTTON,
   ADD_REVIEW_BUTTON,
-  MAKE_OFFER_BUTTON, OFFER_DETAILS_BUTTON
+  MAKE_OFFER_BUTTON,
+  OFFER_DETAILS_BUTTON,
 } from "../constants/buttonTypes";
 
 export const modalReducer = (state = initialState.modal, action) => {
@@ -40,7 +43,7 @@ export const modalReducer = (state = initialState.modal, action) => {
         type: OFFER_DETAILS_MODAL,
         openedFrom: OFFER_DETAILS_BUTTON,
         contentInfo: action.contentInfo,
-      }
+      };
     case OPEN_POSTING_MODAL:
       return {
         isOpen: true,

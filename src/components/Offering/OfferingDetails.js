@@ -15,17 +15,17 @@ let useStyles = makeStyles((theme) => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
     outline: "none",
-    position: "relative"
+    position: "relative",
   },
   tabsRoot: {
     marginBottom: "30px",
-    outline: "display"
+    outline: "display",
   },
   modalHeader: {
-    paddingBottom: "10px"
+    paddingBottom: "10px",
   },
   submitBtn: {
-    backgroundColor: "#6ab547"
+    backgroundColor: "#6ab547",
   },
   declineBtn: {
     backgroundColor: "#b90202",
@@ -47,9 +47,10 @@ export const OfferingDetails = () => {
 
   const handleAcceptOffer = async () => {
     let result = window.confirm(
-      `Are you sure you want to accept this offer? \n` + `\n` +
-      `All other offers for your post "${postingInfo.title}" will be declined. This action cannot be undone.`);
-
+      `Are you sure you want to accept this offer? \n` +
+        `\n` +
+        `All other offers for your post "${postingInfo.title}" will be declined. This action cannot be undone.`
+    );
 
     if (result) {
       await dispatch(acceptOffer(offer._id));
@@ -58,43 +59,42 @@ export const OfferingDetails = () => {
   };
 
   const handleDeclineOffer = async () => {
-    let result = window.confirm(`Are you sure you want to decline this offer? This action cannot be undone.`);
+    let result = window.confirm(
+      `Are you sure you want to decline this offer? This action cannot be undone.`
+    );
 
     if (result) {
       await dispatch(declineOffer(offer._id));
       dispatch(closeModal());
     }
-  }
+  };
 
   return (
     <Paper className={classes.paper}>
-
       <Grid container spacing={2}>
-
         <Grid container item xs={12} justify={"center"}>
-          <Typography align="center" variant="h4" className={classes.modalHeader}>
+          <Typography
+            align="center"
+            variant="h4"
+            className={classes.modalHeader}
+          >
             Offer Details
           </Typography>
         </Grid>
 
         <Grid container item xs={12} justify={"center"}>
           <Grid container item xs={12} justify={"center"}>
-            <OffererInfoDisplay offerer={offerer} postingInfo={postingInfo}/>
+            <OffererInfoDisplay offerer={offerer} postingInfo={postingInfo} />
           </Grid>
 
           <Grid container item xs={12} justify={"center"}>
-            <OfferInfoDisplay offer={offer}/>
+            <OfferInfoDisplay offer={offer} />
           </Grid>
         </Grid>
 
-
         <Grid container item xs={12} justify={"space-between"}>
           <Grid item xs={3}>
-            <Button
-              onClick={() => dispatch(closeModal())}
-            >
-              Cancel
-            </Button>
+            <Button onClick={() => dispatch(closeModal())}>Cancel</Button>
           </Grid>
 
           <Grid container item xs={6} justify={"flex-end"} spacing={1}>
@@ -108,7 +108,6 @@ export const OfferingDetails = () => {
               </Button>
             </Grid>
             <Grid container item xs={2} justify={"flex-end"}>
-
               <Button
                 variant={"contained"}
                 onClick={handleDeclineOffer}
@@ -119,7 +118,6 @@ export const OfferingDetails = () => {
             </Grid>
           </Grid>
         </Grid>
-
       </Grid>
     </Paper>
   );

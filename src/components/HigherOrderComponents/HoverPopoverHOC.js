@@ -14,8 +14,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-
 /**
  * Code from https://material-ui.com/components/popover/#MouseOverPopover.js
  * */
