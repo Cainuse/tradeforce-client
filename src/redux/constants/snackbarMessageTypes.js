@@ -1,7 +1,3 @@
-/* ===== Make Offering Errors ===== */
-export const MAKE_OFFER_AS_UNSIGNED_IN_USER_ERROR =
-  "Please sign in or register before making an offer.";
-
 /* ===== Posting Errors ===== */
 export const ADD_POSTING_ERROR =
   "Something went wrong. Posting was not created";
@@ -42,9 +38,22 @@ export const ADD_REVIEW_SUCCESS = "Review was successfully added";
 export const ADD_REVIEW_ERROR =
   "Review could not be saved. Please try again later";
 
-/* ===== Offering Success/Error ===== */
+/* ===== Offering Successes ===== */
 export const ADD_OFFER_SUCCESS = "Offer was successfully made";
+export const ACCEPT_OFFER_SUCCESS = "You accepted this offer successfully.";
+export const DECLINE_OFFER_SUCCESS = "You declined this offer successfully";
+export const RESCIND_OFFER_SUCCESS = "You rescinded your offer successfully";
+
+/* ===== Offering Errors ===== */
 export const ADD_OFFER_ERROR =
   "Offer could not be made. Please try again later";
 export const ADD_OFFER_MISSING_INFO_ERROR =
   "An offer must have either a comment or an item";
+export const ACCEPT_OFFER_ERROR =
+  "Offer could not be accepted. Please try again later";
+export const DECLINE_OFFER_ERROR =
+  "Offer could not be declined. Please try again later";
+export const RESCIND_OFFER_ERROR =
+  "Offer could not be rescinded. Please try again later";
+export const MAKE_OFFER_AS_UNSIGNED_IN_USER_ERROR =
+  "Please sign in or register before making an offer.";

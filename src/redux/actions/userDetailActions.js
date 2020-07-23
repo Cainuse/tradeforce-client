@@ -18,10 +18,11 @@ const loadUserDetailSuccess = (user) => {
   };
 };
 
-const updateUserDetailSuccess = (user) => {
+const updateUserDetailSuccess = (userId, details) => {
   return {
     type: UPDATE_USER_DETAIL,
-    user,
+    userId: userId,
+    details: details,
   };
 };
 
@@ -41,10 +42,11 @@ export const loadUserDetails = ({ userId, currentUserId }) => {
         );
         userDetails.activePostings = activePostingResponse.data;
         userDetails.inactivePostings = inactivePostingResponse.data;
-        userDetails.offersSent =
+        let offersSentResponse =
           currentUserId && userId === currentUserId
             ? await axios.get(`${BASE_URL}/${userId}/offerings/active`)
             : [];
+        userDetails.offersSent = offersSentResponse.data;
         dispatch(loadUserDetailSuccess(userDetails));
         return "success";
       } else {
@@ -64,12 +66,12 @@ export const loadUserDetails = ({ userId, currentUserId }) => {
   };
 };
 
-export const updateUserDetails = () => {
+export const updateUserDetails = (userId, details) => {
   return async (dispatch) => {
     try {
       dispatch(setLoading(true));
-      // api call
-      dispatch(updateUserDetailSuccess());
+      await axios.patch(`${BASE_URL}/${userId}`, details);
+      dispatch(updateUserDetailSuccess(userId, details));
       dispatch(displaySuccess(UPDATE_USER_SUCCESS));
     } catch (e) {
       dispatch(displayError(UPDATE_USER_ERROR));
