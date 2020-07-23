@@ -1,7 +1,9 @@
 import React from "react";
 import { Grid, Typography } from "@material-ui/core";
-import UserAvatar from "../User/UserAvatar";
 import { makeStyles } from "@material-ui/core/styles";
+
+import UserAvatar from "../User/UserAvatar";
+
 
 const useStyles = makeStyles(() => ({
   infoContainer: {

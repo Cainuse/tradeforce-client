@@ -1,8 +1,8 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Grid, Paper, Typography } from "@material-ui/core";
-import OfferContents from "../AddOffering/OfferingContents";
 import { makeStyles } from "@material-ui/core/styles";
+
 import { OffererInfoDisplay } from "./OffererInfoDisplay";
 import { OfferInfoDisplay } from "./OfferInfoDisplay";
 import { closeModal } from "../../redux/actions/modalActions";
@@ -44,9 +44,6 @@ export const OfferingDetails = () => {
   });
   let { offeringInfo, postingInfo } = contentInfo;
   let { offer, offerer } = offeringInfo;
-
-
-  console.log(contentInfo);
 
   const handleAcceptOffer = async () => {
     let result = window.confirm(

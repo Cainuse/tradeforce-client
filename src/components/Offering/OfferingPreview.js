@@ -9,6 +9,7 @@ import {
 } from "@material-ui/core";
 import { Button, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+
 import UserAvatar from "../User/UserAvatar";
 import defaultProfile from "../../images/placeholder-profile.png";
 import AcceptIconButton from "./AcceptIconButton";

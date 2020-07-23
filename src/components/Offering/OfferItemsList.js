@@ -1,3 +1,5 @@
+import React from "react";
+import clsx from "clsx";
 import {
   Card,
   CardContent,
@@ -6,9 +8,7 @@ import {
   IconButton,
   Typography
 } from "@material-ui/core";
-import clsx from "clsx";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 
 import ItemImagesPreview from "../AddOffering/AddItems/ItemImagesPreview";
