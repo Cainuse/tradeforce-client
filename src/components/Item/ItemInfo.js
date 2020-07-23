@@ -129,10 +129,10 @@ function ItemInfo(props) {
 
   return (
     <React.Fragment>
-      <Grid item xs={7}>
+      <Grid item xs={12} md={7}>
         <ImageCarousel images={images} />
       </Grid>
-      <Grid item xs={4}>
+      <Grid item xs={12} md={4}>
         <Grid container alignItems="center" direction="column">
           {chooseButton(currentUser, {
             openOfferingModal: props.openOfferingModal,
