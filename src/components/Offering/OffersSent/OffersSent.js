@@ -43,7 +43,7 @@ export const OffersSent = (props) => {
           submitAction={handleRescindOffer}
           submitName={"Rescind Offer"}
           dialogMessage={`This action cannot be undone.`}
-          dialogTitle={`Are you sure you want to rescind your offer` +
+          dialogTitle={`Are you sure you want to rescind your offer ` +
           `on ${postingOwner.userName}'s posting "${posting.title}"?`}
           handleClose={handleConfirmationClose}
         />

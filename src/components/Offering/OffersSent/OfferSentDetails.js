@@ -16,28 +16,28 @@ let useStyles = makeStyles((theme) => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
     outline: "none",
-    position: "relative",
+    position: "relative"
   },
   tabsRoot: {
     marginBottom: "30px",
-    outline: "display",
+    outline: "display"
   },
   modalHeader: {
-    paddingBottom: "10px",
+    paddingBottom: "10px"
   },
   submitBtn: {
-    backgroundColor: "#6ab547",
+    backgroundColor: "#6ab547"
   },
   declineBtn: {
     backgroundColor: "#b90202",
     color: "white",
     "&:hover": {
-      backgroundColor: "#a00202",
-    },
+      backgroundColor: "#a00202"
+    }
   },
   postingTitle: {
-    color: theme.palette.primary.main,
-  },
+    color: theme.palette.primary.main
+  }
 
 }));
 
@@ -83,36 +83,38 @@ export const OfferSentDetails = () => {
           </Typography>
         </Grid>
 
-        <Grid container item xs={12} alignContent={"center"} >
-          <Typography style={{paddingRight: "4px"}}>You have made an offer on the posting</Typography>
+        <Grid container item xs={12} alignContent={"center"}>
+          <Typography style={{ paddingRight: "4px" }}>You have made an offer on the posting</Typography>
           <Typography className={classes.postingTitle}>
-            <Link>&quot;{posting.title}&quot;</Link>
+            <Link href={`/items/item=${posting._id}`}>
+              &quot;{posting.title}&quot;
+            </Link>
           </Typography>
         </Grid>
 
         <Grid container item xs={12} justify={"center"}>
           <Grid container item xs={12} justify={"center"}>
-            <PostingSummary postingInfo={{postingOwner, posting}}/>
+            <PostingSummary postingInfo={{ postingOwner, posting }}/>
           </Grid>
 
-          <Grid container item xs={12} justify={"center"} style={{paddingTop: "40px"}}>
-            <OfferInfoDisplay offer={offer} sectionTitle={"Your Offer:"} />
+          <Grid container item xs={12} justify={"center"} style={{ paddingTop: "40px" }}>
+            <OfferInfoDisplay offer={offer} sectionTitle={"Your Offer:"}/>
           </Grid>
         </Grid>
 
         <Grid container item xs={12} justify={"space-between"}>
           <Grid item xs={3}>
-            <Button onClick={() => dispatch(closeModal())}>Cancel</Button>
+            <Button onClick={() => dispatch(closeModal())}>Close</Button>
           </Grid>
 
           <Grid container item xs={6} justify={"flex-end"}>
-              <Button
-                variant={"contained"}
-                color={"primary"}
-                onClick={handleRescindOffer}
-              >
-                Rescind
-              </Button>
+            <Button
+              variant={"contained"}
+              color={"primary"}
+              onClick={handleRescindOffer}
+            >
+              Rescind
+            </Button>
           </Grid>
         </Grid>
       </Grid>
