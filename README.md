@@ -4,8 +4,7 @@ Tradeforce is a webapp designed to connect community members together to facilit
 
 ### Project Description:
 
-Tradeforce is a webapp designed to connect members of the community with each other and facilitate the direct exchange of items in a barter-like system.
-The app will store information related to physical items such as size, weight, condition.
+The app will store information related to physical items such as quantity, category, condition.
 Likewise, the app will support the upload of an image file of the object that the user wishes to put up for exchange.
 The app will also support the ability for users to create and manage their own accounts/profiles by storing basic user information.
 
