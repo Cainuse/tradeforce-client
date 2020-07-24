@@ -191,7 +191,7 @@ export const ItemListSection = (props) => {
                           <Typography className={classes.staticLabel}>
                             Description:&nbsp;
                           </Typography>
-                          <Typography className={classes.itemInfo}>
+                          <Typography className={classes.itemInfoDescription}>
                             {item.description}
                           </Typography>
                         </Grid>
