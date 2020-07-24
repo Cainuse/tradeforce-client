@@ -199,15 +199,13 @@ export const authenticateUser = (token) => {
   };
 };
 
-export const getUserByIdAysnc = (userId) => {
-  return async (dispatch) => {
-    try {
-      let response = await axios.get(`${BASE_URL}/${userId}`);
-      let user = response.data;
-      return user;
-    } catch (e) {
-      return dispatch(displayError(e.response.data.message));
-    }
+export const getUserByIdAsync = (userId, cancelToken) => {
+  let newCancelToken = cancelToken === undefined ? null : cancelToken;
+
+  return async () => {
+    let response = await axios.get(`${BASE_URL}/${userId}`, newCancelToken);
+    let user = response.data;
+    return user;
   };
 };
 
