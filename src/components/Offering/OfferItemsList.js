@@ -45,9 +45,9 @@ const useStyles = makeStyles((theme) => ({
   itemInfo: {
     textTransform: "capitalize",
   },
+  itemInfoDescription: {},
   expandableCard: {
     borderTop: "1px solid lightgrey",
-    width: "100%",
   },
   expandIconContainer: {
     display: "inline-grid",
@@ -85,10 +85,10 @@ const imageSection = (classes, images) => {
   }
   return (
     <React.Fragment>
-      <Grid container item xs={12}>
+      <Grid container item xs={12} >
         <Typography className={classes.staticLabel}>Images:</Typography>
       </Grid>
-      <Grid container item xs={12}>
+      <Grid container item xs={12} justify={"center"}>
         <ItemImagesPreview images={images} />
       </Grid>
     </React.Fragment>
@@ -189,7 +189,7 @@ export const OfferItemList = (props) => {
                         <Typography className={classes.staticLabel}>
                           Description:&nbsp;
                         </Typography>
-                        <Typography className={classes.itemInfo}>
+                        <Typography className={classes.itemInfoDescription}>
                           {item.description}
                         </Typography>
                       </Grid>

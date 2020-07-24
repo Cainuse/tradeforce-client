@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import moment from "moment";
+
 import { Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -37,6 +39,28 @@ export const OfferInfoDisplay = (props) => {
     <Grid container item xs={12} spacing={1} className={classes.offerSection}>
       <Grid container item xs={12} justify={"center"}>
         <Typography className={classes.sectionTitle}>Offer:</Typography>
+      </Grid>
+
+      <Grid
+        container
+        item
+        xs={12}
+        alignContent={"center"}
+        style={{ paddingBottom: "8px" }}
+      >
+        <Grid container item xs={2}>
+          <Typography
+            className={classes.staticTitle}
+            style={{ marginRight: "4px" }}
+          >
+            DATE:
+          </Typography>
+        </Grid>
+        <Grid container item xs={10}>
+          <Typography>
+            {moment(offer.date).format('MMMM Do YYYY')}
+          </Typography>
+        </Grid>
       </Grid>
 
       <Grid
