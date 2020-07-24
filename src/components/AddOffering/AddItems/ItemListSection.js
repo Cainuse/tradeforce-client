@@ -46,6 +46,9 @@ const useStyles = makeStyles((theme) => ({
   itemInfo: {
     textTransform: "capitalize",
   },
+  itemInfoDescription: {
+    // textTransform: "capitalize",
+  },
   expandableCard: {
     borderTop: "1px solid lightgrey",
   },
