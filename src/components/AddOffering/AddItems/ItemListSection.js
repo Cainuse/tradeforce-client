@@ -46,9 +46,7 @@ const useStyles = makeStyles((theme) => ({
   itemInfo: {
     textTransform: "capitalize",
   },
-  itemInfoDescription: {
-    // textTransform: "capitalize",
-  },
+  itemInfoDescription: { },
   expandableCard: {
     borderTop: "1px solid lightgrey",
   },
@@ -92,7 +90,6 @@ const imageSection = (classes, images) => {
         <Typography className={classes.staticLabel}>Images:</Typography>
       </Grid>
       <Grid container item xs={12}>
-        {/*<ImageCarousel images={images}/>*/}
         <ItemImagesPreview images={images} />
       </Grid>
     </React.Fragment>
