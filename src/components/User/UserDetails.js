@@ -11,6 +11,7 @@ import ItemPreviewList from "../Item/ItemPreviewList";
 import Button from "@material-ui/core/Button";
 import { calculateTotalPendingOffersReceived } from "../Offering/OfferingHelpers";
 import { OffersReceived } from "../Offering/OffersReceived";
+import { OffersSent } from "../Offering/OffersSent";
 
 const useStyles = (theme) => ({
   root: {
@@ -123,6 +124,9 @@ class UserDetails extends React.Component {
         </TabPanel>
         <TabPanel value={this.state.value} index={3}>
           <OffersReceived activePostings={activePostings} />
+        </TabPanel>
+        <TabPanel value={this.state.value} index={4}>
+          <OffersSent currentUser={currentUser} offersSent={offersSent} />
         </TabPanel>
       </Paper>
     );
