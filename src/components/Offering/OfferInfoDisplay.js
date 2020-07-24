@@ -25,9 +25,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const OfferInfoDisplay = (props) => {
-  let { offer } = props;
+  let { offer, sectionTitle } = props;
   let classes = useStyles();
   let items = offer.offeredItems;
+  let newSectionTitle = sectionTitle === undefined ? "Offer:" : sectionTitle;
 
   let [expanded, setExpanded] = useState(-1);
 
@@ -38,7 +39,7 @@ export const OfferInfoDisplay = (props) => {
   return (
     <Grid container item xs={12} spacing={1} className={classes.offerSection}>
       <Grid container item xs={12} justify={"center"}>
-        <Typography className={classes.sectionTitle}>Offer:</Typography>
+        <Typography className={classes.sectionTitle}>{newSectionTitle}</Typography>
       </Grid>
 
       <Grid

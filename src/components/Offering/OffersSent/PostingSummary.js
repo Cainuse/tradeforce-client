@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid, Typography, Avatar } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-
+import moment from "moment";
 
 
 let useStyles = makeStyles((theme) => ({
@@ -31,7 +31,19 @@ let useStyles = makeStyles((theme) => ({
     }
   },
   postingPreviewImg: {
-    width: "200px",
+    width: "300px",
+    height: "100%"
+  },
+  sectionTitle: {
+    fontWeight: "300",
+    fontSize: "1.3rem",
+    paddingBottom: "16px",
+    paddingTop: "16px",
+  },
+  staticTitle: {
+    color: theme.palette.primary.main,
+    textTransform: "uppercase",
+    fontWeight: 500
   }
 }));
 
@@ -39,7 +51,6 @@ export const PostingSummary = (props) => {
   const classes = useStyles();
   let { postingInfo } = props;
   let { postingOwner, posting } = postingInfo;
-  console.log(posting);
   let { images } = posting;
 
   let previewImg =
@@ -54,36 +65,108 @@ export const PostingSummary = (props) => {
         alignContent={"center"}
         className={classes.infoContainer}
       >
+
+        <Grid container item xs={12} justify={"center"}>
+          <Typography className={classes.sectionTitle}>Posting Summary:</Typography>
+        </Grid>
+
         <Grid container item xs={12} alignContent={"center"}>
-          <Grid container item xs={1}>
+          <Grid container item xs={5} >
             <Avatar variant={"square"} src={previewImg} className={classes.postingPreviewImg}/>
           </Grid>
 
-          {/*<Grid container item xs={11} className={classes.userInfoContainer}>*/}
-          {/*  <Grid container item xs={12}>*/}
-          {/*    <Typography*/}
-          {/*      className={classes.userInfo}*/}
-          {/*      style={{ marginRight: "4px" }}*/}
-          {/*    >*/}
-          {/*      {offerer.userName}*/}
-          {/*    </Typography>*/}
-          {/*    <Typography className={classes.text}>*/}
-          {/*      has made an offer on your posting &quot;{postingInfo.title}*/}
-          {/*      &quot;.*/}
-          {/*    </Typography>*/}
-          {/*  </Grid>*/}
-          {/*  <Grid container item xs={12} alignContent={"center"}>*/}
-          {/*    <Typography style={{ marginRight: "4px" }}>*/}
-          {/*      You can contact them at*/}
-          {/*    </Typography>*/}
-          {/*    <Typography*/}
-          {/*      className={classes.userInfo}*/}
-          {/*      style={{ color: "#1D588F" }}*/}
-          {/*    >*/}
-          {/*      {offerer.email}*/}
-          {/*    </Typography>*/}
-          {/*  </Grid>*/}
-          {/*</Grid>*/}
+          <Grid container item xs={7} className={classes.userInfoContainer} alignContent={"center"}>
+            <Grid container item xs={12}>
+
+              <Grid container item xs={4}>
+                <Typography
+                  className={classes.staticTitle}
+                  style={{ marginRight: "4px" }}
+                >
+                  Title:
+                </Typography>
+              </Grid>
+              <Grid container item xs={8}>
+                <Typography>
+                  {posting.title}
+                </Typography>
+              </Grid>
+
+              <Grid container item xs={4}>
+                <Typography
+                  className={classes.staticTitle}
+                  style={{ marginRight: "4px" }}
+                >
+                  Owner:
+                </Typography>
+              </Grid>
+              <Grid container item xs={8}>
+                <Typography>
+                  {postingOwner.userName}
+                </Typography>
+              </Grid>
+
+
+              <Grid container item xs={4}>
+                <Typography
+                  className={classes.staticTitle}
+                  style={{ marginRight: "4px" }}
+                >
+                  Date:
+                </Typography>
+              </Grid>
+              <Grid container item xs={8}>
+                <Typography>
+                  {moment(posting.date).format("MMMM Do YYYY")}
+                </Typography>
+              </Grid>
+
+              <Grid container item xs={4}>
+                <Typography
+                  className={classes.staticTitle}
+                  style={{ marginRight: "4px" }}
+                >
+                  Qty:
+                </Typography>
+              </Grid>
+              <Grid container item xs={8}>
+                <Typography>
+                  {posting.quantity}
+                </Typography>
+              </Grid>
+
+              <Grid container item xs={4}>
+                <Typography
+                  className={classes.staticTitle}
+                  style={{ marginRight: "4px" }}
+                >
+                  Condition:
+                </Typography>
+              </Grid>
+              <Grid container item xs={8}>
+                <Typography>
+                  {posting.condition}
+                </Typography>
+              </Grid>
+
+              <Grid container item xs={4}>
+                <Typography
+                  className={classes.staticTitle}
+                  style={{ marginRight: "4px" }}
+                >
+                  Description:
+                </Typography>
+              </Grid>
+              <Grid container item xs={8}>
+                <Typography>
+                  {posting.description}
+                </Typography>
+              </Grid>
+
+            </Grid>
+
+
+          </Grid>
         </Grid>
       </Grid>
     </Grid>

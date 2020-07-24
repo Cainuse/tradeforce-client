@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Grid, Paper, Typography } from "@material-ui/core";
+import { Button, Grid, Paper, Typography, Link } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 import { OffererInfoDisplay } from "../OffersReceived/OffererInfoDisplay";
@@ -35,6 +35,10 @@ let useStyles = makeStyles((theme) => ({
       backgroundColor: "#a00202",
     },
   },
+  postingTitle: {
+    color: theme.palette.primary.main,
+  },
+
 }));
 
 
@@ -79,14 +83,20 @@ export const OfferSentDetails = () => {
           </Typography>
         </Grid>
 
+        <Grid container item xs={12} alignContent={"center"} >
+          <Typography style={{paddingRight: "4px"}}>You have made an offer on the posting</Typography>
+          <Typography className={classes.postingTitle}>
+            <Link>&quot;{posting.title}&quot;</Link>
+          </Typography>
+        </Grid>
+
         <Grid container item xs={12} justify={"center"}>
           <Grid container item xs={12} justify={"center"}>
-            {/*<OffererInfoDisplay offerer={offerer} postingInfo={postingInfo} />*/}
             <PostingSummary postingInfo={{postingOwner, posting}}/>
           </Grid>
 
-          <Grid container item xs={12} justify={"center"}>
-            <OfferInfoDisplay offer={offer} />
+          <Grid container item xs={12} justify={"center"} style={{paddingTop: "40px"}}>
+            <OfferInfoDisplay offer={offer} sectionTitle={"Your Offer:"} />
           </Grid>
         </Grid>
 
@@ -95,7 +105,7 @@ export const OfferSentDetails = () => {
             <Button onClick={() => dispatch(closeModal())}>Cancel</Button>
           </Grid>
 
-          <Grid container item xs={6} justify={"flex-end"} spacing={1}>
+          <Grid container item xs={6} justify={"flex-end"}>
               <Button
                 variant={"contained"}
                 color={"primary"}
