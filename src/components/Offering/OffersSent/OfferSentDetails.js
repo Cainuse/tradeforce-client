@@ -3,10 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button, Grid, Paper, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
-import { OffererInfoDisplay } from "./OffererInfoDisplay";
+import { OffererInfoDisplay } from "../OffersReceived/OffererInfoDisplay";
 import { OfferInfoDisplay } from "../OfferInfoDisplay";
 import { closeModal } from "../../../redux/actions/modalActions";
-import { acceptOffer, declineOffer } from "../../../redux/actions/offeringActions";
+import { rescindOffer } from "../../../redux/actions/offeringActions";
+import { PostingSummary } from "./PostingSummary";
 
 let useStyles = makeStyles((theme) => ({
   paper: {
@@ -36,35 +37,31 @@ let useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const OfferingDetails = () => {
+
+/**
+ * Structure of contentInfo
+ *
+ * contentInfo: { offer, posting, postingOwner }
+ *
+ **/
+export const OfferSentDetails = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const contentInfo = useSelector((state) => {
     return state.modal.contentInfo;
   });
-  let { offeringInfo, postingInfo } = contentInfo;
-  let { offer, offerer } = offeringInfo;
 
-  const handleAcceptOffer = async () => {
+  let { offer, posting, postingOwner } = contentInfo;
+
+  const handleRescindOffer = async () => {
     let result = window.confirm(
-      `Are you sure you want to accept this offer? \n` +
-        `\n` +
-        `All other offers for your post "${postingInfo.title}" will be declined. This action cannot be undone.`
+      `Are you sure you want to rescind your offer? \n` +
+      `\n` +
+      `This action cannot be undone.`
     );
 
     if (result) {
-      await dispatch(acceptOffer(offer._id));
-      dispatch(closeModal());
-    }
-  };
-
-  const handleDeclineOffer = async () => {
-    let result = window.confirm(
-      `Are you sure you want to decline this offer? This action cannot be undone.`
-    );
-
-    if (result) {
-      await dispatch(declineOffer(offer._id));
+      await dispatch(rescindOffer(offer._id));
       dispatch(closeModal());
     }
   };
@@ -78,13 +75,14 @@ export const OfferingDetails = () => {
             variant="h4"
             className={classes.modalHeader}
           >
-            Offer Details
+            Offer Sent Details
           </Typography>
         </Grid>
 
         <Grid container item xs={12} justify={"center"}>
           <Grid container item xs={12} justify={"center"}>
-            <OffererInfoDisplay offerer={offerer} postingInfo={postingInfo} />
+            {/*<OffererInfoDisplay offerer={offerer} postingInfo={postingInfo} />*/}
+            <PostingSummary postingInfo={{postingOwner, posting}}/>
           </Grid>
 
           <Grid container item xs={12} justify={"center"}>
@@ -98,24 +96,13 @@ export const OfferingDetails = () => {
           </Grid>
 
           <Grid container item xs={6} justify={"flex-end"} spacing={1}>
-            <Grid container item xs={2} justify={"flex-end"}>
               <Button
                 variant={"contained"}
                 color={"primary"}
-                onClick={handleAcceptOffer}
+                onClick={handleRescindOffer}
               >
-                Accept
+                Rescind
               </Button>
-            </Grid>
-            <Grid container item xs={2} justify={"flex-end"}>
-              <Button
-                variant={"contained"}
-                onClick={handleDeclineOffer}
-                className={classes.declineBtn}
-              >
-                Decline
-              </Button>
-            </Grid>
           </Grid>
         </Grid>
       </Grid>

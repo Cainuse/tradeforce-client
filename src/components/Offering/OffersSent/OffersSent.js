@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Grid } from "@material-ui/core";
+
 import { OfferSentPreviewCard } from "./OfferSentPreviewCard";
 import ConfirmationDialog from "../../ConfirmationDialog";
 import { rescindOffer } from "../../../redux/actions/offeringActions";
+
+
 
 export const OffersSent = (props) => {
   const dispatch = useDispatch();
@@ -34,7 +37,6 @@ export const OffersSent = (props) => {
     let { posting, postingOwner } = offerInfoToActUpon;
 
     if (confirmationOpen) {
-      console.log("yup");
       return (
         <ConfirmationDialog
           open={confirmationOpen}
@@ -59,7 +61,10 @@ export const OffersSent = (props) => {
             <OfferSentPreviewCard
               currentUser={currentUser}
               offer={offer}
-              fns={{ setOfferInfoToActUpon, handleConfirmationOpen }}
+              fns={{
+                setOfferInfoToActUpon,
+                handleConfirmationOpen
+              }}
             />
           </Grid>
         );

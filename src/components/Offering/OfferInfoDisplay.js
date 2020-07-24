@@ -4,7 +4,7 @@ import moment from "moment";
 import { Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
-import { OfferItemList } from "./OfferItemsList";
+import { OfferItemList } from "./OffersReceived/OfferItemsList";
 
 const useStyles = makeStyles((theme) => ({
   sectionTitle: {

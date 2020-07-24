@@ -10,16 +10,14 @@ import {
 } from "@material-ui/core";
 import {
   Button,
-  IconButton,
   Grid,
   Typography
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import RotateLeftIcon from "@material-ui/icons/RotateLeft";
 
 import UserAvatar from "../../User/UserAvatar";
 import defaultProfile from "../../../images/placeholder-profile.png";
-import { openOfferDetailsModal } from "../../../redux/actions/modalActions";
+import { openOfferSentDetailsModal } from "../../../redux/actions/modalActions";
 import { getPostingByIdAsync } from "../../../redux/actions/postingActions";
 import { getUserByIdAsync } from "../../../redux/actions/userActions";
 import RescindIconButton from "./RescindIconButton";
@@ -111,17 +109,18 @@ export const OfferSentPreviewCard = (props) => {
   /**
    * set offerInfo
    *
-   * offerInfo: { offerId, posting, postingOwner }
+   * offerInfo: { offer, posting, postingOwner }
    *
    **/
   let offerInfo = {
-    offerId: offer._id,
+    offer,
     posting,
     postingOwner,
   }
 
   const handleClickDetails = (contentInfo) => {
-    dispatch(openOfferDetailsModal(contentInfo));
+    console.log(contentInfo);
+    dispatch(openOfferSentDetailsModal(contentInfo));
   };
 
   return (
@@ -158,14 +157,11 @@ export const OfferSentPreviewCard = (props) => {
         <CardActions>
           <Grid container item xs={12} justify={"space-between"}>
             <Grid container item xs={6} alignContent={"center"}>
-              <Button onClick={null}>
+              <Button onClick={() => handleClickDetails(offerInfo)}>
                 Details
               </Button>
             </Grid>
             <Grid container item xs={6} justify={"flex-end"}>
-              {/*<IconButton onClick={null}>*/}
-              {/*  <RotateLeftIcon className={classes.rescindIcon}/>*/}
-              {/*</IconButton>*/}
               <RescindIconButton
                 offerInfo={offerInfo}
                 fns={fns}
