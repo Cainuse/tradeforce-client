@@ -39,7 +39,6 @@ let useStyles = makeStyles((theme) => ({
   },
 }));
 
-
 export const OfferSentDetails = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -104,9 +103,7 @@ export const OfferSentDetails = () => {
 
         <Grid container item xs={12} justify={"space-between"}>
           <Grid item xs={3}>
-            <Button onClick={() => dispatch(closeModal())}>
-              Close
-            </Button>
+            <Button onClick={() => dispatch(closeModal())}>Close</Button>
           </Grid>
 
           <Grid container item xs={6} justify={"flex-end"}>
