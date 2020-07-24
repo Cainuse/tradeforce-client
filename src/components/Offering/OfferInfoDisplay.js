@@ -57,9 +57,7 @@ export const OfferInfoDisplay = (props) => {
           </Typography>
         </Grid>
         <Grid container item xs={10}>
-          <Typography>
-            {moment(offer.date).format('MMMM Do YYYY')}
-          </Typography>
+          <Typography>{moment(offer.date).format("MMMM Do YYYY")}</Typography>
         </Grid>
       </Grid>
 

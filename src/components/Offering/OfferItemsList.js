@@ -85,7 +85,7 @@ const imageSection = (classes, images) => {
   }
   return (
     <React.Fragment>
-      <Grid container item xs={12} >
+      <Grid container item xs={12}>
         <Typography className={classes.staticLabel}>Images:</Typography>
       </Grid>
       <Grid container item xs={12} justify={"center"}>
