@@ -4,12 +4,12 @@ import {
   SET_USER,
   UNSET_USER,
   IS_USER_FETCHING,
-  IS_USER_FAILED
+  IS_USER_FAILED,
 } from "../constants/actionTypes";
 import {
   USER_REGISTRATION_SUCCESS,
   GOOGLE_LOGIN_SUCCESS,
-  USER_LOGIN_SUCCESS
+  USER_LOGIN_SUCCESS,
 } from "../constants/snackbarMessageTypes";
 import { displayError, displaySuccess } from "./snackbarActions";
 import { closeModal, openOfferModal } from "./modalActions";
@@ -20,25 +20,25 @@ const BASE_URL = `${process.env.REACT_APP_BASE_URL}/users`;
 export const setUser = (user) => {
   return {
     type: SET_USER,
-    user
+    user,
   };
 };
 
 export const unsetUser = () => {
   return {
-    type: UNSET_USER
+    type: UNSET_USER,
   };
 };
 
 export const isUserFetching = () => {
   return {
-    type: IS_USER_FETCHING
+    type: IS_USER_FETCHING,
   };
 };
 
 export const isUserFailed = () => {
   return {
-    type: IS_USER_FAILED
+    type: IS_USER_FAILED,
   };
 };
 
@@ -51,7 +51,7 @@ export const registerUserAsync = (user, openedFrom, postingOwnerId) => {
     postalCode,
     dateRegistered,
     password,
-    isGoogleUser
+    isGoogleUser,
   } = user;
 
   return async (dispatch) => {
@@ -65,7 +65,7 @@ export const registerUserAsync = (user, openedFrom, postingOwnerId) => {
         postalCode,
         dateRegistered,
         password,
-        isGoogleUser
+        isGoogleUser,
       });
       const respData = createUserResp.data;
 
@@ -80,7 +80,7 @@ export const registerUserAsync = (user, openedFrom, postingOwnerId) => {
           email: respData.user.email,
           postalCode: "None",
           dateRegistered: respData.user.dateRegistered,
-          isGoogleUser: respData.user.isGoogleUser
+          isGoogleUser: respData.user.isGoogleUser,
         })
       );
       handleAftermathModalBehaviour(
@@ -125,7 +125,7 @@ export const loginUserAsync = (
             postalCode: "None",
             dateRegistered: googleInfo.dateRegistered,
             password: password,
-            isGoogleUser: true
+            isGoogleUser: true,
           })
         );
       }
@@ -138,7 +138,7 @@ export const loginUserAsync = (
       const authUserResp = await axios.post(`${BASE_URL}/login`, {
         email,
         password,
-        isGoogleLogin: user.data.isGoogleUser
+        isGoogleLogin: user.data.isGoogleUser,
       });
       const respData = authUserResp.data;
 
@@ -153,7 +153,7 @@ export const loginUserAsync = (
           email: respData.user.email,
           postalCode: "None",
           dateRegistered: respData.user.dateRegistered,
-          isGoogleUser: respData.user.isGoogleUser
+          isGoogleUser: respData.user.isGoogleUser,
         })
       );
       handleAftermathModalBehaviour(
@@ -175,8 +175,8 @@ export const authenticateUser = (token) => {
     try {
       let config = {
         headers: {
-          "auth-token": token
-        }
+          "auth-token": token,
+        },
       };
       const resp = await axios.post(`${BASE_URL}/authenticate`, {}, config);
       const user = resp.data;
@@ -189,7 +189,7 @@ export const authenticateUser = (token) => {
           email: user.email,
           postalCode: "None",
           dateRegistered: user.dateRegistered,
-          isGoogleUser: user.isGoogleUser
+          isGoogleUser: user.isGoogleUser,
         })
       );
     } catch (err) {

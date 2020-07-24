@@ -6,7 +6,7 @@ import {
   CardHeader,
   CardMedia,
   CardContent,
-  CardActions
+  CardActions,
 } from "@material-ui/core";
 import { Button, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
@@ -20,25 +20,25 @@ import { openOfferDetailsModal } from "../../redux/actions/modalActions";
 
 const useStyles = makeStyles(() => ({
   cardRoot: {
-    minWidth: "300px"
+    minWidth: "300px",
   },
   cardContentRoot: {
     "&:last-child": {
-      paddingBottom: "16px"
-    }
+      paddingBottom: "16px",
+    },
   },
   offerHeader: {
     "& .MuiCardHeader-avatar": {
-      marginRight: "10px"
-    }
+      marginRight: "10px",
+    },
   },
   avatar: {
-    marginRight: "10px"
+    marginRight: "10px",
   },
   previewImg: {
     height: "0",
-    paddingTop: "56.25%"
-  }
+    paddingTop: "56.25%",
+  },
 }));
 
 export const OfferingPreview = (props) => {
@@ -53,40 +53,35 @@ export const OfferingPreview = (props) => {
   let offerInfo = {
     offerId: offer._id,
     offerer: offerer,
-    posting: activePosting
+    posting: activePosting,
   };
 
   let defaultImg = require("../../images/default.jpg");
   let previewImg;
 
   useEffect(() => {
-      // let isMounted = true;
-      let source = Axios.CancelToken.source();
-      let cancelToken = { cancelToken: source.token };
+    let source = Axios.CancelToken.source();
+    let cancelToken = { cancelToken: source.token };
 
-      async function getOfferer() {
-        try {
-          let user = await dispatch(getUserByIdAsync(offer.userId, cancelToken));
-          setOfferer(user);
-        } catch (e) {
-          if (Axios.isCancel(e)) {
-            //do nothing
-          } else {
-            console.log(e);
-          }
+    async function getOfferer() {
+      try {
+        let user = await dispatch(getUserByIdAsync(offer.userId, cancelToken));
+        setOfferer(user);
+      } catch (e) {
+        if (Axios.isCancel(e)) {
+          //do nothing
+        } else {
+          console.log(e);
         }
       }
+    }
 
+    getOfferer();
 
-      getOfferer();
-
-      return () => {
-        // isMounted = false;
-        source.cancel("component Offering Preview was dismounted");
-      };
-    },
-    [dispatch, offer.userId]
-  );
+    return () => {
+      source.cancel("component Offering Preview was dismounted");
+    };
+  }, [dispatch, offer.userId]);
 
   const handleClickDetails = (contentInfo) => {
     dispatch(openOfferDetailsModal(contentInfo));
@@ -104,9 +99,9 @@ export const OfferingPreview = (props) => {
   let contentInfo = {
     offeringInfo: {
       offer,
-      offerer
+      offerer,
     },
-    postingInfo: activePosting
+    postingInfo: activePosting,
   };
 
   return (
@@ -141,10 +136,10 @@ export const OfferingPreview = (props) => {
             </Grid>
             <Grid container item xs={8} justify={"flex-end"}>
               <Grid container item xs={4} justify={"flex-end"}>
-                <AcceptIconButton fns={fns} offerInfo={offerInfo}/>
+                <AcceptIconButton fns={fns} offerInfo={offerInfo} />
               </Grid>
               <Grid container item xs={4} justify={"flex-end"}>
-                <DeclineIconButton fns={fns} offerInfo={offerInfo}/>
+                <DeclineIconButton fns={fns} offerInfo={offerInfo} />
               </Grid>
             </Grid>
           </Grid>
