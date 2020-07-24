@@ -8,12 +8,14 @@ import {
   POSTING_MODAL,
   LOGIN_MODAL,
   REVIEW_MODAL,
+  OFFER_DETAILS_MODAL,
 } from "../redux/constants/modalTypes";
 import AddPosting from "../components/AddPosting/AddPosting";
 import AddOffering from "./AddOffering/AddOffering";
 import { Dialog } from "@material-ui/core";
 import LoginModal from "./Login/Login";
 import ReviewModal from "./Review/AddReview";
+import { OfferingDetails } from "./Offering/OfferingDetails";
 
 //--------------- Helper: Error for if wrong modal type is given -------------//
 const errorModalStyle = makeStyles((theme) => ({
@@ -57,6 +59,8 @@ const chooseModalContents = (props) => {
   switch (props.modal.type) {
     case OFFER_MODAL:
       return <AddOffering />;
+    case OFFER_DETAILS_MODAL:
+      return <OfferingDetails />;
     case POSTING_MODAL:
       return <AddPosting />;
     case LOGIN_MODAL:
