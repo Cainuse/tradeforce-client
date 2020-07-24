@@ -29,6 +29,9 @@ let useStyles = makeStyles((theme) => ({
     "&:hover": {
       backgroundColor: "#a00202"
     }
+  },
+  postingPreviewImg: {
+    width: "200px",
   }
 }));
 
@@ -53,7 +56,7 @@ export const PostingSummary = (props) => {
       >
         <Grid container item xs={12} alignContent={"center"}>
           <Grid container item xs={1}>
-            <Avatar variant={"rounded"} src={previewImg}/>
+            <Avatar variant={"square"} src={previewImg} className={classes.postingPreviewImg}/>
           </Grid>
 
           {/*<Grid container item xs={11} className={classes.userInfoContainer}>*/}

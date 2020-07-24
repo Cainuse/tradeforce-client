@@ -62,6 +62,7 @@ export const OfferSentPreviewCard = (props) => {
 
   let [posting, setPosting] = useState({});
   let [postingOwner, setPostingOwner] = useState({});
+  let [isInfoLoaded, setIsInfoLoaded] = useState(false);
 
   let defaultImg = require("../../../images/default.jpg");
   let previewImg;
@@ -80,6 +81,7 @@ export const OfferSentPreviewCard = (props) => {
         );
         setPosting(posting);
         setPostingOwner(postingOwner);
+        setIsInfoLoaded(true);
         return posting;
       } catch (e) {
         if (Axios.isCancel(e)) {
@@ -94,6 +96,7 @@ export const OfferSentPreviewCard = (props) => {
 
     return () => {
       source.cancel("component OfferingSentPreview was dismounted");
+      setIsInfoLoaded(false);
     };
   }, [dispatch, offer.postingId]);
 
@@ -119,7 +122,6 @@ export const OfferSentPreviewCard = (props) => {
   }
 
   const handleClickDetails = (contentInfo) => {
-    console.log(contentInfo);
     dispatch(openOfferSentDetailsModal(contentInfo));
   };
 
@@ -157,7 +159,7 @@ export const OfferSentPreviewCard = (props) => {
         <CardActions>
           <Grid container item xs={12} justify={"space-between"}>
             <Grid container item xs={6} alignContent={"center"}>
-              <Button onClick={() => handleClickDetails(offerInfo)}>
+              <Button disabled={!isInfoLoaded} onClick={() => handleClickDetails(offerInfo)}>
                 Details
               </Button>
             </Grid>
@@ -165,6 +167,7 @@ export const OfferSentPreviewCard = (props) => {
               <RescindIconButton
                 offerInfo={offerInfo}
                 fns={fns}
+                disabled={!isInfoLoaded}
               />
             </Grid>
           </Grid>

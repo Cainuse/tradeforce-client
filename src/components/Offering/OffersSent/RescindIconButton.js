@@ -14,7 +14,7 @@ const useStyles = makeStyles(() => ({
 
 function RescindIconButton(props) {
   let classes = useStyles();
-  let { offerInfo, fns, onMouseEnter, onMouseLeave } = props;
+  let { offerInfo, fns, disabled, onMouseEnter, onMouseLeave } = props;
   let { handleConfirmationOpen, setOfferInfoToActUpon } = fns;
 
   return (
@@ -23,6 +23,7 @@ function RescindIconButton(props) {
         className={classes.acceptBtn}
         onMouseLeave={onMouseLeave}
         onMouseEnter={onMouseEnter}
+        disabled={disabled}
         onClick={() => {
           setOfferInfoToActUpon(offerInfo);
           handleConfirmationOpen();
