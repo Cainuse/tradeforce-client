@@ -11,13 +11,13 @@ import {
 import { Button, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
-import UserAvatar from "../User/UserAvatar";
-import defaultProfile from "../../images/placeholder-profile.png";
-import AcceptIconButton from "./AcceptIconButton";
-import DeclineIconButton from "./DeclineIconButton";
-import { openOfferDetailsModal } from "../../redux/actions/modalActions";
-import { getPostingByIdAsync } from "../../redux/actions/postingActions";
-import { getUserByIdAsync } from "../../redux/actions/userActions";
+import UserAvatar from "../../User/UserAvatar";
+import defaultProfile from "../../../images/placeholder-profile.png";
+import AcceptIconButton from "../OffersReceived/AcceptIconButton";
+import DeclineIconButton from "../OffersReceived/DeclineIconButton";
+import { openOfferDetailsModal } from "../../../redux/actions/modalActions";
+import { getPostingByIdAsync } from "../../../redux/actions/postingActions";
+import { getUserByIdAsync } from "../../../redux/actions/userActions";
 
 const useStyles = makeStyles(() => ({
   cardRoot: {

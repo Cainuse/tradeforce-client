@@ -1,6 +1,6 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
-import { OfferingPreview } from "./OfferingPreview";
+import { OfferingPreview } from "../OffersReceived/OfferingPreview";
 import { OfferSentPreviewCard } from "./OfferSentPreviewCard";
 
 export const OffersSent = (props) => {

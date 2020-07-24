@@ -15,7 +15,7 @@ import AddOffering from "./AddOffering/AddOffering";
 import { Dialog } from "@material-ui/core";
 import LoginModal from "./Login/Login";
 import ReviewModal from "./Review/AddReview";
-import { OfferingDetails } from "./Offering/OfferingDetails";
+import { OfferingDetails } from "./Offering/OffersReceived/OfferingDetails";
 
 //--------------- Helper: Error for if wrong modal type is given -------------//
 const errorModalStyle = makeStyles((theme) => ({
