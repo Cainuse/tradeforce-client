@@ -4,7 +4,10 @@ import { Grid, Typography, Link, Collapse } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 import { OfferingPreviewList } from "./OfferingPreviewList";
-import { acceptOffer, declineOffer } from "../../../redux/actions/offeringActions";
+import {
+  acceptOffer,
+  declineOffer,
+} from "../../../redux/actions/offeringActions";
 import { getAllPendingOffers } from "./OfferingHelpers";
 import ConfirmationDialog from "../../ConfirmationDialog";
 

@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button, Grid, Paper, Typography, Link } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
-import { OffererInfoDisplay } from "../OffersReceived/OffererInfoDisplay";
 import { OfferInfoDisplay } from "../OfferInfoDisplay";
 import { closeModal } from "../../../redux/actions/modalActions";
 import { rescindOffer } from "../../../redux/actions/offeringActions";
@@ -16,31 +15,29 @@ let useStyles = makeStyles((theme) => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
     outline: "none",
-    position: "relative"
+    position: "relative",
   },
   tabsRoot: {
     marginBottom: "30px",
-    outline: "display"
+    outline: "display",
   },
   modalHeader: {
-    paddingBottom: "10px"
+    paddingBottom: "10px",
   },
   submitBtn: {
-    backgroundColor: "#6ab547"
+    backgroundColor: "#6ab547",
   },
   declineBtn: {
     backgroundColor: "#b90202",
     color: "white",
     "&:hover": {
-      backgroundColor: "#a00202"
-    }
+      backgroundColor: "#a00202",
+    },
   },
   postingTitle: {
-    color: theme.palette.primary.main
-  }
-
+    color: theme.palette.primary.main,
+  },
 }));
-
 
 /**
  * Structure of contentInfo
@@ -60,8 +57,8 @@ export const OfferSentDetails = () => {
   const handleRescindOffer = async () => {
     let result = window.confirm(
       `Are you sure you want to rescind your offer? \n` +
-      `\n` +
-      `This action cannot be undone.`
+        `\n` +
+        `This action cannot be undone.`
     );
 
     if (result) {
@@ -84,7 +81,9 @@ export const OfferSentDetails = () => {
         </Grid>
 
         <Grid container item xs={12} alignContent={"center"}>
-          <Typography style={{ paddingRight: "4px" }}>You have made an offer on the posting</Typography>
+          <Typography style={{ paddingRight: "4px" }}>
+            You have made an offer on the posting
+          </Typography>
           <Typography className={classes.postingTitle}>
             <Link href={`/items/item=${posting._id}`}>
               &quot;{posting.title}&quot;
@@ -94,11 +93,17 @@ export const OfferSentDetails = () => {
 
         <Grid container item xs={12} justify={"center"}>
           <Grid container item xs={12} justify={"center"}>
-            <PostingSummary postingInfo={{ postingOwner, posting }}/>
+            <PostingSummary postingInfo={{ postingOwner, posting }} />
           </Grid>
 
-          <Grid container item xs={12} justify={"center"} style={{ paddingTop: "40px" }}>
-            <OfferInfoDisplay offer={offer} sectionTitle={"Your Offer:"}/>
+          <Grid
+            container
+            item
+            xs={12}
+            justify={"center"}
+            style={{ paddingTop: "40px" }}
+          >
+            <OfferInfoDisplay offer={offer} sectionTitle={"Your Offer:"} />
           </Grid>
         </Grid>
 

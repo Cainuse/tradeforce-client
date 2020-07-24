@@ -6,8 +6,6 @@ import { OfferSentPreviewCard } from "./OfferSentPreviewCard";
 import ConfirmationDialog from "../../ConfirmationDialog";
 import { rescindOffer } from "../../../redux/actions/offeringActions";
 
-
-
 export const OffersSent = (props) => {
   const dispatch = useDispatch();
   let { currentUser, offersSent } = props;
@@ -16,7 +14,6 @@ export const OffersSent = (props) => {
 
   /** offerInfo: { offerId, posting, postingOwner } */
   let [offerInfoToActUpon, setOfferInfoToActUpon] = useState({});
-
 
   const handleConfirmationClose = () => {
     setConfirmationOpen(false);
@@ -43,8 +40,10 @@ export const OffersSent = (props) => {
           submitAction={handleRescindOffer}
           submitName={"Rescind Offer"}
           dialogMessage={`This action cannot be undone.`}
-          dialogTitle={`Are you sure you want to rescind your offer ` +
-          `on ${postingOwner.userName}'s posting "${posting.title}"?`}
+          dialogTitle={
+            `Are you sure you want to rescind your offer ` +
+            `on ${postingOwner.userName}'s posting "${posting.title}"?`
+          }
           handleClose={handleConfirmationClose}
         />
       );
@@ -63,7 +62,7 @@ export const OffersSent = (props) => {
               offer={offer}
               fns={{
                 setOfferInfoToActUpon,
-                handleConfirmationOpen
+                handleConfirmationOpen,
               }}
             />
           </Grid>

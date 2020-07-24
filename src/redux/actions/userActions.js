@@ -202,9 +202,7 @@ export const authenticateUser = (token) => {
 export const getUserByIdAsync = (userId, cancelToken) => {
   let newCancelToken = cancelToken === undefined ? null : cancelToken;
 
-  return async (
-
-  ) => {
+  return async () => {
     let response = await axios.get(`${BASE_URL}/${userId}`, newCancelToken);
     let user = response.data;
     return user;

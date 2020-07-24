@@ -4,7 +4,8 @@ import {
   OPEN_POSTING_MODAL,
   OPEN_LOGIN_MODAL,
   OPEN_REVIEW_MODAL,
-  OPEN_OFFER_DETAILS_MODAL, OPEN_OFFER_SENT_DETAILS_MODAL
+  OPEN_OFFER_DETAILS_MODAL,
+  OPEN_OFFER_SENT_DETAILS_MODAL,
 } from "../constants/actionTypes";
 
 export const closeModal = () => {
@@ -39,8 +40,8 @@ export const openOfferSentDetailsModal = (contentInfo) => {
   return {
     type: OPEN_OFFER_SENT_DETAILS_MODAL,
     contentInfo,
-  }
-}
+  };
+};
 
 export const openPostingModal = () => {
   return {

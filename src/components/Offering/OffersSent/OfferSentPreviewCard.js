@@ -6,13 +6,9 @@ import {
   CardHeader,
   CardMedia,
   CardContent,
-  CardActions
+  CardActions,
 } from "@material-ui/core";
-import {
-  Button,
-  Grid,
-  Typography
-} from "@material-ui/core";
+import { Button, Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 import UserAvatar from "../../User/UserAvatar";
@@ -24,33 +20,33 @@ import RescindIconButton from "./RescindIconButton";
 
 const useStyles = makeStyles((theme) => ({
   cardRoot: {
-    width: "280px"
+    width: "280px",
   },
   cardContentRoot: {
     "&:last-child": {
-      paddingBottom: "10px"
-    }
+      paddingBottom: "10px",
+    },
   },
   offerHeader: {
     "& .MuiCardHeader-avatar": {
-      marginRight: "10px"
-    }
+      marginRight: "10px",
+    },
   },
   avatar: {
-    marginRight: "10px"
+    marginRight: "10px",
   },
   previewImg: {
     height: "0",
-    paddingTop: "56.25%"
+    paddingTop: "56.25%",
   },
   statusLabel: {
     fontWeight: 500,
     color: theme.palette.primary.main,
-    paddingRight: "4px"
+    paddingRight: "4px",
   },
   statusInfo: {
-    textTransform: "lowercase"
-  }
+    textTransform: "lowercase",
+  },
 }));
 
 export const OfferSentPreviewCard = (props) => {
@@ -100,7 +96,6 @@ export const OfferSentPreviewCard = (props) => {
     };
   }, [dispatch, offer.postingId]);
 
-
   //set previewImage
   if (offeredItems.length > 0) {
     let firstItem = offeredItems[0];
@@ -119,7 +114,7 @@ export const OfferSentPreviewCard = (props) => {
     offer,
     posting,
     postingOwner,
-  }
+  };
 
   const handleClickDetails = (contentInfo) => {
     dispatch(openOfferSentDetailsModal(contentInfo));
@@ -149,17 +144,18 @@ export const OfferSentPreviewCard = (props) => {
       />
 
       <CardContent className={classes.cardContentRoot}>
-
         <Grid container item xs={12} style={{ paddingLeft: "16px" }}>
           <Typography className={classes.statusLabel}>Status:</Typography>
           <Typography className={classes.statusInfo}>{offer.status}</Typography>
         </Grid>
 
-
         <CardActions>
           <Grid container item xs={12} justify={"space-between"}>
             <Grid container item xs={6} alignContent={"center"}>
-              <Button disabled={!isInfoLoaded} onClick={() => handleClickDetails(offerInfo)}>
+              <Button
+                disabled={!isInfoLoaded}
+                onClick={() => handleClickDetails(offerInfo)}
+              >
                 Details
               </Button>
             </Grid>

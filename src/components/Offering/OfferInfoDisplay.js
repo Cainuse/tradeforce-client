@@ -39,7 +39,9 @@ export const OfferInfoDisplay = (props) => {
   return (
     <Grid container item xs={12} spacing={1} className={classes.offerSection}>
       <Grid container item xs={12} justify={"center"}>
-        <Typography className={classes.sectionTitle}>{newSectionTitle}</Typography>
+        <Typography className={classes.sectionTitle}>
+          {newSectionTitle}
+        </Typography>
       </Grid>
 
       <Grid

@@ -1,16 +1,15 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { IconButton } from "@material-ui/core";
-import RotateLeftIcon from '@material-ui/icons/RotateLeft';
+import RotateLeftIcon from "@material-ui/icons/RotateLeft";
 
 import { HoverPopoverHOC } from "../../HigherOrderComponents/HoverPopoverHOC";
 
 const useStyles = makeStyles(() => ({
   rescindIcon: {
-    fontSize: "1.7rem"
+    fontSize: "1.7rem",
   },
 }));
-
 
 function RescindIconButton(props) {
   let classes = useStyles();

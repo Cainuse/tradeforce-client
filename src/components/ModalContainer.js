@@ -8,7 +8,8 @@ import {
   POSTING_MODAL,
   LOGIN_MODAL,
   REVIEW_MODAL,
-  OFFER_DETAILS_MODAL, OFFER_SENT_DETAILS_MODAL
+  OFFER_DETAILS_MODAL,
+  OFFER_SENT_DETAILS_MODAL,
 } from "../redux/constants/modalTypes";
 import AddPosting from "../components/AddPosting/AddPosting";
 import AddOffering from "./AddOffering/AddOffering";
