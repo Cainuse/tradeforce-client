@@ -94,7 +94,10 @@ const NotificationsMenu = ({ dispatch, notifications, currentUser }) => {
   };
 
   const renderNotifications = (myNotifications) => {
-    return myNotifications.map((notification) => {
+    const sortedNotifications = myNotifications.sort((a, b) => {
+      return new Date(b.date) - new Date(a.date);
+    });
+    return sortedNotifications.map((notification) => {
       return (
         <Notification
           key={notification._id}

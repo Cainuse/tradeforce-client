@@ -5,6 +5,10 @@ import Typography from "@material-ui/core/Typography";
 import UserAvatar from "./UserAvatar";
 import defaultProfile from "../../images/placeholder-profile.png";
 import { displayError } from "../../redux/actions/snackbarActions";
+import Button from "@material-ui/core/Button";
+import Rating from "@material-ui/lab/Rating";
+import _ from "lodash";
+import { useHistory, useLocation } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   profile: {
@@ -23,11 +27,34 @@ const useStyles = makeStyles((theme) => ({
     fontSize: ".9rem",
     fontWeight: 300,
   },
+  editButton: {
+    color: theme.palette.primary.main,
+  },
 }));
 
 const ProfileCard = (props) => {
-  let { userDetail } = props;
+  let { userDetail, currentUser } = props;
   const classes = useStyles();
+  const history = useHistory();
+  const location = useLocation();
+
+  const calculateAverageReview = () => {
+    if (userDetail.reviews.length > 0) {
+      let totalRatingValue = _.reduce(
+        userDetail.reviews,
+        (acc, review) => acc + review.rating,
+        0
+      );
+      return totalRatingValue / userDetail.reviews.length;
+    }
+    return 0;
+  };
+
+  const averageRating = calculateAverageReview();
+
+  const redirectToEditPage = () => {
+    history.push(location.pathname + "/edit");
+  };
 
   return (
     <div className={classes.profile}>
@@ -43,6 +70,17 @@ const ProfileCard = (props) => {
       <Typography className={classes.username}>
         {userDetail.userName}
       </Typography>
+      <Rating
+        name="half-rating-read"
+        value={averageRating}
+        precision={0.5}
+        readOnly
+      />
+      {currentUser && userDetail._id === currentUser._id && (
+        <Button onClick={redirectToEditPage} className={classes.editButton}>
+          Edit
+        </Button>
+      )}
     </div>
   );
 };

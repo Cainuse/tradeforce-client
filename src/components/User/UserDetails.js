@@ -9,6 +9,8 @@ import TabLabel from "./TabLabel";
 import ReviewList from "../Review/ReviewList";
 import ItemPreviewList from "../Item/ItemPreviewList";
 import Button from "@material-ui/core/Button";
+import { calculateTotalPendingOffersReceived } from "../Offering/OfferingHelpers";
+import { OffersReceived } from "../Offering/OffersReceived";
 
 const useStyles = (theme) => ({
   root: {
@@ -40,6 +42,8 @@ class UserDetails extends React.Component {
 
   render() {
     const { classes, userDetail, currentUser, openReviewModal } = this.props;
+    const { activePostings, offersSent } = userDetail;
+
     return (
       <Paper className={classes.root}>
         <Tabs
@@ -76,7 +80,20 @@ class UserDetails extends React.Component {
           />
           {currentUser && userDetail._id === currentUser._id ? (
             <Tab
-              label={<TabLabel value={6} title={"Offers"} />}
+              label={
+                <TabLabel
+                  value={calculateTotalPendingOffersReceived(activePostings)}
+                  title={"Offers Received"}
+                />
+              }
+              className={classes.tab}
+            />
+          ) : null}
+          {currentUser && userDetail._id === currentUser._id ? (
+            <Tab
+              label={
+                <TabLabel value={offersSent.length} title={"Offers Sent"} />
+              }
               className={classes.tab}
             />
           ) : null}
@@ -105,7 +122,7 @@ class UserDetails extends React.Component {
           />
         </TabPanel>
         <TabPanel value={this.state.value} index={3}>
-          Item Three
+          <OffersReceived activePostings={activePostings} />
         </TabPanel>
       </Paper>
     );
