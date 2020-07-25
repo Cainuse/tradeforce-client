@@ -13,6 +13,11 @@ import TextField from "@material-ui/core/TextField";
 import IconButton from "@material-ui/core/IconButton";
 import EditIcon from "@material-ui/icons/Edit";
 import _ from "lodash";
+import { displayError } from "../../redux/actions/snackbarActions";
+import {
+  IMAGE_TYPE_ERROR,
+  IMAGE_SIZE_ERROR,
+} from "../../redux/constants/snackbarMessageTypes";
 
 const useStyles = (theme) => ({
   buttonHeader: {
@@ -143,12 +148,21 @@ class EditUserProfilePage extends React.Component {
 
   handleImageUpload = (e) => {
     let file = e.target.files[0];
-    let reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
-      this.setState({ profilePic: reader.result });
-      this.updateChangedFields("profilePic");
-    };
+    let fileSize = file.size / 1024 / 1024;
+    if (file.type !== "image/png" && file.type !== "image/jpeg") {
+      this.fileInput.value = "";
+      this.props.displayError(IMAGE_TYPE_ERROR);
+    } else if (fileSize > 1) {
+      this.fileInput.value = "";
+      this.props.displayError(IMAGE_SIZE_ERROR);
+    } else {
+      let reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        this.setState({ profilePic: reader.result });
+        this.updateChangedFields("profilePic");
+      };
+    }
   };
 
   render() {
@@ -195,6 +209,7 @@ class EditUserProfilePage extends React.Component {
               className={classes.input}
               ref={(fileInput) => (this.fileInput = fileInput)}
               onChange={this.handleImageUpload}
+              accept="image/png, image/jpeg"
             />
           </div>
           <Grid container spacing={1}>
@@ -268,6 +283,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { updateUserDetails })(
+export default connect(mapStateToProps, { updateUserDetails, displayError })(
   withRouter(withStyles(useStyles)(EditUserProfilePage))
 );
