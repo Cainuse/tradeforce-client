@@ -53,7 +53,7 @@ export const OfferSentPreviewCard = (props) => {
   const dispatch = useDispatch();
   let classes = useStyles();
 
-  let { currentUser, profilePic, offer, fns } = props;
+  let { profilePic, offer, fns } = props;
   let { offeredItems } = offer;
 
   let [posting, setPosting] = useState({});
