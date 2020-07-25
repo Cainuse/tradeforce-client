@@ -81,6 +81,7 @@ export const registerUserAsync = (user, openedFrom, postingOwnerId) => {
           postalCode: "None",
           dateRegistered: respData.user.dateRegistered,
           isGoogleUser: respData.user.isGoogleUser,
+          location: respData.user.location,
         })
       );
       handleAftermathModalBehaviour(
@@ -154,6 +155,7 @@ export const loginUserAsync = (
           postalCode: "None",
           dateRegistered: respData.user.dateRegistered,
           isGoogleUser: respData.user.isGoogleUser,
+          location: respData.user.location,
         })
       );
       handleAftermathModalBehaviour(
@@ -190,6 +192,7 @@ export const authenticateUser = (token) => {
           postalCode: "None",
           dateRegistered: user.dateRegistered,
           isGoogleUser: user.isGoogleUser,
+          location: user.location,
         })
       );
     } catch (err) {
