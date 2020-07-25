@@ -9,7 +9,7 @@ import { rescindOffer } from "../../../redux/actions/offeringActions";
 
 const useStyles = makeStyles(() => ({
   offersSentContainer: {
-    minHeight: "50vh",
+    minHeight: "45vh",
   },
 }));
 
