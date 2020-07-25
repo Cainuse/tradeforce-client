@@ -57,3 +57,10 @@ export const RESCIND_OFFER_ERROR =
   "Offer could not be rescinded. Please try again later";
 export const MAKE_OFFER_AS_UNSIGNED_IN_USER_ERROR =
   "Please sign in or register before making an offer.";
+
+/* ===== Image Errors ===== */
+export const IMAGE_SIZE_ERROR =
+  "Selected image file exceeds the 1MB size limit. Please choose a smaller image";
+export const IMAGE_TYPE_ERROR =
+  "Selected image type is not accepted. Please choose a JPG or PNG file";
+export const TOO_MANY_IMAGES_ERROR = "Limit of 5 images has been reached";
