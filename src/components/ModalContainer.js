@@ -44,7 +44,6 @@ const modalStyles = makeStyles(() => ({
     alignItems: "center",
     justifyContent: "center",
     margin: "0 auto",
-    // width: "40%",
     height: "100%",
     maxHeight: "100vh",
   },

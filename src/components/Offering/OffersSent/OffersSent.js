@@ -1,18 +1,27 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Grid } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 
 import { OfferSentPreviewCard } from "./OfferSentPreviewCard";
 import ConfirmationDialog from "../../ConfirmationDialog";
 import { rescindOffer } from "../../../redux/actions/offeringActions";
 
+
+const useStyles = makeStyles(() => ({
+  offersSentContainer: {
+    minHeight: "50vh",
+  },
+}))
+
 export const OffersSent = (props) => {
   const dispatch = useDispatch();
+  const classes = useStyles();
   let { currentUser, offersSent } = props;
 
   let [confirmationOpen, setConfirmationOpen] = useState(false);
 
-  /** offerInfo: { offerId, posting, postingOwner } */
+  /** offerInfo: { offer, posting, postingOwner } */
   let [offerInfoToActUpon, setOfferInfoToActUpon] = useState({});
 
   const handleConfirmationClose = () => {
@@ -24,9 +33,9 @@ export const OffersSent = (props) => {
   };
 
   const handleRescindOffer = async () => {
-    let { offerId } = offerInfoToActUpon;
+    let { offer } = offerInfoToActUpon;
 
-    await dispatch(rescindOffer(offerId));
+    await dispatch(rescindOffer(offer._id));
     setConfirmationOpen(false);
   };
 
@@ -52,11 +61,11 @@ export const OffersSent = (props) => {
   };
 
   return (
-    <Grid container alignContent={"center"} justify={"flex-start"} spacing={2}>
+    <Grid container alignContent={"center"} justify={"flex-start"} spacing={2} className={classes.offersSentContainer}>
       {selectConfirmationToDisplay()}
       {offersSent.map((offer, index) => {
         return (
-          <Grid item key={index}>
+          <Grid item key={index} >
             <OfferSentPreviewCard
               currentUser={currentUser}
               offer={offer}
