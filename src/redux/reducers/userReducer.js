@@ -48,6 +48,9 @@ export const userReducer = (state = initialState.currentUser, action) => {
           postalCode: action.details.postalCode
             ? action.details.postalCode
             : state.user.postalCode,
+          location: action.details.location
+            ? action.details.location
+            : state.user.location,
         },
       };
     default:
