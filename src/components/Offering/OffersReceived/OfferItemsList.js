@@ -11,7 +11,7 @@ import {
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { makeStyles } from "@material-ui/core/styles";
 
-import ItemImagesPreview from "../AddOffering/AddItems/ItemImagesPreview";
+import ItemImagesPreview from "../../AddOffering/AddItems/ItemImagesPreview";
 
 const useStyles = makeStyles((theme) => ({
   itemContainer: {

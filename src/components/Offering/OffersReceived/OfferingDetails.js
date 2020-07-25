@@ -4,9 +4,12 @@ import { Button, Grid, Paper, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 import { OffererInfoDisplay } from "./OffererInfoDisplay";
-import { OfferInfoDisplay } from "./OfferInfoDisplay";
-import { closeModal } from "../../redux/actions/modalActions";
-import { acceptOffer, declineOffer } from "../../redux/actions/offeringActions";
+import { OfferInfoDisplay } from "../OfferInfoDisplay";
+import { closeModal } from "../../../redux/actions/modalActions";
+import {
+  acceptOffer,
+  declineOffer,
+} from "../../../redux/actions/offeringActions";
 
 let useStyles = makeStyles((theme) => ({
   paper: {

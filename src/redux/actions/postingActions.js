@@ -175,6 +175,19 @@ export const updateItemDetail = (itemId, details) => {
   };
 };
 
+export const getPostingByIdAsync = (postingId, cancelToken) => {
+  let newCancelToken = cancelToken === undefined ? null : cancelToken;
+
+  return async () => {
+    let response = await axios.get(
+      `${BASE_URL}/postings/${postingId}`,
+      newCancelToken
+    );
+    let posting = response.data;
+    return posting;
+  };
+};
+
 export const clearOldPostings = () => {
   return {
     type: CLEAR_OLD_POSTINGS,
