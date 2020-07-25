@@ -54,7 +54,8 @@ const App = ({ dispatch }) => {
         .then(() => {
           dispatch(setLoading(false));
         })
-        .catch(() => {
+        .catch((err) => {
+          console.log(err);
           dispatch(
             displayError("Error occurred during authentication. Try again!")
           );
@@ -65,7 +66,7 @@ const App = ({ dispatch }) => {
     } else {
       toRender(true);
     }
-  }, [dispatch]);
+  }, []);
 
   return !render ? (
     <Loader />
