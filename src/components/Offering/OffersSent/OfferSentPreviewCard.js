@@ -128,9 +128,7 @@ export const OfferSentPreviewCard = (props) => {
           <UserAvatar
             className={classes.avatar}
             isLargeAvatar={false}
-            userProfileImgSrc={
-              profilePic ? profilePic : defaultProfile
-            }
+            userProfileImgSrc={profilePic ? profilePic : defaultProfile}
           />
         }
         title={`You have made an offer on`}
