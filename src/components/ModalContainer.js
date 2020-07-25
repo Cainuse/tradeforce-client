@@ -83,7 +83,6 @@ const MakeModalContainer = (props) => {
 
   return (
     <Dialog
-      // className={classes.modalContainer}
       open={props.modal.isOpen}
       onClose={() => {
         props.closeModal();
