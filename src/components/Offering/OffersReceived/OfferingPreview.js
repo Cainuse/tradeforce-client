@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { getUserByIdAysnc } from "../../redux/actions/userActions";
 import { useDispatch } from "react-redux";
+import Axios from "axios";
 import {
   Card,
   CardHeader,
@@ -8,12 +8,15 @@ import {
   CardContent,
   CardActions,
 } from "@material-ui/core";
-import { Link, Button, Grid } from "@material-ui/core";
+import { Button, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import UserAvatar from "../User/UserAvatar";
-import defaultProfile from "../../images/placeholder-profile.png";
+
+import UserAvatar from "../../User/UserAvatar";
+import defaultProfile from "../../../images/placeholder-profile.png";
 import AcceptIconButton from "./AcceptIconButton";
 import DeclineIconButton from "./DeclineIconButton";
+import { getUserByIdAsync } from "../../../redux/actions/userActions";
+import { openOfferDetailsModal } from "../../../redux/actions/modalActions";
 
 const useStyles = makeStyles(() => ({
   cardRoot: {
@@ -53,26 +56,36 @@ export const OfferingPreview = (props) => {
     posting: activePosting,
   };
 
-  let defaultImg = require("../../images/default.jpg");
+  let defaultImg = require("../../../images/default.jpg");
   let previewImg;
 
   useEffect(() => {
-    let isMounted = true;
+    let source = Axios.CancelToken.source();
+    let cancelToken = { cancelToken: source.token };
 
     async function getOfferer() {
-      let user = await dispatch(getUserByIdAysnc(offer.userId));
-      if (isMounted) {
+      try {
+        let user = await dispatch(getUserByIdAsync(offer.userId, cancelToken));
         setOfferer(user);
-        return user;
+      } catch (e) {
+        if (Axios.isCancel(e)) {
+          //do nothing
+        } else {
+          console.log(e);
+        }
       }
     }
 
     getOfferer();
 
     return () => {
-      isMounted = false;
+      source.cancel("component Offering Preview was dismounted");
     };
   }, [dispatch, offer.userId]);
+
+  const handleClickDetails = (contentInfo) => {
+    dispatch(openOfferDetailsModal(contentInfo));
+  };
 
   //set previewImage
   if (offeredItems.length > 0) {
@@ -81,6 +94,15 @@ export const OfferingPreview = (props) => {
   } else {
     previewImg = defaultImg;
   }
+
+  //set contentInfo for offeringDetailsModal
+  let contentInfo = {
+    offeringInfo: {
+      offer,
+      offerer,
+    },
+    postingInfo: activePosting,
+  };
 
   return (
     <Card elevation={2} className={classes.cardRoot}>
@@ -108,7 +130,9 @@ export const OfferingPreview = (props) => {
         <CardActions>
           <Grid container item xs={12} justify={"space-between"}>
             <Grid container item xs={4} alignContent={"center"}>
-              <Button>Details</Button>
+              <Button onClick={() => handleClickDetails(contentInfo)}>
+                Details
+              </Button>
             </Grid>
             <Grid container item xs={8} justify={"flex-end"}>
               <Grid container item xs={4} justify={"flex-end"}>

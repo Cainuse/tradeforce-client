@@ -5,6 +5,7 @@ export const initialState = {
     isOpen: false,
     type: "",
     openedFrom: "",
+    contentInfo: {},
   },
   snackbar: {
     isOpen: false,
