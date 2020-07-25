@@ -7,12 +7,11 @@ import { OfferSentPreviewCard } from "./OfferSentPreviewCard";
 import ConfirmationDialog from "../../ConfirmationDialog";
 import { rescindOffer } from "../../../redux/actions/offeringActions";
 
-
 const useStyles = makeStyles(() => ({
   offersSentContainer: {
     minHeight: "50vh",
   },
-}))
+}));
 
 export const OffersSent = (props) => {
   const dispatch = useDispatch();
@@ -61,11 +60,17 @@ export const OffersSent = (props) => {
   };
 
   return (
-    <Grid container alignContent={"center"} justify={"flex-start"} spacing={2} className={classes.offersSentContainer}>
+    <Grid
+      container
+      alignContent={"center"}
+      justify={"flex-start"}
+      spacing={2}
+      className={classes.offersSentContainer}
+    >
       {selectConfirmationToDisplay()}
       {offersSent.map((offer, index) => {
         return (
-          <Grid item key={index} >
+          <Grid item key={index}>
             <OfferSentPreviewCard
               currentUser={currentUser}
               offer={offer}
