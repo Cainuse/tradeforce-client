@@ -16,7 +16,7 @@ const useStyles = makeStyles(() => ({
 export const OffersSent = (props) => {
   const dispatch = useDispatch();
   const classes = useStyles();
-  let { currentUser, offersSent } = props;
+  let { currentUser, profilePic, offersSent } = props;
 
   let [confirmationOpen, setConfirmationOpen] = useState(false);
 
@@ -73,6 +73,7 @@ export const OffersSent = (props) => {
           <Grid item key={index}>
             <OfferSentPreviewCard
               currentUser={currentUser}
+              profilePic={profilePic}
               offer={offer}
               fns={{
                 setOfferInfoToActUpon,

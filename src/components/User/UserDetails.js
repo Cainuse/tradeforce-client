@@ -126,7 +126,10 @@ class UserDetails extends React.Component {
           <OffersReceived activePostings={activePostings} />
         </TabPanel>
         <TabPanel value={this.state.value} index={4}>
-          <OffersSent currentUser={currentUser} offersSent={offersSent} />
+          <OffersSent currentUser={currentUser}
+                      offersSent={offersSent}
+                      profilePic={userDetail.profilePic}
+          />
         </TabPanel>
       </Paper>
     );
