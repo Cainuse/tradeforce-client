@@ -53,7 +53,7 @@ export const OfferSentPreviewCard = (props) => {
   const dispatch = useDispatch();
   let classes = useStyles();
 
-  let { offer, currentUser, fns } = props;
+  let { profilePic, offer, fns } = props;
   let { offeredItems } = offer;
 
   let [posting, setPosting] = useState({});
@@ -128,9 +128,7 @@ export const OfferSentPreviewCard = (props) => {
           <UserAvatar
             className={classes.avatar}
             isLargeAvatar={false}
-            userProfileImgSrc={
-              currentUser.profilePic ? currentUser.profilePic : defaultProfile
-            }
+            userProfileImgSrc={profilePic ? profilePic : defaultProfile}
           />
         }
         title={`You have made an offer on`}
