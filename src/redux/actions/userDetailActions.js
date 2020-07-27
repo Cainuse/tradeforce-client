@@ -47,7 +47,9 @@ export const loadUserDetails = ({ userId, currentUserId }) => {
             ? await axios.get(`${BASE_URL}/${userId}/offerings/active`)
             : null;
         // offersSent === null when currentUser is NOT owner of profile (includes when user is not logged in)
-        userDetails.offersSent = offersSentResponse ? offersSentResponse.data : null;
+        userDetails.offersSent = offersSentResponse
+          ? offersSentResponse.data
+          : null;
         dispatch(loadUserDetailSuccess(userDetails));
         return "success";
       } else {

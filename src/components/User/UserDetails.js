@@ -15,25 +15,25 @@ import { OffersSent } from "../Offering/OffersSent/OffersSent";
 
 const useStyles = (theme) => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   tab: {
-    margin: theme.spacing(0, 5)
+    margin: theme.spacing(0, 5),
   },
   reviewButton: {
-    color: theme.palette.primary.main
+    color: theme.palette.primary.main,
   },
   reviewButtonContainer: {
     display: "flex",
-    justifyContent: "flex-end"
-  }
+    justifyContent: "flex-end",
+  },
 });
 
 class UserDetails extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: 0
+      value: 0,
     };
   }
 
@@ -41,23 +41,30 @@ class UserDetails extends React.Component {
     this.setState({ value: newValue });
   };
 
-  reloadIfUserLoginOnOwnProfilePage = ({ isUserOwnerOfProfile, offersSent }) => {
-    let didUserLoginOnOwnProfilePage = isUserOwnerOfProfile && offersSent === null;
+  reloadIfUserLoginOnOwnProfilePage = ({
+    isUserOwnerOfProfile,
+    offersSent,
+  }) => {
+    let didUserLoginOnOwnProfilePage =
+      isUserOwnerOfProfile && offersSent === null;
     if (didUserLoginOnOwnProfilePage) {
       window.location.reload(false);
     }
     //don't reload if user logged in on a page that is not their own profile
   };
 
-
   render() {
     const { classes, userDetail, currentUser, openReviewModal } = this.props;
     const { activePostings, offersSent } = userDetail;
-    const isUserOwnerOfProfile = currentUser && userDetail._id === currentUser._id;
+    const isUserOwnerOfProfile =
+      currentUser && userDetail._id === currentUser._id;
 
     return (
       <React.Fragment>
-        {this.reloadIfUserLoginOnOwnProfilePage({ isUserOwnerOfProfile, offersSent })}
+        {this.reloadIfUserLoginOnOwnProfilePage({
+          isUserOwnerOfProfile,
+          offersSent,
+        })}
 
         <Paper className={classes.root}>
           <Tabs
@@ -88,7 +95,7 @@ class UserDetails extends React.Component {
             />
             <Tab
               label={
-                <TabLabel value={userDetail.reviews.length} title={"Reviews"}/>
+                <TabLabel value={userDetail.reviews.length} title={"Reviews"} />
               }
               className={classes.tab}
             />
@@ -106,17 +113,20 @@ class UserDetails extends React.Component {
             {isUserOwnerOfProfile ? (
               <Tab
                 label={
-                  <TabLabel value={ offersSent ? offersSent.length : 0 } title={"Offers Sent"}/>
+                  <TabLabel
+                    value={offersSent ? offersSent.length : 0}
+                    title={"Offers Sent"}
+                  />
                 }
                 className={classes.tab}
               />
             ) : null}
           </Tabs>
           <TabPanel value={this.state.value} index={0}>
-            <ItemPreviewList items={userDetail.activePostings} sizing={2}/>
+            <ItemPreviewList items={userDetail.activePostings} sizing={2} />
           </TabPanel>
           <TabPanel value={this.state.value} index={1}>
-            <ItemPreviewList items={userDetail.inactivePostings} sizing={2}/>
+            <ItemPreviewList items={userDetail.inactivePostings} sizing={2} />
           </TabPanel>
           <TabPanel value={this.state.value} index={2}>
             {isUserOwnerOfProfile && (
@@ -136,7 +146,7 @@ class UserDetails extends React.Component {
             />
           </TabPanel>
           <TabPanel value={this.state.value} index={3}>
-            <OffersReceived activePostings={activePostings}/>
+            <OffersReceived activePostings={activePostings} />
           </TabPanel>
           <TabPanel value={this.state.value} index={4}>
             <OffersSent
