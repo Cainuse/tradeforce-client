@@ -54,12 +54,6 @@ const App = ({ dispatch }) => {
         .then(() => {
           dispatch(setLoading(false));
         })
-        .catch((err) => {
-          console.log(err);
-          dispatch(
-            displayError("Error occurred during authentication. Try again!")
-          );
-        })
         .finally(() => {
           toRender(true);
         });
