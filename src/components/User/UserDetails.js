@@ -41,12 +41,23 @@ class UserDetails extends React.Component {
     this.setState({ value: newValue });
   };
 
+  guardUserLoginOnOwnProfilePage = ({isUserOwnerOfProfile, offersSent}) => {
+    let didUserLoginOnOwnProfilePage = isUserOwnerOfProfile && offersSent === null;
+    if (didUserLoginOnOwnProfilePage) {
+      window.location.reload(false);
+    }
+    //don't reload if user logged in on a page that is not their own profile
+  }
+
+
   render() {
     const { classes, userDetail, currentUser, openReviewModal } = this.props;
     const { activePostings, offersSent } = userDetail;
+    const isUserOwnerOfProfile = currentUser && userDetail._id === currentUser._id;
 
     return (
       <Paper className={classes.root}>
+        {this.guardUserLoginOnOwnProfilePage({isUserOwnerOfProfile, offersSent})}
         <Tabs
           value={this.state.value}
           onChange={this.handleChange}
@@ -79,7 +90,7 @@ class UserDetails extends React.Component {
             }
             className={classes.tab}
           />
-          {currentUser && userDetail._id === currentUser._id ? (
+          {isUserOwnerOfProfile ? (
             <Tab
               label={
                 <TabLabel
@@ -90,7 +101,7 @@ class UserDetails extends React.Component {
               className={classes.tab}
             />
           ) : null}
-          {currentUser && userDetail._id === currentUser._id ? (
+          {isUserOwnerOfProfile ? (
             <Tab
               label={
                 <TabLabel value={offersSent.length} title={"Offers Sent"} />
@@ -106,7 +117,7 @@ class UserDetails extends React.Component {
           <ItemPreviewList items={userDetail.inactivePostings} sizing={2} />
         </TabPanel>
         <TabPanel value={this.state.value} index={2}>
-          {currentUser && userDetail._id !== currentUser._id && (
+          {isUserOwnerOfProfile && (
             <div className={classes.reviewButtonContainer}>
               <Button
                 onClick={openReviewModal}
