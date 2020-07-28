@@ -2,7 +2,7 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
-import { unsetUser } from "../../redux/actions/userActions";
+import { logoutUser } from "../../redux/actions/userActions";
 import { connect } from "react-redux";
 
 const loggedOutStyles = makeStyles(() => ({
@@ -14,7 +14,7 @@ const loggedOutStyles = makeStyles(() => ({
   },
 }));
 
-const LogoutBtn = ({ unsetUser }) => {
+const LogoutBtn = ({ logoutUser, currentUser }) => {
   const classes = loggedOutStyles();
   const history = useHistory();
   return (
@@ -25,7 +25,7 @@ const LogoutBtn = ({ unsetUser }) => {
       className={classes.logoutBtn}
       onClick={() => {
         localStorage.removeItem("token");
-        unsetUser();
+        logoutUser(currentUser.user._id);
         history.push("/");
       }}
     >
@@ -39,7 +39,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  unsetUser: () => dispatch(unsetUser()),
+  logoutUser: (userId) => dispatch(logoutUser(userId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LogoutBtn);
