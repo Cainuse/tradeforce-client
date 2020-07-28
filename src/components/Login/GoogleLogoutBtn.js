@@ -27,18 +27,16 @@ const GoogleLogoutBtn = ({
   const classes = useStyles();
   const history = useHistory();
 
-  const logout = (response) => {
+  const logout = () => {
     localStorage.removeItem("token");
     history.push("/");
     unsetUser();
     logoutSuccess("Successfully logged out!");
     closeModal();
-    return response;
   };
 
-  const handleLogoutFailure = (response) => {
+  const handleLogoutFailure = () => {
     logoutError("Failed to logout! Try again.");
-    return response;
   };
 
   return (

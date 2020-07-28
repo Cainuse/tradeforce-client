@@ -81,6 +81,7 @@ export const registerUserAsync = (user, openedFrom, postingOwnerId) => {
           postalCode: "None",
           dateRegistered: respData.user.dateRegistered,
           isGoogleUser: respData.user.isGoogleUser,
+          location: respData.user.location,
         })
       );
       handleAftermathModalBehaviour(
@@ -151,9 +152,10 @@ export const loginUserAsync = (
           firstName: respData.user.firstName,
           lastName: respData.user.lastName,
           email: respData.user.email,
-          postalCode: "None",
+          postalCode: respData.user.postalCode,
           dateRegistered: respData.user.dateRegistered,
           isGoogleUser: respData.user.isGoogleUser,
+          location: respData.user.location,
         })
       );
       handleAftermathModalBehaviour(
@@ -173,12 +175,7 @@ export const loginUserAsync = (
 export const authenticateUser = (token) => {
   return async (dispatch) => {
     try {
-      let config = {
-        headers: {
-          "auth-token": token,
-        },
-      };
-      const resp = await axios.post(`${BASE_URL}/authenticate`, {}, config);
+      const resp = await axios.post(`${BASE_URL}/authenticate`, { token });
       const user = resp.data;
       return dispatch(
         setUser({
@@ -187,14 +184,17 @@ export const authenticateUser = (token) => {
           firstName: user.firstName,
           lastName: user.lastName,
           email: user.email,
-          postalCode: "None",
+          postalCode: user.postalCode,
           dateRegistered: user.dateRegistered,
           isGoogleUser: user.isGoogleUser,
+          location: user.location,
         })
       );
     } catch (err) {
       dispatch(isUserFailed());
-      return dispatch(displayError(err.response.data.message));
+      return dispatch(
+        displayError("Authentication failed due to invalid token. Try again!")
+      );
     }
   };
 };

@@ -13,7 +13,6 @@ import ModalContainer from "./ModalContainer";
 import FeedbackSnackbar from "./FeedbackSnackbar";
 import { authenticateUser } from "../redux/actions/userActions";
 import Loader from "./Loader";
-import { displayError } from "../redux/actions/snackbarActions";
 import { setLoading } from "../redux/actions/loadingActions";
 
 const theme = createMuiTheme({
@@ -54,18 +53,13 @@ const App = ({ dispatch }) => {
         .then(() => {
           dispatch(setLoading(false));
         })
-        .catch(() => {
-          dispatch(
-            displayError("Error occurred during authentication. Try again!")
-          );
-        })
         .finally(() => {
           toRender(true);
         });
     } else {
       toRender(true);
     }
-  }, [dispatch]);
+  }, []);
 
   return !render ? (
     <Loader />

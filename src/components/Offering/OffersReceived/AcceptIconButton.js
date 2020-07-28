@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { IconButton } from "@material-ui/core";
 import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
 
-import { HoverPopoverHOC } from "../HigherOrderComponents/HoverPopoverHOC";
+import { HoverPopoverHOC } from "../../HigherOrderComponents/HoverPopoverHOC";
 
 const useStyles = makeStyles((theme) => ({
   acceptBtn: {

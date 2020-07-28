@@ -11,12 +11,12 @@ import {
 import { Button, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
-import UserAvatar from "../User/UserAvatar";
-import defaultProfile from "../../images/placeholder-profile.png";
+import UserAvatar from "../../User/UserAvatar";
+import defaultProfile from "../../../images/placeholder-profile.png";
 import AcceptIconButton from "./AcceptIconButton";
 import DeclineIconButton from "./DeclineIconButton";
-import { getUserByIdAsync } from "../../redux/actions/userActions";
-import { openOfferDetailsModal } from "../../redux/actions/modalActions";
+import { getUserByIdAsync } from "../../../redux/actions/userActions";
+import { openOfferDetailsModal } from "../../../redux/actions/modalActions";
 
 const useStyles = makeStyles(() => ({
   cardRoot: {
@@ -56,7 +56,7 @@ export const OfferingPreview = (props) => {
     posting: activePosting,
   };
 
-  let defaultImg = require("../../images/default.jpg");
+  let defaultImg = require("../../../images/default.jpg");
   let previewImg;
 
   useEffect(() => {
