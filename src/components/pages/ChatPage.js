@@ -1,36 +1,27 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import { connect } from "react-redux";
-import ChatSocketServer from "../../utils/ChatSocketServer";
+import ChatList from "../Chat/ChatList";
+import Grid from "@material-ui/core/Grid";
 
 const ChatPage = (props) => {
-  const { _id, userName } = props.currentUser;
-
-  console.log("=====Chat Page=====");
-  console.log("id: ", _id);
-  console.log("username: ", userName);
-
-  useEffect(() => {
-    console.log("=====useeffect=====");
-    ChatSocketServer.createSocketConnection(_id);
-    ChatSocketServer.getChatList(_id);
-    ChatSocketServer.eventEmitter.on("chat-list-response", (response) => {
-      console.log(response);
-    });
-
-    return () => {
-      ChatSocketServer.eventEmitter.removeListener(
-        "chat-list-response",
-        () => {}
-      );
-      ChatSocketServer.logout(_id);
-    };
-  }, []);
+  const [selectedChatUser, setSelectedChatUser] = useState(null);
 
   return (
     <Container>
       <Typography variant="h1">Chat Page</Typography>
+      <Grid container>
+        <Grid item xs={4}>
+          <ChatList
+            userId={props.currentUser._id}
+            setSelectedChatUser={setSelectedChatUser}
+          />
+        </Grid>
+        <Grid item xs={8}>
+          {selectedChatUser ? <p>Chat Conversation Here</p> : null}
+        </Grid>
+      </Grid>
     </Container>
   );
 };
