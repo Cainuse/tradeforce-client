@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Container from "@material-ui/core/Container";
 import Typography from "@material-ui/core/Typography";
 import { connect } from "react-redux";
-import ChatSocketServer from "../Chat/utils/ChatSocketServer";
+import ChatSocketServer from "../../utils/ChatSocketServer";
 
 const ChatPage = (props) => {
   const { _id, userName } = props.currentUser;
