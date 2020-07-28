@@ -5,7 +5,7 @@ import Typography from "@material-ui/core/Typography";
 const ChatPage = () => {
   return (
     <Container>
-      <Typography>Whoops!</Typography>
+      <Typography variant="h1">Chat Page</Typography>
     </Container>
   );
 };
