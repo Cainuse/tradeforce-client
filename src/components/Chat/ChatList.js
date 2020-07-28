@@ -51,10 +51,11 @@ class ChatList extends React.Component {
         chatList = response.chatList.chatList;
         this.setState({ chatList: chatList });
       } else if (response.singleUser && response.userInfo) {
-        let userId = response.userInfo._id;
+        console.log(response);
+        let userId = response.userInfo.user._id;
         let updatedChatList = this.state.chatList.map((user) => {
           if (user._id === userId) {
-            user.isOnline = true;
+            user.isOnline = response.userInfo.user.isOnline;
           }
           return user;
         });
