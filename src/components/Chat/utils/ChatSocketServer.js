@@ -33,10 +33,11 @@ class ChatSocketServer {
   };
 
   logout = (userId) => {
-    this.socket.emit("logout", userId);
+    this.socket.emit("logout", { userId });
     this.socket.on("logout-response", (data) => {
       this.eventEmitter.emit("logout-response", data);
     });
+    console.log("logged out");
   };
 }
 

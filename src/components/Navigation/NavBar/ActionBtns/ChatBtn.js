@@ -42,7 +42,7 @@ const ChatBtn = () => {
 
   return (
     <IconButton color="inherit" onClick={redirect} className={classes.iconBtn}>
-      <Badge color="primary" variant="dot" visible={false}>
+      <Badge color="primary" variant="dot" visible="false">
         <MailOutlineIcon className={classes.chatBtn} />
       </Badge>
     </IconButton>

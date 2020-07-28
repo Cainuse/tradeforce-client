@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -17,6 +17,9 @@ const useStyles = makeStyles((theme) => ({
 
 const ChatList = () => {
   const classes = useStyles();
+  const [chatList, setChatList] = useState([]);
+
+  useEffect(() => {});
 
   return (
     <div className={classes.root}>
