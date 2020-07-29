@@ -4,6 +4,7 @@ import Typography from "@material-ui/core/Typography";
 import { connect } from "react-redux";
 import ChatList from "../Chat/ChatList";
 import Grid from "@material-ui/core/Grid";
+import Conversation from "../Chat/Conversation";
 
 const ChatPage = (props) => {
   const [selectedChatUser, setSelectedChatUser] = useState(null);
@@ -19,7 +20,10 @@ const ChatPage = (props) => {
           />
         </Grid>
         <Grid item xs={8}>
-          {selectedChatUser ? <p>Chat Conversation Here</p> : null}
+          <Conversation
+            currentUser={props.currentUser}
+            selectedChatUser={selectedChatUser}
+          />
         </Grid>
       </Grid>
     </Container>
