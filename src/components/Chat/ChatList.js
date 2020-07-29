@@ -105,7 +105,6 @@ class ChatList extends React.Component {
                 <ListItem
                   key={idx}
                   button
-                  // selected={this.state.selectedItemIndex === idx}
                   onClick={() => this.selectChatUser({ user, idx })}
                   className={clsx(classes.listItem, {
                     [classes.selectedUser]:
@@ -114,9 +113,6 @@ class ChatList extends React.Component {
                 >
                   <ChatListItem user={user} />
                 </ListItem>
-                {/* {idx !== this.state.chatList.length - 1 ? (
-                  <Divider variant="inset" component="li" />
-                ) : null} */}
               </React.Fragment>
             );
           })}
