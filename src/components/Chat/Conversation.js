@@ -35,6 +35,17 @@ const useStyles = (theme) => ({
     alignItems: "center",
     margin: theme.spacing(2, 0, 2, 2),
   },
+  messageContainer: {
+    padding: theme.spacing(0, 3),
+    height: "80%",
+    overflow: "auto",
+  },
+  conversationContainer: {
+    height: "85vh",
+  },
+  fromUser: {
+    color: theme.palette.primary.main,
+  },
 });
 
 class Conversation extends React.Component {
@@ -51,15 +62,16 @@ class Conversation extends React.Component {
 
   componentDidMount = () => {
     ChatSocketServer.receiveMessage();
-    ChatSocketServer.eventEmitter.on("add-message-response", (response) => {
-      console.log(response);
-    });
+    ChatSocketServer.eventEmitter.on(
+      "add-message-response",
+      this.receiveMessage
+    );
   };
 
   componentWillUnmount = () => {
     ChatSocketServer.eventEmitter.removeListener(
       "add-message-response",
-      () => {}
+      this.receiveMessage
     );
   };
 
@@ -69,6 +81,19 @@ class Conversation extends React.Component {
       this.props.selectedChatUser._id !== prevProps.selectedChatUser._id
     ) {
       this.getMessages();
+    }
+  };
+
+  receiveMessage = (response) => {
+    if (!response.error && response.chatMsg) {
+      this.setState({
+        conversations: [...this.state.conversations, response.chatMsg],
+      });
+    } else {
+      let errorMessage = response.message
+        ? response.message
+        : "Something went wrong";
+      console.log(errorMessage);
     }
   };
 
@@ -91,8 +116,17 @@ class Conversation extends React.Component {
 
   handleOnSubmit = (e) => {
     e.preventDefault();
-    console.log("submitted: ", this.state.message);
     // submit message via socket
+    let message = {
+      fromUserId: this.state.currentUser._id,
+      toUserId: this.props.selectedChatUser._id,
+      content: this.state.message,
+    };
+    ChatSocketServer.sendMessage(message);
+    this.setState({
+      conversations: [...this.state.conversations, message],
+      message: "",
+    });
   };
 
   render() {
@@ -124,17 +158,25 @@ class Conversation extends React.Component {
           />
         </Paper>
         <Divider />
-        {this.state.conversations.length > 0
-          ? this.state.conversations.map((msg, idx) => {
-              return (
-                <div key={idx}>
-                  <p>{msg.content}</p>
-                  <p>From: {msg.fromUserName}</p>
-                  <p>To: {msg.toUserName}</p>
-                </div>
-              );
-            })
-          : "nothing selected"}
+        <div className={classes.messageContainer}>
+          {this.state.conversations.length > 0
+            ? this.state.conversations.map((msg, idx) => {
+                return (
+                  <div key={idx}>
+                    <p
+                      className={
+                        msg.fromUserId === this.state.currentUser._id
+                          ? classes.fromUser
+                          : classes.toUser
+                      }
+                    >
+                      {msg.content}
+                    </p>
+                  </div>
+                );
+              })
+            : "nothing selected"}
+        </div>
         <Divider />
         <Paper
           component="form"
@@ -150,6 +192,7 @@ class Conversation extends React.Component {
             variant="outlined"
             className={classes.input}
             size="small"
+            value={this.state.message}
           />
           <IconButton
             type="submit"

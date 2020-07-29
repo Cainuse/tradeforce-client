@@ -30,7 +30,7 @@ class ChatSocketServer {
   };
 
   sendMessage = (message) => {
-    this.socket.on("add-message", message);
+    this.socket.emit("add-message", message);
   };
 
   receiveMessage = () => {
