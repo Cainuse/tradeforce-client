@@ -41,7 +41,12 @@ class ChatList extends React.Component {
     this.props.setLoading(true);
     const userId = this.props.userId;
     ChatSocketServer.getChatList(userId);
+    ChatSocketServer.getStatusChange();
     ChatSocketServer.eventEmitter.on("chat-list-response", this.createChatList);
+    ChatSocketServer.eventEmitter.on(
+      "status-change-response",
+      this.updateUserStatus
+    );
   };
 
   componentWillUnmount = () => {
@@ -49,35 +54,36 @@ class ChatList extends React.Component {
       "chat-list-response",
       this.createChatList
     );
+    ChatSocketServer.eventEmitter.removeListener(
+      "status-change-response",
+      this.updateUserStatus
+    );
+  };
+
+  updateUserStatus = (response) => {
+    if (!response.error && response.userInfo && response.userInfo.user) {
+      let userId = response.userInfo.user._id;
+      let updatedChatList = this.state.chatList.map((user) => {
+        if (user._id === userId) {
+          user.isOnline = response.userOnline;
+        }
+        return user;
+      });
+      this.setState({ chatList: updatedChatList });
+    } else {
+      console.log(response.message);
+    }
   };
 
   createChatList = (response) => {
-    if (!response.error) {
-      let chatList = this.state.chatList;
-      if (!response.singleUser && !response.userDisconnected) {
-        chatList = response.chatList.chatList;
-        this.setState({ chatList: chatList });
-      } else if (response.singleUser && response.userInfo) {
-        let userId = response.userInfo.user._id;
-        let updatedChatList = this.state.chatList.map((user) => {
-          if (user._id === userId) {
-            user.isOnline = response.userInfo.user.isOnline;
-          }
-          return user;
-        });
-        this.setState({ chatList: updatedChatList });
-      } else if (response.userDisconnected) {
-        let userId = response.user ? response.user._id : response.userId;
-        let updatedChatList = this.state.chatList.map((user) => {
-          if (user._id === userId) {
-            user.isOnline = false;
-          }
-          return user;
-        });
-        this.setState({ chatList: updatedChatList });
-      }
+    if (!response.error && response.chatList) {
+      let newChatList = response.chatList.chatList;
+      this.setState({ chatList: newChatList });
     } else {
-      console.log("chatlist load error");
+      let errorMessage = response.message
+        ? response.message
+        : "unable to load chat list";
+      console.log(errorMessage);
     }
     this.props.setLoading(false);
   };

@@ -10,6 +10,7 @@ class ChatSocketServer {
       this.socket = io(process.env.REACT_APP_SOCKET_URL, {
         query: `userId=${userId}`,
       });
+      this.socket.emit("status-change", { userId, status: true });
     } catch (e) {
       alert("Socket connection could not be established");
     }
@@ -19,6 +20,12 @@ class ChatSocketServer {
     this.socket.emit("chat-list", { userId: userId });
     this.socket.on("chat-list-response", (data) => {
       this.eventEmitter.emit("chat-list-response", data);
+    });
+  };
+
+  getStatusChange = () => {
+    this.socket.on("status-change-response", (data) => {
+      this.eventEmitter.emit("status-change-response", data);
     });
   };
 
@@ -34,6 +41,7 @@ class ChatSocketServer {
 
   logout = (userId) => {
     this.socket.emit("logout", { userId });
+    this.socket.emit("status-change", { userId, status: false });
     this.socket.on("logout-response", (data) => {
       this.eventEmitter.emit("logout-response", data);
     });
