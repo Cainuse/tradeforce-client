@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
+import Badge from "@material-ui/core/Badge";
 import { IconButton, List } from "@material-ui/core";
 import NotificationsNoneOutlinedIcon from "@material-ui/icons/NotificationsNoneOutlined";
 import Divider from "@material-ui/core/Divider";
@@ -16,7 +17,7 @@ import {
 
 const useStyles = makeStyles(() => ({
   iconBtn: {
-    padding: "1px",
+    padding: "8px",
   },
   notificationsMenu: {
     border: "1rem",
@@ -24,7 +25,6 @@ const useStyles = makeStyles(() => ({
   },
   notificationBtn: {
     fontSize: "1.7rem",
-    padding: "5px",
   },
   notificationsList: {
     width: "26rem",
@@ -47,6 +47,15 @@ const NotificationsMenu = ({ dispatch, notifications, currentUser }) => {
   const [markAllStatus, setmarkAllStatus] = useState(true);
   const [myNotifications, setMyNotifications] = useState(notifications);
 
+  const countUnread = (currNotifications) => {
+    return currNotifications.reduce(
+      (acc, curr) => (!curr.isRead ? ++acc : acc),
+      0
+    );
+  };
+
+  const [numUnread, setNumUnread] = useState(countUnread(notifications));
+
   useEffect(() => {
     retrieveNotifications();
   }, [markAllStatus]);
@@ -56,9 +65,21 @@ const NotificationsMenu = ({ dispatch, notifications, currentUser }) => {
     retrieveNotifications();
   };
 
+  const updateNumUnread = (amount, type) => {
+    let updateAmount = 0;
+    if (type === "increase") {
+      updateAmount = numUnread + amount;
+    } else if (type === "decrease") {
+      updateAmount = numUnread - amount <= 0 ? 0 : numUnread - amount;
+    }
+
+    setNumUnread(updateAmount);
+  };
+
   const retrieveNotifications = () => {
-    dispatch(getNotificationsAsync(currentUser.user._id)).then((res) => {
+    return dispatch(getNotificationsAsync(currentUser.user._id)).then((res) => {
       setMyNotifications(res.notifications);
+      setNumUnread(countUnread(res.notifications));
     });
   };
 
@@ -68,6 +89,7 @@ const NotificationsMenu = ({ dispatch, notifications, currentUser }) => {
         updateAllNotificationsAsync(currentUser.user._id, markAllStatus)
       ).then(() => {
         setmarkAllStatus(!markAllStatus);
+        setNumUnread(0);
       });
     }
   };
@@ -75,6 +97,7 @@ const NotificationsMenu = ({ dispatch, notifications, currentUser }) => {
   const handleClickDeleteAll = () => {
     dispatch(removeAllNotificationsAsync(currentUser.user._id)).then(() => {
       retrieveNotifications();
+      setNumUnread(0);
     });
   };
 
@@ -91,6 +114,7 @@ const NotificationsMenu = ({ dispatch, notifications, currentUser }) => {
       return notification;
     });
     setMyNotifications(updatedNotifications);
+    updateNumUnread(1, newReadStatus ? "decrease" : "increase");
   };
 
   const renderNotifications = (myNotifications) => {
@@ -108,6 +132,7 @@ const NotificationsMenu = ({ dispatch, notifications, currentUser }) => {
           date={notification.date}
           content={notification.content}
           onUpdateStatus={updateIndividualReadStatus}
+          updateUnreadCount={updateNumUnread}
         />
       );
     });
@@ -125,8 +150,11 @@ const NotificationsMenu = ({ dispatch, notifications, currentUser }) => {
         onClick={handleOpenNotifications}
         className={classes.iconBtn}
       >
-        <NotificationsNoneOutlinedIcon className={classes.notificationBtn} />
+        <Badge badgeContent={numUnread} color="secondary">
+          <NotificationsNoneOutlinedIcon className={classes.notificationBtn} />
+        </Badge>
       </IconButton>
+
       <Menu
         getContentAnchorEl={null}
         anchorOrigin={{
