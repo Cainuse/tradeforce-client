@@ -1,17 +1,23 @@
 import React, { useState } from "react";
 import Container from "@material-ui/core/Container";
-import Typography from "@material-ui/core/Typography";
 import { connect } from "react-redux";
 import ChatList from "../Chat/ChatList";
 import Grid from "@material-ui/core/Grid";
 import Conversation from "../Chat/Conversation";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  container: {
+    paddingTop: theme.spacing(6),
+  },
+}));
 
 const ChatPage = (props) => {
   const [selectedChatUser, setSelectedChatUser] = useState(null);
+  const classes = useStyles();
 
   return (
-    <Container>
-      <Typography variant="h1">Chat Page</Typography>
+    <Container className={classes.container}>
       <Grid container>
         <Grid item xs={4}>
           <ChatList

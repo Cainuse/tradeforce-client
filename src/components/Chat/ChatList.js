@@ -8,7 +8,10 @@ import ChatSocketServer from "../../utils/ChatSocketServer";
 import Badge from "@material-ui/core/Badge";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
-import Divider from "@material-ui/core/Divider";
+import Typography from "@material-ui/core/Typography";
+import { connect } from "react-redux";
+import { setLoading } from "../../redux/actions/loadingActions";
+import clsx from "clsx";
 
 const useStyles = (theme) => ({
   root: {
@@ -19,6 +22,10 @@ const useStyles = (theme) => ({
   listItem: {
     margin: theme.spacing(1, 0),
   },
+  selectedUser: {
+    backgroundColor: "#eaf3fb",
+    borderLeft: `5px solid ${theme.palette.primary.main}`,
+  },
 });
 
 class ChatList extends React.Component {
@@ -26,12 +33,12 @@ class ChatList extends React.Component {
     super(props);
     this.state = {
       chatList: [],
-      loading: true,
       selectedItemIndex: -1,
     };
   }
 
   componentDidMount = () => {
+    this.props.setLoading(true);
     const userId = this.props.userId;
     ChatSocketServer.getChatList(userId);
     ChatSocketServer.eventEmitter.on("chat-list-response", this.createChatList);
@@ -51,7 +58,6 @@ class ChatList extends React.Component {
         chatList = response.chatList.chatList;
         this.setState({ chatList: chatList });
       } else if (response.singleUser && response.userInfo) {
-        console.log(response);
         let userId = response.userInfo.user._id;
         let updatedChatList = this.state.chatList.map((user) => {
           if (user._id === userId) {
@@ -73,7 +79,7 @@ class ChatList extends React.Component {
     } else {
       console.log("chatlist load error");
     }
-    this.setState({ loading: false });
+    this.props.setLoading(false);
   };
 
   selectChatUser = ({ user, idx }) => {
@@ -84,26 +90,32 @@ class ChatList extends React.Component {
   render() {
     const { classes } = this.props;
     return this.state.chatList.length === 0 ? null : (
-      <List>
-        {this.state.chatList.map((user, idx) => {
-          return (
-            <React.Fragment key={idx}>
-              <ListItem
-                key={idx}
-                button
-                selected={this.state.selectedItemIndex === idx}
-                onClick={() => this.selectChatUser({ user, idx })}
-                className={classes.listItem}
-              >
-                <ChatListItem user={user} />
-              </ListItem>
-              {idx !== this.state.chatList.length - 1 ? (
-                <Divider variant="inset" component="li" />
-              ) : null}
-            </React.Fragment>
-          );
-        })}
-      </List>
+      <React.Fragment>
+        <Typography variant="h5">Conversations</Typography>
+        <List>
+          {this.state.chatList.map((user, idx) => {
+            return (
+              <React.Fragment key={idx}>
+                <ListItem
+                  key={idx}
+                  button
+                  // selected={this.state.selectedItemIndex === idx}
+                  onClick={() => this.selectChatUser({ user, idx })}
+                  className={clsx(classes.listItem, {
+                    [classes.selectedUser]:
+                      this.state.selectedItemIndex === idx,
+                  })}
+                >
+                  <ChatListItem user={user} />
+                </ListItem>
+                {/* {idx !== this.state.chatList.length - 1 ? (
+                  <Divider variant="inset" component="li" />
+                ) : null} */}
+              </React.Fragment>
+            );
+          })}
+        </List>
+      </React.Fragment>
     );
   }
 }
@@ -134,4 +146,4 @@ const ChatListItem = ({ user }) => {
   );
 };
 
-export default withStyles(useStyles)(ChatList);
+export default connect(null, { setLoading })(withStyles(useStyles)(ChatList));
