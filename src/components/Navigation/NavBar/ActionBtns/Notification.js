@@ -69,6 +69,7 @@ const SeeMoreMenu = ({
       </IconButton>
       <Menu
         id="more-menu"
+        getContentAnchorEl={null}
         anchorEl={anchorEl}
         anchorOrigin={{
           vertical: "bottom",
@@ -82,7 +83,7 @@ const SeeMoreMenu = ({
         open={open}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}>
+        <MenuItem onClick={handleClose} divider={true}>
           <Button
             color="inherit"
             onClick={handleReadClick}
@@ -116,6 +117,7 @@ const Notification = ({
   content,
   key,
   onUpdateStatus,
+  updateUnreadCount,
 }) => {
   const classes = useStyles();
 
@@ -124,6 +126,7 @@ const Notification = ({
   const handleDeleteClick = () => {
     dispatch(removeNotificationAsync(_id)).then(() => {
       setIsExisting(false);
+      updateUnreadCount(1, "decrease");
     });
   };
 
