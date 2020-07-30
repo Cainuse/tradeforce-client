@@ -12,6 +12,7 @@ import Typography from "@material-ui/core/Typography";
 import { connect } from "react-redux";
 import { setLoading } from "../../redux/actions/loadingActions";
 import clsx from "clsx";
+import _ from "lodash";
 
 const useStyles = (theme) => ({
   root: {
@@ -34,6 +35,7 @@ class ChatList extends React.Component {
     this.state = {
       chatList: [],
       selectedItemIndex: -1,
+      unreadChats: [],
     };
   }
 
@@ -47,6 +49,10 @@ class ChatList extends React.Component {
       "status-change-response",
       this.updateUserStatus
     );
+    ChatSocketServer.eventEmitter.on(
+      "add-message-response",
+      this.addUnreadIndicator
+    );
   };
 
   componentWillUnmount = () => {
@@ -58,6 +64,32 @@ class ChatList extends React.Component {
       "status-change-response",
       this.updateUserStatus
     );
+    ChatSocketServer.eventEmitter.removeListener(
+      "add-message-response",
+      this.addUnreadIndicator
+    );
+  };
+
+  addUnreadIndicator = (response) => {
+    if (!response.error && response.chatMsg) {
+      let senderId = response.chatMsg.fromUserId;
+      let userIndex = _.findIndex(
+        this.state.chatList,
+        (user) => user._id === senderId
+      );
+      let isOtherUserSelected =
+        this.state.selectedItemIndex === -1 ||
+        userIndex !== this.state.selectedItemIndex;
+      let isUserAlreadyUnread = _.includes(this.state.unreadChats, senderId);
+      if (isOtherUserSelected && !isUserAlreadyUnread) {
+        this.setState({ unreadChats: [...this.state.unreadChats, senderId] });
+      }
+    } else {
+      let errorMessage = response.message
+        ? response.message
+        : "Something went wrong";
+      console.log(errorMessage);
+    }
   };
 
   updateUserStatus = (response) => {
@@ -89,7 +121,11 @@ class ChatList extends React.Component {
   };
 
   selectChatUser = ({ user, idx }) => {
-    this.setState({ selectedItemIndex: idx });
+    let updatedUnreadChats = _.filter(
+      this.state.unreadChats,
+      (userId) => userId !== user._id
+    );
+    this.setState({ selectedItemIndex: idx, unreadChats: updatedUnreadChats });
     this.props.setSelectedChatUser(user);
   };
 
@@ -111,7 +147,10 @@ class ChatList extends React.Component {
                       this.state.selectedItemIndex === idx,
                   })}
                 >
-                  <ChatListItem user={user} />
+                  <ChatListItem
+                    user={user}
+                    isUnread={_.includes(this.state.unreadChats, user._id)}
+                  />
                 </ListItem>
               </React.Fragment>
             );
@@ -122,7 +161,7 @@ class ChatList extends React.Component {
   }
 }
 
-const ChatListItem = ({ user }) => {
+const ChatListItem = ({ user, isUnread }) => {
   return (
     <React.Fragment>
       <ListItemIcon>
@@ -144,6 +183,7 @@ const ChatListItem = ({ user }) => {
         primary={`${user.firstName} ${user.lastName}`}
         secondary={user.userName}
       />
+      <Badge invisible={!isUnread} color="error" variant="dot" />
     </React.Fragment>
   );
 };
