@@ -10,7 +10,7 @@ import ReviewList from "../Review/ReviewList";
 import ItemPreviewList from "../Item/ItemPreviewList";
 import Button from "@material-ui/core/Button";
 import { calculateTotalPendingOffersReceived } from "../Offering/OffersReceived/OfferingHelpers";
-import { OffersReceived } from "../Offering/OffersReceived/OffersReceived";
+import OffersReceived from "../Offering/OffersReceived/OffersReceived";
 import { OffersSent } from "../Offering/OffersSent/OffersSent";
 
 const useStyles = (theme) => ({

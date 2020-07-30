@@ -2,6 +2,8 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Grid, Paper, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import { useHistory } from "react-router-dom";
+import { connect } from "react-redux";
 
 import { OffererInfoDisplay } from "./OffererInfoDisplay";
 import { OfferInfoDisplay } from "../OfferInfoDisplay";
@@ -10,6 +12,7 @@ import {
   acceptOffer,
   declineOffer,
 } from "../../../redux/actions/offeringActions";
+import ChatSocketServer from "../../../utils/ChatSocketServer";
 
 let useStyles = makeStyles((theme) => ({
   paper: {
@@ -39,14 +42,21 @@ let useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const OfferingDetails = () => {
+const OfferingDetails = ({ currentUser }) => {
   const classes = useStyles();
+  let history = useHistory();
   const dispatch = useDispatch();
   const contentInfo = useSelector((state) => {
     return state.modal.contentInfo;
   });
   let { offeringInfo, postingInfo } = contentInfo;
   let { offer, offerer } = offeringInfo;
+
+  const navigateToChat = () => {
+    setTimeout(() => {
+      history.push("/chat");
+    }, 3000);
+  };
 
   const handleAcceptOffer = async () => {
     let result = window.confirm(
@@ -58,6 +68,14 @@ export const OfferingDetails = () => {
     if (result) {
       await dispatch(acceptOffer(offer._id));
       dispatch(closeModal());
+      ChatSocketServer.sendMessage({
+        fromUserId: currentUser ? currentUser.user._id : 0,
+        toUserId: offerer._id,
+        content: `Hi there! I've accepted your offering to my posting ${
+          postingInfo ? postingInfo.title : ""
+        }`,
+      });
+      navigateToChat();
     }
   };
 
@@ -125,3 +143,9 @@ export const OfferingDetails = () => {
     </Paper>
   );
 };
+
+const mapStateToProps = (state) => ({
+  currentUser: state.currentUser,
+});
+
+export default connect(mapStateToProps)(OfferingDetails);
