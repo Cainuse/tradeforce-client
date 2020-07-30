@@ -6,16 +6,14 @@ import IconButton from "@material-ui/core/IconButton";
 import { withStyles } from "@material-ui/core/styles";
 import InputBase from "@material-ui/core/InputBase";
 import Divider from "@material-ui/core/Divider";
-import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import Badge from "@material-ui/core/Badge";
-import Avatar from "@material-ui/core/Avatar";
 import _ from "lodash";
+import ChatUserInfo from "./ChatUserInfo";
 
 import ChatSocketServer from "../../utils/ChatSocketServer";
 import ChatHttpServer from "../../utils/ChatHttpServer";
-import { Messages } from "./Messages";
+import Messages from "./Messages";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
+
 // import  Messages  from "./Messages";
 
 const useStyles = (theme) => ({
@@ -35,7 +33,7 @@ const useStyles = (theme) => ({
   },
   userHeader: {
     display: "flex",
-    justifyContent: "flex-start",
+    justifyContent: "space-between",
     alignItems: "center",
     margin: theme.spacing(2, 0, 2, 2),
   },
@@ -144,28 +142,10 @@ class Conversation extends React.Component {
     return selectedChatUser ? (
       <div className={classes.conversationContainer}>
         <Paper elevation={0} className={classes.userHeader}>
-          <ListItemIcon>
-            <Badge
-              color="primary"
-              variant="dot"
-              invisible={!selectedChatUser.isOnline}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-            >
-              <ListItemAvatar>
-                <Avatar
-                  alt={selectedChatUser.userName}
-                  src={selectedChatUser.profilePic}
-                />
-              </ListItemAvatar>
-            </Badge>
-          </ListItemIcon>
-          <ListItemText
-            primary={`${selectedChatUser.firstName} ${selectedChatUser.lastName}`}
-            secondary={selectedChatUser.userName}
-          />
+          <ChatUserInfo user={selectedChatUser} hideBadge={true} />
+          <IconButton>
+            <MoreVertIcon />
+          </IconButton>
         </Paper>
         <Divider />
 

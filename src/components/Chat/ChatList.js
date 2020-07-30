@@ -5,15 +5,12 @@ import _ from "lodash";
 import { withStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
 import Badge from "@material-ui/core/Badge";
-import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 
 import { setLoading } from "../../redux/actions/loadingActions";
 import ChatSocketServer from "../../utils/ChatSocketServer";
+import ChatUserInfo from "./ChatUserInfo";
 
 const useStyles = (theme) => ({
   root: {
@@ -165,25 +162,7 @@ class ChatList extends React.Component {
 const ChatListItem = ({ user, isUnread }) => {
   return (
     <React.Fragment>
-      <ListItemIcon>
-        <Badge
-          color="primary"
-          variant="dot"
-          invisible={!user.isOnline}
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "left",
-          }}
-        >
-          <ListItemAvatar>
-            <Avatar alt={user.userName} src={user.profilePic} />
-          </ListItemAvatar>
-        </Badge>
-      </ListItemIcon>
-      <ListItemText
-        primary={`${user.firstName} ${user.lastName}`}
-        secondary={user.userName}
-      />
+      <ChatUserInfo user={user} hideBadge={false} />
       <Badge invisible={!isUnread} color="error" variant="dot" />
     </React.Fragment>
   );
