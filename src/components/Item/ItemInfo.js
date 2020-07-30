@@ -141,7 +141,9 @@ function ItemInfo(props) {
             openLoginModal: props.openLoginModal,
             displayWarning: props.displayWarning,
           })}
-          <MessageBox ownerId={itemDetail.ownerId} currentUser={currentUser} />
+          {itemDetail.ownerId !== currentUser._id ? (
+            <MessageBox ownerId={itemDetail.ownerId} />
+          ) : null}
           <Box my={3} width="60%">
             <p className={classes.detailTitle}>
               Quantity: <span className={classes.qtyVal}>{quantity}</span>
