@@ -17,6 +17,8 @@ import _ from "lodash";
 import ChatSocketServer from "../../utils/ChatSocketServer";
 import ChatHttpServer from "../../utils/ChatHttpServer";
 import { Messages } from "./Messages";
+// import  Messages  from "./Messages";
+
 
 const useStyles = (theme) => ({
   root: {
@@ -139,30 +141,6 @@ class Conversation extends React.Component {
     });
   };
 
-  renderMessages = (classes) => {
-    return (
-      <ScrollToBottom>
-        {this.state.conversations.map((msg, idx) => {
-            console.log(this.state.conversations)
-            return (
-              // <div key={idx}>
-              <p key={idx}
-                 className={
-                   msg.fromUserId === this.state.currentUser._id
-                     ? classes.fromUser
-                     : classes.toUser
-                 }
-              >
-                {msg.content}
-              </p>
-              // </div>
-            );
-          }
-        )}
-      </ScrollToBottom>
-    );
-  }
-
   render() {
     const { classes, selectedChatUser } = this.props;
     return selectedChatUser ? (
@@ -191,14 +169,15 @@ class Conversation extends React.Component {
             secondary={selectedChatUser.userName}
           />
         </Paper>
-        <Divider />
-        <div className={classes.messageContainer}>
-          {this.state.conversations.length > 0
-            // ? this.renderMessages(classes)
-            ? <Messages conversations={this.state.conversations} classes={classes} currentUser={this.state.currentUser}/>
-            : "nothing selected"}
-        </div>
-        <Divider />
+        <Divider/>
+
+        <Messages
+          conversations={this.state.conversations}
+          classes={classes}
+          currentUser={this.state.currentUser}
+        />
+
+        <Divider/>
         <Paper
           component="form"
           elevation={0}

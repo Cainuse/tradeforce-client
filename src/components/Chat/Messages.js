@@ -1,34 +1,34 @@
-import React, { useState, useEffect } from "react";
-import ScrollToBottom, { useScrollToBottom } from "react-scroll-to-bottom";
+import React from "react";
+import ScrollToBottom from "react-scroll-to-bottom";
 
 export const Messages = ({conversations, currentUser, classes}) => {
-  let [messages, setMessages] = useState([]);
-  let scrollToBottom = useScrollToBottom();
 
-  useEffect(() => {
-    setMessages(conversations);
-    scrollToBottom();
-  }, [conversations])
-
+  if (conversations.length > 0) {
+    return (
+      <ScrollToBottom className={classes.messageContainer}>
+        {conversations.map((msg, idx) => {
+            return (
+              <div key={idx}>
+                <p key={idx}
+                   className={
+                     msg.fromUserId === currentUser._id
+                       ? classes.fromUser
+                       : classes.toUser
+                   }
+                >
+                  {msg.content}
+                </p>
+              </div>
+            );
+          }
+        )}
+      </ScrollToBottom>
+    );
+  }
   return (
-    <ScrollToBottom>
-      {messages.map((msg, idx) => {
-          console.log(messages)
-          return (
-            // <div key={idx}>
-            <p key={idx}
-               className={
-                 msg.fromUserId === currentUser._id
-                   ? classes.fromUser
-                   : classes.toUser
-               }
-            >
-              {msg.content}
-            </p>
-            // </div>
-          );
-        }
-      )}
-    </ScrollToBottom>
-  )
+    <div className={classes.messageContainer}>
+      {"nothing selected"}
+    </div>
+  );
+
 }
