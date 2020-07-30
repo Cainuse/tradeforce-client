@@ -7,7 +7,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import AccountCircleOutlinedIcon from "@material-ui/icons/AccountCircleOutlined";
 import { IconButton } from "@material-ui/core";
 
-import { unsetUser } from "../../../../redux/actions/userActions";
+import { logoutUser } from "../../../../redux/actions/userActions";
 import GoogleLogoutBtn from "../../../Login/GoogleLogoutBtn";
 import { loadUserDetails } from "../../../../redux/actions/userDetailActions";
 
@@ -42,7 +42,7 @@ function AccountBtn(props) {
 
   const handleClickLogout = () => {
     localStorage.removeItem("token");
-    props.unsetUser();
+    props.logoutUser(props.currentUser.user._id);
     history.push("/");
   };
 
@@ -89,7 +89,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  unsetUser: () => dispatch(unsetUser()),
+  logoutUser: (userId) => dispatch(logoutUser(userId)),
   loadUserDetails: ({ userId, currentUserId }) =>
     dispatch(loadUserDetails({ userId, currentUserId })),
 });

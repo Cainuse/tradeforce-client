@@ -136,7 +136,12 @@ export const OfferingPreview = (props) => {
             </Grid>
             <Grid container item xs={8} justify={"flex-end"}>
               <Grid container item xs={4} justify={"flex-end"}>
-                <AcceptIconButton fns={fns} offerInfo={offerInfo} />
+                <AcceptIconButton
+                  fns={fns}
+                  offerInfo={offerInfo}
+                  offerer={offerer}
+                  posting={activePosting}
+                />
               </Grid>
               <Grid container item xs={4} justify={"flex-end"}>
                 <DeclineIconButton fns={fns} offerInfo={offerInfo} />

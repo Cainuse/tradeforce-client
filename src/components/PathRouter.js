@@ -8,6 +8,7 @@ import EditItemDetailsPage from "./pages/EditItemDetailsPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import ScrollToTop from "./ScrollToTop";
 import EditUserProfilePage from "./pages/EditUserProfilePage";
+import ChatPage from "./pages/ChatPage";
 
 const PathRouter = () => {
   return (
@@ -31,6 +32,9 @@ const PathRouter = () => {
         </Route>
         <Route exact path="/profile/user=:id">
           <UserProfile />
+        </Route>
+        <Route exact path="/chat">
+          <ChatPage />
         </Route>
         <Route>
           <NotFoundPage />

@@ -14,6 +14,7 @@ import {
 import { displayError, displaySuccess } from "./snackbarActions";
 import { closeModal, openOfferModal } from "./modalActions";
 import { MAKE_OFFER_BUTTON } from "../constants/buttonTypes";
+import ChatSocketServer from "../../utils/ChatSocketServer";
 
 const BASE_URL = `${process.env.REACT_APP_BASE_URL}/users`;
 
@@ -84,6 +85,7 @@ export const registerUserAsync = (user, openedFrom, postingOwnerId) => {
           location: respData.user.location,
         })
       );
+      ChatSocketServer.createSocketConnection(respData.user._id);
       handleAftermathModalBehaviour(
         dispatch,
         openedFrom,
@@ -158,6 +160,7 @@ export const loginUserAsync = (
           location: respData.user.location,
         })
       );
+      ChatSocketServer.createSocketConnection(respData.user._id);
       handleAftermathModalBehaviour(
         dispatch,
         openedFrom,
@@ -177,7 +180,7 @@ export const authenticateUser = (token) => {
     try {
       const resp = await axios.post(`${BASE_URL}/authenticate`, { token });
       const user = resp.data;
-      return dispatch(
+      dispatch(
         setUser({
           _id: user._id,
           userName: user.userName,
@@ -190,6 +193,7 @@ export const authenticateUser = (token) => {
           location: user.location,
         })
       );
+      ChatSocketServer.createSocketConnection(user._id);
     } catch (err) {
       dispatch(isUserFailed());
       return dispatch(
@@ -225,4 +229,11 @@ const handleAftermathModalBehaviour = (
   } else {
     dispatch(closeModal());
   }
+};
+
+export const logoutUser = (userId) => {
+  return (dispatch) => {
+    ChatSocketServer.logout(userId);
+    dispatch(unsetUser());
+  };
 };

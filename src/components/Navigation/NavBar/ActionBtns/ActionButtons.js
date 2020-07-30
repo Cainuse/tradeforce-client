@@ -12,6 +12,7 @@ import {
 } from "../../../../redux/actions/modalActions";
 import AccountBtn from "./AccountBtn";
 import { LOGIN_REGISTER_BUTTON } from "../../../../redux/constants/buttonTypes";
+import ChatBtn from "./ChatBtn";
 
 const loggedOutStyles = makeStyles(() => ({
   loginBtn: {
@@ -99,6 +100,7 @@ const LoggedInActionItems = (props) => {
         openPostingModal={props.openPostingModal}
       />
       <AppBarDivider className={classes.divider} />
+      <ChatBtn />
       <NotificationsMenu />
       <AccountBtn
         iconBtnClass={classes.iconBtn}
