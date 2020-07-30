@@ -13,6 +13,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import Badge from "@material-ui/core/Badge";
 import Avatar from "@material-ui/core/Avatar";
+import _ from "lodash";
 
 const useStyles = (theme) => ({
   root: {
@@ -86,9 +87,15 @@ class Conversation extends React.Component {
 
   receiveMessage = (response) => {
     if (!response.error && response.chatMsg) {
-      this.setState({
-        conversations: [...this.state.conversations, response.chatMsg],
-      });
+      if (
+        !_.find(this.state.conversations, { _id: response.chatMsg._id }) &&
+        this.props.selectedChatUser &&
+        response.chatMsg.fromUserId === this.props.selectedChatUser._id
+      ) {
+        this.setState({
+          conversations: [...this.state.conversations, response.chatMsg],
+        });
+      }
     } else {
       let errorMessage = response.message
         ? response.message
