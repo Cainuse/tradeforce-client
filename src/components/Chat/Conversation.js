@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import ScrollToBottom from 'react-scroll-to-bottom';
 import Paper from "@material-ui/core/Paper";
 import SendIcon from "@material-ui/icons/Send";
 import IconButton from "@material-ui/core/IconButton";

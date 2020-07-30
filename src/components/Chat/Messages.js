@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ScrollToBottom from "react-scroll-to-bottom";
 
 export const Messages = ({conversations, currentUser, classes}) => {
+
+  //UseEffect to force rerender the component when
+  // -- user changes to a chat with another user
+  // -- new message is added
+  useEffect(() => {
+    //do nothing
+  }, [conversations])
 
   if (conversations.length > 0) {
     return (
