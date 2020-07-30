@@ -1,11 +1,9 @@
 import React from "react";
-import ChatSocketServer from "../../utils/ChatSocketServer";
-import ChatHttpServer from "../../utils/ChatHttpServer";
+import { connect } from "react-redux";
 import Paper from "@material-ui/core/Paper";
 import SendIcon from "@material-ui/icons/Send";
 import IconButton from "@material-ui/core/IconButton";
 import { withStyles } from "@material-ui/core/styles";
-import { connect } from "react-redux";
 import InputBase from "@material-ui/core/InputBase";
 import Divider from "@material-ui/core/Divider";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
@@ -14,6 +12,11 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Badge from "@material-ui/core/Badge";
 import Avatar from "@material-ui/core/Avatar";
 import _ from "lodash";
+
+import ChatSocketServer from "../../utils/ChatSocketServer";
+import ChatHttpServer from "../../utils/ChatHttpServer";
+import { Messages } from "./Messages";
+// import  Messages  from "./Messages";
 
 const useStyles = (theme) => ({
   root: {
@@ -165,25 +168,13 @@ class Conversation extends React.Component {
           />
         </Paper>
         <Divider />
-        <div className={classes.messageContainer}>
-          {this.state.conversations.length > 0
-            ? this.state.conversations.map((msg, idx) => {
-                return (
-                  <div key={idx}>
-                    <p
-                      className={
-                        msg.fromUserId === this.state.currentUser._id
-                          ? classes.fromUser
-                          : classes.toUser
-                      }
-                    >
-                      {msg.content}
-                    </p>
-                  </div>
-                );
-              })
-            : "nothing selected"}
-        </div>
+
+        <Messages
+          conversations={this.state.conversations}
+          classes={classes}
+          currentUser={this.state.currentUser}
+        />
+
         <Divider />
         <Paper
           component="form"

@@ -1,18 +1,19 @@
 import React from "react";
+import { connect } from "react-redux";
+import clsx from "clsx";
+import _ from "lodash";
 import { withStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import ChatSocketServer from "../../utils/ChatSocketServer";
 import Badge from "@material-ui/core/Badge";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
-import { connect } from "react-redux";
+
 import { setLoading } from "../../redux/actions/loadingActions";
-import clsx from "clsx";
-import _ from "lodash";
+import ChatSocketServer from "../../utils/ChatSocketServer";
 
 const useStyles = (theme) => ({
   root: {
