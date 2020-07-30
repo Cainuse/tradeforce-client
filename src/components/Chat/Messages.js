@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import ScrollToBottom from "react-scroll-to-bottom";
-import ReactEmoji from "react-emoji";
+import { SentMessage, ReceivedMessage } from "./Message";
 
 const Messages = ({ conversations, currentUser, classes }) => {
   //UseEffect to force rerender the component when
@@ -13,22 +13,15 @@ const Messages = ({ conversations, currentUser, classes }) => {
   if (conversations.length > 0) {
     return (
       <ScrollToBottom className={classes.messageContainer}>
-        {conversations.map((msg, idx) => {
-          return (
-            <div key={idx}>
-              <p
-                key={idx}
-                className={
-                  msg.fromUserId === currentUser._id
-                    ? classes.fromUser
-                    : classes.toUser
-                }
-              >
-                {ReactEmoji.emojify(msg.content)}
-              </p>
-            </div>
-          );
-        })}
+        <div className={classes.messages}>
+          {conversations.map((msg, idx) => {
+            return msg.fromUserId === currentUser._id ? (
+              <SentMessage msg={msg} key={idx} />
+            ) : (
+              <ReceivedMessage msg={msg} key={idx} />
+            );
+          })}
+        </div>
       </ScrollToBottom>
     );
   }

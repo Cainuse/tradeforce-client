@@ -39,14 +39,22 @@ const useStyles = (theme) => ({
   },
   messageContainer: {
     padding: theme.spacing(0, 3),
+    width: "97%",
     height: "80%",
     overflow: "auto",
+    flex: "auto",
   },
   conversationContainer: {
     height: "85vh",
   },
   fromUser: {
     color: theme.palette.primary.main,
+  },
+  messages: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "flex-end",
+    padding: theme.spacing(2, 2, 2, 0),
   },
 });
 
