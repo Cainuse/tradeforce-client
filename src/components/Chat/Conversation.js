@@ -179,6 +179,8 @@ class Conversation extends React.Component {
             className={classes.input}
             size="small"
             value={this.state.message}
+            multiline
+            rowsMax={4}
           />
           <IconButton
             type="submit"
