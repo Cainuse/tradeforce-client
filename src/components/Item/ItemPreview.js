@@ -8,7 +8,6 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
-import Rating from "./Rating";
 import { clearOldItemDetails } from "../../redux/actions/postingActions";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -104,7 +103,6 @@ const ItemPreview = ({
         <Button size="small" color="primary" onClick={() => routeToItem(_id)}>
           Details
         </Button>
-        <Rating isReadOnly={true} />
       </CardActions>
     </Card>
   );
