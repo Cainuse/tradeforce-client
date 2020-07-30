@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import ScrollToBottom from "react-scroll-to-bottom";
+import ReactEmoji from "react-emoji";
 
-export const Messages = ({ conversations, currentUser, classes }) => {
+const Messages = ({ conversations, currentUser, classes }) => {
   //UseEffect to force rerender the component when
   // -- user changes to a chat with another user
   // -- new message is added
@@ -23,7 +24,7 @@ export const Messages = ({ conversations, currentUser, classes }) => {
                     : classes.toUser
                 }
               >
-                {msg.content}
+                {ReactEmoji.emojify(msg.content)}
               </p>
             </div>
           );
@@ -33,3 +34,5 @@ export const Messages = ({ conversations, currentUser, classes }) => {
   }
   return <div className={classes.messageContainer}>{"nothing selected"}</div>;
 };
+
+export default Messages;
