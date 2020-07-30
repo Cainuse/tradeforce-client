@@ -42,21 +42,29 @@ const useStyles = makeStyles((theme) => ({
   },
   time: {
     color: theme.palette.text.disabled,
+    margin: theme.spacing(0, 1),
   },
 }));
 
-const SentMessage = ({ msg }) => {
+const Message = ({ msg, isSentByCurrentUser }) => {
   const classes = useStyles();
   let time = moment(msg.date).format("hh:mm a");
 
   return (
     <div className={classes.messageContainer}>
-      <div className={clsx(classes.message, classes.sentMessage)}>
+      <div
+        className={clsx(classes.message, {
+          [classes.sentMessage]: isSentByCurrentUser,
+          [classes.receivedMessage]: !isSentByCurrentUser,
+        })}
+      >
         <p className={classes.messageText}>{ReactEmoji.emojify(msg.content)}</p>
       </div>
       <Typography
         variant="caption"
-        className={clsx(classes.time, classes.sentTime)}
+        className={clsx(classes.time, {
+          [classes.sentTime]: isSentByCurrentUser,
+        })}
       >
         {time}
       </Typography>
@@ -64,20 +72,4 @@ const SentMessage = ({ msg }) => {
   );
 };
 
-const ReceivedMessage = ({ msg }) => {
-  const classes = useStyles();
-  let time = moment(msg.date).format("hh:mm a");
-
-  return (
-    <div className={classes.messageContainer}>
-      <div className={clsx(classes.message, classes.receivedMessage)}>
-        <p className={classes.messageText}>{ReactEmoji.emojify(msg.content)}</p>
-      </div>
-      <Typography variant="caption" className={classes.time}>
-        {time}
-      </Typography>
-    </div>
-  );
-};
-
-export { SentMessage, ReceivedMessage };
+export default Message;

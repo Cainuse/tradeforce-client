@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import ScrollToBottom from "react-scroll-to-bottom";
-import { SentMessage, ReceivedMessage } from "./Message";
+import Message from "./Message";
 import DateDivider from "./DateDivider";
 import _ from "lodash";
 import moment from "moment";
@@ -26,22 +26,18 @@ const Messages = ({ conversations, currentUser, classes }) => {
               <React.Fragment key={index}>
                 <DateDivider>{date}</DateDivider>
                 {_.map(messages, (msg, idx) => {
-                  return msg.fromUserId === currentUser._id ? (
-                    <SentMessage msg={msg} key={idx} />
-                  ) : (
-                    <ReceivedMessage msg={msg} key={idx} />
+                  let isSentByCurrentUser = msg.fromUserId === currentUser._id;
+                  return (
+                    <Message
+                      msg={msg}
+                      key={idx}
+                      isSentByCurrentUser={isSentByCurrentUser}
+                    />
                   );
                 })}
               </React.Fragment>
             );
           })}
-          {/* {conversations.map((msg, idx) => {
-            return msg.fromUserId === currentUser._id ? (
-              <SentMessage msg={msg} key={idx} />
-            ) : (
-              <ReceivedMessage msg={msg} key={idx} />
-            );
-          })} */}
         </div>
       </ScrollToBottom>
     );
