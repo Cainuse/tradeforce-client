@@ -18,12 +18,11 @@ import ChatHttpServer from "../../utils/ChatHttpServer";
 import { Messages } from "./Messages";
 // import  Messages  from "./Messages";
 
-
 const useStyles = (theme) => ({
   root: {
     width: "100%",
     maxWidth: 360,
-    backgroundColor: theme.palette.background.paper
+    backgroundColor: theme.palette.background.paper,
   },
   input: {
     marginLeft: theme.spacing(1),
@@ -131,12 +130,12 @@ class Conversation extends React.Component {
     let message = {
       fromUserId: this.state.currentUser._id,
       toUserId: this.props.selectedChatUser._id,
-      content: this.state.message
+      content: this.state.message,
     };
     ChatSocketServer.sendMessage(message);
     this.setState({
       conversations: [...this.state.conversations, message],
-      message: ""
+      message: "",
     });
   };
 
@@ -168,7 +167,7 @@ class Conversation extends React.Component {
             secondary={selectedChatUser.userName}
           />
         </Paper>
-        <Divider/>
+        <Divider />
 
         <Messages
           conversations={this.state.conversations}
@@ -176,7 +175,7 @@ class Conversation extends React.Component {
           currentUser={this.state.currentUser}
         />
 
-        <Divider/>
+        <Divider />
         <Paper
           component="form"
           elevation={0}

@@ -15,7 +15,6 @@ import Typography from "@material-ui/core/Typography";
 import { setLoading } from "../../redux/actions/loadingActions";
 import ChatSocketServer from "../../utils/ChatSocketServer";
 
-
 const useStyles = (theme) => ({
   root: {
     width: "100%",
