@@ -7,7 +7,10 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import ChatSocketServer from "../../utils/ChatSocketServer";
-import { displayError } from "../../redux/actions/snackbarActions";
+import {
+  displayError,
+  displaySuccess,
+} from "../../redux/actions/snackbarActions";
 
 const MessageBox = ({ dispatch, ownerId, currentUser }) => {
   const [open, setOpen] = useState(false);
@@ -33,6 +36,11 @@ const MessageBox = ({ dispatch, ownerId, currentUser }) => {
     };
     ChatSocketServer.sendMessage(newMsg);
     setOpen(false);
+    dispatch(
+      displaySuccess(
+        "Message successfully sent! You may go to the Chat page for continuing a conversation."
+      )
+    );
   };
 
   return (
