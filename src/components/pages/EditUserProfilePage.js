@@ -60,7 +60,6 @@ class EditUserProfilePage extends React.Component {
   constructor(props) {
     super(props);
     const { userDetail } = props;
-    console.log(userDetail);
     this.state = {
       firstName: userDetail.firstName,
       lastName: userDetail.lastName,

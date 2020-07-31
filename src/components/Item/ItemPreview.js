@@ -38,11 +38,11 @@ const ItemPreview = ({
 }) => {
   const classes = useStyles();
   const history = useHistory();
-  const [distanceMsg, setDistanceMsg] = useState("Location data unavailable");
+  const [distanceMsg, setDistanceMsg] = useState("");
   const [locationMsg, setLocationMsg] = useState("");
 
   const getDistance = (lat1, lat2, lon1, lon2, unit) => {
-    if (lat1 == lat2 && lon1 == lon2) {
+    if (lat1 === lat2 && lon1 === lon2) {
       return 0;
     } else {
       var radlat1 = (Math.PI * lat1) / 180;
@@ -58,10 +58,10 @@ const ItemPreview = ({
       dist = Math.acos(dist);
       dist = (dist * 180) / Math.PI;
       dist = dist * 60 * 1.1515;
-      if (unit == "K") {
+      if (unit === "K") {
         dist = dist * 1.609344;
       }
-      if (unit == "N") {
+      if (unit === "N") {
         dist = dist * 0.8684;
       }
       return dist;
@@ -69,24 +69,30 @@ const ItemPreview = ({
   };
 
   const updateDistance = async () => {
-    let user = await getUserByIdAsync(ownerId);
+    try {
+      if (ownerId) {
+        let user = await getUserByIdAsync(ownerId);
 
-    const dist = Math.floor(
-      getDistance(
-        currentUser.user.location.lat,
-        user.location.lat,
-        currentUser.user.location.lon,
-        user.location.lon,
-        "K"
-      )
-    );
-    setDistanceMsg(`About ${dist} km away`);
-    setLocationMsg(user.location.location);
-    return dist;
+        const dist = Math.floor(
+          getDistance(
+            currentUser.user.location.lat,
+            user.location.lat,
+            currentUser.user.location.lon,
+            user.location.lon,
+            "K"
+          )
+        );
+        setDistanceMsg(`About ${dist} km away`);
+        setLocationMsg(user.location.location);
+        return dist;
+      }
+    } catch (err) {
+      setDistanceMsg("");
+      setLocationMsg("");
+    }
   };
 
   useEffect(() => {
-    console.log(currentUser);
     if (currentUser.user && currentUser.user.location) {
       updateDistance();
     }

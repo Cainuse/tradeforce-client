@@ -40,7 +40,6 @@ const GoogleBtn = ({ loginUserAsync, displayError, modal, itemDetail }) => {
 
   const handleLoginFailure = (response) => {
     displayError("Google login failed. Please try again!");
-    console.log(response);
   };
 
   return (
