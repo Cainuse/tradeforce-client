@@ -2,6 +2,8 @@
 
 Tradeforce is a webapp designed to connect community members together to facilitate the direct exchange of items in a barter-like system. By engaging with one another in trade, Tradeforce helps two-fold: strengthening community ties as people come together to help their neighbours; and also reducing collective spending and waste, finding new homes for items that would otherwise be discarded.
 
+Tradeforce Server URL: https://github.com/Cainuse/tradeforce-server
+
 ### Project Description:
 
 The app will store information related to physical items such as quantity, category, condition.
