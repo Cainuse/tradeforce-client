@@ -73,8 +73,8 @@ export const updateUserDetails = (userId, details) => {
   return async (dispatch) => {
     try {
       dispatch(setLoading(true));
-      await axios.patch(`${BASE_URL}/${userId}`, details);
-      dispatch(updateUserDetailSuccess(userId, details));
+      let updatedResponse = await axios.patch(`${BASE_URL}/${userId}`, details);
+      dispatch(updateUserDetailSuccess(userId, updatedResponse.data));
       dispatch(displaySuccess(UPDATE_USER_SUCCESS));
     } catch (e) {
       dispatch(displayError(UPDATE_USER_ERROR));

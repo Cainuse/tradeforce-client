@@ -87,6 +87,14 @@ class EditUserProfilePage extends React.Component {
     return haveEmptyFields || haveErrors;
   };
 
+  validatePostalCode = (postalCode) => {
+    const us = new RegExp("^\\d{5}(-{0,1}\\d{4})?$");
+    const ca = new RegExp(
+      /([ABCEGHJKLMNPRSTVXY]\d)([ABCEGHJKLMNPRSTVWXYZ]\d){2}/i
+    );
+    return us.test(postalCode) || ca.test(postalCode.replace(/\W+/g, ""));
+  };
+
   validateInput = ([key, value]) => {
     let errors = this.state.errors;
     switch (key) {
@@ -100,7 +108,11 @@ class EditUserProfilePage extends React.Component {
         break;
       case "postalCode":
         errors.postalCode =
-          value.length > 0 ? "" : "Postal Code cannot be left blank";
+          value.length > 0
+            ? this.validatePostalCode(value)
+              ? ""
+              : "Invalid postal code"
+            : "Postal Code cannot be left blank";
         break;
       default:
         break;
