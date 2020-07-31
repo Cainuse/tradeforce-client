@@ -53,7 +53,7 @@ export const ItemResultsHook = () => {
   let loading = useSelector((state) => state.loading);
 
   const [searchParams, setSearchParams] = useState("");
-  const [pageNum, setPageNum] = useState(1);
+  const [pageNum, setPageNum] = useState(null);
 
   const [postingPreviews, setPostingPreviews] = useState([]);
   const [totalNumPages, setTotalNumPages] = useState(-1);
@@ -67,10 +67,12 @@ export const ItemResultsHook = () => {
         } else {
           history.push(`/items/?${searchParams}/${pageNum}`);
         }
-        await dispatch(loadPostingsByQuery({
-          query: searchParams,
-          pageNumToLoad: pageNum
-        }));
+        if (pageNum){
+          await dispatch(loadPostingsByQuery({
+            query: searchParams,
+            pageNumToLoad: pageNum
+          }));
+        }
       } catch (err) {
         console.log(err);
       }
@@ -104,7 +106,7 @@ export const ItemResultsHook = () => {
     if (!hasPageParam) {
       setPageNum(1);
     } else {
-      setPageNum(params[1]);
+      setPageNum(parseInt(params[1]));
     }
   }
 
@@ -118,6 +120,7 @@ export const ItemResultsHook = () => {
           <ItemPreviewList items={postingPreviews} sizing={3}/>
           <div className={classes.paginationContainer}>
             <Pagination count={totalNumPages}
+                        page={pageNum}
                         color={"primary"}
                         showFirstButton={true}
                         showLastButton={true}
