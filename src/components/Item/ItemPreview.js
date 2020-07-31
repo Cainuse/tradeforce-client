@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Card from "@material-ui/core/Card";
 import { makeStyles } from "@material-ui/core";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -11,6 +11,7 @@ import Grid from "@material-ui/core/Grid";
 import { clearOldItemDetails } from "../../redux/actions/postingActions";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { getUserByIdAsync } from "../../redux/actions/userActions";
 
 const useStyles = makeStyles(() => ({
   tradeItemCard: {
@@ -29,12 +30,67 @@ const ItemPreview = ({
   _id,
   title,
   date,
-  location,
   images,
+  ownerId,
   clearOldItemDetails,
+  getUserByIdAsync,
+  currentUser,
 }) => {
   const classes = useStyles();
   const history = useHistory();
+  const [distanceMsg, setDistanceMsg] = useState("Location data unavailable");
+  const [locationMsg, setLocationMsg] = useState("");
+
+  const getDistance = (lat1, lat2, lon1, lon2, unit) => {
+    if (lat1 == lat2 && lon1 == lon2) {
+      return 0;
+    } else {
+      var radlat1 = (Math.PI * lat1) / 180;
+      var radlat2 = (Math.PI * lat2) / 180;
+      var theta = lon1 - lon2;
+      var radtheta = (Math.PI * theta) / 180;
+      var dist =
+        Math.sin(radlat1) * Math.sin(radlat2) +
+        Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+      if (dist > 1) {
+        dist = 1;
+      }
+      dist = Math.acos(dist);
+      dist = (dist * 180) / Math.PI;
+      dist = dist * 60 * 1.1515;
+      if (unit == "K") {
+        dist = dist * 1.609344;
+      }
+      if (unit == "N") {
+        dist = dist * 0.8684;
+      }
+      return dist;
+    }
+  };
+
+  const updateDistance = async () => {
+    let user = await getUserByIdAsync(ownerId);
+
+    const dist = Math.floor(
+      getDistance(
+        currentUser.user.location.lat,
+        user.location.lat,
+        currentUser.user.location.lon,
+        user.location.lon,
+        "K"
+      )
+    );
+    setDistanceMsg(`About ${dist} km away`);
+    setLocationMsg(user.location.location);
+    return dist;
+  };
+
+  useEffect(() => {
+    console.log(currentUser);
+    if (currentUser.user && currentUser.user.location) {
+      updateDistance();
+    }
+  }, []);
 
   const parseDate = (str) => {
     return new Date(str);
@@ -69,6 +125,19 @@ const ItemPreview = ({
     });
   };
 
+  const renderLocationData = () => {
+    return currentUser.user ? (
+      <Grid item xs={12}>
+        <Typography variant="body2" color="textPrimary" component="p">
+          {distanceMsg}
+        </Typography>
+        <Typography variant="body2" color="textPrimary" component="p">
+          {locationMsg}
+        </Typography>
+      </Grid>
+    ) : null;
+  };
+
   return (
     <Card className={classes.tradeItemCard} elevation={2}>
       <CardActionArea onClick={() => routeToItem(_id)}>
@@ -91,11 +160,7 @@ const ItemPreview = ({
                 {title ? title : "Untitled"}
               </Typography>
             </Grid>
-            <Grid item xs={12}>
-              <Typography variant="body2" color="textPrimary" component="p">
-                {location}
-              </Typography>
-            </Grid>
+            {renderLocationData()}
           </Grid>
         </CardContent>
       </CardActionArea>
@@ -109,9 +174,10 @@ const ItemPreview = ({
 };
 
 const mapStateToProps = (state) => ({
-  error: state.error,
+  currentUser: state.currentUser,
 });
 
 export default connect(mapStateToProps, {
   clearOldItemDetails,
+  getUserByIdAsync,
 })(ItemPreview);

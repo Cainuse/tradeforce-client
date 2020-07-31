@@ -29,8 +29,8 @@ const ItemPreviewList = (props) => {
               _id={item._id}
               title={item.title}
               date={item.date}
-              location={item.location}
               images={item.images}
+              ownerId={item.ownerId}
             />
           </Grid>
         );
