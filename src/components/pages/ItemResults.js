@@ -1,9 +1,9 @@
-import React from "react";
-import { connect } from "react-redux";
-import { withRouter } from "react-router";
+import React, { useState, useEffect, useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useLocation } from "react-router";
 
 import Container from "@material-ui/core/Container";
-import { withStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Pagination from "@material-ui/lab/Pagination";
 
@@ -12,7 +12,7 @@ import ItemPreviewList from "../Item/ItemPreviewList";
 import SearchBar from "../Item/SearchBar";
 
 
-const useStyles = (theme) => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     flexDirection: "column",
@@ -26,73 +26,133 @@ const useStyles = (theme) => ({
     alignItems: "center"
   },
   contentsContainer: {
-    display: "inline-grid"
+    display: "inline-grid",
+    width: "100%",
   },
   paginationContainer: {
     display: "flex",
     justifyContent: "center",
     paddingTop: "30px",
-    paddingBottom: "30px",
+    paddingBottom: "30px"
   }
-});
+}));
 
-// this is the page with all the item previews displayed (also includes the result to searching for a specific item)
-class ItemResults extends React.Component {
-  constructor(props) {
-    super(props);
+// this is the page with all the item previews displayed
+// (also includes the result to searching for a specific item)
+export const ItemResults = () => {
+  const dispatch = useDispatch();
+  const classes = useStyles();
 
-    this.state = {
-      currentPageNum: 1
-    };
+  let location = useLocation();
+  let history = useHistory();
+
+  let postings = useSelector((state) => state.postings);
+  let loading = useSelector((state) => state.loading);
+
+  const [searchParams, setSearchParams] = useState("");
+  const [currentPageNum, setCurrentPageNum] = useState(-1);
+
+  const [postingPreviews, setPostingPreviews] = useState([]);
+  const [totalNumPages, setTotalNumPages] = useState(-1);
+  const [numResults, setNumResults] = useState(-1);
+  const [isPostingInfoLoaded, setIsPostingInfoLoaded] = useState(false);
+
+
+  // memoized function to prevent useEffect from forcing rerender every time this function is created.
+  // helps prevent infinite loops
+  const getSearchParamsAndPageNum = useCallback(() => {
+    let paramsStr = location.search;
+    let params = paramsStr.split("/");
+    let searchParams = params[0].replace("?", "");
+
+    let hasPageParam = !!params[1];
+
+    let pageParam;
+    if (!hasPageParam) {
+      pageParam = 1;
+    } else {
+      pageParam = parseInt(params[1]);
+    }
+
+    return { searchParams, pageParam };
+  }, [location]);
+
+
+
+  useEffect(() => {
+    async function getPostings() {
+      try {
+        resetPostingInfo();
+
+        let { searchParams, pageParam } = getSearchParamsAndPageNum();
+        setSearchParams(searchParams);
+        setCurrentPageNum(parseInt(pageParam));
+
+        await dispatch(loadPostingsByQuery({
+          query: searchParams,
+          pageNumToLoad: pageParam
+        }));
+
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    getPostings();
+
+  }, [dispatch, getSearchParamsAndPageNum]);
+
+
+  // rerender when postings is updated in redux store
+  useEffect(() => {
+    let { numPages, numResults, postingPreviews } = postings;
+
+    if (numPages && numResults && postingPreviews) {
+      setTotalNumPages(numPages);
+      setNumResults(numResults);
+      setPostingPreviews(postingPreviews);
+      setIsPostingInfoLoaded(true);
+    }
+
+  }, [postings]);
+
+
+  const handlePaginationClick = (event, value) => {
+    history.push(`/items/?${searchParams}/${value}`);
+  };
+
+  const resetPostingInfo = () => {
+    setIsPostingInfoLoaded(false);
+    setTotalNumPages(null);
+    setNumResults(null);
+    setPostingPreviews(null);
   }
 
-  componentDidMount() {
-    let val = this.props.location.search.replace("?", "");
-    this.props.loadPostingsByQuery({ query: val, pageNumToLoad: 1 });
-  }
-
-  componentDidUpdate() {
-
-  }
-  
-  handleChangePagination = (event, value) => {
-    this.setState({ currentPageNum: value });
-  }
-
-  render() {
-    const { classes, postings, loading } = this.props;
-
-    return (
-      <Container className={classes.root}>
-        <div className={classes.search}>
-          <SearchBar />
-        </div>
-        {postings.length > 0 ? (
-          <div className={classes.contentsContainer}>
-            <ItemPreviewList items={postings} sizing={3}/>
-            <div className={classes.paginationContainer}>
-              <Pagination count={2}
-                          color={"primary"}
-                          showFirstButton={true}
-                          showLastButton={true}
-              />
-            </div>
+  return (
+    <Container className={classes.root}>
+      <div className={classes.search}>
+        <SearchBar/>
+      </div>
+      {isPostingInfoLoaded && numResults > 0 ? (
+        <div className={classes.contentsContainer}>
+          <ItemPreviewList items={postingPreviews} sizing={3}/>
+          <div className={classes.paginationContainer}>
+            <Pagination count={totalNumPages}
+                        page={currentPageNum}
+                        color={"primary"}
+                        showFirstButton={true}
+                        showLastButton={true}
+                        onChange={handlePaginationClick}
+            />
           </div>
-        ) : loading ? null : (
-          <Typography className={classes.noResults}>
-            No results were found
-          </Typography>
-        )}
-      </Container>
-    );
-  }
-}
+        </div>
+      ) : loading ? null : (
+        <Typography className={classes.noResults}>
+          No results were found
+        </Typography>
+      )}
+    </Container>
+  );
+};
 
-const mapStateToProps = (state) => ({
-  postings: state.postings,
-  loading: state.loading,
-});
 
-export default connect(mapStateToProps, { loadPostingsByQuery })(
-  withRouter(withStyles(useStyles)(ItemResults))
-);
+
