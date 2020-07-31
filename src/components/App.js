@@ -6,6 +6,7 @@ import {
   makeStyles,
   ThemeProvider,
 } from "@material-ui/core/styles";
+
 import NavBar from "./Navigation/NavBar/NavBar";
 import NavDrawer from "./Navigation/NavDrawer";
 import PathRouter from "./PathRouter";
@@ -13,8 +14,9 @@ import ModalContainer from "./ModalContainer";
 import FeedbackSnackbar from "./FeedbackSnackbar";
 import { authenticateUser } from "../redux/actions/userActions";
 import Loader from "./Loader";
-import { displayError } from "../redux/actions/snackbarActions";
 import { setLoading } from "../redux/actions/loadingActions";
+
+import "../components/styles/monserratFont.css";
 
 const theme = createMuiTheme({
   palette: {

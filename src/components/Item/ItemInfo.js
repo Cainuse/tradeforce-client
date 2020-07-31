@@ -14,6 +14,7 @@ import {
   openOfferModal,
 } from "../../redux/actions/modalActions";
 import ImageCarousel from "./ImageCarousel";
+import MessageBox from "./MessageBox";
 import { MAKE_OFFER_BUTTON } from "../../redux/constants/buttonTypes";
 import { displayWarning } from "../../redux/actions/snackbarActions";
 import { MAKE_OFFER_AS_UNSIGNED_IN_USER_ERROR } from "../../redux/constants/snackbarMessageTypes";
@@ -140,6 +141,9 @@ function ItemInfo(props) {
             openLoginModal: props.openLoginModal,
             displayWarning: props.displayWarning,
           })}
+          {currentUser && currentUser._id !== itemDetail.ownerId ? (
+            <MessageBox ownerId={itemDetail.ownerId} />
+          ) : null}
           <Box my={3} width="60%">
             <p className={classes.detailTitle}>
               Quantity: <span className={classes.qtyVal}>{quantity}</span>
@@ -191,6 +195,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state) => ({
   currentUser: state.currentUser.user,
+  itemDetail: state.itemDetail,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ItemInfo);
