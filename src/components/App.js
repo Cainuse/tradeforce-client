@@ -37,6 +37,25 @@ const theme = createMuiTheme({
 });
 
 const useStyles = makeStyles(() => ({
+  "@global": {
+    "*::-webkit-scrollbar": {
+      width: "0.4em",
+    },
+    // "*::-webkit-scrollbar-track": {
+    //   background: "rgb(0, 0, 0, 0.12)",
+    //   border: "4px solid transparent",
+    //   backgroundClip: "content-box",
+    // },
+    "*::-webkit-scrollbar-thumb": {
+      backgroundColor: "#acacac",
+      borderRadius: "50px",
+      height: "120px",
+    },
+    "*": {
+      scrollbarWidth: "thin",
+      scrollbarColor: "#acacac",
+    },
+  },
   root: {
     height: "100vh",
   },

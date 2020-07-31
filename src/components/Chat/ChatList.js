@@ -25,6 +25,17 @@ const useStyles = (theme) => ({
     backgroundColor: "#eaf3fb",
     borderLeft: `5px solid ${theme.palette.primary.main}`,
   },
+  list: {
+    height: "72vh",
+    flex: "auto",
+    overflow: "hidden",
+    "&:hover": {
+      overflow: "auto",
+    },
+  },
+  title: {
+    fontWeight: 300,
+  },
 });
 
 class ChatList extends React.Component {
@@ -129,31 +140,35 @@ class ChatList extends React.Component {
 
   render() {
     const { classes } = this.props;
-    return this.state.chatList.length === 0 ? null : (
+    return (
       <React.Fragment>
-        <Typography variant="h5">Conversations</Typography>
-        <List>
-          {this.state.chatList.map((user, idx) => {
-            return (
-              <React.Fragment key={idx}>
-                <ListItem
-                  key={idx}
-                  button
-                  onClick={() => this.selectChatUser({ user, idx })}
-                  className={clsx(classes.listItem, {
-                    [classes.selectedUser]:
-                      this.state.selectedItemIndex === idx,
-                  })}
-                >
-                  <ChatListItem
-                    user={user}
-                    isUnread={_.includes(this.state.unreadChats, user._id)}
-                  />
-                </ListItem>
-              </React.Fragment>
-            );
-          })}
-        </List>
+        <Typography variant="h5" className={classes.title}>
+          Conversations
+        </Typography>
+        {this.state.chatList.length === 0 ? null : (
+          <List className={classes.list}>
+            {this.state.chatList.map((user, idx) => {
+              return (
+                <React.Fragment key={idx}>
+                  <ListItem
+                    key={idx}
+                    button
+                    onClick={() => this.selectChatUser({ user, idx })}
+                    className={clsx(classes.listItem, {
+                      [classes.selectedUser]:
+                        this.state.selectedItemIndex === idx,
+                    })}
+                  >
+                    <ChatListItem
+                      user={user}
+                      isUnread={_.includes(this.state.unreadChats, user._id)}
+                    />
+                  </ListItem>
+                </React.Fragment>
+              );
+            })}
+          </List>
+        )}
       </React.Fragment>
     );
   }

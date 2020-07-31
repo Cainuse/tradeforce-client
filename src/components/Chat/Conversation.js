@@ -12,9 +12,10 @@ import ChatUserInfo from "./ChatUserInfo";
 import ChatSocketServer from "../../utils/ChatSocketServer";
 import ChatHttpServer from "../../utils/ChatHttpServer";
 import Messages from "./Messages";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
-
-// import  Messages  from "./Messages";
+import { withRouter } from "react-router";
+import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
+import Tooltip from "@material-ui/core/Tooltip";
+import Typography from "@material-ui/core/Typography";
 
 const useStyles = (theme) => ({
   root: {
@@ -45,7 +46,7 @@ const useStyles = (theme) => ({
     flex: "auto",
   },
   conversationContainer: {
-    height: "85vh",
+    height: "75vh",
   },
   fromUser: {
     color: theme.palette.primary.main,
@@ -55,6 +56,16 @@ const useStyles = (theme) => ({
     flexDirection: "column",
     justifyContent: "flex-end",
     padding: theme.spacing(2, 2, 2, 0),
+  },
+  unselected: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "97%",
+    height: "80%",
+    "& *": {
+      fontWeight: 300,
+    },
   },
 });
 
@@ -145,15 +156,22 @@ class Conversation extends React.Component {
     });
   };
 
+  redirectToProfile = () => {
+    const { history, selectedChatUser } = this.props;
+    history.push(`/profile/user=${selectedChatUser._id}`);
+  };
+
   render() {
     const { classes, selectedChatUser } = this.props;
     return selectedChatUser ? (
       <div className={classes.conversationContainer}>
         <Paper elevation={0} className={classes.userHeader}>
           <ChatUserInfo user={selectedChatUser} hideBadge={true} />
-          <IconButton>
-            <MoreVertIcon />
-          </IconButton>
+          <Tooltip title="Visit profile">
+            <IconButton onClick={this.redirectToProfile}>
+              <PersonOutlineIcon />
+            </IconButton>
+          </Tooltip>
         </Paper>
         <Divider />
 
@@ -193,8 +211,8 @@ class Conversation extends React.Component {
         </Paper>
       </div>
     ) : this.props.loading ? null : (
-      <div>
-        <p>Select a conversation</p>
+      <div className={classes.unselected}>
+        <Typography variant="h5">Select a conversation</Typography>
       </div>
     );
   }
@@ -204,4 +222,6 @@ const mapStateToProps = (state) => ({
   loading: state.loading,
 });
 
-export default connect(mapStateToProps)(withStyles(useStyles)(Conversation));
+export default connect(mapStateToProps)(
+  withRouter(withStyles(useStyles)(Conversation))
+);
