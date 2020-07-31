@@ -16,7 +16,7 @@ import { authenticateUser } from "../redux/actions/userActions";
 import Loader from "./Loader";
 import { setLoading } from "../redux/actions/loadingActions";
 
-// import "../components/styles/monserratFont.css";
+import "../components/styles/monserratFont.css";
 
 const theme = createMuiTheme({
   palette: {
