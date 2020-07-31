@@ -9,6 +9,7 @@ class ChatSocketServer {
     try {
       this.socket = io(process.env.REACT_APP_SOCKET_URL, {
         query: `userId=${userId}`,
+        transports: ["websocket"],
       });
       this.socket.emit("status-change", { userId, status: true });
     } catch (e) {
