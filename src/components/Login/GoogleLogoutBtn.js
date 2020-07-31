@@ -33,9 +33,6 @@ const GoogleLogoutBtn = ({
     history.push("/");
     logoutUser(currentUser.user._id);
     closeModal();
-    setTimeout(() => {
-      window.location.reload();
-    }, 500);
   };
 
   const handleLogoutFailure = () => {

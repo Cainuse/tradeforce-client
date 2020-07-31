@@ -45,9 +45,6 @@ function AccountBtn(props) {
     localStorage.removeItem("token");
     props.logoutUser(props.currentUser.user._id);
     history.push("/");
-    setTimeout(() => {
-      window.location.reload();
-    }, 500);
   };
 
   const handleClose = () => {
