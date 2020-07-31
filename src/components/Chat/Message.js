@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#f5f6f7",
     justifyContent: "flex-start",
     borderRadius: theme.spacing(2, 2, 2, 0),
+    alignSelf: "flex-start",
   },
   messageText: {
     width: "100%",
