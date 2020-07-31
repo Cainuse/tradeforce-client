@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router";
 
@@ -27,7 +27,8 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center"
   },
   contentsContainer: {
-    display: "inline-grid"
+    display: "inline-grid",
+    width: "100%",
   },
   paginationContainer: {
     display: "flex",
@@ -37,10 +38,13 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-// this is the page with all the item previews displayed (also includes the result to searching for a specific item)
+// this is the page with all the item previews displayed
+// (also includes the result to searching for a specific item)
 export const ItemResultsHook = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
+
+  let isInitialMount = useRef(true);
 
   let location = useLocation();
   let history = useHistory();
@@ -48,25 +52,31 @@ export const ItemResultsHook = () => {
   let postings = useSelector((state) => state.postings);
   let loading = useSelector((state) => state.loading);
 
+  const [searchParams, setSearchParams] = useState("");
   const [pageNum, setPageNum] = useState(1);
 
   const [postingPreviews, setPostingPreviews] = useState([]);
   const [totalNumPages, setTotalNumPages] = useState(-1);
-  const [numResults, setNumResults] = useState(-1);
 
   useEffect(() => {
     async function getPostings() {
       try {
-        let val = location.search.replace("?", "");
-        // console.log(val);
-        await dispatch(loadPostingsByQuery({ query: val, pageNumToLoad: 1 }));
+        if (isInitialMount.current) {
+          setSearchParamsAndPageNum();
+          isInitialMount.current = false;
+        } else {
+          history.push(`/items/?${searchParams}/${pageNum}`);
+        }
+        await dispatch(loadPostingsByQuery({
+          query: searchParams,
+          pageNumToLoad: pageNum
+        }));
       } catch (err) {
         console.log(err);
       }
     }
     getPostings();
-  }, []);
-
+  }, [pageNum]);
 
 
   useEffect(() => {
@@ -74,30 +84,29 @@ export const ItemResultsHook = () => {
 
     if ( numPages && numResults && postingPreviews ) {
       setTotalNumPages(numPages);
-      setNumResults(numResults);
       setPostingPreviews(postingPreviews);
     }
 
-  }, [postings])
+  }, [postings]);
 
   const handlePaginationClick = (event, value) => {
     setPageNum(value);
-
-    if (value > 1) {
-      let val = location.search.replace("?", "");
-      console.log(val);
-
-      // let searchParamsStr = location.search;
-      let searchParamsStr = "http://localhost:3000/items?category=all&page=2";
-      let params = new URLSearchParams(searchParamsStr);
-      console.log(params.keys());
-      // let searchParams = searchParamsStr.split("&");
-      // console.log(searchParams);
-      // history.push();
-    }
   }
 
-  // console.log(location);
+  const setSearchParamsAndPageNum = () => {
+    let paramsStr = location.search;
+    let params = paramsStr.split("/");
+    let searchParams = params[0].replace("?", "");
+    setSearchParams(searchParams);
+
+    let hasPageParam = !!params[1];
+
+    if (!hasPageParam) {
+      setPageNum(1);
+    } else {
+      setPageNum(params[1]);
+    }
+  }
 
   return (
     <Container className={classes.root}>

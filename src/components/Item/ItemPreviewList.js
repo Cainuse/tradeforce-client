@@ -6,6 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 let useStyles = makeStyles({
   itemPreviewContainer: {
     minHeight: "47.5vh",
+    alignContent: "baseline",
   },
 });
 
@@ -19,8 +20,6 @@ const ItemPreviewList = (props) => {
       direction={"row"}
       spacing={4}
       className={classes.itemPreviewContainer}
-      alignContent={"center"}
-      alignItems={"center"}
     >
       {items.map((item, index) => {
         return (
