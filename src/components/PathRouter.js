@@ -2,6 +2,7 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 import ItemPage from "./Item/ItemPage";
 import ItemResults from "./pages/ItemResults";
+import { ItemResultsHook } from "./pages/ItemResultsHook";
 import LandingPage from "./pages/LandingPage";
 import UserProfile from "./pages/UserProfile";
 import EditItemDetailsPage from "./pages/EditItemDetailsPage";
@@ -25,7 +26,7 @@ const PathRouter = () => {
           <EditItemDetailsPage />
         </Route>
         <Route path="/items">
-          <ItemResults />
+          <ItemResultsHook />
         </Route>
         <Route exact path="/profile/user=:id/edit">
           <EditUserProfilePage />

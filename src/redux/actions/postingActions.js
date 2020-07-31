@@ -97,15 +97,16 @@ export const loadAllPostings = () => {
   };
 };
 
-export const loadPostingsByQuery = (query) => {
+export const loadPostingsByQuery = ({query, pageNumToLoad}) => {
   return async (dispatch) => {
     try {
       dispatch(setLoading(true));
       let url = query
-        ? `${BASE_URL}/postings/search/${query}`
-        : `${BASE_URL}/postings/active`;
+        ? `${BASE_URL}/postings/search/${query}/${pageNumToLoad}`
+        : `${BASE_URL}/postings/active/${pageNumToLoad}`;
       let postingResponse = await axios.get(url);
       dispatch(loadAllPostingsSuccess(postingResponse.data));
+      return postingResponse.data;
     } catch (error) {
       dispatch(displayError(LOAD_POSTING_ERROR));
     } finally {
