@@ -4,6 +4,7 @@ import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 import { logoutUser } from "../../redux/actions/userActions";
 import { connect } from "react-redux";
+import { displaySuccess } from "../../redux/actions/snackbarActions";
 
 const loggedOutStyles = makeStyles(() => ({
   logoutBtn: {
@@ -14,7 +15,7 @@ const loggedOutStyles = makeStyles(() => ({
   },
 }));
 
-const LogoutBtn = ({ logoutUser, currentUser }) => {
+const LogoutBtn = ({ logoutUser, currentUser, displaySuccess }) => {
   const classes = loggedOutStyles();
   const history = useHistory();
   return (
@@ -26,6 +27,7 @@ const LogoutBtn = ({ logoutUser, currentUser }) => {
       onClick={() => {
         localStorage.removeItem("token");
         logoutUser(currentUser.user._id);
+        displaySuccess("Successfully logged out!");
         history.push("/");
       }}
     >
@@ -40,6 +42,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   logoutUser: (userId) => dispatch(logoutUser(userId)),
+  displaySuccess: (msg) => dispatch(displaySuccess(msg)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LogoutBtn);
