@@ -105,7 +105,7 @@ export const loadPostingsByQuery = ({ query, pageNumToLoad }) => {
       dispatch(setLoading(true));
       let url = query
         ? `${BASE_URL}/postings/search/${query}/${pageNum}`
-        : `${BASE_URL}/postings/active/${pageNumToLoad}`;
+        : `${BASE_URL}/postings/active/${pageNum}`;
       let postingResponse = await axios.get(url);
       dispatch(loadAllPostingsSuccess(postingResponse.data));
       return postingResponse.data;
