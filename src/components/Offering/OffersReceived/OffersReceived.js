@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, connect } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { Grid, Typography, Link, Collapse } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -10,6 +11,7 @@ import {
 } from "../../../redux/actions/offeringActions";
 import { getAllPendingOffers } from "./OfferingHelpers";
 import ConfirmationDialog from "../../ConfirmationDialog";
+import ChatSocketServer from "../../../utils/ChatSocketServer";
 
 const useStyles = makeStyles((theme) => ({
   allOffersContainer: {
@@ -32,10 +34,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const OffersReceived = (props) => {
+const OffersReceived = (props) => {
   let classes = useStyles();
   let dispatch = useDispatch();
-  let { activePostings } = props;
+  let history = useHistory();
+  let { activePostings, currentUser } = props;
 
   let [expanded, setExpanded] = useState(-1);
   let [confirmationOpen, setConfirmationOpen] = useState(false);
@@ -44,10 +47,24 @@ export const OffersReceived = (props) => {
   /** offerInfo: {offerId, offerer, posting} */
   let [offerInfoToActUpon, setOfferInfoToActUpon] = useState({});
 
+  const navigateToChat = () => {
+    setTimeout(() => {
+      history.push("/chat");
+    }, 3000);
+  };
+
   const handleAcceptOffer = async () => {
-    let { offerId } = offerInfoToActUpon;
+    let { offerId, offerer, posting } = offerInfoToActUpon;
     await dispatch(acceptOffer(offerId));
     handleConfirmationClose();
+    ChatSocketServer.sendMessage({
+      fromUserId: currentUser ? currentUser.user._id : 0,
+      toUserId: offerer._id,
+      content: `Hi there! I've accepted your offering to my posting ${
+        posting ? posting.title : ""
+      }`,
+    });
+    navigateToChat();
   };
 
   const handleConfirmationOpen = (type) => {
@@ -164,3 +181,9 @@ export const OffersReceived = (props) => {
     </Grid>
   );
 };
+
+const mapStateToProps = (state) => ({
+  currentUser: state.currentUser,
+});
+
+export default connect(mapStateToProps)(OffersReceived);

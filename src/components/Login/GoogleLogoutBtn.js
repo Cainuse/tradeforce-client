@@ -3,7 +3,7 @@ import { GoogleLogout } from "react-google-login";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import { unsetUser } from "../../redux/actions/userActions";
+import { logoutUser } from "../../redux/actions/userActions";
 import { closeModal } from "../../redux/actions/modalActions";
 import {
   displaySuccess,
@@ -19,10 +19,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const GoogleLogoutBtn = ({
-  unsetUser,
+  logoutUser,
   closeModal,
   logoutSuccess,
   logoutError,
+  currentUser,
 }) => {
   const classes = useStyles();
   const history = useHistory();
@@ -30,7 +31,7 @@ const GoogleLogoutBtn = ({
   const logout = () => {
     localStorage.removeItem("token");
     history.push("/");
-    unsetUser();
+    logoutUser(currentUser.user._id);
     logoutSuccess("Successfully logged out!");
     closeModal();
   };
@@ -58,7 +59,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  unsetUser: () => dispatch(unsetUser()),
+  logoutUser: (userId) => dispatch(logoutUser(userId)),
   closeModal: () => dispatch(closeModal()),
   logoutSuccess: (msg) => dispatch(displaySuccess(msg)),
   logoutError: (msg) => dispatch(displayError(msg)),
