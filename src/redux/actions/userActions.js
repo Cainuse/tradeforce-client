@@ -235,5 +235,6 @@ export const logoutUser = (userId) => {
   return (dispatch) => {
     ChatSocketServer.logout(userId);
     dispatch(unsetUser());
+    dispatch(displaySuccess("Successfully logged out!"));
   };
 };

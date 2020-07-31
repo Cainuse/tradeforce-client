@@ -37,6 +37,8 @@ const GoogleBtn = ({ loginUserAsync, displayError, modal, itemDetail }) => {
         modal.openedFrom,
         itemDetail.ownerId
       );
+    } else {
+      displayError("Google login failed. Please try again!");
     }
   };
 
