@@ -11,19 +11,18 @@ import { loadPostingsByQuery } from "../../redux/actions/postingActions";
 import ItemPreviewList from "../Item/ItemPreviewList";
 import SearchBar from "../Item/SearchBar";
 
-
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     flexDirection: "column",
-    alignItems: "center"
+    alignItems: "center",
   },
   search: {
     margin: theme.spacing(7, 0, 3, 0),
     width: "100%",
     display: "flex",
     flexDirection: "column",
-    alignItems: "center"
+    alignItems: "center",
   },
   contentsContainer: {
     display: "inline-grid",
@@ -33,8 +32,8 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "center",
     paddingTop: "30px",
-    paddingBottom: "30px"
-  }
+    paddingBottom: "30px",
+  },
 }));
 
 // this is the page with all the item previews displayed
@@ -57,7 +56,6 @@ export const ItemResults = () => {
   const [numResults, setNumResults] = useState(-1);
   const [isPostingInfoLoaded, setIsPostingInfoLoaded] = useState(false);
 
-
   // memoized function to prevent useEffect from forcing rerender every time this function is created.
   // helps prevent infinite loops
   const getSearchParamsAndPageNum = useCallback(() => {
@@ -77,8 +75,6 @@ export const ItemResults = () => {
     return { searchParams, pageParam };
   }, [location]);
 
-
-
   useEffect(() => {
     async function getPostings() {
       try {
@@ -88,19 +84,18 @@ export const ItemResults = () => {
         setSearchParams(searchParams);
         setCurrentPageNum(parseInt(pageParam));
 
-        await dispatch(loadPostingsByQuery({
-          query: searchParams,
-          pageNumToLoad: pageParam
-        }));
-
+        await dispatch(
+          loadPostingsByQuery({
+            query: searchParams,
+            pageNumToLoad: pageParam,
+          })
+        );
       } catch (err) {
         console.log(err);
       }
     }
     getPostings();
-
   }, [dispatch, getSearchParamsAndPageNum]);
-
 
   // rerender when postings is updated in redux store
   useEffect(() => {
@@ -112,9 +107,7 @@ export const ItemResults = () => {
       setPostingPreviews(postingPreviews);
       setIsPostingInfoLoaded(true);
     }
-
   }, [postings]);
-
 
   const handlePaginationClick = (event, value) => {
     history.push(`/items/?${searchParams}/${value}`);
@@ -125,23 +118,24 @@ export const ItemResults = () => {
     setTotalNumPages(null);
     setNumResults(null);
     setPostingPreviews(null);
-  }
+  };
 
   return (
     <Container className={classes.root}>
       <div className={classes.search}>
-        <SearchBar/>
+        <SearchBar />
       </div>
       {isPostingInfoLoaded && numResults > 0 ? (
         <div className={classes.contentsContainer}>
-          <ItemPreviewList items={postingPreviews} sizing={3}/>
+          <ItemPreviewList items={postingPreviews} sizing={3} />
           <div className={classes.paginationContainer}>
-            <Pagination count={totalNumPages}
-                        page={currentPageNum}
-                        color={"primary"}
-                        showFirstButton={true}
-                        showLastButton={true}
-                        onChange={handlePaginationClick}
+            <Pagination
+              count={totalNumPages}
+              page={currentPageNum}
+              color={"primary"}
+              showFirstButton={true}
+              showLastButton={true}
+              onChange={handlePaginationClick}
             />
           </div>
         </div>
@@ -153,6 +147,3 @@ export const ItemResults = () => {
     </Container>
   );
 };
-
-
-

@@ -97,7 +97,7 @@ export const loadAllPostings = () => {
   };
 };
 
-export const loadPostingsByQuery = ({query, pageNumToLoad}) => {
+export const loadPostingsByQuery = ({ query, pageNumToLoad }) => {
   let pageNum = pageNumToLoad !== undefined ? pageNumToLoad : 1;
 
   return async (dispatch) => {
