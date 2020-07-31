@@ -10,7 +10,6 @@ import Pagination from "@material-ui/lab/Pagination";
 import { getPostingByIdAsync, loadPostingsByQuery } from "../../redux/actions/postingActions";
 import ItemPreviewList from "../Item/ItemPreviewList";
 import SearchBar from "../Item/SearchBar";
-import Axios from "axios";
 import { getUserByIdAsync } from "../../redux/actions/userActions";
 
 
@@ -44,43 +43,16 @@ export const ItemResultsHook = () => {
   const classes = useStyles();
 
   let location = useLocation();
+  let history = useHistory();
 
   let postings = useSelector((state) => state.postings);
   let loading = useSelector((state) => state.loading);
 
   const [pageNum, setPageNum] = useState(1);
-  const [postingsInfo, setPostingsInfo] = useState({});
 
   const [postingPreviews, setPostingPreviews] = useState([]);
   const [totalNumPages, setTotalNumPages] = useState(-1);
   const [numResults, setNumResults] = useState(-1);
-
-  //
-  // useEffect(() => {
-  //   let source = Axios.CancelToken.source();
-  //   let cancelToken = { cancelToken: source.token };
-  //
-  //   async function getPostingInfo() {
-  //     try {
-  //       let posting = await dispatch(
-  //         getPostingByIdAsync(offer.postingId, cancelToken)
-  //       );
-  //       let postingOwner = await dispatch(
-  //         getUserByIdAsync(posting.ownerId, cancelToken)
-  //       );
-  //       setPosting(posting);
-  //       setPostingOwner(postingOwner);
-  //       setIsInfoLoaded(true);
-  //       return posting;
-  //     } catch (e) {
-  //       if (Axios.isCancel(e)) {
-  //         //do nothing
-  //       } else {
-  //         console.log(e);
-  //       }
-  //     }
-  //   }
-
 
   useEffect(() => {
     async function getPostings() {
@@ -95,10 +67,7 @@ export const ItemResultsHook = () => {
     getPostings();
   }, []);
 
-  // useEffect(async () => {
-  //   let val = location.search.replace("?", "");
-  //   await dispatch(loadPostingsByQuery({ query: val, pageNumToLoad: pageNum }));
-  // }, [pageNum]);
+
 
   useEffect(() => {
     let { numPages, numResults, postingPreviews } = postings;
@@ -111,12 +80,24 @@ export const ItemResultsHook = () => {
 
   }, [postings])
 
+  const handlePaginationClick = (event, value) => {
+    setPageNum(value);
 
-  const handleChangePagination = (event, value) => {
-    this.setState({ currentPageNum: value });
-  };
+    if (value > 1) {
+      let val = location.search.replace("?", "");
+      console.log(val);
 
-  console.log(postingPreviews.length);
+      // let searchParamsStr = location.search;
+      let searchParamsStr = "http://localhost:3000/items?category=all&page=2";
+      let params = new URLSearchParams(searchParamsStr);
+      console.log(params.keys());
+      // let searchParams = searchParamsStr.split("&");
+      // console.log(searchParams);
+      // history.push();
+    }
+  }
+
+  // console.log(location);
 
   return (
     <Container className={classes.root}>
@@ -127,10 +108,11 @@ export const ItemResultsHook = () => {
         <div className={classes.contentsContainer}>
           <ItemPreviewList items={postingPreviews} sizing={3}/>
           <div className={classes.paginationContainer}>
-            <Pagination count={2}
+            <Pagination count={totalNumPages}
                         color={"primary"}
                         showFirstButton={true}
                         showLastButton={true}
+                        onChange={handlePaginationClick}
             />
           </div>
         </div>
