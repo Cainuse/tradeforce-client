@@ -10,6 +10,7 @@ import { IconButton } from "@material-ui/core";
 import { logoutUser } from "../../../../redux/actions/userActions";
 import GoogleLogoutBtn from "../../../Login/GoogleLogoutBtn";
 import { loadUserDetails } from "../../../../redux/actions/userDetailActions";
+import { displaySuccess } from "../../../../redux/actions/snackbarActions";
 
 const getLogoutMenuItem = (currentUser, handleClickLogout) => {
   if (currentUser.user.isGoogleUser) {
@@ -44,6 +45,9 @@ function AccountBtn(props) {
     localStorage.removeItem("token");
     props.logoutUser(props.currentUser.user._id);
     history.push("/");
+    setTimeout(() => {
+      window.location.reload();
+    }, 500);
   };
 
   const handleClose = () => {
@@ -92,6 +96,7 @@ const mapDispatchToProps = (dispatch) => ({
   logoutUser: (userId) => dispatch(logoutUser(userId)),
   loadUserDetails: ({ userId, currentUserId }) =>
     dispatch(loadUserDetails({ userId, currentUserId })),
+  displaySuccess: (msg) => dispatch(displaySuccess(msg)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AccountBtn);

@@ -32,8 +32,10 @@ const GoogleLogoutBtn = ({
     localStorage.removeItem("token");
     history.push("/");
     logoutUser(currentUser.user._id);
-    logoutSuccess("Successfully logged out!");
     closeModal();
+    setTimeout(() => {
+      window.location.reload();
+    }, 500);
   };
 
   const handleLogoutFailure = () => {

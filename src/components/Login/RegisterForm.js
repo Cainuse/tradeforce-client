@@ -150,6 +150,7 @@ const RegisterForm = ({ dispatch, modal, itemDetail }, props) => {
           itemDetail.ownerId
         )
       );
+      window.location.reload();
     }
   };
 
