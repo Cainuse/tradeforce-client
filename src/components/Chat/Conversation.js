@@ -81,8 +81,8 @@ class Conversation extends React.Component {
     this.messageContainer = React.createRef();
   }
 
-  componentDidMount = () => {
-    ChatSocketServer.receiveMessage();
+  componentDidMount = async () => {
+    // ChatSocketServer.receiveMessage();
     ChatSocketServer.eventEmitter.on(
       "add-message-response",
       this.receiveMessage
@@ -96,16 +96,22 @@ class Conversation extends React.Component {
     );
   };
 
-  componentDidUpdate = (prevProps) => {
+  componentDidUpdate = async (prevProps) => {
     if (
       prevProps.selectedChatUser === null ||
       this.props.selectedChatUser._id !== prevProps.selectedChatUser._id
     ) {
       this.getMessages();
+      if (this.props.selectedChatUser) {
+        await ChatHttpServer.markConversationAsRead(
+          this.props.selectedChatUser._id,
+          this.props.currentUser._id
+        );
+      }
     }
   };
 
-  receiveMessage = (response) => {
+  receiveMessage = async (response) => {
     if (!response.error && response.chatMsg) {
       if (
         !_.find(this.state.conversations, { _id: response.chatMsg._id }) &&
@@ -115,6 +121,7 @@ class Conversation extends React.Component {
         this.setState({
           conversations: [...this.state.conversations, response.chatMsg],
         });
+        await ChatHttpServer.markOneAsRead(response.chatMsg._id);
       }
     } else {
       let errorMessage = response.message
