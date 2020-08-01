@@ -10,6 +10,7 @@ import { offeringStatus } from "../constants/OfferingConstants";
 import { closeModal } from "../../redux/actions/modalActions";
 import { displayError } from "../../redux/actions/snackbarActions";
 import { ADD_OFFER_MISSING_INFO_ERROR } from "../../redux/constants/snackbarMessageTypes";
+import ChatSocketServer from "../../utils/ChatSocketServer";
 
 const useStyles = (theme) => ({
   paper: {
@@ -175,6 +176,7 @@ class AddOffering extends React.Component {
 
       let id = this.props.itemDetail._id;
       this.props.makeOffer(offering, id);
+      ChatSocketServer.sendNotification(this.props.itemDetail.ownerId);
       this.resetFormState();
       setTimeout(() => {
         this.props.closeModal();

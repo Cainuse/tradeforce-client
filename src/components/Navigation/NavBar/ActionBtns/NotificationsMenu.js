@@ -14,6 +14,7 @@ import {
   removeAllNotificationsAsync,
   getNotificationsAsync,
 } from "../../../../redux/actions/notificationActions";
+import ChatSocketServer from "../../../../utils/ChatSocketServer";
 
 const useStyles = makeStyles(() => ({
   iconBtn: {
@@ -58,7 +59,26 @@ const NotificationsMenu = ({ dispatch, notifications, currentUser }) => {
 
   useEffect(() => {
     retrieveNotifications();
-  }, [markAllStatus]);
+  }, [markAllStatus, numUnread]);
+
+  useEffect(() => {
+    ChatSocketServer.eventEmitter.on("new-notification", handleNewNotification);
+
+    return () => {
+      ChatSocketServer.eventEmitter.removeListener(
+        "new-notification",
+        handleNewNotification
+      );
+    };
+  }, []);
+
+  const handleNewNotification = (data) => {
+    console.log("handle new notification");
+    console.log(data);
+    if (!data.error) {
+      updateNumUnread(0, "increase");
+    }
+  };
 
   const handleOpenNotifications = (event) => {
     setAnchorEl(event.currentTarget);

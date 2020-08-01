@@ -64,6 +64,7 @@ const OffersReceived = (props) => {
         posting ? posting.title : ""
       }`,
     });
+    ChatSocketServer.sendNotification(offerer._id);
     navigateToChat();
   };
 
@@ -79,9 +80,10 @@ const OffersReceived = (props) => {
   };
 
   const handleDeclineOffer = async () => {
-    let { offerId } = offerInfoToActUpon;
+    let { offerId, offerer } = offerInfoToActUpon;
     await dispatch(declineOffer(offerId));
     handleConfirmationClose();
+    ChatSocketServer.sendNotification(offerer._id);
   };
 
   const handleExpand = (index) => {
