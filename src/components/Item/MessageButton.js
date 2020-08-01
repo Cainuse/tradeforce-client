@@ -19,7 +19,7 @@ import {
 import { HoverPopoverHOC } from "../HigherOrderComponents/HoverPopoverHOC";
 import {
   MESSAGE_SENT_SUCCESS,
-  MESSAGE_EMPTY_ERROR
+  MESSAGE_EMPTY_ERROR,
 } from "../../redux/constants/snackbarMessageTypes";
 
 const useStyles = makeStyles((theme) => ({
@@ -66,9 +66,7 @@ const MessageButton = ({
     };
     ChatSocketServer.sendMessage(newMsg);
     setOpen(false);
-    dispatch(
-      displaySuccess(MESSAGE_SENT_SUCCESS)
-    );
+    dispatch(displaySuccess(MESSAGE_SENT_SUCCESS));
   };
 
   return (
