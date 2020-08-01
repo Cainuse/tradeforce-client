@@ -2,10 +2,13 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router";
 
-import Container from "@material-ui/core/Container";
-import Button from "@material-ui/core/Button";
-import Divider from "@material-ui/core/Divider";
-import { makeStyles } from "@material-ui/core/styles";
+import { withStyles, makeStyles } from "@material-ui/core/styles";
+import
+{
+  Button,
+  Container,
+  Divider
+} from "@material-ui/core";
 
 import ReviewSection from "./ReviewSection";
 import ItemDetailContainer from "./ItemDetailContainer";
@@ -20,12 +23,12 @@ const useStyles = makeStyles((theme) => ({
   buttonHeader: {
     display: "flex",
     justifyContent: "space-between",
-    margin: theme.spacing(1)
+    margin: theme.spacing(1),
   },
   divider: {
     marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(3)
-  }
+    marginBottom: theme.spacing(3),
+  },
 }));
 
 // Item Details page for in-depth view of offered items

@@ -14,7 +14,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import ChatSocketServer from "../../utils/ChatSocketServer";
 import {
   displayError,
-  displaySuccess
+  displaySuccess,
 } from "../../redux/actions/snackbarActions";
 import { HoverPopoverHOC } from "../HigherOrderComponents/HoverPopoverHOC";
 
@@ -25,18 +25,18 @@ const useStyles = makeStyles((theme) => ({
     bottom: "5%",
     right: "3%",
     "&:hover": {
-      backgroundColor: "#194975"
-    }
-  }
+      backgroundColor: "#194975",
+    },
+  },
 }));
 
 const MessageButton = ({
-                      dispatch,
-                      ownerId,
-                      currentUser,
-                      onMouseEnter,
-                      onMouseLeave
-                    }) => {
+  dispatch,
+  ownerId,
+  currentUser,
+  onMouseEnter,
+  onMouseLeave,
+}) => {
   const classes = useStyles();
 
   const [open, setOpen] = useState(false);
@@ -69,7 +69,6 @@ const MessageButton = ({
     );
   };
 
-
   return (
     <div>
       <IconButton
@@ -78,9 +77,8 @@ const MessageButton = ({
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
       >
-        <SmsIcon color={"secondary"}/>
+        <SmsIcon color={"secondary"} />
       </IconButton>
-
 
       <Dialog
         open={open}
@@ -122,4 +120,6 @@ const mapStateToProps = (state) => ({
   currentUser: state.currentUser,
 });
 
-export default HoverPopoverHOC("Message Posting Owner")(connect(mapStateToProps)(MessageButton));
+export default HoverPopoverHOC("Message Posting Owner")(
+  connect(mapStateToProps)(MessageButton)
+);

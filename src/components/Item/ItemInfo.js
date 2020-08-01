@@ -20,8 +20,6 @@ import { MAKE_OFFER_BUTTON } from "../../redux/constants/buttonTypes";
 import { displayWarning } from "../../redux/actions/snackbarActions";
 import { MAKE_OFFER_AS_UNSIGNED_IN_USER_ERROR } from "../../redux/constants/snackbarMessageTypes";
 
-
-
 const useStyles = makeStyles((theme) => ({
   button: {
     backgroundColor: theme.palette.primary.main,
