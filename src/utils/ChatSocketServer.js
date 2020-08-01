@@ -12,6 +12,8 @@ class ChatSocketServer {
         transports: ["websocket"],
       });
       this.socket.emit("status-change", { userId, status: true });
+      this.receiveMessage();
+      this.receiveNotification();
     } catch (e) {
       alert("Socket connection could not be established");
     }
@@ -37,6 +39,12 @@ class ChatSocketServer {
   receiveMessage = () => {
     this.socket.on("add-message-response", (data) => {
       this.eventEmitter.emit("add-message-response", data);
+    });
+  };
+
+  receiveNotification = () => {
+    this.socket.on("new-notification", (data) => {
+      this.eventEmitter.emit("new-notification", data);
     });
   };
 
