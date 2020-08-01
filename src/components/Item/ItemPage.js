@@ -2,16 +2,13 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router";
 
-import Container from "@material-ui/core/Container";
-import Button from "@material-ui/core/Button";
-import Divider from "@material-ui/core/Divider";
 import { makeStyles } from "@material-ui/core/styles";
+import { Button, Container, Divider } from "@material-ui/core";
 
 import ReviewSection from "./ReviewSection";
 import ItemDetailContainer from "./ItemDetailContainer";
 import { loadItemDetail } from "../../redux/actions/postingActions";
-
-// Item Details page for in-depth view of offered items
+import MessageButton from "./MessageButton";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,12 +25,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+// Item Details page for in-depth view of offered items
+
 const ItemPage = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
   const itemDetail = useSelector((state) => state.itemDetail);
+  const currentUser = useSelector((state) => state.currentUser);
+
+  let isNotOwnerOfPosting =
+    currentUser && currentUser._id !== itemDetail.ownerId;
 
   useEffect(() => {
     async function loadPosting() {
@@ -64,6 +67,9 @@ const ItemPage = () => {
         <ItemDetailContainer itemDetail={itemDetail} />
         <Divider className={classes.divider} />
         <ReviewSection itemDetail={itemDetail} />
+        {isNotOwnerOfPosting ? (
+          <MessageButton ownerId={itemDetail.ownerId} />
+        ) : null}
       </Container>
     </div>
   ) : null;

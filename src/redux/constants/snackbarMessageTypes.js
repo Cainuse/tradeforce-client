@@ -1,3 +1,10 @@
+/* ===== Message Successes ===== */
+export const MESSAGE_SENT_SUCCESS =
+  "Message successfully sent! You may go to the Chat page to continue the conversation.";
+
+/* ===== Message Errors ===== */
+export const MESSAGE_EMPTY_ERROR = "Cannot send an empty message. Try again!";
+
 /* ===== Posting Errors ===== */
 export const ADD_POSTING_ERROR =
   "Something went wrong. Posting was not created";
