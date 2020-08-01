@@ -2,19 +2,13 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router";
 
-import { withStyles, makeStyles } from "@material-ui/core/styles";
-import
-{
-  Button,
-  Container,
-  Divider
-} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import { Button, Container, Divider } from "@material-ui/core";
 
 import ReviewSection from "./ReviewSection";
 import ItemDetailContainer from "./ItemDetailContainer";
 import { loadItemDetail } from "../../redux/actions/postingActions";
 import MessageButton from "./MessageButton";
-
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,8 +35,8 @@ const ItemPage = () => {
   const itemDetail = useSelector((state) => state.itemDetail);
   const currentUser = useSelector((state) => state.currentUser);
 
-  let isNotOwnerOfPosting = currentUser && currentUser._id !== itemDetail.ownerId;
-
+  let isNotOwnerOfPosting =
+    currentUser && currentUser._id !== itemDetail.ownerId;
 
   useEffect(() => {
     async function loadPosting() {
@@ -70,16 +64,15 @@ const ItemPage = () => {
         <Button onClick={redirect}>&lt; Back</Button>
       </div>
       <Container className={classes.root}>
-        <ItemDetailContainer itemDetail={itemDetail}/>
-        <Divider className={classes.divider}/>
-        <ReviewSection itemDetail={itemDetail}/>
+        <ItemDetailContainer itemDetail={itemDetail} />
+        <Divider className={classes.divider} />
+        <ReviewSection itemDetail={itemDetail} />
         {isNotOwnerOfPosting ? (
-          <MessageButton ownerId={itemDetail.ownerId}/>
+          <MessageButton ownerId={itemDetail.ownerId} />
         ) : null}
       </Container>
     </div>
   ) : null;
 };
-
 
 export default ItemPage;
