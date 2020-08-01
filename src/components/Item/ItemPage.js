@@ -10,8 +10,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import ReviewSection from "./ReviewSection";
 import ItemDetailContainer from "./ItemDetailContainer";
 import { loadItemDetail } from "../../redux/actions/postingActions";
+import MessageButton from "./MessageButton";
 
-// Item Details page for in-depth view of offered items
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,13 +20,15 @@ const useStyles = makeStyles((theme) => ({
   buttonHeader: {
     display: "flex",
     justifyContent: "space-between",
-    margin: theme.spacing(1),
+    margin: theme.spacing(1)
   },
   divider: {
     marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(3),
-  },
+    marginBottom: theme.spacing(3)
+  }
 }));
+
+// Item Details page for in-depth view of offered items
 
 const ItemPage = () => {
   const classes = useStyles();
@@ -34,6 +36,10 @@ const ItemPage = () => {
   const history = useHistory();
   const location = useLocation();
   const itemDetail = useSelector((state) => state.itemDetail);
+  const currentUser = useSelector((state) => state.currentUser);
+
+  let isNotOwnerOfPosting = currentUser && currentUser._id !== itemDetail.ownerId;
+
 
   useEffect(() => {
     async function loadPosting() {
@@ -61,12 +67,16 @@ const ItemPage = () => {
         <Button onClick={redirect}>&lt; Back</Button>
       </div>
       <Container className={classes.root}>
-        <ItemDetailContainer itemDetail={itemDetail} />
-        <Divider className={classes.divider} />
-        <ReviewSection itemDetail={itemDetail} />
+        <ItemDetailContainer itemDetail={itemDetail}/>
+        <Divider className={classes.divider}/>
+        <ReviewSection itemDetail={itemDetail}/>
+        {isNotOwnerOfPosting ? (
+          <MessageButton ownerId={itemDetail.ownerId}/>
+        ) : null}
       </Container>
     </div>
   ) : null;
 };
+
 
 export default ItemPage;

@@ -1,18 +1,44 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
+
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import { IconButton } from "@material-ui/core";
+import SmsIcon from "@material-ui/icons/Sms";
+import { makeStyles } from "@material-ui/core/styles";
+
 import ChatSocketServer from "../../utils/ChatSocketServer";
 import {
   displayError,
-  displaySuccess,
+  displaySuccess
 } from "../../redux/actions/snackbarActions";
+import { HoverPopoverHOC } from "../HigherOrderComponents/HoverPopoverHOC";
 
-const MessageBox = ({ dispatch, ownerId, currentUser }) => {
+const useStyles = makeStyles((theme) => ({
+  messageBtnContainer: {
+    backgroundColor: theme.palette.primary.main,
+    position: "fixed",
+    bottom: "5%",
+    right: "3%",
+    "&:hover": {
+      backgroundColor: "#194975"
+    }
+  }
+}));
+
+const MessageButton = ({
+                      dispatch,
+                      ownerId,
+                      currentUser,
+                      onMouseEnter,
+                      onMouseLeave
+                    }) => {
+  const classes = useStyles();
+
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
 
@@ -43,19 +69,23 @@ const MessageBox = ({ dispatch, ownerId, currentUser }) => {
     );
   };
 
+
   return (
     <div>
-      <Button
-        variant="contained"
-        color="primary"
-        style={{ marginTop: "10px" }}
+      <IconButton
+        className={classes.messageBtnContainer}
         onClick={handleClickOpen}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
       >
-        Send a message
-      </Button>
+        <SmsIcon color={"secondary"}/>
+      </IconButton>
+
+
       <Dialog
         open={open}
         onClose={handleClose}
+        disableScrollLock={true}
         aria-labelledby="form-dialog-title"
       >
         <DialogTitle id="form-dialog-title">
@@ -92,4 +122,4 @@ const mapStateToProps = (state) => ({
   currentUser: state.currentUser,
 });
 
-export default connect(mapStateToProps)(MessageBox);
+export default HoverPopoverHOC("Message Posting Owner")(connect(mapStateToProps)(MessageButton));

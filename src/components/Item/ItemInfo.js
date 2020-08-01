@@ -1,23 +1,26 @@
 import React from "react";
+import { useHistory, useLocation } from "react-router-dom";
+import { connect } from "react-redux";
+
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import { Box } from "@material-ui/core";
 import Chip from "@material-ui/core/Chip";
-import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
+
 import clsx from "clsx";
 import _ from "lodash";
-import { useHistory, useLocation } from "react-router-dom";
 
 import {
   openLoginModal,
   openOfferModal,
 } from "../../redux/actions/modalActions";
 import ImageCarousel from "./ImageCarousel";
-import MessageBox from "./MessageBox";
 import { MAKE_OFFER_BUTTON } from "../../redux/constants/buttonTypes";
 import { displayWarning } from "../../redux/actions/snackbarActions";
 import { MAKE_OFFER_AS_UNSIGNED_IN_USER_ERROR } from "../../redux/constants/snackbarMessageTypes";
+
+
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -141,9 +144,6 @@ function ItemInfo(props) {
             openLoginModal: props.openLoginModal,
             displayWarning: props.displayWarning,
           })}
-          {currentUser && currentUser._id !== itemDetail.ownerId ? (
-            <MessageBox ownerId={itemDetail.ownerId} />
-          ) : null}
           <Box my={3} width="60%">
             <p className={classes.detailTitle}>
               Quantity: <span className={classes.qtyVal}>{quantity}</span>
