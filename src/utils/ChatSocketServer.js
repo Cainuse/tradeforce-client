@@ -42,6 +42,10 @@ class ChatSocketServer {
     });
   };
 
+  sendNotification = (userId) => {
+    this.socket.emit("notify-recipient", { userId: userId });
+  };
+
   receiveNotification = () => {
     this.socket.on("new-notification", (data) => {
       this.eventEmitter.emit("new-notification", data);
@@ -55,7 +59,6 @@ class ChatSocketServer {
       this.eventEmitter.emit("logout-response", data);
     });
     this.socket.off();
-    console.log("logged out");
   };
 }
 
