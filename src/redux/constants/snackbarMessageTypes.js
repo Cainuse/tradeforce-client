@@ -24,7 +24,7 @@ export const USER_LOGIN_SUCCESS = "Successfully logged into the app!";
 export const USER_LOGOUT_SUCCESS = "Successfully logged out!";
 
 /* ===== User Details Successes ===== */
-export const UPDATE_USER_SUCCESS = "Your details were successfully update";
+export const UPDATE_USER_SUCCESS = "Your details were successfully updated";
 
 /* ===== User Details Errors ===== */
 export const LOAD_USER_DETAILS_NOT_FOUND = "User could not be found";
