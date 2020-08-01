@@ -1,63 +1,78 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { connect, useDispatch, useSelector } from "react-redux";
+import { useHistory, useLocation, withRouter } from "react-router";
+
 import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
 import { withStyles } from "@material-ui/core/styles";
+
 import ReviewSection from "./ReviewSection";
 import ItemDetailContainer from "./ItemDetailContainer";
-import { connect } from "react-redux";
-import { withRouter } from "react-router";
-import { loadItemDetail } from "../../redux/actions/postingActions";
+import { getPostingByIdAsync, loadItemDetail } from "../../redux/actions/postingActions";
+import Axios from "axios";
+import { getUserByIdAsync } from "../../redux/actions/userActions";
 
 // Item Details page for in-depth view of offered items
 
 const useStyles = (theme) => ({
   root: {
-    fontFamily: "Montserrat",
+    fontFamily: "Montserrat"
   },
   buttonHeader: {
     display: "flex",
     justifyContent: "space-between",
-    margin: theme.spacing(1),
+    margin: theme.spacing(1)
   },
   divider: {
     marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(3),
-  },
+    marginBottom: theme.spacing(3)
+  }
 });
 
-class ItemPage extends React.Component {
-  async componentDidMount() {
-    const itemId = this.props.location.pathname.split("=")[1];
-    let response = await this.props.loadItemDetail(itemId);
-    if (response === "error") {
-      this.props.history.push("/OhNo!");
-    }
-  }
+const ItemPage = ({ classes, itemDetail }) => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const location = useLocation();
 
-  redirect = async () => {
-    this.props.history.goBack();
+  useEffect(() => {
+    async function loadPosting() {
+      try {
+        const itemId = location.pathname.split("=")[1];
+        let response = await dispatch(loadItemDetail(itemId));
+        if (response === "error") {
+          history.push("/OhNo!");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    loadPosting();
+  }, [location, history, dispatch]);
+
+  const redirect = async () => {
+    history.goBack();
   };
 
-  render() {
-    const { classes, itemDetail } = this.props;
-    return Object.keys(itemDetail).length !== 0 ? (
-      <div>
-        <div className={classes.buttonHeader}>
-          <Button onClick={this.redirect}>&lt; Back</Button>
-        </div>
-        <Container className={classes.root}>
-          <ItemDetailContainer itemDetail={itemDetail} />
-          <Divider className={classes.divider} />
-          <ReviewSection itemDetail={itemDetail} />
-        </Container>
+
+  return Object.keys(itemDetail).length !== 0 ? (
+    <div>
+      <div className={classes.buttonHeader}>
+        <Button onClick={redirect}>&lt; Back</Button>
       </div>
-    ) : null;
-  }
-}
+      <Container className={classes.root}>
+        <ItemDetailContainer itemDetail={itemDetail}/>
+        <Divider className={classes.divider}/>
+        <ReviewSection itemDetail={itemDetail}/>
+      </Container>
+    </div>
+  ) : null;
+
+};
 
 const mapStateToProps = (state) => ({
-  itemDetail: state.itemDetail,
+  itemDetail: state.itemDetail
 });
 
 export default connect(mapStateToProps, { loadItemDetail })(
