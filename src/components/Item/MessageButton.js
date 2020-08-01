@@ -17,6 +17,10 @@ import {
   displaySuccess,
 } from "../../redux/actions/snackbarActions";
 import { HoverPopoverHOC } from "../HigherOrderComponents/HoverPopoverHOC";
+import {
+  MESSAGE_SENT_SUCCESS,
+  MESSAGE_EMPTY_ERROR
+} from "../../redux/constants/snackbarMessageTypes";
 
 const useStyles = makeStyles((theme) => ({
   messageBtnContainer: {
@@ -52,7 +56,7 @@ const MessageButton = ({
 
   const handleSendMessage = () => {
     if (message === "") {
-      dispatch(displayError("Cannot send an empty message. Try again!"));
+      dispatch(displayError(MESSAGE_EMPTY_ERROR));
       return;
     }
     const newMsg = {
@@ -63,9 +67,7 @@ const MessageButton = ({
     ChatSocketServer.sendMessage(newMsg);
     setOpen(false);
     dispatch(
-      displaySuccess(
-        "Message successfully sent! You may go to the Chat page for continuing a conversation."
-      )
+      displaySuccess(MESSAGE_SENT_SUCCESS)
     );
   };
 
