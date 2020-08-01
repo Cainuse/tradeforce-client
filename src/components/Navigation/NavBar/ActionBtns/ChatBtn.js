@@ -12,26 +12,9 @@ const useStyles = makeStyles(() => ({
   iconBtn: {
     padding: "1px",
   },
-  notificationsMenu: {
-    border: "1rem",
-    borderColor: "black",
-  },
   chatBtn: {
     fontSize: "1.5rem",
     padding: "5px",
-  },
-  notificationsList: {
-    width: "26rem",
-    padding: "0",
-    maxHeight: 300,
-    overflow: "auto",
-  },
-  headingBtn: {
-    textTransform: "none",
-  },
-  headingBtns: {
-    display: "flex",
-    justifyContent: "space-between",
   },
 }));
 
