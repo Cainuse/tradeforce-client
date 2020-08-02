@@ -8,12 +8,11 @@ import {
   CLEAR_OLD_POSTINGS,
 } from "../constants/actionTypes";
 
+
 const addPosting = (state, action) => {
   let { postingPreviews } = state;
-
   let { posting } = action;
-  console.log(posting);
-  posting.quantity = parseInt(posting.quantity);
+
   let newPostingPreviews = [...postingPreviews, posting];
   let newState = {
     ...state,
@@ -23,19 +22,32 @@ const addPosting = (state, action) => {
 };
 
 const deletePosting = (state, action) => {
+  let { postingPreviews } = state;
+
   let { itemId } = action;
-  let newState = state.filter((posting) => posting._id !== itemId);
+  let newPostingPreviews = postingPreviews.filter((posting) => posting._id !== itemId);
+  let newState = {
+    ...state,
+    postingPreviews: newPostingPreviews,
+  }
   return newState;
 };
 
 const updatePostingDetail = (state, action) => {
   let { itemId, details } = action;
-  let newState = state.map((posting) => {
+  let { postingPreview } = state;
+
+  let newPostingPreview = postingPreview.map((posting) => {
     if (posting._id === itemId) {
       return { ...posting, ...details };
     }
     return posting;
   });
+
+  let newState = {
+    ...state,
+    postingPreview: newPostingPreview,
+  }
   return newState;
 };
 
@@ -44,22 +56,6 @@ const loadPostings = (action) => {
 };
 
 const makeOffer = (state, action) => {
-  // let { postingPreviews } = state;
-  // let newState = postingPreviews.map((posting) => {
-  //   if (posting.id === action.postId) {
-  //     if (!posting.offerings) {
-  //       posting["offerings"] = [];
-  //     }
-  //     let updatedOfferings = posting.offerings.concat(action.offering);
-  //     let newPostingDetail = {
-  //       ...posting,
-  //       offerings: updatedOfferings,
-  //     };
-  //     return newPostingDetail;
-  //   }
-  //   return posting;
-  // });
-  // return newState;
   const { postingPreviews } = state;
 
   let newPostingPreviews = updatePostingOfferings({ postingPreviews, action });
