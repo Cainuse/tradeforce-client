@@ -8,7 +8,6 @@ import {
   CLEAR_OLD_POSTINGS,
 } from "../constants/actionTypes";
 
-
 const addPosting = (state, action) => {
   let { postingPreviews } = state;
   let { posting } = action;
@@ -17,7 +16,7 @@ const addPosting = (state, action) => {
   let newState = {
     ...state,
     newPostingPreviews,
-  }
+  };
   return newState;
 };
 
@@ -25,11 +24,13 @@ const deletePosting = (state, action) => {
   let { postingPreviews } = state;
 
   let { itemId } = action;
-  let newPostingPreviews = postingPreviews.filter((posting) => posting._id !== itemId);
+  let newPostingPreviews = postingPreviews.filter(
+    (posting) => posting._id !== itemId
+  );
   let newState = {
     ...state,
     postingPreviews: newPostingPreviews,
-  }
+  };
   return newState;
 };
 
@@ -47,7 +48,7 @@ const updatePostingDetail = (state, action) => {
   let newState = {
     ...state,
     postingPreview: newPostingPreview,
-  }
+  };
   return newState;
 };
 
@@ -67,7 +68,6 @@ const makeOffer = (state, action) => {
 
   console.log(newState);
   return newState;
-
 };
 
 const clearPostings = () => {
@@ -97,7 +97,6 @@ export const postingsReducer = (state = initialState.postings, action) => {
   }
 };
 
-
 // ------------------ Helpers ----------------------- //
 const updatePostingOfferings = ({ postingPreviews, action }) => {
   return postingPreviews.map((posting) => {
@@ -114,4 +113,4 @@ const updatePostingOfferings = ({ postingPreviews, action }) => {
     }
     return posting;
   });
-}
+};
