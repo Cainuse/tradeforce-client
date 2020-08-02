@@ -83,7 +83,7 @@ function CustomizedInputBase(props) {
     if (category !== "" && category !== "any") {
       searchString = searchString.concat(`&category=${category}`);
     }
-    await props.loadPostingsByQuery(searchString);
+    await props.loadPostingsByQuery({ query: searchString });
     history.push({
       pathname: "/items",
       search: searchString,
