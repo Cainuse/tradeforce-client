@@ -55,16 +55,18 @@ const OffersReceived = (props) => {
 
   const handleAcceptOffer = async () => {
     let { offerId, offerer, posting } = offerInfoToActUpon;
-    await dispatch(acceptOffer(offerId));
+    let response = await dispatch(acceptOffer(offerId));
     handleConfirmationClose();
-    ChatSocketServer.sendMessage({
-      fromUserId: currentUser ? currentUser.user._id : 0,
-      toUserId: offerer._id,
-      content: `Hi there! I've accepted your offering to my posting ${
-        posting ? posting.title : ""
-      }`,
-    });
-    ChatSocketServer.sendNotification(offerer._id);
+    if (response) {
+      ChatSocketServer.sendMessage({
+        fromUserId: currentUser ? currentUser.user._id : 0,
+        toUserId: offerer._id,
+        content: `Hi there! I've accepted your offering to my posting ${
+          posting ? posting.title : ""
+        }`,
+      });
+      ChatSocketServer.sendNotification(offerer._id);
+    }
     navigateToChat();
   };
 
@@ -81,9 +83,11 @@ const OffersReceived = (props) => {
 
   const handleDeclineOffer = async () => {
     let { offerId, offerer } = offerInfoToActUpon;
-    await dispatch(declineOffer(offerId));
+    let response = await dispatch(declineOffer(offerId));
+    if (response) {
+      ChatSocketServer.sendNotification(offerer._id);
+    }
     handleConfirmationClose();
-    ChatSocketServer.sendNotification(offerer._id);
   };
 
   const handleExpand = (index) => {
