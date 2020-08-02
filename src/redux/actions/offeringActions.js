@@ -59,6 +59,7 @@ export const makeOffer = (offering, postId) => {
       );
       dispatch(makeOfferSuccess(offeringResponse.data._id, postId));
       dispatch(displaySuccess(ADD_OFFER_SUCCESS));
+      return "success";
     } catch (e) {
       dispatch(displayError(ADD_OFFER_ERROR));
     } finally {
@@ -76,6 +77,7 @@ export const acceptOffer = (offeringId) => {
       );
       dispatch(acceptOfferSuccess(offeringResponse.data));
       dispatch(displaySuccess(ACCEPT_OFFER_SUCCESS));
+      return "success";
     } catch (e) {
       dispatch(displayError(ACCEPT_OFFER_ERROR));
     } finally {
@@ -93,6 +95,7 @@ export const declineOffer = (offeringId) => {
       );
       dispatch(declineOfferSuccess(offeringResponse.data));
       dispatch(displaySuccess(DECLINE_OFFER_SUCCESS));
+      return "success";
     } catch (e) {
       dispatch(displayError(DECLINE_OFFER_ERROR));
     } finally {

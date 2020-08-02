@@ -1,7 +1,8 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
+
 import ItemPage from "./Item/ItemPage";
-import ItemResults from "./pages/ItemResults";
+import { ItemResults } from "./pages/ItemResults";
 import LandingPage from "./pages/LandingPage";
 import UserProfile from "./pages/UserProfile";
 import EditItemDetailsPage from "./pages/EditItemDetailsPage";

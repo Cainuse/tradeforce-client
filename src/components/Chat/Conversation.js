@@ -6,17 +6,16 @@ import IconButton from "@material-ui/core/IconButton";
 import { withStyles } from "@material-ui/core/styles";
 import InputBase from "@material-ui/core/InputBase";
 import Divider from "@material-ui/core/Divider";
-import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import Badge from "@material-ui/core/Badge";
-import Avatar from "@material-ui/core/Avatar";
 import _ from "lodash";
+import ChatUserInfo from "./ChatUserInfo";
 
 import ChatSocketServer from "../../utils/ChatSocketServer";
 import ChatHttpServer from "../../utils/ChatHttpServer";
-import { Messages } from "./Messages";
-// import  Messages  from "./Messages";
+import Messages from "./Messages";
+import { withRouter } from "react-router";
+import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
+import Tooltip from "@material-ui/core/Tooltip";
+import Typography from "@material-ui/core/Typography";
 
 const useStyles = (theme) => ({
   root: {
@@ -35,20 +34,38 @@ const useStyles = (theme) => ({
   },
   userHeader: {
     display: "flex",
-    justifyContent: "flex-start",
+    justifyContent: "space-between",
     alignItems: "center",
     margin: theme.spacing(2, 0, 2, 2),
   },
   messageContainer: {
     padding: theme.spacing(0, 3),
+    width: "97%",
     height: "80%",
     overflow: "auto",
+    flex: "auto",
   },
   conversationContainer: {
-    height: "85vh",
+    height: "75vh",
   },
   fromUser: {
     color: theme.palette.primary.main,
+  },
+  messages: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "flex-end",
+    padding: theme.spacing(2, 2, 2, 0),
+  },
+  unselected: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "97%",
+    height: "80%",
+    "& *": {
+      fontWeight: 300,
+    },
   },
 });
 
@@ -64,8 +81,8 @@ class Conversation extends React.Component {
     this.messageContainer = React.createRef();
   }
 
-  componentDidMount = () => {
-    ChatSocketServer.receiveMessage();
+  componentDidMount = async () => {
+    // ChatSocketServer.receiveMessage();
     ChatSocketServer.eventEmitter.on(
       "add-message-response",
       this.receiveMessage
@@ -79,16 +96,22 @@ class Conversation extends React.Component {
     );
   };
 
-  componentDidUpdate = (prevProps) => {
+  componentDidUpdate = async (prevProps) => {
     if (
       prevProps.selectedChatUser === null ||
       this.props.selectedChatUser._id !== prevProps.selectedChatUser._id
     ) {
       this.getMessages();
+      if (this.props.selectedChatUser) {
+        await ChatHttpServer.markConversationAsRead(
+          this.props.selectedChatUser._id,
+          this.props.currentUser._id
+        );
+      }
     }
   };
 
-  receiveMessage = (response) => {
+  receiveMessage = async (response) => {
     if (!response.error && response.chatMsg) {
       if (
         !_.find(this.state.conversations, { _id: response.chatMsg._id }) &&
@@ -98,6 +121,7 @@ class Conversation extends React.Component {
         this.setState({
           conversations: [...this.state.conversations, response.chatMsg],
         });
+        await ChatHttpServer.markOneAsRead(response.chatMsg._id);
       }
     } else {
       let errorMessage = response.message
@@ -139,33 +163,22 @@ class Conversation extends React.Component {
     });
   };
 
+  redirectToProfile = () => {
+    const { history, selectedChatUser } = this.props;
+    history.push(`/profile/user=${selectedChatUser._id}`);
+  };
+
   render() {
     const { classes, selectedChatUser } = this.props;
     return selectedChatUser ? (
       <div className={classes.conversationContainer}>
         <Paper elevation={0} className={classes.userHeader}>
-          <ListItemIcon>
-            <Badge
-              color="primary"
-              variant="dot"
-              invisible={!selectedChatUser.isOnline}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-            >
-              <ListItemAvatar>
-                <Avatar
-                  alt={selectedChatUser.userName}
-                  src={selectedChatUser.profilePic}
-                />
-              </ListItemAvatar>
-            </Badge>
-          </ListItemIcon>
-          <ListItemText
-            primary={`${selectedChatUser.firstName} ${selectedChatUser.lastName}`}
-            secondary={selectedChatUser.userName}
-          />
+          <ChatUserInfo user={selectedChatUser} hideBadge={true} />
+          <Tooltip title="Visit profile">
+            <IconButton onClick={this.redirectToProfile}>
+              <PersonOutlineIcon />
+            </IconButton>
+          </Tooltip>
         </Paper>
         <Divider />
 
@@ -205,8 +218,8 @@ class Conversation extends React.Component {
         </Paper>
       </div>
     ) : this.props.loading ? null : (
-      <div>
-        <p>Select a conversation</p>
+      <div className={classes.unselected}>
+        <Typography variant="h5">Select a conversation</Typography>
       </div>
     );
   }
@@ -216,4 +229,6 @@ const mapStateToProps = (state) => ({
   loading: state.loading,
 });
 
-export default connect(mapStateToProps)(withStyles(useStyles)(Conversation));
+export default connect(mapStateToProps)(
+  withRouter(withStyles(useStyles)(Conversation))
+);
