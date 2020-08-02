@@ -36,7 +36,9 @@ const loadPostings = (action) => {
 };
 
 const makeOffer = (state, action) => {
-  let newState = state.map((posting) => {
+  let { postingPreviews } = state;
+
+  let newState = postingPreviews.map((posting) => {
     if (posting.id === action.postId) {
       if (!posting.offerings) {
         posting["offerings"] = [];
