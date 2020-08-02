@@ -12,6 +12,8 @@ class ChatSocketServer {
         transports: ["websocket"],
       });
       this.socket.emit("status-change", { userId, status: true });
+      this.receiveMessage();
+      this.receiveNotification();
     } catch (e) {
       alert("Socket connection could not be established");
     }
@@ -40,6 +42,16 @@ class ChatSocketServer {
     });
   };
 
+  sendNotification = (userId) => {
+    this.socket.emit("notify-recipient", { userId: userId });
+  };
+
+  receiveNotification = () => {
+    this.socket.on("new-notification", (data) => {
+      this.eventEmitter.emit("new-notification", data);
+    });
+  };
+
   logout = (userId) => {
     this.socket.emit("logout", { userId });
     this.socket.emit("status-change", { userId, status: false });
@@ -47,7 +59,6 @@ class ChatSocketServer {
       this.eventEmitter.emit("logout-response", data);
     });
     this.socket.off();
-    console.log("logged out");
   };
 }
 

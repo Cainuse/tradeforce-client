@@ -36,6 +36,24 @@ const useStyles = (theme) => ({
   title: {
     fontWeight: 300,
   },
+  emptyList: {
+    height: "72vh",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRight: "1px solid rgb(0, 0, 0, 0.12)",
+    width: "70%",
+    padding: theme.spacing(2),
+  },
+  mainText: {
+    fontWeight: 500,
+    color: theme.palette.primary.main,
+  },
+  subText: {
+    paddingTop: theme.spacing(2),
+    fontWeight: 300,
+  },
 });
 
 class ChatList extends React.Component {
@@ -145,7 +163,7 @@ class ChatList extends React.Component {
         <Typography variant="h5" className={classes.title}>
           Conversations
         </Typography>
-        {this.state.chatList.length === 0 ? null : (
+        {this.state.chatList.length !== 0 ? (
           <List className={classes.list}>
             {this.state.chatList.map((user, idx) => {
               return (
@@ -168,6 +186,16 @@ class ChatList extends React.Component {
               );
             })}
           </List>
+        ) : (
+          <div className={classes.emptyList}>
+            <Typography variant="h5" className={classes.mainText}>
+              No conversations have been started yet!
+            </Typography>
+            <Typography variant="subtitle2" className={classes.subText}>
+              Start a conversation through the posting page or by accepting an
+              offer.
+            </Typography>
+          </div>
         )}
       </React.Fragment>
     );
