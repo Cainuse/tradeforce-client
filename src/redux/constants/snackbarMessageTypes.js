@@ -1,3 +1,10 @@
+/* ===== Message Successes ===== */
+export const MESSAGE_SENT_SUCCESS =
+  "Message successfully sent! You may go to the Chat page to continue the conversation.";
+
+/* ===== Message Errors ===== */
+export const MESSAGE_EMPTY_ERROR = "Cannot send an empty message. Try again!";
+
 /* ===== Posting Errors ===== */
 export const ADD_POSTING_ERROR =
   "Something went wrong. Posting was not created";
@@ -24,7 +31,7 @@ export const USER_LOGIN_SUCCESS = "Successfully logged into the app!";
 export const USER_LOGOUT_SUCCESS = "Successfully logged out!";
 
 /* ===== User Details Successes ===== */
-export const UPDATE_USER_SUCCESS = "Your details were successfully update";
+export const UPDATE_USER_SUCCESS = "Your details were successfully updated";
 
 /* ===== User Details Errors ===== */
 export const LOAD_USER_DETAILS_NOT_FOUND = "User could not be found";
