@@ -168,7 +168,7 @@ const NotificationsMenu = ({ dispatch, notifications, currentUser }) => {
         onClick={handleOpenNotifications}
         className={classes.iconBtn}
       >
-        <Badge badgeContent={numUnread} color="secondary">
+        <Badge badgeContent={numUnread} color="error">
           <NotificationsNoneOutlinedIcon className={classes.notificationBtn} />
         </Badge>
       </IconButton>
