@@ -14,7 +14,7 @@ const useStyles = makeStyles(() => ({
   },
   chatBtn: {
     fontSize: "1.5rem",
-    padding: "5px",
+    padding: "3px",
   },
 }));
 
