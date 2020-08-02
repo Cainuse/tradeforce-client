@@ -59,7 +59,7 @@ const NotificationsMenu = ({ dispatch, notifications, currentUser }) => {
 
   useEffect(() => {
     retrieveNotifications();
-  }, [markAllStatus, numUnread]);
+  }, [markAllStatus]);
 
   useEffect(() => {
     ChatSocketServer.eventEmitter.on("new-notification", handleNewNotification);
@@ -70,13 +70,13 @@ const NotificationsMenu = ({ dispatch, notifications, currentUser }) => {
         handleNewNotification
       );
     };
-  }, []);
+  });
 
   const handleNewNotification = (data) => {
     console.log("handle new notification");
-    console.log(data);
+    // console.log(data);
     if (!data.error) {
-      updateNumUnread(0, "increase");
+      updateNumUnread(1, "increase");
     }
   };
 
