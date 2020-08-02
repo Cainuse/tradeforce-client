@@ -157,7 +157,7 @@ class ChatList extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, loading } = this.props;
     return (
       <React.Fragment>
         <Typography variant="h5" className={classes.title}>
@@ -186,7 +186,7 @@ class ChatList extends React.Component {
               );
             })}
           </List>
-        ) : (
+        ) : loading ? null : (
           <div className={classes.emptyList}>
             <Typography variant="h5" className={classes.mainText}>
               No conversations have been started yet!
@@ -211,4 +211,10 @@ const ChatListItem = ({ user, isUnread }) => {
   );
 };
 
-export default connect(null, { setLoading })(withStyles(useStyles)(ChatList));
+const mapStateToProps = (state) => ({
+  loading: state.loading,
+});
+
+export default connect(mapStateToProps, { setLoading })(
+  withStyles(useStyles)(ChatList)
+);
