@@ -18,7 +18,7 @@ class ChatHttpServer {
       const response = await axios.get(`${BASE_URL}/unread/${userId}`);
       return response.data;
     } catch (error) {
-      return error;
+      throw new Error("unable to get unread count");
     }
   };
 
@@ -34,7 +34,7 @@ class ChatHttpServer {
     try {
       await axios.patch(`${BASE_URL}/markOneAsRead`, { messageId });
     } catch (error) {
-      return error;
+      throw new Error("unable to mark message as read");
     }
   };
 }

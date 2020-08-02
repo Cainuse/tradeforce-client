@@ -83,3 +83,5 @@ export const GET_UNREAD_ERROR =
   "Unable to get unread message count. Please try again later";
 export const SEND_MESSAGE_ERROR =
   "Unable to send message. Please try again later";
+export const LOAD_CHATLIST_ERROR =
+  "Unable to load chat list. Please try again later";

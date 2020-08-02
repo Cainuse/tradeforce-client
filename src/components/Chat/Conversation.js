@@ -19,6 +19,7 @@ import {
   MESSAGE_EMPTY_ERROR,
   SEND_MESSAGE_ERROR,
   GET_CHAT_MESSAGES_ERROR,
+  MARK_ONE_READ_ERROR,
 } from "../../redux/constants/snackbarMessageTypes";
 
 const useStyles = (theme) => ({
@@ -86,7 +87,6 @@ class Conversation extends React.Component {
   }
 
   componentDidMount = async () => {
-    // ChatSocketServer.receiveMessage();
     ChatSocketServer.eventEmitter.on(
       "add-message-response",
       this.receiveMessage
@@ -120,7 +120,11 @@ class Conversation extends React.Component {
         this.setState({
           conversations: [...this.state.conversations, response.chatMsg],
         });
-        await ChatHttpServer.markOneAsRead(response.chatMsg._id);
+        try {
+          await ChatHttpServer.markOneAsRead(response.chatMsg._id);
+        } catch (e) {
+          this.props.displayError(MARK_ONE_READ_ERROR);
+        }
       }
     } else {
       this.props.displayError(SEND_MESSAGE_ERROR);
@@ -150,18 +154,18 @@ class Conversation extends React.Component {
 
   handleOnSubmit = (e) => {
     e.preventDefault();
-    // submit message via socket
     if (this.state.message.length > 0) {
       let message = {
         fromUserId: this.state.currentUser._id,
         toUserId: this.props.selectedChatUser._id,
         content: this.state.message,
       };
-      ChatSocketServer.sendMessage(message);
-      this.setState({
-        conversations: [...this.state.conversations, message],
-        message: "",
+      ChatSocketServer.sendMessage(message, () => {
+        this.setState({
+          conversations: [...this.state.conversations, message],
+        });
       });
+      this.setState({ message: "" });
     } else {
       this.props.displayError(MESSAGE_EMPTY_ERROR);
     }
