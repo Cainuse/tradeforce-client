@@ -9,9 +9,17 @@ import {
 } from "../constants/actionTypes";
 
 const addPosting = (state, action) => {
+  let { postingPreviews } = state;
+
   let { posting } = action;
+  console.log(posting);
   posting.quantity = parseInt(posting.quantity);
-  return [...state, posting];
+  let newPostingPreviews = [...postingPreviews, posting];
+  let newState = {
+    ...state,
+    newPostingPreviews,
+  }
+  return newState;
 };
 
 const deletePosting = (state, action) => {
@@ -36,27 +44,42 @@ const loadPostings = (action) => {
 };
 
 const makeOffer = (state, action) => {
-  let { postingPreviews } = state;
+  // let { postingPreviews } = state;
+  // let newState = postingPreviews.map((posting) => {
+  //   if (posting.id === action.postId) {
+  //     if (!posting.offerings) {
+  //       posting["offerings"] = [];
+  //     }
+  //     let updatedOfferings = posting.offerings.concat(action.offering);
+  //     let newPostingDetail = {
+  //       ...posting,
+  //       offerings: updatedOfferings,
+  //     };
+  //     return newPostingDetail;
+  //   }
+  //   return posting;
+  // });
+  // return newState;
+  const { postingPreviews } = state;
 
-  let newState = postingPreviews.map((posting) => {
-    if (posting.id === action.postId) {
-      if (!posting.offerings) {
-        posting["offerings"] = [];
-      }
-      let updatedOfferings = posting.offerings.concat(action.offering);
-      let newPostingDetail = {
-        ...posting,
-        offerings: updatedOfferings,
-      };
-      return newPostingDetail;
-    }
-    return posting;
-  });
+  let newPostingPreviews = updatePostingOfferings({ postingPreviews, action });
+
+  let newState = {
+    ...state,
+    postingPreviews: newPostingPreviews,
+  };
+
+  console.log(newState);
   return newState;
+
 };
 
 const clearPostings = () => {
-  return [];
+  return {
+    numPages: 0,
+    numResults: 0,
+    postingPreviews: [],
+  };
 };
 
 export const postingsReducer = (state = initialState.postings, action) => {
@@ -77,3 +100,22 @@ export const postingsReducer = (state = initialState.postings, action) => {
       return state;
   }
 };
+
+
+// ------------------ Helpers ----------------------- //
+const updatePostingOfferings = ({ postingPreviews, action }) => {
+  return postingPreviews.map((posting) => {
+    if (posting.id === action.postId) {
+      if (posting.offerings === undefined) {
+        posting["offerings"] = [];
+      }
+      let updatedOfferings = posting.offerings.concat(action.offering._id);
+      let newPostingDetail = {
+        ...posting,
+        offerings: updatedOfferings,
+      };
+      return newPostingDetail;
+    }
+    return posting;
+  });
+}

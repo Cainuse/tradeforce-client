@@ -12,7 +12,11 @@ export const initialState = {
     type: "",
     message: "",
   },
-  postings: [],
+  postings: {
+    numPages: 0,
+    numResults: 0,
+    postingPreviews: [],
+  },
   currentUser: {
     isFetching: false,
     isFailed: false,

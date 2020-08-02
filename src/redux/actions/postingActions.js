@@ -139,7 +139,6 @@ export const loadItemDetail = (itemId) => {
       dispatch(loadItemDetailSuccess(item));
       return "success";
     } catch (error) {
-      // throw new Error(error.response.status)
       dispatch(displayError(LOAD_ITEM_ERROR));
       return "error";
     } finally {
