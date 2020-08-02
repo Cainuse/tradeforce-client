@@ -64,3 +64,13 @@ export const IMAGE_SIZE_ERROR =
 export const IMAGE_TYPE_ERROR =
   "Selected image type is not accepted. Please choose a JPG or PNG file";
 export const TOO_MANY_IMAGES_ERROR = "Limit of 5 images has been reached";
+
+/* ===== Image Errors ===== */
+export const GET_CHAT_MESSAGES_ERROR =
+  "Unable to retrieve conversation messages. Please try again later.";
+export const MARK_ONE_READ_ERROR =
+  "Unable to mark message as read. Please try again later";
+export const MARK_ALL_READ_ERROR =
+  "Unable to update unread status of messages. Please try again later";
+export const GET_UNREAD_ERROR =
+  "Unable to get unread message count. Please try again later.";
