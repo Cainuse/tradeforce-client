@@ -211,10 +211,8 @@ const ChatListItem = ({ user, isUnread }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  loading: state.loading,
-});
+// const mapStateToProps = (state) => ({
+//   loading: state.loading,
+// });
 
-export default connect(mapStateToProps, { setLoading })(
-  withStyles(useStyles)(ChatList)
-);
+export default connect(null, { setLoading })(withStyles(useStyles)(ChatList));

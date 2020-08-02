@@ -5,6 +5,7 @@ import ChatList from "../Chat/ChatList";
 import Grid from "@material-ui/core/Grid";
 import Conversation from "../Chat/Conversation";
 import { makeStyles } from "@material-ui/core/styles";
+import { displayError } from "../../redux/actions/snackbarActions";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -23,12 +24,16 @@ const ChatPage = (props) => {
           <ChatList
             userId={props.currentUser._id}
             setSelectedChatUser={setSelectedChatUser}
+            displayError={props.displayError}
+            loading={props.loading}
           />
         </Grid>
         <Grid item xs={8}>
           <Conversation
             currentUser={props.currentUser}
             selectedChatUser={selectedChatUser}
+            displayError={props.displayError}
+            loading={props.loading}
           />
         </Grid>
       </Grid>
@@ -38,6 +43,7 @@ const ChatPage = (props) => {
 
 const mapStateToProps = (state) => ({
   currentUser: state.currentUser.user,
+  loading: state.loading,
 });
 
-export default connect(mapStateToProps)(ChatPage);
+export default connect(mapStateToProps, { displayError })(ChatPage);
