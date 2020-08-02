@@ -66,7 +66,6 @@ const makeOffer = (state, action) => {
     postingPreviews: newPostingPreviews,
   };
 
-  console.log(newState);
   return newState;
 };
 
