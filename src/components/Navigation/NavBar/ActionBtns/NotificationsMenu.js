@@ -73,8 +73,6 @@ const NotificationsMenu = ({ dispatch, notifications, currentUser }) => {
   });
 
   const handleNewNotification = (data) => {
-    console.log("handle new notification");
-    // console.log(data);
     if (!data.error) {
       updateNumUnread(1, "increase");
     }
