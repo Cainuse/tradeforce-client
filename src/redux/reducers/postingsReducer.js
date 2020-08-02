@@ -12,10 +12,10 @@ const addPosting = (state, action) => {
   let { postingPreviews } = state;
   let { posting } = action;
 
-  let newPostingPreviews = [...postingPreviews, posting];
+  let newPostingPreviews = [posting, ...postingPreviews];
   let newState = {
     ...state,
-    newPostingPreviews,
+    postingPreviews: newPostingPreviews,
   };
   return newState;
 };
