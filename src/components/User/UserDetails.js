@@ -129,7 +129,7 @@ class UserDetails extends React.Component {
             <ItemPreviewList items={userDetail.inactivePostings} sizing={2} />
           </TabPanel>
           <TabPanel value={this.state.value} index={2}>
-            {isUserOwnerOfProfile && (
+            {!isUserOwnerOfProfile && (
               <div className={classes.reviewButtonContainer}>
                 <Button
                   onClick={openReviewModal}

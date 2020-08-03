@@ -67,6 +67,7 @@ const MessageButton = ({
     ChatSocketServer.sendMessage(newMsg);
     setOpen(false);
     dispatch(displaySuccess(MESSAGE_SENT_SUCCESS));
+    setMessage("");
   };
 
   return (
