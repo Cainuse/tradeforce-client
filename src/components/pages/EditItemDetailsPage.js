@@ -52,11 +52,6 @@ class EditItemDetailsPage extends React.Component {
 
   redirect = () => {
     const { history } = this.props;
-    // const parentPath = location.pathname.substring(
-    //   0,
-    //   location.pathname.lastIndexOf("/")
-    // );
-    // history.push(parentPath);
     history.goBack();
   };
 
@@ -152,13 +147,17 @@ class EditItemDetailsPage extends React.Component {
     this.updateChangedFields("images");
   };
 
+  handleConfirmationOpen = (type) => {
+    this.setState({ confirmationOpen: true, confirmationType: type });
+  };
+
   handleSubmit = async () => {
     if (!this.validateRequiredFields()) {
       let details = _.pick(this.state, this.state.changedFields);
       await this.props.updateItemDetail(this.state._id, details);
       this.redirect();
     } else {
-      window.alert("Please fill required fields");
+      this.handleConfirmationOpen("alert");
     }
   };
 
@@ -172,10 +171,6 @@ class EditItemDetailsPage extends React.Component {
     this.setState({ confirmationOpen: false });
   };
 
-  handleConfirmationOpen = (type) => {
-    this.setState({ confirmationOpen: true, confirmationType: type });
-  };
-
   selectConfirmationToDisplay = () => {
     switch (this.state.confirmationType) {
       case "delete":
@@ -187,6 +182,18 @@ class EditItemDetailsPage extends React.Component {
             dialogMessage={"This action cannot be undone"}
             dialogTitle={"Are you sure you want to delete this posting?"}
             handleClose={this.handleConfirmationClose}
+          />
+        );
+      case "alert":
+        return (
+          <ConfirmationDialog
+            open={this.state.confirmationOpen}
+            submitAction={this.handleConfirmationClose}
+            submitName={"OK"}
+            dialogMessage={"Please fill required the fields"}
+            dialogTitle={"Information is missing from the form"}
+            handleClose={this.handleConfirmationClose}
+            omitCancelButton={true}
           />
         );
       default:

@@ -15,6 +15,7 @@ class ConfirmationDialog extends React.Component {
       dialogMessage,
       dialogTitle,
       handleClose,
+      omitCancelButton,
     } = this.props;
 
     return (
@@ -25,9 +26,11 @@ class ConfirmationDialog extends React.Component {
             {dialogMessage}
           </DialogContentText>
           <DialogActions>
-            <Button onClick={handleClose} color="primary">
-              Cancel
-            </Button>
+            {!omitCancelButton && (
+              <Button onClick={handleClose} color="primary">
+                Cancel
+              </Button>
+            )}
             <Button onClick={submitAction} color="primary">
               {submitName}
             </Button>
