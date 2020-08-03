@@ -1,6 +1,6 @@
 /* ===== Message Successes ===== */
 export const MESSAGE_SENT_SUCCESS =
-  "Message successfully sent! You may go to the Chat page to continue the conversation.";
+  "Message successfully sent! You may go to the Chat page to continue the conversation";
 
 /* ===== Message Errors ===== */
 export const MESSAGE_EMPTY_ERROR = "Cannot send an empty message. Try again!";
@@ -47,7 +47,7 @@ export const ADD_REVIEW_ERROR =
 
 /* ===== Offering Successes ===== */
 export const ADD_OFFER_SUCCESS = "Offer was successfully made";
-export const ACCEPT_OFFER_SUCCESS = "You accepted this offer successfully.";
+export const ACCEPT_OFFER_SUCCESS = "You accepted this offer successfully";
 export const DECLINE_OFFER_SUCCESS = "You declined this offer successfully";
 export const RESCIND_OFFER_SUCCESS = "You rescinded your offer successfully";
 
@@ -63,7 +63,7 @@ export const DECLINE_OFFER_ERROR =
 export const RESCIND_OFFER_ERROR =
   "Offer could not be rescinded. Please try again later";
 export const MAKE_OFFER_AS_UNSIGNED_IN_USER_ERROR =
-  "Please sign in or register before making an offer.";
+  "Please sign in or register before making an offer";
 
 /* ===== Image Errors ===== */
 export const IMAGE_SIZE_ERROR =
@@ -71,3 +71,17 @@ export const IMAGE_SIZE_ERROR =
 export const IMAGE_TYPE_ERROR =
   "Selected image type is not accepted. Please choose a JPG or PNG file";
 export const TOO_MANY_IMAGES_ERROR = "Limit of 5 images has been reached";
+
+/* ===== Chat Errors ===== */
+export const GET_CHAT_MESSAGES_ERROR =
+  "Unable to retrieve conversation messages. Please try again later";
+export const MARK_ONE_READ_ERROR =
+  "Unable to mark message as read. Please try again later";
+export const MARK_ALL_READ_ERROR =
+  "Unable to update unread status of messages. Please try again later";
+export const GET_UNREAD_ERROR =
+  "Unable to get unread message count. Please try again later";
+export const SEND_MESSAGE_ERROR =
+  "Unable to send message. Please try again later";
+export const LOAD_CHATLIST_ERROR =
+  "Unable to load chat list. Please try again later";

@@ -11,6 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import { setLoading } from "../../redux/actions/loadingActions";
 import ChatSocketServer from "../../utils/ChatSocketServer";
 import ChatUserInfo from "./ChatUserInfo";
+import { LOAD_CHATLIST_ERROR } from "../../redux/constants/snackbarMessageTypes";
 
 const useStyles = (theme) => ({
   root: {
@@ -112,10 +113,7 @@ class ChatList extends React.Component {
         this.setState({ unreadChats: [...this.state.unreadChats, senderId] });
       }
     } else {
-      let errorMessage = response.message
-        ? response.message
-        : "Something went wrong";
-      console.log(errorMessage);
+      //do nothing
     }
   };
 
@@ -130,7 +128,7 @@ class ChatList extends React.Component {
       });
       this.setState({ chatList: updatedChatList });
     } else {
-      console.log(response.message);
+      // do nothing
     }
   };
 
@@ -139,10 +137,7 @@ class ChatList extends React.Component {
       let newChatList = response.chatList.chatList;
       this.setState({ chatList: newChatList });
     } else {
-      let errorMessage = response.message
-        ? response.message
-        : "unable to load chat list";
-      console.log(errorMessage);
+      this.props.displayError(LOAD_CHATLIST_ERROR);
     }
     this.props.setLoading(false);
   };
@@ -157,7 +152,7 @@ class ChatList extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, loading } = this.props;
     return (
       <React.Fragment>
         <Typography variant="h5" className={classes.title}>
@@ -186,7 +181,7 @@ class ChatList extends React.Component {
               );
             })}
           </List>
-        ) : (
+        ) : loading ? null : (
           <div className={classes.emptyList}>
             <Typography variant="h5" className={classes.mainText}>
               No conversations have been started yet!
