@@ -52,6 +52,7 @@ export const registerUserAsync = (user, openedFrom, postingOwnerId) => {
     dateRegistered,
     password,
     isGoogleUser,
+    profilePic,
   } = user;
 
   return async (dispatch) => {
@@ -65,6 +66,7 @@ export const registerUserAsync = (user, openedFrom, postingOwnerId) => {
         dateRegistered,
         password,
         isGoogleUser,
+        profilePic,
       });
       const respData = createUserResp.data;
 
@@ -81,6 +83,7 @@ export const registerUserAsync = (user, openedFrom, postingOwnerId) => {
           dateRegistered: respData.user.dateRegistered,
           isGoogleUser: respData.user.isGoogleUser,
           location: respData.user.location,
+          profilePic: respData.user.profilePic,
         })
       );
       ChatSocketServer.createSocketConnection(respData.user._id);
@@ -126,6 +129,7 @@ export const loginUserAsync = (
             dateRegistered: googleInfo.dateRegistered,
             password: password,
             isGoogleUser: true,
+            profilePic: googleInfo.profilePic,
           })
         );
       }
@@ -155,6 +159,7 @@ export const loginUserAsync = (
           dateRegistered: respData.user.dateRegistered,
           isGoogleUser: respData.user.isGoogleUser,
           location: respData.user.location,
+          profilePic: respData.user.profilePic,
         })
       );
       ChatSocketServer.createSocketConnection(respData.user._id);
@@ -188,6 +193,7 @@ export const authenticateUser = (token) => {
           dateRegistered: user.dateRegistered,
           isGoogleUser: user.isGoogleUser,
           location: user.location,
+          profilePic: user.profilePic,
         })
       );
       ChatSocketServer.createSocketConnection(user._id);

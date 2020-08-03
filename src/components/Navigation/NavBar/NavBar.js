@@ -5,7 +5,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import { Logo } from "../../Logo";
-import ActionItems from "./ActionBtns/ActionButtons";
+import ActionButtons from "./ActionBtns/ActionButtons";
 import { clickMenuBtn } from "../../../redux/actions/flyoutActions";
 import { connect } from "react-redux";
 
@@ -66,7 +66,7 @@ function CreateNavBar(props) {
             <MenuIcon className={classes.menuIcon} />
           </IconButton>
           <Logo className={classes.logo} />
-          <ActionItems isLoggedIn={props.isLoggedIn} />
+          <ActionButtons isLoggedIn={props.isLoggedIn} />
         </Toolbar>
       </AppBar>
       <Toolbar />
