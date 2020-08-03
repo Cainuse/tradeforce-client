@@ -41,8 +41,8 @@ const loggedInStyles = makeStyles(() => ({
     fontWeight: "100",
   },
   accountBtn: {
-    fontSize: "2rem",
-    padding: "5px",
+    height: "30px",
+    width: "30px",
   },
   iconBtn: {
     padding: "1px",

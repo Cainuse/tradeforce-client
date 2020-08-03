@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function UserAvatar({ isLargeAvatar, userProfileImgSrc }) {
+export default function UserAvatar({ overRideClass, isLargeAvatar, userProfileImgSrc }) {
   const classes = useStyles();
 
   return (
@@ -27,7 +27,12 @@ export default function UserAvatar({ isLargeAvatar, userProfileImgSrc }) {
       <Avatar
         alt="User Image"
         src={userProfileImgSrc}
-        className={isLargeAvatar ? classes.large : classes.small}
+        className={
+          overRideClass === undefined
+            ? isLargeAvatar ? classes.large : classes.small
+            : overRideClass
+        }
+        variant={"circle"}
       />
     </div>
   );
