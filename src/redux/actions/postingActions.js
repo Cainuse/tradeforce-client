@@ -67,7 +67,7 @@ export const addPosting = (posting, currentUser) => {
         date: new Date(),
         location: currentUser.location
           ? currentUser.location
-          : "The Darkest Timeline",
+          : "Location Unavailable",
       };
       let postingResponse = await axios.post(
         `${BASE_URL}/postings`,

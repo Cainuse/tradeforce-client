@@ -64,23 +64,35 @@ class EditUserProfilePage extends React.Component {
       firstName: userDetail.firstName,
       lastName: userDetail.lastName,
       profilePic: userDetail.profilePic,
-      location: userDetail.location,
+      postalCode: userDetail.postalCode,
       changedFields: [],
       confirmationOpen: false,
       errors: {
         firstName: "",
         lastName: "",
-        location: "",
+        postalCode: "",
         userName: "",
       },
     };
   }
 
   isFormInvalid = () => {
-    let inputFields = _.pick(this.state, ["firstName", "lastName", "location"]);
+    let inputFields = _.pick(this.state, [
+      "firstName",
+      "lastName",
+      "postalCode",
+    ]);
     let haveEmptyFields = _.values(inputFields).some((val) => val.length === 0);
     let haveErrors = _.values(this.state.errors).some((val) => val.length > 0);
     return haveEmptyFields || haveErrors;
+  };
+
+  validatePostalCode = (postalCode) => {
+    const us = new RegExp("^\\d{5}(-{0,1}\\d{4})?$");
+    const ca = new RegExp(
+      /([ABCEGHJKLMNPRSTVXY]\d)([ABCEGHJKLMNPRSTVWXYZ]\d){2}/i
+    );
+    return us.test(postalCode) || ca.test(postalCode.replace(/\W+/g, ""));
   };
 
   validateInput = ([key, value]) => {
@@ -94,9 +106,13 @@ class EditUserProfilePage extends React.Component {
         errors.lastName =
           value.length > 0 ? "" : "Last name cannot be left blank";
         break;
-      case "location":
-        errors.location =
-          value.length > 0 ? "" : "Location cannot be left blank";
+      case "postalCode":
+        errors.postalCode =
+          value.length > 0
+            ? this.validatePostalCode(value)
+              ? ""
+              : "Invalid postal code"
+            : "Postal Code cannot be left blank";
         break;
       default:
         break;
@@ -133,8 +149,13 @@ class EditUserProfilePage extends React.Component {
   handleSubmit = async () => {
     if (!this.isFormInvalid()) {
       let details = _.pick(this.state, this.state.changedFields);
-      await this.props.updateUserDetails(this.props.userDetail._id, details);
-      this.redirect();
+      let response = await this.props.updateUserDetails(
+        this.props.userDetail._id,
+        details
+      );
+      if (response) {
+        this.redirect();
+      }
     } else {
       window.alert("Please fill required fields");
     }
@@ -167,7 +188,7 @@ class EditUserProfilePage extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { firstName, lastName, profilePic, location, errors } = this.state;
+    const { firstName, lastName, profilePic, postalCode, errors } = this.state;
     return (
       <div>
         {this.state.confirmationOpen && (
@@ -244,15 +265,15 @@ class EditUserProfilePage extends React.Component {
             <Grid item xs={12} sm={6}>
               <TextField
                 required
-                label="Location"
+                label="Postal Code"
                 fullWidth
                 margin="dense"
                 variant="outlined"
-                name="location"
+                name="postalCode"
                 onChange={this.handleInputChange}
-                defaultValue={location}
-                error={!!errors.location}
-                helperText={errors.location}
+                defaultValue={postalCode}
+                error={!!errors.postalCode}
+                helperText={errors.postalCode}
               />
             </Grid>
           </Grid>

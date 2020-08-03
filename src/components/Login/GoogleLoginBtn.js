@@ -20,7 +20,6 @@ const GoogleBtn = ({ loginUserAsync, displayError, modal, itemDetail }) => {
     const { name, email, givenName, familyName } = response.profileObj;
     const userName = name;
     const password = "googlePassword";
-    const postalCode = "None";
     const dateRegistered = new Date();
 
     if (response.accessToken) {
@@ -31,7 +30,6 @@ const GoogleBtn = ({ loginUserAsync, displayError, modal, itemDetail }) => {
           userName,
           givenName,
           familyName,
-          postalCode,
           dateRegistered,
         },
         modal.openedFrom,
@@ -44,7 +42,6 @@ const GoogleBtn = ({ loginUserAsync, displayError, modal, itemDetail }) => {
 
   const handleLoginFailure = (response) => {
     displayError("Google login failed. Please try again!");
-    console.log(response);
   };
 
   return (

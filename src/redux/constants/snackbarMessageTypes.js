@@ -39,6 +39,8 @@ export const LOAD_USER_DETAILS_ERROR =
   "This profile could not be loaded. Please try again later";
 export const UPDATE_USER_ERROR =
   "Something went wrong. Your profile was not updated";
+export const INVALID_POSTAL_CODE_ERROR =
+  "Google was unable to find your postal code. Please enter a valid postal code";
 
 /* ===== Review Success/Error ===== */
 export const ADD_REVIEW_SUCCESS = "Review was successfully added";

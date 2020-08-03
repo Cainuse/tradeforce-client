@@ -126,7 +126,6 @@ const RegisterForm = ({ dispatch, modal, itemDetail }, props) => {
             firstName: fName,
             lastName: lName,
             email: email,
-            postalCode: "None",
             dateRegistered: new Date(),
             password: password,
             isGoogleUser: false,
