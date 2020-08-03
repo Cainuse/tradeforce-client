@@ -119,7 +119,6 @@ export const loginUserAsync = (
       user = await axios.get(`${BASE_URL}/findUser/${email}`);
     } catch (err) {
       if (googleInfo) {
-        console.log(googleInfo);
         dispatch(displaySuccess(GOOGLE_LOGIN_SUCCESS));
         return await dispatch(
           registerUserAsync({
