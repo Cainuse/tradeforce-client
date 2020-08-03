@@ -5,7 +5,6 @@ import Button from "@material-ui/core/Button";
 import { connect } from "react-redux";
 import Container from "@material-ui/core/Container";
 import Step1 from "../AddPosting/Step1";
-import Step2 from "../AddPosting/Step2";
 import Step3 from "../AddPosting/Step3";
 import _ from "lodash";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -14,6 +13,7 @@ import {
   deletePosting,
 } from "../../redux/actions/postingActions";
 import ConfirmationDialog from "../ConfirmationDialog";
+import ImageUpload from "../ImageUpload";
 
 const useStyles = (theme) => ({
   buttonHeader: {
@@ -52,11 +52,6 @@ class EditItemDetailsPage extends React.Component {
 
   redirect = () => {
     const { history } = this.props;
-    // const parentPath = location.pathname.substring(
-    //   0,
-    //   location.pathname.lastIndexOf("/")
-    // );
-    // history.push(parentPath);
     history.goBack();
   };
 
@@ -230,8 +225,7 @@ class EditItemDetailsPage extends React.Component {
             />
           </div>
           <div className={classes.section}>
-            <Step2
-              change={this.handleInputChange}
+            <ImageUpload
               addImage={this.handleAddImage}
               images={this.state.images}
               deleteImage={this.handleRemoveFromList}
