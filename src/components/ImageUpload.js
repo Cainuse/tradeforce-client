@@ -77,39 +77,41 @@ const useStyles = makeStyles((theme) => ({
 
 const ImageUpload = ({ images, addImage, deleteImage, isSmall = false }) => {
   const [highlighted, setHighlighted] = useState(false);
-  const [errors, setErrors] = useState({
-    type: false,
-    limit: false,
-    size: false,
-  });
+  const [limitError, setLimitError] = useState(false);
+  const [sizeError, setSizeError] = useState(false);
+  const [typeError, setTypeError] = useState(false);
   const classes = useStyles();
 
-  const isValidFile = ({ file, index, spaceAvailable }) => {
-    if (index >= spaceAvailable) {
-      setErrors({ ...errors, limit: true });
-      return false;
-    }
+  const isValidFile = (file) => {
+    let isValid = true;
     if (file.type !== "image/png" && file.type !== "image/jpeg") {
-      setErrors({ ...errors, type: true });
-      return false;
+      setTypeError(true);
+      isValid = false;
     }
     let fileSize = file.size / 1024 / 1024;
     if (fileSize > 1) {
-      setErrors({ ...errors, size: true });
-      return false;
+      setSizeError(true);
+      isValid = false;
     }
-    return true;
+    return isValid;
+  };
+
+  const isWithinLimit = ({ index, spaceAvailable }) => {
+    let isValid = true;
+    if (index >= spaceAvailable) {
+      setLimitError(true);
+      isValid = false;
+    }
+    return isValid;
   };
 
   const processFiles = (files) => {
+    setTypeError(false);
+    setSizeError(false);
     let spaceAvailable = 5 - images.length;
-    setErrors({
-      ...errors,
-      type: false,
-      size: false,
-    });
     Array.from(files)
-      .filter((file, index) => isValidFile({ file, index, spaceAvailable }))
+      .filter((file) => isValidFile(file))
+      .filter((file, index) => isWithinLimit({ index, spaceAvailable }))
       .forEach((file) => {
         let reader = new FileReader();
         reader.onloadend = () => {
@@ -120,32 +122,31 @@ const ImageUpload = ({ images, addImage, deleteImage, isSmall = false }) => {
   };
 
   const renderErrorMessages = () => {
-    if (Object.values(errors).includes(true)) {
-      return (
-        <div>
-          {errors.limit && <p>{TOO_MANY_IMAGES_ERROR}</p>}
-          {errors.size && (
-            <p>
-              Some images were not uploaded because they exceeded the 1MB size
-              limit
-            </p>
-          )}
-          {errors.type && (
-            <p>
-              Some images were not uploaded because they were not a PNG or JPG
-              file
-            </p>
-          )}
-        </div>
-      );
-    }
-    return null;
+    return (
+      <div>
+        {limitError && <p>{TOO_MANY_IMAGES_ERROR}</p>}
+        {sizeError && (
+          <p>
+            Some images were not uploaded because they exceeded the 1MB size
+            limit
+          </p>
+        )}
+        {typeError && (
+          <p>
+            Some images were not uploaded because they were not a PNG or JPG
+            file
+          </p>
+        )}
+      </div>
+    );
   };
 
   const handleDeleteChange = (index) => {
     if (images.length - 1 < 5) {
-      setErrors({ ...errors, limit: false });
+      setLimitError(false);
     }
+    setSizeError(false);
+    setTypeError(false);
     deleteImage("images", index);
   };
 
