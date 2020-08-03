@@ -36,9 +36,9 @@ const deletePosting = (state, action) => {
 
 const updatePostingDetail = (state, action) => {
   let { itemId, details } = action;
-  let { postingPreview } = state;
+  let { postingPreviews } = state;
 
-  let newPostingPreview = postingPreview.map((posting) => {
+  let newPostingPreview = postingPreviews.map((posting) => {
     if (posting._id === itemId) {
       return { ...posting, ...details };
     }
