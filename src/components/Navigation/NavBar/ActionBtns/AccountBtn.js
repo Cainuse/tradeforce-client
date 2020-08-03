@@ -4,20 +4,22 @@ import { connect } from "react-redux";
 
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import AccountCircleOutlinedIcon from "@material-ui/icons/AccountCircleOutlined";
 import { Avatar, IconButton } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 
 import { logoutUser } from "../../../../redux/actions/userActions";
 import GoogleLogoutBtn from "../../../Login/GoogleLogoutBtn";
 import { loadUserDetails } from "../../../../redux/actions/userDetailActions";
-import UserAvatar from "../../../User/UserAvatar";
-import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(() => ({
   accountBtnContainer: {
     paddingLeft: "5px",
-  }
-}))
+  },
+  accountBtn: {
+    height: "30px",
+    width: "30px",
+  },
+}));
 
 const getLogoutMenuItem = (currentUser, handleClickLogout) => {
   if (currentUser.user.isGoogleUser) {
@@ -67,8 +69,12 @@ function AccountBtn(props) {
         aria-label="accountButton"
         onClick={handleClick}
       >
-        <Avatar src={props.currentUser.user.profilePic} variant={"circle"} alt={"userProfileIcon"} className={props.accountBtnClass}/>
-
+        <Avatar
+          src={props.currentUser.user.profilePic}
+          variant={"circle"}
+          alt={"userProfileIcon"}
+          className={classes.accountBtn}
+        />
       </IconButton>
       <Menu
         id="simple-menu"

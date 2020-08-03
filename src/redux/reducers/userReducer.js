@@ -53,7 +53,7 @@ export const userReducer = (state = initialState.currentUser, action) => {
             : state.user.location,
           profilePic: action.details.profilePic
             ? action.details.profilePic
-            : state.user.profilePic
+            : state.user.profilePic,
         },
       };
     default:

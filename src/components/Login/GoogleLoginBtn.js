@@ -17,7 +17,6 @@ const GoogleBtn = ({ loginUserAsync, displayError, modal, itemDetail }) => {
   const classes = useStyles();
 
   const login = async (response) => {
-    console.log(response);
     const { email, givenName, familyName, imageUrl } = response.profileObj;
     const userName = email.split("@")[0];
     const password = "googlePassword";
@@ -43,7 +42,7 @@ const GoogleBtn = ({ loginUserAsync, displayError, modal, itemDetail }) => {
     }
   };
 
-  const handleLoginFailure = (response) => {
+  const handleLoginFailure = () => {
     displayError("Google login failed. Please try again!");
   };
 

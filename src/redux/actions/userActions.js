@@ -66,7 +66,7 @@ export const registerUserAsync = (user, openedFrom, postingOwnerId) => {
         dateRegistered,
         password,
         isGoogleUser,
-        profilePic
+        profilePic,
       });
       const respData = createUserResp.data;
 
