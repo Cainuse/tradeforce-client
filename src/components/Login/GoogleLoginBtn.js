@@ -23,23 +23,19 @@ const GoogleBtn = ({ loginUserAsync, displayError, modal, itemDetail }) => {
     const dateRegistered = new Date();
     const profilePic = imageUrl;
 
-    if (response.accessToken) {
-      await loginUserAsync(
-        email,
-        password,
-        {
-          userName,
-          givenName,
-          familyName,
-          dateRegistered,
-          profilePic,
-        },
-        modal.openedFrom,
-        itemDetail.ownerId
-      );
-    } else {
-      displayError("Google login failed. Please try again!");
-    }
+    await loginUserAsync(
+      email,
+      password,
+      {
+        userName,
+        givenName,
+        familyName,
+        dateRegistered,
+        profilePic,
+      },
+      modal.openedFrom,
+      itemDetail.ownerId
+    );
   };
 
   const handleLoginFailure = () => {
