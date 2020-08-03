@@ -17,11 +17,11 @@ const GoogleBtn = ({ loginUserAsync, displayError, modal, itemDetail }) => {
   const classes = useStyles();
 
   const login = async (response) => {
-    const { name, email, givenName, familyName } = response.profileObj;
-    const userName = name;
+    const { email, givenName, familyName, imageUrl } = response.profileObj;
+    const userName = email.split("@")[0];
     const password = "googlePassword";
-    const postalCode = "None";
     const dateRegistered = new Date();
+    const profilePic = imageUrl;
 
     if (response.accessToken) {
       await loginUserAsync(
@@ -31,8 +31,8 @@ const GoogleBtn = ({ loginUserAsync, displayError, modal, itemDetail }) => {
           userName,
           givenName,
           familyName,
-          postalCode,
           dateRegistered,
+          profilePic,
         },
         modal.openedFrom,
         itemDetail.ownerId
@@ -42,9 +42,8 @@ const GoogleBtn = ({ loginUserAsync, displayError, modal, itemDetail }) => {
     }
   };
 
-  const handleLoginFailure = (response) => {
+  const handleLoginFailure = () => {
     displayError("Google login failed. Please try again!");
-    console.log(response);
   };
 
   return (

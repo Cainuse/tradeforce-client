@@ -6,6 +6,7 @@ import {
   ACCEPT_OFFER,
   DECLINE_OFFER,
   RESCIND_OFFER,
+  ADD_POSTING,
 } from "../constants/actionTypes";
 import _ from "lodash";
 
@@ -68,6 +69,12 @@ const rescindOfferRemoveFromOffers = (state, action) => {
   return { ...state, offersSent: updatedOffersSent };
 };
 
+// add newly created posting to active postings array
+const addPosting = (state, action) => {
+  let updatedActivePostings = [...state.activePostings, action.posting];
+  return { ...state, activePostings: updatedActivePostings };
+};
+
 export const userDetailReducer = (state = initialState.userDetail, action) => {
   switch (action.type) {
     case ADD_REVIEW:
@@ -82,6 +89,8 @@ export const userDetailReducer = (state = initialState.userDetail, action) => {
       return declineOfferUpdateStatus(state, action);
     case RESCIND_OFFER:
       return rescindOfferRemoveFromOffers(state, action);
+    case ADD_POSTING:
+      return addPosting(state, action);
     default:
       return state;
   }

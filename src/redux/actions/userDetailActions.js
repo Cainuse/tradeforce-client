@@ -4,6 +4,7 @@ import {
   UPDATE_USER_SUCCESS,
   LOAD_USER_DETAILS_ERROR,
   LOAD_USER_DETAILS_NOT_FOUND,
+  INVALID_POSTAL_CODE_ERROR,
 } from "../constants/snackbarMessageTypes";
 import { displayError, displaySuccess } from "./snackbarActions";
 import { setLoading } from "./loadingActions";
@@ -73,11 +74,17 @@ export const updateUserDetails = (userId, details) => {
   return async (dispatch) => {
     try {
       dispatch(setLoading(true));
-      await axios.patch(`${BASE_URL}/${userId}`, details);
-      dispatch(updateUserDetailSuccess(userId, details));
+      let updatedResponse = await axios.patch(`${BASE_URL}/${userId}`, details);
+      localStorage.setItem("token", updatedResponse.data.token);
+      dispatch(updateUserDetailSuccess(userId, updatedResponse.data.body));
       dispatch(displaySuccess(UPDATE_USER_SUCCESS));
+      return "success";
     } catch (e) {
-      dispatch(displayError(UPDATE_USER_ERROR));
+      if (e.response.status === 400) {
+        dispatch(displayError(INVALID_POSTAL_CODE_ERROR));
+      } else {
+        dispatch(displayError(UPDATE_USER_ERROR));
+      }
     } finally {
       dispatch(setLoading(false));
     }

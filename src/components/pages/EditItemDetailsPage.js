@@ -154,7 +154,6 @@ class EditItemDetailsPage extends React.Component {
 
   handleSubmit = async () => {
     if (!this.validateRequiredFields()) {
-      // console.log(this.state.changedFields);
       let details = _.pick(this.state, this.state.changedFields);
       await this.props.updateItemDetail(this.state._id, details);
       this.redirect();

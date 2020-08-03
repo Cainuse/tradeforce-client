@@ -40,10 +40,6 @@ const loggedInStyles = makeStyles(() => ({
     fontSize: "1.3rem",
     fontWeight: "100",
   },
-  accountBtn: {
-    fontSize: "2rem",
-    padding: "5px",
-  },
   iconBtn: {
     padding: "1px",
   },
@@ -102,10 +98,7 @@ const LoggedInActionItems = (props) => {
       <AppBarDivider className={classes.divider} />
       <ChatBtn />
       <NotificationsMenu />
-      <AccountBtn
-        iconBtnClass={classes.iconBtn}
-        accountBtnClass={classes.accountBtn}
-      />
+      <AccountBtn iconBtnClass={classes.iconBtn} />
     </div>
   );
 };

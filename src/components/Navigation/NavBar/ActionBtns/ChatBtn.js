@@ -7,6 +7,8 @@ import SmsOutlinedIcon from "@material-ui/icons/SmsOutlined";
 import ChatSocketServer from "../../../../utils/ChatSocketServer";
 import ChatHttpServer from "../../../../utils/ChatHttpServer";
 import { connect } from "react-redux";
+import { displayError } from "../../../../redux/actions/snackbarActions";
+import { GET_UNREAD_ERROR } from "../../../../redux/constants/snackbarMessageTypes";
 
 const useStyles = makeStyles(() => ({
   iconBtn: {
@@ -25,10 +27,14 @@ const ChatBtn = (props) => {
 
   useEffect(() => {
     async function fetchUnreadCount() {
-      const response = await ChatHttpServer.getUnreadCount(
-        props.currentUser.user._id
-      );
-      setUnreadCount(response.unreadCount);
+      try {
+        const response = await ChatHttpServer.getUnreadCount(
+          props.currentUser.user._id
+        );
+        setUnreadCount(response.unreadCount);
+      } catch (e) {
+        this.props.displayError(GET_UNREAD_ERROR);
+      }
     }
 
     if (window.location.pathname !== "/chat") {
@@ -76,4 +82,4 @@ const mapStateToProps = (state) => ({
   currentUser: state.currentUser,
 });
 
-export default connect(mapStateToProps)(ChatBtn);
+export default connect(mapStateToProps, { displayError })(ChatBtn);

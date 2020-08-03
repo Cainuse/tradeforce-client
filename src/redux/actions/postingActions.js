@@ -67,7 +67,7 @@ export const addPosting = (posting, currentUser) => {
         date: new Date(),
         location: currentUser.location
           ? currentUser.location
-          : "The Darkest Timeline",
+          : "Location Unavailable",
       };
       let postingResponse = await axios.post(
         `${BASE_URL}/postings`,
@@ -139,7 +139,6 @@ export const loadItemDetail = (itemId) => {
       dispatch(loadItemDetailSuccess(item));
       return "success";
     } catch (error) {
-      // throw new Error(error.response.status)
       dispatch(displayError(LOAD_ITEM_ERROR));
       return "error";
     } finally {

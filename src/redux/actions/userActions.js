@@ -49,10 +49,10 @@ export const registerUserAsync = (user, openedFrom, postingOwnerId) => {
     firstName,
     lastName,
     email,
-    postalCode,
     dateRegistered,
     password,
     isGoogleUser,
+    profilePic,
   } = user;
 
   return async (dispatch) => {
@@ -63,10 +63,10 @@ export const registerUserAsync = (user, openedFrom, postingOwnerId) => {
         firstName,
         lastName,
         email,
-        postalCode,
         dateRegistered,
         password,
         isGoogleUser,
+        profilePic,
       });
       const respData = createUserResp.data;
 
@@ -79,10 +79,11 @@ export const registerUserAsync = (user, openedFrom, postingOwnerId) => {
           firstName: respData.user.firstName,
           lastName: respData.user.lastName,
           email: respData.user.email,
-          postalCode: "None",
+          postalCode: respData.user.postalCode,
           dateRegistered: respData.user.dateRegistered,
           isGoogleUser: respData.user.isGoogleUser,
           location: respData.user.location,
+          profilePic: respData.user.profilePic,
         })
       );
       ChatSocketServer.createSocketConnection(respData.user._id);
@@ -125,10 +126,10 @@ export const loginUserAsync = (
             firstName: googleInfo.givenName,
             lastName: googleInfo.familyName,
             email: email,
-            postalCode: "None",
             dateRegistered: googleInfo.dateRegistered,
             password: password,
             isGoogleUser: true,
+            profilePic: googleInfo.profilePic,
           })
         );
       }
@@ -158,6 +159,7 @@ export const loginUserAsync = (
           dateRegistered: respData.user.dateRegistered,
           isGoogleUser: respData.user.isGoogleUser,
           location: respData.user.location,
+          profilePic: respData.user.profilePic,
         })
       );
       ChatSocketServer.createSocketConnection(respData.user._id);
@@ -191,6 +193,7 @@ export const authenticateUser = (token) => {
           dateRegistered: user.dateRegistered,
           isGoogleUser: user.isGoogleUser,
           location: user.location,
+          profilePic: user.profilePic,
         })
       );
       ChatSocketServer.createSocketConnection(user._id);

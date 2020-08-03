@@ -1,5 +1,4 @@
 import React from "react";
-import { connect } from "react-redux";
 import Paper from "@material-ui/core/Paper";
 import SendIcon from "@material-ui/icons/Send";
 import IconButton from "@material-ui/core/IconButton";
@@ -16,6 +15,12 @@ import { withRouter } from "react-router";
 import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
 import Tooltip from "@material-ui/core/Tooltip";
 import Typography from "@material-ui/core/Typography";
+import {
+  MESSAGE_EMPTY_ERROR,
+  SEND_MESSAGE_ERROR,
+  GET_CHAT_MESSAGES_ERROR,
+  MARK_ONE_READ_ERROR,
+} from "../../redux/constants/snackbarMessageTypes";
 
 const useStyles = (theme) => ({
   root: {
@@ -82,7 +87,6 @@ class Conversation extends React.Component {
   }
 
   componentDidMount = async () => {
-    // ChatSocketServer.receiveMessage();
     ChatSocketServer.eventEmitter.on(
       "add-message-response",
       this.receiveMessage
@@ -98,16 +102,11 @@ class Conversation extends React.Component {
 
   componentDidUpdate = async (prevProps) => {
     if (
-      prevProps.selectedChatUser === null ||
-      this.props.selectedChatUser._id !== prevProps.selectedChatUser._id
+      this.props.selectedChatUser &&
+      (prevProps.selectedChatUser === null ||
+        this.props.selectedChatUser._id !== prevProps.selectedChatUser._id)
     ) {
       this.getMessages();
-      if (this.props.selectedChatUser) {
-        await ChatHttpServer.markConversationAsRead(
-          this.props.selectedChatUser._id,
-          this.props.currentUser._id
-        );
-      }
     }
   };
 
@@ -121,13 +120,14 @@ class Conversation extends React.Component {
         this.setState({
           conversations: [...this.state.conversations, response.chatMsg],
         });
-        await ChatHttpServer.markOneAsRead(response.chatMsg._id);
+        try {
+          await ChatHttpServer.markOneAsRead(response.chatMsg._id);
+        } catch (e) {
+          this.props.displayError(MARK_ONE_READ_ERROR);
+        }
       }
     } else {
-      let errorMessage = response.message
-        ? response.message
-        : "Something went wrong";
-      console.log(errorMessage);
+      this.props.displayError(SEND_MESSAGE_ERROR);
     }
   };
 
@@ -138,9 +138,13 @@ class Conversation extends React.Component {
         currentUser._id,
         this.props.selectedChatUser._id
       );
+      await ChatHttpServer.markConversationAsRead(
+        this.props.selectedChatUser._id,
+        currentUser._id
+      );
       this.setState({ conversations: messagesResponse });
     } catch (e) {
-      // console.log(e);
+      this.props.displayError(GET_CHAT_MESSAGES_ERROR);
     }
   };
 
@@ -150,17 +154,21 @@ class Conversation extends React.Component {
 
   handleOnSubmit = (e) => {
     e.preventDefault();
-    // submit message via socket
-    let message = {
-      fromUserId: this.state.currentUser._id,
-      toUserId: this.props.selectedChatUser._id,
-      content: this.state.message,
-    };
-    ChatSocketServer.sendMessage(message);
-    this.setState({
-      conversations: [...this.state.conversations, message],
-      message: "",
-    });
+    if (this.state.message.length > 0) {
+      let message = {
+        fromUserId: this.state.currentUser._id,
+        toUserId: this.props.selectedChatUser._id,
+        content: this.state.message,
+      };
+      ChatSocketServer.sendMessage(message, () => {
+        this.setState({
+          conversations: [...this.state.conversations, message],
+        });
+      });
+      this.setState({ message: "" });
+    } else {
+      this.props.displayError(MESSAGE_EMPTY_ERROR);
+    }
   };
 
   redirectToProfile = () => {
@@ -169,7 +177,7 @@ class Conversation extends React.Component {
   };
 
   render() {
-    const { classes, selectedChatUser } = this.props;
+    const { classes, selectedChatUser, loading } = this.props;
     return selectedChatUser ? (
       <div className={classes.conversationContainer}>
         <Paper elevation={0} className={classes.userHeader}>
@@ -217,7 +225,7 @@ class Conversation extends React.Component {
           </IconButton>
         </Paper>
       </div>
-    ) : this.props.loading ? null : (
+    ) : loading ? null : (
       <div className={classes.unselected}>
         <Typography variant="h5">Select a conversation</Typography>
       </div>
@@ -225,10 +233,4 @@ class Conversation extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  loading: state.loading,
-});
-
-export default connect(mapStateToProps)(
-  withRouter(withStyles(useStyles)(Conversation))
-);
+export default withRouter(withStyles(useStyles)(Conversation));

@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { connect } from "react-redux";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
+import { getUserByIdAsync } from "../../redux/actions/userActions";
 
 const useStyles = makeStyles((theme) => ({
   header: {
@@ -22,10 +24,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ItemHeader(props) {
+const ItemHeader = (props) => {
   const classes = useStyles();
+  const [loc, setLoc] = useState("");
+
   let { itemDetail } = props;
   let { date, title, location } = itemDetail;
+
+  const getUpdatedLocation = async () => {
+    const user = await props.dispatch(getUserByIdAsync(itemDetail.ownerId));
+    setLoc(user.location.location);
+  };
+
+  useEffect(() => {
+    getUpdatedLocation();
+  }, []);
 
   const formatDate = (date) => {
     const options = { month: "long", day: "numeric" };
@@ -44,8 +57,10 @@ export default function ItemHeader(props) {
         {title}
       </Typography>
       <Typography className={classes.subtitle} variant="subtitle1">
-        {location}
+        {loc}
       </Typography>
     </Paper>
   );
-}
+};
+
+export default connect()(ItemHeader);
