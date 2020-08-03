@@ -149,8 +149,13 @@ class EditUserProfilePage extends React.Component {
   handleSubmit = async () => {
     if (!this.isFormInvalid()) {
       let details = _.pick(this.state, this.state.changedFields);
-      await this.props.updateUserDetails(this.props.userDetail._id, details);
-      this.redirect();
+      let response = await this.props.updateUserDetails(
+        this.props.userDetail._id,
+        details
+      );
+      if (response) {
+        this.redirect();
+      }
     } else {
       window.alert("Please fill required fields");
     }

@@ -77,6 +77,7 @@ export const updateUserDetails = (userId, details) => {
       let updatedResponse = await axios.patch(`${BASE_URL}/${userId}`, details);
       dispatch(updateUserDetailSuccess(userId, updatedResponse.data));
       dispatch(displaySuccess(UPDATE_USER_SUCCESS));
+      return "success";
     } catch (e) {
       if (e.response.status === 400) {
         dispatch(displayError(INVALID_POSTAL_CODE_ERROR));
