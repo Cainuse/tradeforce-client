@@ -75,7 +75,8 @@ export const updateUserDetails = (userId, details) => {
     try {
       dispatch(setLoading(true));
       let updatedResponse = await axios.patch(`${BASE_URL}/${userId}`, details);
-      dispatch(updateUserDetailSuccess(userId, updatedResponse.data));
+      localStorage.setItem("token", updatedResponse.data.token);
+      dispatch(updateUserDetailSuccess(userId, updatedResponse.data.body));
       dispatch(displaySuccess(UPDATE_USER_SUCCESS));
       return "success";
     } catch (e) {
