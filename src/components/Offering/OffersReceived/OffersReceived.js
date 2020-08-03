@@ -54,7 +54,6 @@ const OffersReceived = (props) => {
   const handleAcceptOffer = async () => {
     let { offerId, offerer, posting } = offerInfoToActUpon;
     let response = await dispatch(acceptOffer(offerId));
-    // handleConfirmationClose();
     if (response) {
       ChatSocketServer.sendMessage({
         fromUserId: currentUser ? currentUser.user._id : 0,
