@@ -31,7 +31,7 @@ const updateUserDetailSuccess = (userId, details) => {
   };
 };
 
-export const clearUserDetails = () => {
+export const clearOldUserDetails = () => {
   return {
     type: CLEAR_OLD_USER_DETAILS,
   };

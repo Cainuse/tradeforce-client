@@ -9,7 +9,10 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import { logoutUser } from "../../../../redux/actions/userActions";
 import GoogleLogoutBtn from "../../../Login/GoogleLogoutBtn";
-import { loadUserDetails } from "../../../../redux/actions/userDetailActions";
+import {
+  loadUserDetails,
+  clearOldUserDetails,
+} from "../../../../redux/actions/userDetailActions";
 
 const useStyles = makeStyles(() => ({
   accountBtnContainer: {
@@ -39,15 +42,8 @@ function AccountBtn(props) {
   };
 
   const handleClickProfile = async () => {
-    let response = await props.loadUserDetails({
-      userId: props.currentUser.user._id,
-      currentUserId: props.currentUser.user._id,
-    });
-    if (response === "success") {
-      history.push(`/profile/user=${props.currentUser.user._id}`);
-    } else {
-      history.push("/UserNotFound");
-    }
+    props.clearOldUserDetails();
+    history.push(`/profile/user=${props.currentUser.user._id}`);
     setAnchorEl(null);
   };
 
@@ -108,6 +104,7 @@ const mapDispatchToProps = (dispatch) => ({
   logoutUser: (userId) => dispatch(logoutUser(userId)),
   loadUserDetails: ({ userId, currentUserId }) =>
     dispatch(loadUserDetails({ userId, currentUserId })),
+  clearOldUserDetails: () => dispatch(clearOldUserDetails()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AccountBtn);
