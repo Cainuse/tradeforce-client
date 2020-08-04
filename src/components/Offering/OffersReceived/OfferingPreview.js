@@ -17,6 +17,8 @@ import AcceptIconButton from "./AcceptIconButton";
 import DeclineIconButton from "./DeclineIconButton";
 import { getUserByIdAsync } from "../../../redux/actions/userActions";
 import { openOfferDetailsModal } from "../../../redux/actions/modalActions";
+import { displayError } from "../../../redux/actions/snackbarActions";
+import { GENERIC_LOADING_ERROR } from "../../../redux/constants/snackbarMessageTypes";
 
 const useStyles = makeStyles(() => ({
   cardRoot: {
@@ -69,11 +71,9 @@ export const OfferingPreview = (props) => {
         setOfferer(user);
       } catch (e) {
         if (Axios.isCancel(e)) {
-          //do nothing
+          //Purposeful error: do nothing
         } else {
-          console.log(
-            "There was an error when attempting to getOfferer for OfferingPreview"
-          );
+          dispatch(displayError(GENERIC_LOADING_ERROR));
         }
       }
     }

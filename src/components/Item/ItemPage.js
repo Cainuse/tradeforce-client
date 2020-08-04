@@ -40,15 +40,11 @@ const ItemPage = () => {
 
   useEffect(() => {
     async function loadPosting() {
-      try {
         const itemId = location.pathname.split("=")[1];
         let response = await dispatch(loadItemDetail(itemId));
         if (response.type === "error") {
           history.push("/OhNo!");
         }
-      } catch (error) {
-        console.log("Posting failed to load on ItemDetail's Page");
-      }
     }
 
     loadPosting();

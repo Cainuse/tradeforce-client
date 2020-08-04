@@ -1,3 +1,9 @@
+/* ===== Generic Errors ===== */
+export const GENERIC_LOADING_ERROR =
+  "Some information could not be loaded. Please try again later";
+export const GENERIC_ERROR =
+  "Something went wrong. Please try again later";
+
 /* ===== Message Successes ===== */
 export const MESSAGE_SENT_SUCCESS =
   "Message successfully sent! You may go to the Chat page to continue the conversation";
