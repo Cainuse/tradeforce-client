@@ -59,12 +59,12 @@ const useStyles = (theme) => ({
 class EditUserProfilePage extends React.Component {
   constructor(props) {
     super(props);
-    const { userDetail } = props;
+    const { currentUser } = props;
     this.state = {
-      firstName: userDetail.firstName,
-      lastName: userDetail.lastName,
-      profilePic: userDetail.profilePic,
-      postalCode: userDetail.postalCode,
+      firstName: currentUser.firstName,
+      lastName: currentUser.lastName,
+      profilePic: currentUser.profilePic,
+      postalCode: currentUser.postalCode,
       changedFields: [],
       confirmationOpen: false,
       errors: {
@@ -150,7 +150,7 @@ class EditUserProfilePage extends React.Component {
     if (!this.isFormInvalid()) {
       let details = _.pick(this.state, this.state.changedFields);
       let response = await this.props.updateUserDetails(
-        this.props.userDetail._id,
+        this.props.currentUser._id,
         details
       );
       if (response) {
@@ -330,7 +330,7 @@ class EditUserProfilePage extends React.Component {
 }
 const mapStateToProps = (state) => {
   return {
-    userDetail: state.userDetail,
+    currentUser: state.currentUser.user,
   };
 };
 
