@@ -13,7 +13,8 @@ import Step1 from "../AddPosting/Step1";
 import Step3 from "../AddPosting/Step3";
 import {
   updateItemDetail,
-  deletePosting, loadItemDetail
+  deletePosting,
+  loadItemDetail,
 } from "../../redux/actions/postingActions";
 import ConfirmationDialog from "../ConfirmationDialog";
 import ImageUpload from "../ImageUpload";
@@ -24,24 +25,23 @@ const useStyles = makeStyles((theme) => ({
   buttonHeader: {
     display: "flex",
     justifyContent: "space-between",
-    margin: theme.spacing(1)
+    margin: theme.spacing(1),
   },
   section: {
-    margin: theme.spacing(2, 0)
+    margin: theme.spacing(2, 0),
   },
   cancelButton: {
     color: "#AD343E",
-    borderColor: "#AD343E"
-  }
+    borderColor: "#AD343E",
+  },
 }));
 
 const EditItemDetailsPage = () => {
-
   const classes = useStyles();
   const history = useHistory();
   const location = useLocation();
   const dispatch = useDispatch();
-  const itemDetail = useSelector(state => state.itemDetail);
+  const itemDetail = useSelector((state) => state.itemDetail);
 
   const [itemDetailState, setItemDetailState] = useState({});
   const [errors, setErrors] = useState({
@@ -49,14 +49,13 @@ const EditItemDetailsPage = () => {
     description: "",
     category: "",
     condition: "",
-    quantity: ""
+    quantity: "",
   });
   const [changedFields, setChangedFields] = useState([]);
   const [confirmationOpen, setConfirmationOpen] = useState(false);
   const [confirmationType, setConfirmationType] = useState("");
 
   let arrNewImgs = null;
-
 
   const reloadItemDetails = useCallback(async () => {
     let itemDetailsUrl = _.replace(location.pathname, "/edit", "");
@@ -70,7 +69,6 @@ const EditItemDetailsPage = () => {
       dispatch(displayError(LOAD_EDIT_ITEM_DETAIL_PAGE_ERROR));
     }
   }, [dispatch, location]);
-
 
   useEffect(() => {
     if (_.isEmpty(itemDetail)) {
@@ -89,7 +87,7 @@ const EditItemDetailsPage = () => {
       "title",
       "description",
       "category",
-      "condition"
+      "condition",
     ]);
     let haveEmptyFields = _.values(requiredFields).some(
       (val) => val.length === 0
@@ -129,7 +127,7 @@ const EditItemDetailsPage = () => {
         "description",
         "category",
         "condition",
-        "quantity"
+        "quantity",
       ])
     );
 
@@ -140,21 +138,24 @@ const EditItemDetailsPage = () => {
 
   const updateChangedFields = (field) => {
     if (!_.includes(changedFields, field)) {
-      setChangedFields([...changedFields, field] );
+      setChangedFields([...changedFields, field]);
     }
   };
 
   const handleInputChange = (e) => {
     let { name, value } = e.target;
     validateInput([name, value]);
-    setItemDetailState({ ...itemDetailState, [name]: value })
+    setItemDetailState({ ...itemDetailState, [name]: value });
     updateChangedFields(name);
   };
 
   const handleAddtoList = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
-      setItemDetailState({...itemDetailState, [e.target.name]: [...itemDetailState[e.target.name], e.target.value]});
+      setItemDetailState({
+        ...itemDetailState,
+        [e.target.name]: [...itemDetailState[e.target.name], e.target.value],
+      });
       updateChangedFields(e.target.name);
       e.target.value = "";
     }
@@ -162,7 +163,7 @@ const EditItemDetailsPage = () => {
 
   const handleRemoveFromList = (type, idx) => {
     let newTags = itemDetailState[type].filter((item, index) => index !== idx);
-    setItemDetailState({ ...itemDetailState, [type]: newTags })
+    setItemDetailState({ ...itemDetailState, [type]: newTags });
     updateChangedFields(type);
   };
 
@@ -175,7 +176,7 @@ const EditItemDetailsPage = () => {
 
     setItemDetailState({
       ...itemDetailState,
-      images: arrNewImgs
+      images: arrNewImgs,
     });
 
     updateChangedFields("images");
@@ -258,7 +259,7 @@ const EditItemDetailsPage = () => {
         </Button>
         <Button
           onClick={() => handleConfirmationOpen("delete")}
-          startIcon={<DeleteIcon/>}
+          startIcon={<DeleteIcon />}
           className={classes.cancelButton}
         >
           Delete Posting
@@ -295,11 +296,7 @@ const EditItemDetailsPage = () => {
           >
             Cancel
           </Button>
-          <Button
-            onClick={handleSubmit}
-            variant="contained"
-            color="primary"
-          >
+          <Button onClick={handleSubmit} variant="contained" color="primary">
             Save
           </Button>
         </div>
@@ -307,7 +304,5 @@ const EditItemDetailsPage = () => {
     </div>
   );
 };
-
-
 
 export default EditItemDetailsPage;
