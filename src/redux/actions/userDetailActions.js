@@ -1,4 +1,8 @@
-import { LOAD_USER_DETAIL, UPDATE_USER_DETAIL } from "../constants/actionTypes";
+import {
+  LOAD_USER_DETAIL,
+  UPDATE_USER_DETAIL,
+  CLEAR_OLD_USER_DETAILS,
+} from "../constants/actionTypes";
 import {
   UPDATE_USER_ERROR,
   UPDATE_USER_SUCCESS,
@@ -24,6 +28,12 @@ const updateUserDetailSuccess = (userId, details) => {
     type: UPDATE_USER_DETAIL,
     userId: userId,
     details: details,
+  };
+};
+
+export const clearUserDetails = () => {
+  return {
+    type: CLEAR_OLD_USER_DETAILS,
   };
 };
 
