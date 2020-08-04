@@ -59,12 +59,12 @@ const useStyles = (theme) => ({
 class EditUserProfilePage extends React.Component {
   constructor(props) {
     super(props);
-    const { userDetail } = props;
+    const { currentUser } = props;
     this.state = {
-      firstName: userDetail.firstName,
-      lastName: userDetail.lastName,
-      profilePic: userDetail.profilePic,
-      postalCode: userDetail.postalCode,
+      firstName: currentUser.firstName,
+      lastName: currentUser.lastName,
+      profilePic: currentUser.profilePic,
+      postalCode: currentUser.postalCode,
       changedFields: [],
       confirmationOpen: false,
       errors: {
@@ -150,14 +150,14 @@ class EditUserProfilePage extends React.Component {
     if (!this.isFormInvalid()) {
       let details = _.pick(this.state, this.state.changedFields);
       let response = await this.props.updateUserDetails(
-        this.props.userDetail._id,
+        this.props.currentUser._id,
         details
       );
       if (response) {
         this.redirect();
       }
     } else {
-      window.alert("Please fill required fields");
+      this.handleConfirmationOpen("alert");
     }
   };
 
@@ -186,12 +186,33 @@ class EditUserProfilePage extends React.Component {
     }
   };
 
-  render() {
-    const { classes } = this.props;
-    const { firstName, lastName, profilePic, postalCode, errors } = this.state;
-    return (
-      <div>
-        {this.state.confirmationOpen && (
+  selectConfirmationToDisplay = () => {
+    switch (this.state.confirmationType) {
+      case "delete":
+        return (
+          <ConfirmationDialog
+            open={this.state.confirmationOpen}
+            submitAction={this.handleDeletePosting}
+            submitName={"Delete"}
+            dialogMessage={"This action cannot be undone"}
+            dialogTitle={"Are you sure you want to delete this posting?"}
+            handleClose={this.handleConfirmationClose}
+          />
+        );
+      case "alert":
+        return (
+          <ConfirmationDialog
+            open={this.state.confirmationOpen}
+            submitAction={this.handleConfirmationClose}
+            submitName={"OK"}
+            dialogMessage={"Please fill required the fields"}
+            dialogTitle={"Information is missing from the form"}
+            handleClose={this.handleConfirmationClose}
+            omitCancelButton={true}
+          />
+        );
+      default:
+        return (
           <ConfirmationDialog
             open={this.state.confirmationOpen}
             submitAction={this.redirect}
@@ -200,7 +221,16 @@ class EditUserProfilePage extends React.Component {
             dialogTitle={"Are you sure you want to leave this page?"}
             handleClose={this.handleConfirmationClose}
           />
-        )}
+        );
+    }
+  };
+
+  render() {
+    const { classes } = this.props;
+    const { firstName, lastName, profilePic, postalCode, errors } = this.state;
+    return (
+      <div>
+        {this.state.confirmationOpen && this.selectConfirmationToDisplay()}
         <div className={classes.buttonHeader}>
           <Button onClick={() => this.handleConfirmationOpen("redirect")}>
             &lt; Back to Profile
@@ -300,7 +330,7 @@ class EditUserProfilePage extends React.Component {
 }
 const mapStateToProps = (state) => {
   return {
-    userDetail: state.userDetail,
+    currentUser: state.currentUser.user,
   };
 };
 

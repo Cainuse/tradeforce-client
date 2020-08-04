@@ -19,7 +19,14 @@ const useStyles = (theme) => ({
   img: {
     overflow: "hidden",
     display: "block",
-    width: "100%",
+    objectFit: "contain",
+  },
+  imgContainer: {
+    maxWidth: "100%",
+    height: "20rem",
+    display: "flex",
+    justifyContent: "center",
+    backgroundColor: theme.palette.background.default,
   },
 });
 
@@ -44,11 +51,13 @@ class ItemImagesPreview extends React.Component {
     let maxSteps = images.length;
     return (
       <div>
-        <img
-          className={classes.img}
-          src={images[this.state.activeStep]}
-          alt={`${this.state.activeStep}`}
-        />
+        <div className={classes.imgContainer}>
+          <img
+            className={classes.img}
+            src={images[this.state.activeStep]}
+            alt={`${this.state.activeStep}`}
+          />
+        </div>
         {maxSteps > 1 && (
           <MobileStepper
             steps={maxSteps}
@@ -59,7 +68,9 @@ class ItemImagesPreview extends React.Component {
               <Button
                 size="small"
                 onClick={this.handleNext}
-                disabled={this.state.activeStep === maxSteps - 1}
+                disabled={
+                  maxSteps === 0 || this.state.activeStep === maxSteps - 1
+                }
               >
                 Next
                 <KeyboardArrowRight />
@@ -69,7 +80,7 @@ class ItemImagesPreview extends React.Component {
               <Button
                 size="small"
                 onClick={this.handleBack}
-                disabled={this.state.activeStep === 0}
+                disabled={maxSteps === 0 || this.state.activeStep === 0}
               >
                 <KeyboardArrowLeft />
                 Back

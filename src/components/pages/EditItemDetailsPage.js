@@ -5,7 +5,6 @@ import Button from "@material-ui/core/Button";
 import { connect } from "react-redux";
 import Container from "@material-ui/core/Container";
 import Step1 from "../AddPosting/Step1";
-import Step2 from "../AddPosting/Step2";
 import Step3 from "../AddPosting/Step3";
 import _ from "lodash";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -14,6 +13,7 @@ import {
   deletePosting,
 } from "../../redux/actions/postingActions";
 import ConfirmationDialog from "../ConfirmationDialog";
+import ImageUpload from "../ImageUpload";
 
 const useStyles = (theme) => ({
   buttonHeader: {
@@ -52,11 +52,6 @@ class EditItemDetailsPage extends React.Component {
 
   redirect = () => {
     const { history } = this.props;
-    // const parentPath = location.pathname.substring(
-    //   0,
-    //   location.pathname.lastIndexOf("/")
-    // );
-    // history.push(parentPath);
     history.goBack();
   };
 
@@ -152,13 +147,17 @@ class EditItemDetailsPage extends React.Component {
     this.updateChangedFields("images");
   };
 
+  handleConfirmationOpen = (type) => {
+    this.setState({ confirmationOpen: true, confirmationType: type });
+  };
+
   handleSubmit = async () => {
     if (!this.validateRequiredFields()) {
       let details = _.pick(this.state, this.state.changedFields);
       await this.props.updateItemDetail(this.state._id, details);
       this.redirect();
     } else {
-      window.alert("Please fill required fields");
+      this.handleConfirmationOpen("alert");
     }
   };
 
@@ -172,10 +171,6 @@ class EditItemDetailsPage extends React.Component {
     this.setState({ confirmationOpen: false });
   };
 
-  handleConfirmationOpen = (type) => {
-    this.setState({ confirmationOpen: true, confirmationType: type });
-  };
-
   selectConfirmationToDisplay = () => {
     switch (this.state.confirmationType) {
       case "delete":
@@ -187,6 +182,18 @@ class EditItemDetailsPage extends React.Component {
             dialogMessage={"This action cannot be undone"}
             dialogTitle={"Are you sure you want to delete this posting?"}
             handleClose={this.handleConfirmationClose}
+          />
+        );
+      case "alert":
+        return (
+          <ConfirmationDialog
+            open={this.state.confirmationOpen}
+            submitAction={this.handleConfirmationClose}
+            submitName={"OK"}
+            dialogMessage={"Please fill required the fields"}
+            dialogTitle={"Information is missing from the form"}
+            handleClose={this.handleConfirmationClose}
+            omitCancelButton={true}
           />
         );
       default:
@@ -230,8 +237,7 @@ class EditItemDetailsPage extends React.Component {
             />
           </div>
           <div className={classes.section}>
-            <Step2
-              change={this.handleInputChange}
+            <ImageUpload
               addImage={this.handleAddImage}
               images={this.state.images}
               deleteImage={this.handleRemoveFromList}
