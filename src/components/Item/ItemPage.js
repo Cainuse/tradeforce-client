@@ -43,7 +43,7 @@ const ItemPage = () => {
       try {
         const itemId = location.pathname.split("=")[1];
         let response = await dispatch(loadItemDetail(itemId));
-        if (response === "error") {
+        if (response.type === "error") {
           history.push("/OhNo!");
         }
       } catch (error) {
