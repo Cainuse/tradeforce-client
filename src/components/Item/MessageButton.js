@@ -77,6 +77,7 @@ const MessageButton = ({
         onClick={handleClickOpen}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
+        disabled={currentUser.user._id === ownerId}
       >
         <SmsIcon color={"secondary"} />
       </IconButton>
