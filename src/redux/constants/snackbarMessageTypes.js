@@ -13,8 +13,7 @@ export const LOAD_CHATLIST_ERROR =
 /* ===== Generic Errors ===== */
 export const GENERIC_LOADING_ERROR =
   "Some information could not be loaded. Please try again later";
-export const GENERIC_ERROR =
-  "Something went wrong. Please try again later";
+export const GENERIC_ERROR = "Something went wrong. Please try again later";
 
 /* ===== Image Errors ===== */
 export const IMAGE_SIZE_ERROR =

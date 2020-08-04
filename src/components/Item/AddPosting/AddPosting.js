@@ -5,7 +5,10 @@ import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import { connect } from "react-redux";
-import { addPosting, loadItemDetail } from "../../../redux/actions/postingActions";
+import {
+  addPosting,
+  loadItemDetail,
+} from "../../../redux/actions/postingActions";
 import { closeModal } from "../../../redux/actions/modalActions";
 import { displayError } from "../../../redux/actions/snackbarActions";
 import { ADD_POSTING_ERROR } from "../../../redux/constants/snackbarMessageTypes";

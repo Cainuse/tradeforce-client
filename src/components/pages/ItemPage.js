@@ -40,11 +40,11 @@ const ItemPage = () => {
 
   useEffect(() => {
     async function loadPosting() {
-        const itemId = location.pathname.split("=")[1];
-        let response = await dispatch(loadItemDetail(itemId));
-        if (response.type === "error") {
-          history.push("/OhNo!");
-        }
+      const itemId = location.pathname.split("=")[1];
+      let response = await dispatch(loadItemDetail(itemId));
+      if (response.type === "error") {
+        history.push("/OhNo!");
+      }
     }
 
     loadPosting();

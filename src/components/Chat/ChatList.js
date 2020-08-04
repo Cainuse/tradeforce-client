@@ -12,7 +12,10 @@ import { setLoading } from "../../redux/actions/loadingActions";
 import { displayError } from "../../redux/actions/snackbarActions";
 import ChatSocketServer from "../../utils/ChatSocketServer";
 import ChatUserInfo from "./ChatUserInfo";
-import { GENERIC_ERROR, LOAD_CHATLIST_ERROR } from "../../redux/constants/snackbarMessageTypes";
+import {
+  GENERIC_ERROR,
+  LOAD_CHATLIST_ERROR,
+} from "../../redux/constants/snackbarMessageTypes";
 
 const useStyles = (theme) => ({
   root: {
@@ -216,4 +219,6 @@ const ChatListItem = ({ user }) => {
   );
 };
 
-export default connect(null, { setLoading, displayError })(withStyles(useStyles)(ChatList));
+export default connect(null, { setLoading, displayError })(
+  withStyles(useStyles)(ChatList)
+);
