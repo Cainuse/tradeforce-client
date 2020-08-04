@@ -21,6 +21,7 @@ const useStyles = (theme) => ({
   },
   listItem: {
     margin: theme.spacing(1, 0),
+    paddingRight: theme.spacing(5),
   },
   selectedUser: {
     backgroundColor: "#eaf3fb",
@@ -54,6 +55,9 @@ const useStyles = (theme) => ({
   subText: {
     paddingTop: theme.spacing(2),
     fontWeight: 300,
+  },
+  unreadBadge: {
+    paddingRight: theme.spacing(3),
   },
 });
 
@@ -108,12 +112,17 @@ class ChatList extends React.Component {
       let isOtherUserSelected =
         this.state.selectedItemIndex === -1 ||
         userIndex !== this.state.selectedItemIndex;
-      let isUserAlreadyUnread = _.includes(this.state.unreadChats, senderId);
-      if (isOtherUserSelected && !isUserAlreadyUnread) {
-        this.setState({ unreadChats: [...this.state.unreadChats, senderId] });
+      if (isOtherUserSelected) {
+        const updatedUser = _.find(this.state.chatList, { _id: senderId });
+        updatedUser.unreadCount++;
+        const updatedChatList = _.map(this.state.chatList, (user) => {
+          if (user._id === senderId) {
+            return updatedUser;
+          }
+          return user;
+        });
+        this.setState({ chatList: updatedChatList });
       }
-    } else {
-      //do nothing
     }
   };
 
@@ -143,11 +152,17 @@ class ChatList extends React.Component {
   };
 
   selectChatUser = ({ user, idx }) => {
-    let updatedUnreadChats = _.filter(
-      this.state.unreadChats,
-      (userId) => userId !== user._id
-    );
-    this.setState({ selectedItemIndex: idx, unreadChats: updatedUnreadChats });
+    let updatedUser = { ...user, unreadCount: 0 };
+    let updatedChatList = _.map(this.state.chatList, (entry) => {
+      if (entry._id === user._id) {
+        return updatedUser;
+      }
+      return entry;
+    });
+    this.setState({
+      selectedItemIndex: idx,
+      chatList: updatedChatList,
+    });
     this.props.setSelectedChatUser(user);
   };
 
@@ -172,10 +187,7 @@ class ChatList extends React.Component {
                         this.state.selectedItemIndex === idx,
                     })}
                   >
-                    <ChatListItem
-                      user={user}
-                      isUnread={_.includes(this.state.unreadChats, user._id)}
-                    />
+                    <ChatListItem user={user} />
                   </ListItem>
                 </React.Fragment>
               );
@@ -197,11 +209,11 @@ class ChatList extends React.Component {
   }
 }
 
-const ChatListItem = ({ user, isUnread }) => {
+const ChatListItem = ({ user }) => {
   return (
     <React.Fragment>
       <ChatUserInfo user={user} hideBadge={false} />
-      <Badge invisible={!isUnread} color="error" variant="dot" />
+      <Badge badgeContent={user.unreadCount} color="error" />
     </React.Fragment>
   );
 };
