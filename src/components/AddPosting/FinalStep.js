@@ -27,7 +27,7 @@ const FinalStep = (props) => {
   const close = async (e) => {
     e.preventDefault();
     let result = await loadItemDetail(id);
-    if (result === "success") {
+    if (result.type === "success") {
       history.push(`/items/item=${id}`);
     }
     closeModal();

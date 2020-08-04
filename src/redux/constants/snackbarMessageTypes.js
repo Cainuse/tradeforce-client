@@ -18,6 +18,8 @@ export const DELETE_POSTING_ERROR =
   "Something went wrong. Posting was not deleted";
 export const UPDATE_POSTING_ERROR =
   "Something went wrong. Posting was not updated";
+export const LOAD_EDIT_ITEM_DETAIL_PAGE_ERROR =
+  "Something went wrong. Edit item page could not be loaded. Please try again later";
 
 /* ===== Posting Successes ===== */
 export const DELETE_POSTING_SUCCESS = "Posting was successfully deleted";
