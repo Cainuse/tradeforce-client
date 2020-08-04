@@ -34,8 +34,10 @@ export const OffersSent = (props) => {
   const handleRescindOffer = async () => {
     let { offer } = offerInfoToActUpon;
 
-    await dispatch(rescindOffer(offer._id));
-    setConfirmationOpen(false);
+    let response = await dispatch(rescindOffer(offer._id));
+    if (response) {
+      setConfirmationOpen(false);
+    }
   };
 
   const selectConfirmationToDisplay = () => {
