@@ -11,8 +11,8 @@ import {
   OFFER_DETAILS_MODAL,
   OFFER_SENT_DETAILS_MODAL,
 } from "../redux/constants/modalTypes";
-import AddPosting from "../components/AddPosting/AddPosting";
-import AddOffering from "./AddOffering/AddOffering";
+import AddPosting from "./Item/AddPosting/AddPosting";
+import AddOffering from "./Offering/AddOffering/AddOffering";
 import { Dialog } from "@material-ui/core";
 import LoginModal from "./Login/Login";
 import ReviewModal from "./Review/AddReview";

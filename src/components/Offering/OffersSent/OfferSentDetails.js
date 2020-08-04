@@ -7,7 +7,7 @@ import { OfferInfoDisplay } from "../OfferInfoDisplay";
 import { closeModal } from "../../../redux/actions/modalActions";
 import { rescindOffer } from "../../../redux/actions/offeringActions";
 import { PostingSummary } from "./PostingSummary";
-import ConfirmationDialog from "../../ConfirmationDialog";
+import ConfirmationDialog from "../../shared/ConfirmationDialog";
 
 let useStyles = makeStyles((theme) => ({
   paper: {

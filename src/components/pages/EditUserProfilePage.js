@@ -3,7 +3,7 @@ import UserAvatar from "../User/UserAvatar";
 import { updateUserDetails } from "../../redux/actions/userDetailActions";
 import { connect } from "react-redux";
 import defaultProfile from "../../images/placeholder-profile.png";
-import ConfirmationDialog from "../ConfirmationDialog";
+import ConfirmationDialog from "../shared/ConfirmationDialog";
 import { withStyles } from "@material-ui/core/styles";
 import { withRouter } from "react-router";
 import Button from "@material-ui/core/Button";

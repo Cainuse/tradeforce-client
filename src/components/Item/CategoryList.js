@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import CategoryCard from "./CategoryCard";
 
-import { categories } from "../../redux/constants/classifierTypes";
+import { categories } from "../constants/classifierTypes";
 
 const useStyles = makeStyles((theme) => ({
   root: {

@@ -4,7 +4,7 @@ import CloudUploadOutlinedIcon from "@material-ui/icons/CloudUploadOutlined";
 import IconButton from "@material-ui/core/IconButton";
 import ClearIcon from "@material-ui/icons/Clear";
 import clsx from "clsx";
-import { TOO_MANY_IMAGES_ERROR } from "../redux/constants/snackbarMessageTypes";
+import { TOO_MANY_IMAGES_ERROR } from "../../redux/constants/snackbarMessageTypes";
 
 const useStyles = makeStyles((theme) => ({
   dropzone: {

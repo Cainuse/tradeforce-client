@@ -1,95 +1,66 @@
-import Typography from "@material-ui/core/Typography";
-import Grid from "@material-ui/core/Grid";
-import TextField from "@material-ui/core/TextField";
-import { Button } from "@material-ui/core";
-import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-
-import {
-  categories,
-  conditions,
-} from "../../../redux/constants/classifierTypes";
-import ImageUpload from "../../ImageUpload";
+import TextField from "@material-ui/core/TextField";
+import Chip from "@material-ui/core/Chip";
+import Grid from "@material-ui/core/Grid";
+import { categories, conditions } from "../../constants/classifierTypes";
 
 const useStyles = makeStyles((theme) => ({
-  addItemSection: {
-    marginTop: "30px",
-  },
-  comment: {
-    outline: "none",
-    marginBottom: "20px",
-  },
-  formSection: {
-    marginBottom: "20px",
-  },
-  formHeader: {
-    color: theme.palette.primary.main,
-    paddingBottom: "10px",
-  },
-  form: {
-    width: "100%",
-    minHeight: "270px",
-    marginBottom: theme.spacing(3),
-    flexGrow: 1,
-  },
-  textField: {},
-  addBtnContainer: {
-    justifySelf: "flex-end",
-  },
-  addBtn: {
-    fontWeight: 300,
-    textTransform: "capitalize",
-    justifySelf: "flex-end",
-    margin: "5px",
+  tags: {
+    margin: theme.spacing(0.5),
   },
 }));
 
-export const AddItemForm = (props) => {
-  let classes = useStyles();
-  let { item, errors } = props.state;
-  let { nameOfItem, quantity, images, description, category, condition } = item;
+const Step1 = (props) => {
+  const { change, state, addTag, deleteTag } = props;
+  const {
+    title,
+    description,
+    category,
+    condition,
+    quantity,
+    tags,
+    errors,
+  } = state;
+
+  const classes = useStyles();
 
   return (
-    <div className={classes.addItemSection}>
-      <Typography variant="h6" className={classes.formHeader}>
-        Add an Item
-      </Typography>
-
+    <React.Fragment>
       <Grid container className={classes.form} spacing={1}>
         <Grid item xs={12}>
           <TextField
             required
-            label="Name of Item"
-            className={classes.textField}
+            label="Title"
+            className={classes.textfield}
             fullWidth
             margin="dense"
             variant="outlined"
-            name="nameOfItem"
-            onChange={props.handleChange}
-            defaultValue={nameOfItem}
-            error={!!errors.nameOfItem}
-            helperText={errors.nameOfItem}
+            name="title"
+            onChange={change}
+            defaultValue={title}
+            error={!!errors.title}
+            helperText={errors.title}
           />
         </Grid>
         <Grid item xs={12}>
           <TextField
             required
             multiline
-            rows={3}
+            rows={4}
             label="Description"
             className={classes.textfield}
             fullWidth
             margin="dense"
             variant="outlined"
             name="description"
-            onChange={props.handleChange}
+            onChange={change}
             defaultValue={description}
             error={!!errors.description}
             helperText={errors.description}
           />
         </Grid>
-        <Grid item xs={3} sm={6}>
+        <Grid item xs={12} sm={6}>
           <TextField
             required
             id="outlined-select-category-native"
@@ -101,7 +72,7 @@ export const AddItemForm = (props) => {
               native: true,
             }}
             variant="outlined"
-            onChange={props.handleChange}
+            onChange={change}
             name="category"
             defaultValue={category}
             error={!!errors.category}
@@ -114,7 +85,7 @@ export const AddItemForm = (props) => {
             ))}
           </TextField>
         </Grid>
-        <Grid item xs={3} sm={6}>
+        <Grid item xs={12} sm={6}>
           <TextField
             required
             id="outlined-select-condition-native"
@@ -126,7 +97,7 @@ export const AddItemForm = (props) => {
               native: true,
             }}
             variant="outlined"
-            onChange={props.handleChange}
+            onChange={change}
             name="condition"
             defaultValue={condition}
             error={!!errors.condition}
@@ -139,7 +110,25 @@ export const AddItemForm = (props) => {
             ))}
           </TextField>
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            label="Tags"
+            className={classes.textfield}
+            fullWidth
+            margin="dense"
+            variant="outlined"
+            name="tags"
+            defaultValue=""
+            onKeyUp={addTag}
+            placeholder={
+              tags.length === 10
+                ? "Tag limit reached"
+                : "Press enter to add tag"
+            }
+            disabled={tags.length >= 10}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
           <TextField
             required
             label="Quantity"
@@ -149,35 +138,28 @@ export const AddItemForm = (props) => {
             variant="outlined"
             name="quantity"
             defaultValue={quantity}
-            onChange={props.handleChange}
+            onChange={change}
             type="number"
             inputProps={{ min: "1" }}
             error={!!errors.quantity}
             helperText={errors.quantity}
           />
         </Grid>
-        <Grid item xs={12}>
-          <ImageUpload
-            images={images}
-            addImage={props.addImage}
-            deleteImage={props.deleteImage}
-            isSmall={true}
-          />
-        </Grid>
-        <Grid container item justify={"flex-end"} xs={12}>
-          <Button
-            variant={"contained"}
-            color={"primary"}
-            className={classes.addBtn}
-            startIcon={<AddCircleOutlineOutlinedIcon />}
-            onClick={() => {
-              props.handleSubmitAddItem();
+        {tags.map((tag, idx) => (
+          <Chip
+            key={idx}
+            color="primary"
+            size="small"
+            onDelete={() => {
+              deleteTag("tags", idx);
             }}
-          >
-            Add Item
-          </Button>
-        </Grid>
+            label={tag}
+            className={classes.tags}
+          />
+        ))}
       </Grid>
-    </div>
+    </React.Fragment>
   );
 };
+
+export default Step1;

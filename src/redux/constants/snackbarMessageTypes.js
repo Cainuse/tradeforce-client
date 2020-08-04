@@ -70,6 +70,11 @@ export const LOAD_EDIT_ITEM_DETAIL_PAGE_ERROR =
 export const DELETE_POSTING_SUCCESS = "Posting was successfully deleted";
 export const UPDATE_POSTING_SUCCESS = "Posting was successfully updated";
 
+/* ===== Review Success/Error ===== */
+export const ADD_REVIEW_SUCCESS = "Review was successfully added";
+export const ADD_REVIEW_ERROR =
+  "Review could not be saved. Please try again later";
+
 /* ===== User Login/Registration Successes ===== */
 export const USER_REGISTRATION_SUCCESS =
   "Your user was successfully registered!";

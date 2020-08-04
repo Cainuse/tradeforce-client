@@ -1,5 +1,5 @@
 import React from "react";
-import ImageUpload from "../ImageUpload";
+import ImageUpload from "../../shared/ImageUpload";
 
 const Step2 = ({ addImage, images, deleteImage }) => {
   return (
