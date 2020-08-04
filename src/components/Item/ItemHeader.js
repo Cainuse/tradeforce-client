@@ -32,8 +32,12 @@ const ItemHeader = (props) => {
   let { date, title, location } = itemDetail;
 
   const getUpdatedLocation = async () => {
-    const user = await props.dispatch(getUserByIdAsync(itemDetail.ownerId));
-    setLoc(user.location.location);
+    if (location && location.location) {
+      setLoc(location.location);
+    } else {
+      const user = await props.dispatch(getUserByIdAsync(itemDetail.ownerId));
+      setLoc(user.location.location);
+    }
   };
 
   useEffect(() => {
