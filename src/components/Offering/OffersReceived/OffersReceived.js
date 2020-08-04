@@ -65,7 +65,7 @@ const OffersReceived = (props) => {
       ChatSocketServer.sendNotification(offerer._id);
       handleConfirmationOpen("chat");
     } else {
-     handleConfirmationClose();
+      handleConfirmationClose();
     }
   };
 

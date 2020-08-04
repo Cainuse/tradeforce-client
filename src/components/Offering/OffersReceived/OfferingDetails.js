@@ -56,11 +56,11 @@ const OfferingDetails = ({ currentUser }) => {
   const [confirmationType, setConfirmationType] = useState("");
 
   const handleAcceptOffer = () => {
-    handleConfirmationOpen("accept")
+    handleConfirmationOpen("accept");
   };
 
   const handleDeclineOffer = () => {
-    handleConfirmationOpen("decline")
+    handleConfirmationOpen("decline");
   };
 
   const handleConfirmationOpen = (type) => {
@@ -71,8 +71,7 @@ const OfferingDetails = ({ currentUser }) => {
   const handleCloseAllConfirmationDialogs = () => {
     setConfirmationOpen(false);
     setConfirmationType("");
-  }
-
+  };
 
   const acceptOfferAction = async () => {
     let response = await dispatch(acceptOffer(offer._id));
