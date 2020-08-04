@@ -113,6 +113,7 @@ export const rescindOffer = (offeringId) => {
       );
       dispatch(rescindOfferSuccess(offeringResponse.data));
       dispatch(displaySuccess(RESCIND_OFFER_SUCCESS));
+      return "success";
     } catch (e) {
       dispatch(displayError(RESCIND_OFFER_ERROR));
     } finally {
