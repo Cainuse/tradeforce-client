@@ -28,10 +28,10 @@ const GoogleBtn = ({ loginUserAsync, displayError, modal, itemDetail }) => {
       password,
       {
         userName,
-        givenName,
-        familyName,
+        givenName: givenName ? givenName : "",
+        familyName: familyName ? familyName : "",
         dateRegistered,
-        profilePic,
+        profilePic: profilePic ? profilePic : "",
       },
       modal.openedFrom,
       itemDetail.ownerId
