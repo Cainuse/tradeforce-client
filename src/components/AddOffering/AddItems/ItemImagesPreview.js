@@ -20,7 +20,7 @@ const useStyles = (theme) => ({
     overflow: "hidden",
     display: "block",
     objectFit: "contain",
-    width: "80%"
+    width: "100%"
   },
   imgContainer: {
     maxWidth: "100%",
@@ -51,7 +51,7 @@ class ItemImagesPreview extends React.Component {
     let { images, classes } = this.props;
     let maxSteps = images.length;
     return (
-      <div>
+      <div style={{ width: "100%" }}>
         <div className={classes.imgContainer}>
           <img
             className={classes.img}
