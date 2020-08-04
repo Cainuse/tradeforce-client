@@ -20,6 +20,7 @@ const useStyles = (theme) => ({
     overflow: "hidden",
     display: "block",
     objectFit: "contain",
+    width: "80%"
   },
   imgContainer: {
     maxWidth: "100%",
