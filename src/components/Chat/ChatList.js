@@ -56,9 +56,6 @@ const useStyles = (theme) => ({
     paddingTop: theme.spacing(2),
     fontWeight: 300,
   },
-  unreadBadge: {
-    paddingRight: theme.spacing(3),
-  },
 });
 
 class ChatList extends React.Component {
