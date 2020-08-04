@@ -55,15 +55,24 @@ const OfferingDetails = ({ currentUser }) => {
   const [confirmationOpen, setConfirmationOpen] = useState(false);
   const [confirmationType, setConfirmationType] = useState("");
 
-  const handleAcceptOffer = async () => {
-    setConfirmationOpen(true);
-    setConfirmationType("accept");
+  const handleAcceptOffer = () => {
+    handleConfirmationOpen("accept")
   };
 
-  const handleDeclineOffer = async () => {
-    setConfirmationOpen(true);
-    setConfirmationType("decline");
+  const handleDeclineOffer = () => {
+    handleConfirmationOpen("decline")
   };
+
+  const handleConfirmationOpen = (type) => {
+    setConfirmationOpen(true);
+    setConfirmationType(type);
+  };
+
+  const handleCloseAllConfirmationDialogs = () => {
+    setConfirmationOpen(false);
+    setConfirmationType("");
+  }
+
 
   const acceptOfferAction = async () => {
     let response = await dispatch(acceptOffer(offer._id));
@@ -76,9 +85,10 @@ const OfferingDetails = ({ currentUser }) => {
         }`,
       });
       ChatSocketServer.sendNotification(offerer._id);
+      handleConfirmationOpen("chat");
+    } else {
+      handleCloseAllConfirmationDialogs();
     }
-    setConfirmationOpen(true);
-    setConfirmationType("chat");
   };
 
   const navigateToChat = () => {
@@ -103,7 +113,7 @@ const OfferingDetails = ({ currentUser }) => {
           submitName={"Decline"}
           dialogMessage={"This action cannot be undone"}
           dialogTitle={"Are you sure you want to decline this offer?"}
-          handleClose={() => setConfirmationOpen(false)}
+          handleClose={handleCloseAllConfirmationDialogs}
         />
       );
     } else if (confirmationType === "accept") {
@@ -114,7 +124,7 @@ const OfferingDetails = ({ currentUser }) => {
           submitName={"Accept"}
           dialogMessage={`All other offers for your post ${postingInfo.title} will be declined. This action cannot be undone.`}
           dialogTitle={"Are you sure you want to accept this offer?"}
-          handleClose={() => setConfirmationOpen(false)}
+          handleClose={handleCloseAllConfirmationDialogs}
         />
       );
     } else if (confirmationType === "chat") {
@@ -131,6 +141,8 @@ const OfferingDetails = ({ currentUser }) => {
           }}
         />
       );
+    } else {
+      return null;
     }
   };
 
