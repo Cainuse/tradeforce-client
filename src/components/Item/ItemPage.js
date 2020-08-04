@@ -33,7 +33,7 @@ const ItemPage = () => {
   const history = useHistory();
   const location = useLocation();
   const itemDetail = useSelector((state) => state.itemDetail);
-  const currentUser = useSelector((state) => state.currentUser);
+  const currentUser = useSelector((state) => state.currentUser.user);
 
   let isNotOwnerOfPosting =
     currentUser && currentUser._id !== itemDetail.ownerId;
@@ -47,7 +47,7 @@ const ItemPage = () => {
           history.push("/OhNo!");
         }
       } catch (error) {
-        console.log(error);
+        console.log("Posting failed to load on ItemDetail's Page");
       }
     }
 
