@@ -24,13 +24,7 @@ const ItemPreviewList = (props) => {
       {items.map((item, index) => {
         return (
           <Grid key={index} item xs={12} sm={6} md={3} lg={sizing}>
-            <ItemPreview
-              _id={item._id}
-              title={item.title}
-              date={item.date}
-              images={item.images}
-              ownerId={item.ownerId}
-            />
+            <ItemPreview item={item} />
           </Grid>
         );
       })}

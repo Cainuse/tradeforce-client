@@ -27,19 +27,16 @@ const useStyles = makeStyles(() => ({
 }));
 
 const ItemPreview = ({
-  _id,
-  title,
-  date,
-  images,
-  ownerId,
   clearOldItemDetails,
   getUserByIdAsync,
   currentUser,
+  item,
 }) => {
   const classes = useStyles();
   const history = useHistory();
   const [distanceMsg, setDistanceMsg] = useState("");
   const [locationMsg, setLocationMsg] = useState("");
+  const { _id, title, date, images, ownerId, location } = item;
 
   const getDistance = (lat1, lat2, lon1, lon2, unit) => {
     if (lat1 === lat2 && lon1 === lon2) {
@@ -69,26 +66,41 @@ const ItemPreview = ({
   };
 
   const updateDistance = async () => {
-    try {
-      if (ownerId) {
-        let user = await getUserByIdAsync(ownerId);
+    if (location && location.lat && location.lon) {
+      const dist = Math.floor(
+        getDistance(
+          currentUser.user.location.lat,
+          location.lat,
+          currentUser.user.location.lon,
+          location.lon,
+          "K"
+        )
+      );
+      setDistanceMsg(`About ${dist} km away`);
+      setLocationMsg(location.location);
+      return dist;
+    } else {
+      try {
+        if (ownerId) {
+          let user = await getUserByIdAsync(ownerId);
 
-        const dist = Math.floor(
-          getDistance(
-            currentUser.user.location.lat,
-            user.location.lat,
-            currentUser.user.location.lon,
-            user.location.lon,
-            "K"
-          )
-        );
-        setDistanceMsg(`About ${dist} km away`);
-        setLocationMsg(user.location.location);
-        return dist;
+          const dist = Math.floor(
+            getDistance(
+              currentUser.user.location.lat,
+              user.location.lat,
+              currentUser.user.location.lon,
+              user.location.lon,
+              "K"
+            )
+          );
+          setDistanceMsg(`About ${dist} km away`);
+          setLocationMsg(user.location.location);
+          return dist;
+        }
+      } catch (err) {
+        setDistanceMsg("");
+        setLocationMsg("");
       }
-    } catch (err) {
-      setDistanceMsg("");
-      setLocationMsg("");
     }
   };
 
@@ -154,7 +166,7 @@ const ItemPreview = ({
               ? images[0]
               : require("../../images/default.jpg")
           }
-          title="Tradeforce"
+          title={`Preview of ${title || "Untitled Posting"}`}
         />
         <CardContent>
           <Grid container spacing={2}>
