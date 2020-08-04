@@ -71,7 +71,9 @@ export const OfferingPreview = (props) => {
         if (Axios.isCancel(e)) {
           //do nothing
         } else {
-          console.log("There was an error when attempting to getOfferer for OfferingPreview");
+          console.log(
+            "There was an error when attempting to getOfferer for OfferingPreview"
+          );
         }
       }
     }
