@@ -1,15 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useLocation } from "react-router";
 import ProfileCard from "../User/ProfileCard";
-import { withStyles } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 import hero from "../../images/hero.png";
 import UserDetails from "../User/UserDetails";
-import { connect } from "react-redux";
-import { displayError } from "../../redux/actions/snackbarActions";
-import { withRouter } from "react-router";
 import { loadUserDetails } from "../../redux/actions/userDetailActions";
 import { openReviewModal } from "../../redux/actions/modalActions";
 
-const useStyles = () => ({
+const useStyles = makeStyles(() => ({
   hero: {
     position: "relative",
     height: "20vh",
@@ -34,53 +33,49 @@ const useStyles = () => ({
     top: 0,
   },
   box: {},
-});
+}));
 
-class UserProfile extends React.Component {
-  async componentDidMount() {
-    const { location, currentUser, loadUserDetails, history } = this.props;
-    const userId = location.pathname.split("=")[1];
-    let response = await loadUserDetails({
-      userId,
-      currentUserId: currentUser ? currentUser._id : null,
-    });
-    if (response !== "success") {
-      history.push("/UserNotFound");
+const UserProfile = () => {
+  const history = useHistory();
+  const location = useLocation();
+  const userDetail = useSelector((state) => state.userDetail);
+  const currentUser = useSelector((state) => state.currentUser.user);
+  const dispatch = useDispatch();
+  const classes = useStyles();
+
+  useEffect(() => {
+    async function loadUser() {
+      try {
+        const userId = location.pathname.split("=")[1];
+        let response = await dispatch(
+          loadUserDetails({
+            userId,
+            currentUserId: currentUser ? currentUser._id : null,
+          })
+        );
+        if (response !== "success") {
+          history.push("/UserNotFound");
+        }
+      } catch (error) {
+        console.log("Failed to load User Profile page");
+      }
     }
-  }
+    loadUser();
+  }, [dispatch, history, location, currentUser]);
 
-  render() {
-    let { userDetail, currentUser, classes, openReviewModal } = this.props;
-
-    return Object.keys(userDetail).length !== 0 ? (
-      <div>
-        <div className={classes.hero}></div>
-        <div className={classes.container}>
-          <ProfileCard userDetail={userDetail} currentUser={currentUser} />
-          <UserDetails
-            userDetail={userDetail}
-            currentUser={currentUser}
-            openReviewModal={openReviewModal}
-          />
-        </div>
+  return Object.keys(userDetail).length !== 0 ? (
+    <div>
+      <div className={classes.hero}></div>
+      <div className={classes.container}>
+        <ProfileCard userDetail={userDetail} currentUser={currentUser} />
+        <UserDetails
+          userDetail={userDetail}
+          currentUser={currentUser}
+          openReviewModal={() => dispatch(openReviewModal())}
+        />
       </div>
-    ) : null;
-  }
-}
+    </div>
+  ) : null;
+};
 
-const mapStateToProps = (state) => ({
-  userDetail: state.userDetail,
-  currentUser: state.currentUser.user,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  displayError: (msg) => dispatch(displayError(msg)),
-  loadUserDetails: ({ userId, currentUserId }) =>
-    dispatch(loadUserDetails({ userId, currentUserId })),
-  openReviewModal: () => dispatch(openReviewModal()),
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(withStyles(useStyles)(UserProfile)));
+export default UserProfile;
