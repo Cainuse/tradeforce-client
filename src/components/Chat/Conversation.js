@@ -21,6 +21,8 @@ import {
   GET_CHAT_MESSAGES_ERROR,
   MARK_ONE_READ_ERROR,
 } from "../../redux/constants/snackbarMessageTypes";
+import { connect } from "react-redux";
+import { clearOldUserDetails } from "../../redux/actions/userDetailActions";
 
 const useStyles = (theme) => ({
   root: {
@@ -172,7 +174,8 @@ class Conversation extends React.Component {
   };
 
   redirectToProfile = () => {
-    const { history, selectedChatUser } = this.props;
+    const { history, selectedChatUser, clearOldUserDetails } = this.props;
+    clearOldUserDetails();
     history.push(`/profile/user=${selectedChatUser._id}`);
   };
 
@@ -233,4 +236,6 @@ class Conversation extends React.Component {
   }
 }
 
-export default withRouter(withStyles(useStyles)(Conversation));
+export default connect(null, { clearOldUserDetails })(
+  withRouter(withStyles(useStyles)(Conversation))
+);

@@ -6,7 +6,7 @@ import {
   ACCEPT_OFFER,
   DECLINE_OFFER,
   RESCIND_OFFER,
-  ADD_POSTING,
+  CLEAR_OLD_USER_DETAILS,
 } from "../constants/actionTypes";
 import _ from "lodash";
 
@@ -69,6 +69,11 @@ const rescindOfferRemoveFromOffers = (state, action) => {
   return { ...state, offersSent: updatedOffersSent };
 };
 
+// clear previously viewed user profile
+const clearPreviousUser = () => {
+  return {};
+};
+
 export const userDetailReducer = (state = initialState.userDetail, action) => {
   switch (action.type) {
     case ADD_REVIEW:
@@ -83,6 +88,8 @@ export const userDetailReducer = (state = initialState.userDetail, action) => {
       return declineOfferUpdateStatus(state, action);
     case RESCIND_OFFER:
       return rescindOfferRemoveFromOffers(state, action);
+    case CLEAR_OLD_USER_DETAILS:
+      return clearPreviousUser();
     default:
       return state;
   }
