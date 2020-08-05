@@ -42,7 +42,7 @@ const ItemHeader = (props) => {
 
   useEffect(() => {
     getUpdatedLocation();
-  }, []);
+  }, [itemDetail]);
 
   const formatDate = (date) => {
     const options = { month: "long", day: "numeric" };

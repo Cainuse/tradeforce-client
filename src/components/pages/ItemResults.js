@@ -10,6 +10,8 @@ import Pagination from "@material-ui/lab/Pagination";
 import { loadPostingsByQuery } from "../../redux/actions/postingActions";
 import ItemPreviewList from "../Item/ItemPreviewList";
 import SearchBar from "../Item/SearchBar";
+import { displayError } from "../../redux/actions/snackbarActions";
+import { GENERIC_LOADING_ERROR } from "../../redux/constants/snackbarMessageTypes";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -91,7 +93,7 @@ export const ItemResults = () => {
           })
         );
       } catch (err) {
-        console.log(err);
+        dispatch(displayError(GENERIC_LOADING_ERROR));
       }
     }
     getPostings();

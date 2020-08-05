@@ -6,11 +6,8 @@ import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOut
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 
-import {
-  categories,
-  conditions,
-} from "../../../redux/constants/classifierTypes";
-import ImageUpload from "../../ImageUpload";
+import { categories, conditions } from "../../../constants/classifierTypes";
+import ImageUpload from "../../../shared/ImageUpload";
 
 const useStyles = makeStyles((theme) => ({
   addItemSection: {

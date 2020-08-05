@@ -5,12 +5,12 @@ import { withStyles } from "@material-ui/core/styles";
 import { Typography, Paper, Button, Grid } from "@material-ui/core";
 
 import OfferContents from "./OfferingContents";
-import { makeOffer } from "../../redux/actions/offeringActions";
-import { offeringStatus } from "../constants/OfferingConstants";
-import { closeModal } from "../../redux/actions/modalActions";
-import { displayError } from "../../redux/actions/snackbarActions";
-import { ADD_OFFER_MISSING_INFO_ERROR } from "../../redux/constants/snackbarMessageTypes";
-import ChatSocketServer from "../../utils/ChatSocketServer";
+import { makeOffer } from "../../../redux/actions/offeringActions";
+import { offeringStatus } from "../../constants/OfferingConstants";
+import { closeModal } from "../../../redux/actions/modalActions";
+import { displayError } from "../../../redux/actions/snackbarActions";
+import { ADD_OFFER_MISSING_INFO_ERROR } from "../../../redux/constants/snackbarMessageTypes";
+import ChatSocketServer from "../../../utils/ChatSocketServer";
 
 const useStyles = (theme) => ({
   paper: {

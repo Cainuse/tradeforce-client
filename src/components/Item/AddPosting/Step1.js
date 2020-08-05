@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Chip from "@material-ui/core/Chip";
 import Grid from "@material-ui/core/Grid";
-import { categories, conditions } from "../../redux/constants/classifierTypes";
+import { categories, conditions } from "../../constants/classifierTypes";
 
 const useStyles = makeStyles((theme) => ({
   tags: {

@@ -17,6 +17,8 @@ import { openOfferSentDetailsModal } from "../../../redux/actions/modalActions";
 import { getPostingByIdAsync } from "../../../redux/actions/postingActions";
 import { getUserByIdAsync } from "../../../redux/actions/userActions";
 import RescindIconButton from "./RescindIconButton";
+import { displayError } from "../../../redux/actions/snackbarActions";
+import { GENERIC_LOADING_ERROR } from "../../../redux/constants/snackbarMessageTypes";
 
 const useStyles = makeStyles((theme) => ({
   cardRoot: {
@@ -81,9 +83,9 @@ export const OfferSentPreviewCard = (props) => {
         return posting;
       } catch (e) {
         if (Axios.isCancel(e)) {
-          //do nothing
+          //Purposeful error: do nothing
         } else {
-          console.log(e);
+          dispatch(displayError(GENERIC_LOADING_ERROR));
         }
       }
     }

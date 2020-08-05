@@ -9,15 +9,15 @@ import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
 import DeleteIcon from "@material-ui/icons/Delete";
 
-import Step1 from "../AddPosting/Step1";
-import Step3 from "../AddPosting/Step3";
+import Step1 from "../Item/AddPosting/Step1";
+import Step3 from "../Item/AddPosting/Step3";
 import {
   updateItemDetail,
   deletePosting,
   loadItemDetail,
 } from "../../redux/actions/postingActions";
-import ConfirmationDialog from "../ConfirmationDialog";
-import ImageUpload from "../ImageUpload";
+import ConfirmationDialog from "../shared/ConfirmationDialog";
+import ImageUpload from "../shared/ImageUpload";
 import { displayError } from "../../redux/actions/snackbarActions";
 import { LOAD_EDIT_ITEM_DETAIL_PAGE_ERROR } from "../../redux/constants/snackbarMessageTypes";
 

@@ -10,7 +10,7 @@ import {
   declineOffer,
 } from "../../../redux/actions/offeringActions";
 import { getAllPendingOffers } from "./OfferingHelpers";
-import ConfirmationDialog from "../../ConfirmationDialog";
+import ConfirmationDialog from "../../shared/ConfirmationDialog";
 import ChatSocketServer from "../../../utils/ChatSocketServer";
 
 const useStyles = makeStyles((theme) => ({

@@ -5,10 +5,10 @@ import { useHistory, useLocation } from "react-router";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button, Container, Divider } from "@material-ui/core";
 
-import ReviewSection from "./ReviewSection";
-import ItemDetailContainer from "./ItemDetailContainer";
+import ReviewSection from "../Item/ReviewSection";
+import ItemDetailContainer from "../Item/ItemDetailContainer";
 import { loadItemDetail } from "../../redux/actions/postingActions";
-import MessageButton from "./MessageButton";
+import MessageButton from "../Item/MessageButton";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,14 +40,10 @@ const ItemPage = () => {
 
   useEffect(() => {
     async function loadPosting() {
-      try {
-        const itemId = location.pathname.split("=")[1];
-        let response = await dispatch(loadItemDetail(itemId));
-        if (response.type === "error") {
-          history.push("/OhNo!");
-        }
-      } catch (error) {
-        console.log("Posting failed to load on ItemDetail's Page");
+      const itemId = location.pathname.split("=")[1];
+      let response = await dispatch(loadItemDetail(itemId));
+      if (response.type === "error") {
+        history.push("/OhNo!");
       }
     }
 

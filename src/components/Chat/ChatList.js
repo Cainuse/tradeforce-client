@@ -9,9 +9,13 @@ import Badge from "@material-ui/core/Badge";
 import Typography from "@material-ui/core/Typography";
 
 import { setLoading } from "../../redux/actions/loadingActions";
+import { displayError } from "../../redux/actions/snackbarActions";
 import ChatSocketServer from "../../utils/ChatSocketServer";
 import ChatUserInfo from "./ChatUserInfo";
-import { LOAD_CHATLIST_ERROR } from "../../redux/constants/snackbarMessageTypes";
+import {
+  GENERIC_ERROR,
+  LOAD_CHATLIST_ERROR,
+} from "../../redux/constants/snackbarMessageTypes";
 
 const useStyles = (theme) => ({
   root: {
@@ -134,7 +138,7 @@ class ChatList extends React.Component {
       });
       this.setState({ chatList: updatedChatList });
     } else {
-      // do nothing
+      this.props.displayError(GENERIC_ERROR);
     }
   };
 
@@ -215,4 +219,6 @@ const ChatListItem = ({ user }) => {
   );
 };
 
-export default connect(null, { setLoading })(withStyles(useStyles)(ChatList));
+export default connect(null, { setLoading, displayError })(
+  withStyles(useStyles)(ChatList)
+);

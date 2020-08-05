@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     flexDirection: "column",
     margin: theme.spacing(1),
+    cursor: "pointer",
   },
   image: {
     width: "100%",

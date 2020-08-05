@@ -13,7 +13,7 @@ import {
   declineOffer,
 } from "../../../redux/actions/offeringActions";
 import ChatSocketServer from "../../../utils/ChatSocketServer";
-import ConfirmationDialog from "../../ConfirmationDialog";
+import ConfirmationDialog from "../../shared/ConfirmationDialog";
 
 let useStyles = makeStyles((theme) => ({
   paper: {
