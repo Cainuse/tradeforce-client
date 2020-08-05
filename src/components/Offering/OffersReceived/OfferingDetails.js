@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Grid, Paper, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
@@ -13,6 +13,7 @@ import {
   declineOffer,
 } from "../../../redux/actions/offeringActions";
 import ChatSocketServer from "../../../utils/ChatSocketServer";
+import ConfirmationDialog from "../../shared/ConfirmationDialog";
 
 let useStyles = makeStyles((theme) => ({
   paper: {
@@ -44,30 +45,37 @@ let useStyles = makeStyles((theme) => ({
 
 const OfferingDetails = ({ currentUser }) => {
   const classes = useStyles();
-  let history = useHistory();
   const dispatch = useDispatch();
+  const history = useHistory();
   const contentInfo = useSelector((state) => {
     return state.modal.contentInfo;
   });
   let { offeringInfo, postingInfo } = contentInfo;
   let { offer, offerer } = offeringInfo;
+  const [confirmationOpen, setConfirmationOpen] = useState(false);
+  const [confirmationType, setConfirmationType] = useState("");
 
-  const navigateToChat = () => {
-    setTimeout(() => {
-      history.push("/chat");
-    }, 3000);
+  const handleAcceptOffer = () => {
+    handleConfirmationOpen("accept");
   };
 
-  const handleAcceptOffer = async () => {
-    let result = window.confirm(
-      `Are you sure you want to accept this offer? \n` +
-        `\n` +
-        `All other offers for your post "${postingInfo.title}" will be declined. This action cannot be undone.`
-    );
+  const handleDeclineOffer = () => {
+    handleConfirmationOpen("decline");
+  };
 
-    if (result) {
-      await dispatch(acceptOffer(offer._id));
-      dispatch(closeModal());
+  const handleConfirmationOpen = (type) => {
+    setConfirmationOpen(true);
+    setConfirmationType(type);
+  };
+
+  const handleCloseAllConfirmationDialogs = () => {
+    setConfirmationOpen(false);
+    setConfirmationType("");
+  };
+
+  const acceptOfferAction = async () => {
+    let response = await dispatch(acceptOffer(offer._id));
+    if (response) {
       ChatSocketServer.sendMessage({
         fromUserId: currentUser ? currentUser.user._id : 0,
         toUserId: offerer._id,
@@ -75,23 +83,71 @@ const OfferingDetails = ({ currentUser }) => {
           postingInfo ? postingInfo.title : ""
         }`,
       });
-      navigateToChat();
+      ChatSocketServer.sendNotification(offerer._id);
+      handleConfirmationOpen("chat");
+    } else {
+      handleCloseAllConfirmationDialogs();
     }
   };
 
-  const handleDeclineOffer = async () => {
-    let result = window.confirm(
-      `Are you sure you want to decline this offer? This action cannot be undone.`
-    );
+  const navigateToChat = () => {
+    dispatch(closeModal());
+    history.push("/chat");
+  };
 
-    if (result) {
-      await dispatch(declineOffer(offer._id));
-      dispatch(closeModal());
+  const declineOfferAction = async () => {
+    let response = await dispatch(declineOffer(offer._id));
+    dispatch(closeModal());
+    if (response) {
+      ChatSocketServer.sendNotification(offerer._id);
+    }
+  };
+
+  const selectConfirmationToDisplay = () => {
+    if (confirmationType === "decline") {
+      return (
+        <ConfirmationDialog
+          open={confirmationOpen}
+          submitAction={declineOfferAction}
+          submitName={"Decline"}
+          dialogMessage={"This action cannot be undone"}
+          dialogTitle={"Are you sure you want to decline this offer?"}
+          handleClose={handleCloseAllConfirmationDialogs}
+        />
+      );
+    } else if (confirmationType === "accept") {
+      return (
+        <ConfirmationDialog
+          open={confirmationOpen}
+          submitAction={acceptOfferAction}
+          submitName={"Accept"}
+          dialogMessage={`All other offers for your post ${postingInfo.title} will be declined. This action cannot be undone.`}
+          dialogTitle={"Are you sure you want to accept this offer?"}
+          handleClose={handleCloseAllConfirmationDialogs}
+        />
+      );
+    } else if (confirmationType === "chat") {
+      return (
+        <ConfirmationDialog
+          open={confirmationOpen}
+          submitAction={navigateToChat}
+          submitName={"Go to Chat"}
+          dialogMessage={`You can organize your exchange in the chat conversation`}
+          dialogTitle={`A message was sent to ${offerer.userName} on your behalf`}
+          handleClose={() => {
+            setConfirmationOpen(false);
+            dispatch(closeModal());
+          }}
+        />
+      );
+    } else {
+      return null;
     }
   };
 
   return (
     <Paper className={classes.paper}>
+      {confirmationOpen && selectConfirmationToDisplay()}
       <Grid container spacing={2}>
         <Grid container item xs={12} justify={"center"}>
           <Typography

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Grid, Paper, Typography, Link } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
@@ -7,6 +7,7 @@ import { OfferInfoDisplay } from "../OfferInfoDisplay";
 import { closeModal } from "../../../redux/actions/modalActions";
 import { rescindOffer } from "../../../redux/actions/offeringActions";
 import { PostingSummary } from "./PostingSummary";
+import ConfirmationDialog from "../../shared/ConfirmationDialog";
 
 let useStyles = makeStyles((theme) => ({
   paper: {
@@ -48,21 +49,34 @@ export const OfferSentDetails = () => {
 
   let { offer, posting, postingOwner } = contentInfo;
 
-  const handleRescindOffer = async () => {
-    let result = window.confirm(
-      `Are you sure you want to rescind your offer? \n` +
-        `\n` +
-        `This action cannot be undone.`
-    );
+  const [confirmationOpen, setConfirmationOpen] = useState(false);
 
-    if (result) {
-      await dispatch(rescindOffer(offer._id));
+  const displayConfirmationDialog = () => {
+    return (
+      <ConfirmationDialog
+        open={confirmationOpen}
+        submitAction={handleRescindOffer}
+        submitName={"Rescind"}
+        dialogMessage={`Are you sure you want to rescind your offer?`}
+        dialogTitle={`This action cannot be undone.`}
+        handleClose={() => {
+          setConfirmationOpen(false);
+        }}
+      />
+    );
+  };
+
+  const handleRescindOffer = async () => {
+    let response = await dispatch(rescindOffer(offer._id));
+    if (response) {
       dispatch(closeModal());
     }
+    setConfirmationOpen(false);
   };
 
   return (
     <Paper className={classes.paper}>
+      {confirmationOpen && displayConfirmationDialog()}
       <Grid container spacing={2}>
         <Grid container item xs={12} justify={"center"}>
           <Typography
@@ -110,7 +124,7 @@ export const OfferSentDetails = () => {
             <Button
               variant={"contained"}
               color={"primary"}
-              onClick={handleRescindOffer}
+              onClick={() => setConfirmationOpen(true)}
             >
               Rescind
             </Button>

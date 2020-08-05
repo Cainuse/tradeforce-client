@@ -1,9 +1,13 @@
-import { LOAD_USER_DETAIL, UPDATE_USER_DETAIL } from "../constants/actionTypes";
+import {
+  LOAD_USER_DETAIL,
+  UPDATE_USER_DETAIL,
+  CLEAR_OLD_USER_DETAILS,
+} from "../constants/actionTypes";
 import {
   UPDATE_USER_ERROR,
   UPDATE_USER_SUCCESS,
   LOAD_USER_DETAILS_ERROR,
-  LOAD_USER_DETAILS_NOT_FOUND,
+  LOAD_USER_DETAILS_NOT_FOUND_ERROR,
   INVALID_POSTAL_CODE_ERROR,
 } from "../constants/snackbarMessageTypes";
 import { displayError, displaySuccess } from "./snackbarActions";
@@ -24,6 +28,12 @@ const updateUserDetailSuccess = (userId, details) => {
     type: UPDATE_USER_DETAIL,
     userId: userId,
     details: details,
+  };
+};
+
+export const clearOldUserDetails = () => {
+  return {
+    type: CLEAR_OLD_USER_DETAILS,
   };
 };
 
@@ -59,7 +69,7 @@ export const loadUserDetails = ({ userId, currentUserId }) => {
       }
     } catch (e) {
       if (e.response.status === 404) {
-        dispatch(displayError(LOAD_USER_DETAILS_NOT_FOUND));
+        dispatch(displayError(LOAD_USER_DETAILS_NOT_FOUND_ERROR));
       } else {
         dispatch(displayError(LOAD_USER_DETAILS_ERROR));
       }

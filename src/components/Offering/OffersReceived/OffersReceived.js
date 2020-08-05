@@ -10,7 +10,7 @@ import {
   declineOffer,
 } from "../../../redux/actions/offeringActions";
 import { getAllPendingOffers } from "./OfferingHelpers";
-import ConfirmationDialog from "../../ConfirmationDialog";
+import ConfirmationDialog from "../../shared/ConfirmationDialog";
 import ChatSocketServer from "../../../utils/ChatSocketServer";
 
 const useStyles = makeStyles((theme) => ({
@@ -48,15 +48,12 @@ const OffersReceived = (props) => {
   let [offerInfoToActUpon, setOfferInfoToActUpon] = useState({});
 
   const navigateToChat = () => {
-    setTimeout(() => {
-      history.push("/chat");
-    }, 3000);
+    history.push("/chat");
   };
 
   const handleAcceptOffer = async () => {
     let { offerId, offerer, posting } = offerInfoToActUpon;
     let response = await dispatch(acceptOffer(offerId));
-    handleConfirmationClose();
     if (response) {
       ChatSocketServer.sendMessage({
         fromUserId: currentUser ? currentUser.user._id : 0,
@@ -66,8 +63,8 @@ const OffersReceived = (props) => {
         }`,
       });
       ChatSocketServer.sendNotification(offerer._id);
+      handleConfirmationOpen("chat");
     }
-    navigateToChat();
   };
 
   const handleConfirmationOpen = (type) => {
@@ -118,6 +115,17 @@ const OffersReceived = (props) => {
               submitName={"Decline Offer"}
               dialogMessage={"This action cannot be undone."}
               dialogTitle={`Are you sure you want to decline ${offerer.userName}'s offer?`}
+              handleClose={handleConfirmationClose}
+            />
+          );
+        case "chat":
+          return (
+            <ConfirmationDialog
+              open={confirmationOpen}
+              submitAction={navigateToChat}
+              submitName={"Go to Chat"}
+              dialogMessage={`You can organize your exchange in the chat conversation`}
+              dialogTitle={`A message was sent to ${offerer.userName} on your behalf`}
               handleClose={handleConfirmationClose}
             />
           );

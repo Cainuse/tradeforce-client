@@ -6,11 +6,8 @@ import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOut
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 
-import {
-  categories,
-  conditions,
-} from "../../../redux/constants/classifierTypes";
-import ItemImagesUpload from "./ItemImagesUpload";
+import { categories, conditions } from "../../../constants/classifierTypes";
+import ImageUpload from "../../../shared/ImageUpload";
 
 const useStyles = makeStyles((theme) => ({
   addItemSection: {
@@ -157,11 +154,11 @@ export const AddItemForm = (props) => {
           />
         </Grid>
         <Grid item xs={12}>
-          <ItemImagesUpload
+          <ImageUpload
             images={images}
-            handleChange={props.handleChange}
             addImage={props.addImage}
             deleteImage={props.deleteImage}
+            isSmall={true}
           />
         </Grid>
         <Grid container item justify={"flex-end"} xs={12}>

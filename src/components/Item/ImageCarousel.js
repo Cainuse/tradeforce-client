@@ -56,7 +56,6 @@ class ImageCarousel extends React.Component {
             alt={`${this.state.activeStep}`}
           />
         </div>
-        {/* {maxSteps > 1 && ( */}
         <MobileStepper
           steps={maxSteps}
           position="static"
@@ -66,7 +65,9 @@ class ImageCarousel extends React.Component {
             <Button
               size="small"
               onClick={this.handleNext}
-              disabled={this.state.activeStep === maxSteps - 1}
+              disabled={
+                maxSteps === 0 || this.state.activeStep === maxSteps - 1
+              }
             >
               Next
               <KeyboardArrowRight />
@@ -76,14 +77,13 @@ class ImageCarousel extends React.Component {
             <Button
               size="small"
               onClick={this.handleBack}
-              disabled={this.state.activeStep === 0}
+              disabled={maxSteps === 0 || this.state.activeStep === 0}
             >
               <KeyboardArrowLeft />
               Back
             </Button>
           }
         />
-        {/* )} */}
       </div>
     );
   }

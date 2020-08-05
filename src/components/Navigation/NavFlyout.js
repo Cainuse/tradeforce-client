@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import { closeFlyout } from "../../redux/actions/flyoutActions";
-import { categories } from "../../redux/constants/classifierTypes";
+import { categories } from "../constants/classifierTypes";
 
 const flyoutStyles = makeStyles((theme) => ({
   flyoutTranslateX: {

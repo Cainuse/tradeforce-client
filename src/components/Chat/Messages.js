@@ -10,7 +10,7 @@ const Messages = ({ conversations, currentUser, classes }) => {
   // -- user changes to a chat with another user
   // -- new message is added
   useEffect(() => {
-    //do nothing
+    //force rerender when conversations changes
   }, [conversations]);
 
   const groupedConversations = _.toPairs(

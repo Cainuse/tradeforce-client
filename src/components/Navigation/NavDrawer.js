@@ -4,7 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Link from "@material-ui/core/Link";
 import { connect } from "react-redux";
 import { closeFlyout } from "../../redux/actions/flyoutActions";
-import { categories } from "../../redux/constants/classifierTypes";
+import { categories } from "../constants/classifierTypes";
 
 const flyoutStyles = makeStyles((theme) => ({
   paper: {

@@ -4,7 +4,7 @@ import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 import { OfferSentPreviewCard } from "./OfferSentPreviewCard";
-import ConfirmationDialog from "../../ConfirmationDialog";
+import ConfirmationDialog from "../../shared/ConfirmationDialog";
 import { rescindOffer } from "../../../redux/actions/offeringActions";
 
 const useStyles = makeStyles(() => ({
@@ -34,8 +34,10 @@ export const OffersSent = (props) => {
   const handleRescindOffer = async () => {
     let { offer } = offerInfoToActUpon;
 
-    await dispatch(rescindOffer(offer._id));
-    setConfirmationOpen(false);
+    let response = await dispatch(rescindOffer(offer._id));
+    if (response) {
+      setConfirmationOpen(false);
+    }
   };
 
   const selectConfirmationToDisplay = () => {

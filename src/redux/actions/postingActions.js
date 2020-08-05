@@ -137,10 +137,16 @@ export const loadItemDetail = (itemId) => {
         ...owner,
       };
       dispatch(loadItemDetailSuccess(item));
-      return "success";
+      return {
+        type: "success",
+        data: item,
+      };
     } catch (error) {
       dispatch(displayError(LOAD_ITEM_ERROR));
-      return "error";
+      return {
+        type: "error",
+        data: null,
+      };
     } finally {
       dispatch(setLoading(false));
     }
