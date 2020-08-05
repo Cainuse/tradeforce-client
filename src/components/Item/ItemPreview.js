@@ -108,7 +108,7 @@ const ItemPreview = ({
     if (currentUser.user && currentUser.user.location) {
       updateDistance();
     }
-  }, []);
+  }, [location]);
 
   const parseDate = (str) => {
     return new Date(str);
