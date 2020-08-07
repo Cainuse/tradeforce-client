@@ -95,7 +95,7 @@ In addition to chat, we also included the following functionalities:
 
 - Google OAuth to provide a seemless and familiar registration/login mechanism for users
 
-- Google Maps API integration to fetch more detailed information about a user's location based on pr:white_check_mark:d postal code and enable approximate distance calculations relative to the current app user to be shown on the previews of postings (i.e. search results page). This allows the user to plan for their trades smarter and be able to trade with people who are within a reasonable distance away from them.
+- Google Maps API integration to fetch more detailed information about a user's location based on provided postal code and enable approximate distance calculations relative to the current app user to be shown on the previews of postings (i.e. search results page). This allows the user to plan for their trades smarter and be able to trade with people who are within a reasonable distance away from them.
 
 ## Rubric 5: Next Steps
 
