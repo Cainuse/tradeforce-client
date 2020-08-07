@@ -4,12 +4,7 @@ View the project at: <https://tradeforce.herokuapp.com>
 
 Tradeforce Server URL: https://github.com/Cainuse/tradeforce-server
 
-Built by:
-
-- Abid Salahi (z2u0b)
-- Jenessa Tan (s9p1b)
-- Sang Xu Jacqueline Yin (r6s1b)
-- Zhen Peng Zhu (i8v0b)
+[Built by: ](#rubric-6-list-of-contributions) Abid Salahi (z2u0b), Jenessa Tan (s9p1b), Sang Xu Jacqueline Yin (r6s1b), Zhen Peng Zhu (i8v0b)
 
 ## Table of Contents
 
