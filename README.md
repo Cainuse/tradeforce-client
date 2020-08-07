@@ -45,9 +45,9 @@ By engaging with one another in trade, Tradeforce helps two-fold: strengthening 
 
 :white_check_mark: Live-chat functionality
 :white_check_mark: Location Services with Google Maps API
-:x: Meeting scheduling interface
-:x: 2-factor authentication for login security
-:x: Admin M:x:
+:x:  Meeting scheduling interface
+:x:  2-factor authentication for login security
+:x:  Admin Module
 
 ## Rubric 3: How Tech from Units 1-5 were used in Project
 
