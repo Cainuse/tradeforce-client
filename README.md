@@ -27,27 +27,27 @@ By engaging with one another in trade, Tradeforce helps two-fold: strengthening 
 
 ### MVP Requirements
 
-- [x] User Interface
-- [x] User sign-in & User profiles
-- [x] User search postings
-- [x] User create/edit/delete postings (edit and deletion is limited to postings that they themselves have created)
-- [x] Users can offer/respond with things on postings by other users to trade
+:white_check_mark: User Interface
+:white_check_mark: User sign-in & User profiles
+:white_check_mark: User search postings
+:white_check_mark: User create/edit/delete postings (edit and deletion is limited to postings that they themselves have created)
+:white_check_mark: Users can offer/respond with things on postings by other users to trade
 
 ### Standard Requirements
 
-- [x] Archive unavailable/traded items
-- [x] User reviews for satisfaction
-- [x] Notification centre for receiving responses/offer
-- [x] User's posts/offers are displayed (user profile page)
-- [x] Third party login (ex. via Google)
+:white_check_mark: Archive unavailable/traded items
+:white_check_mark: User reviews for satisfaction
+:white_check_mark: Notification centre for receiving responses/offer
+:white_check_mark: User's posts/offers are displayed (user profile page)
+:white_check_mark: Third party login (ex. via Google)
 
 ### Stretch Requirements
 
-- [x] Live-chat functionality
-- [x] Location Services with Google Maps API
-- [ ] Meeting scheduling interface
-- [ ] 2-factor authentication for login security
-- [ ] Admin Module
+:white_check_mark: Live-chat functionality
+:white_check_mark: Location Services with Google Maps API
+:x: Meeting scheduling interface
+:x: 2-factor authentication for login security
+:x: Admin M:x:
 
 ## Rubric 3: How Tech from Units 1-5 were used in Project
 
@@ -95,7 +95,7 @@ In addition to chat, we also included the following functionalities:
 
 - Google OAuth to provide a seemless and familiar registration/login mechanism for users
 
-- Google Maps API integration to fetch more detailed information about a user's location based on provided postal code and enable approximate distance calculations relative to the current app user to be shown on the previews of postings (i.e. search results page). This allows the user to plan for their trades smarter and be able to trade with people who are within a reasonable distance away from them.
+- Google Maps API integration to fetch more detailed information about a user's location based on pr:white_check_mark:d postal code and enable approximate distance calculations relative to the current app user to be shown on the previews of postings (i.e. search results page). This allows the user to plan for their trades smarter and be able to trade with people who are within a reasonable distance away from them.
 
 ## Rubric 5: Next Steps
 
