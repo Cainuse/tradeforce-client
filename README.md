@@ -4,6 +4,13 @@ View the project at: <https://tradeforce.herokuapp.com>
 
 Tradeforce Server URL: https://github.com/Cainuse/tradeforce-server
 
+Built by:
+
+- Abid Salahi (z2u0b)
+- Jenessa Tan (s9p1b)
+- Sang Xu Jacqueline Yin (r6s1b)
+- Zhen Peng Zhu (i8v0b)
+
 ## Table of Contents
 
 - [I. Description of App](#rubric-1-description-of-app)
@@ -13,6 +20,7 @@ Tradeforce Server URL: https://github.com/Cainuse/tradeforce-server
 - [V. Next Steps](#rubric-5-next-steps)
 - [VI. List of Contributions](#rubric-6-list-of-contributions)
 - [VII. Challenges](#challenges-during-development)
+- [VIII. Appendix](#appendix)
 
 ## Rubric 1: Description of App
 
@@ -130,7 +138,7 @@ Jenessa worked on the following features:
 
 - Prototype design
 - Integration of frontend and backend
-- Frontend implementation, which includes:
+- Frontend implementation, including but not limited to:
   - frontend live chat
   - posting details & search results
   - image drag & drop uploader
@@ -141,7 +149,7 @@ Jenessa worked on the following features:
 
 Jackie worked on the following features:
 
-- Frontend implementation, which includes:
+- Frontend implementation, including but not limited to:
   - making offer detail modal
   - user profile
   - offers received/sent previews
@@ -172,6 +180,8 @@ Chat function was the hardest thing to implement, for many reasons. It’s a vit
 #### Coordination/Task Management
 
 Due to the novelty of having to work 100% remotely and members having outside commitments, we admittedly were not very coordinated in the beginning of our project. There were overlaps in what people were working on, which introduced technical conflicts, there other tasks that blocked other tasks but weren’t being addressed and so forth. We realized that adhering to this pattern would be detrimental to our project and completing our goals so we introduced an agile sprint board in trello to collect, plan, and organize our tickets.
+
+## Appendix
 
 ### Project Description:
 
