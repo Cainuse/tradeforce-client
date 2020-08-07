@@ -79,14 +79,38 @@ Learning how to incorporate chat into our existing app was a challenge; more det
 In addition to chat, we also included the following functionalities:
 
 - push notifications for unread chat and offering notification counts in the navigation bar to alert users
+
 - Google OAuth to provide a seemless and familiar registration/login mechanism for users
-- Google Maps API integration to fetch more detailed information about a user's location based on provided postal code and enable distance calculations relative to the current app user to be shown on the previews of postings (i.e. search results page)
+
+- Google Maps API integration to fetch more detailed information about a user's location based on provided postal code and enable approximate distance calculations relative to the current app user to be shown on the previews of postings (i.e. search results page). This allows the user to plan for their trades smarter and be able to trade with people who are within a reasonable distance away from them.
 
 ## Rubric 5: Next Steps
+
+For future development, the following features should be added to improve useability and functionality:
+
+- the ability to select pre-existing postings when making an offer. This would require a change to the offering data structure to be able to differentiate between postings and items that are standalone. Furthermore, if a posting is offered and that offer is accepted, all the offers made to the posting in question should be declined and that posting should be set to inactive/traded.
+
+- the ability to refine search using distances of the postings relative to the current user, i.e. user can specify in their search that they only want to see result within an X km radius. To accomplish this, our frontend would need to add the distance options to the search filter menu and the backend would need to adjust the database query
+
+- an admin module to monitor and moderate content on the site. This is especially important for removing inappropriate content and/or users. Admin would also be able to update specific app parameters, such as categories and conditions. This would require adjustment to our authentication components
+
+Other things we discussed:
+
+- clicking notifications in the notification menu (nav bar) would open the offer details modal
+- adjusting the data structure of offerings to include more descriptive information (i.e. adding a title)
+- move image upload to use external image hosting service (e.g. Amazon S3, Google Firebase, etc) to improve loading performance
 
 ## Rubric 6: List of Contributions
 
 ## Challenges
+
+#### Chat
+
+Chat function was the hardest thing to implement, for many reasons. It’s a vital feature for our app. We knew from the get-go, chat was a stretch goal that we weren’t sure we’d complete, given the breadth of the application and the time constraints. However, after implementing accept offerings, it was clear that there was something missing. The user experience felt incomplete. However, because everything else had to be set up before we started chat, chat had to be implemented at the very end of the development cycle, leaving us with very little time. Furthermore, all the tutorials online were for a standalone chat apps, so we had to figure out how to integrate it into our own app within that time crunch. We distributed the work among several team members and held many impromptu meetings to discuss our learnings and progress. In the end, through cooperation and many sleepless nights of reading documentations and piece-mealing several tutorials and resources together, we eventually built and integrated this massive feature, of which all of our team members are really proud.
+
+#### Coordination/Task Management
+
+Due to the novelty of having to work 100% remotely and members having outside commitments, we admittedly were not very coordinated in the beginning of our project. There were overlaps in what people were working on, which introduced technical conflicts, there other tasks that blocked other tasks but weren’t being addressed and so forth. We realized that adhering to this pattern would be detrimental to our project and completing our goals so we introduced an agile sprint board in trello to collect, plan, and organize our tickets.
 
 ### Project Description:
 
@@ -100,10 +124,6 @@ In summary, the app will support the following actions for users:
     2. Creation/editing/deletion of postings of items the user wants to put up for exchange
     3. Ability to search the application for goods that they are interested in
     4. Ability to contact other users to arrange the trade
-
-### Project Task Requirements
-
-### Task Breakdown
 
 ##### MVP Requirement #1: "User Interface"
 
