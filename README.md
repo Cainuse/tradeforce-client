@@ -140,6 +140,9 @@ Jenessa worked on the following features:
   - styling
 - Push notifications for chat and offer notifications
 
+Jenessa was pivotal to the development of this app, from the conceptualization and designing of the prototype that would eventually become the foundation of how the frontend styled the user interface, to the architecting of user workflow of the transactions of postings. She was an all-rounder for our group, working on crucial components and features that spanned across both the frontend and the backend. As the starkest example, Jenessa tackled the sizable task of connecting the backend and frontend for live-chat, implementing the code necessary for the real-time exchange of information between client and server, and then actualizing that information in an aesthetically appealing UI.
+
+
 #### Sang Xu Jaqueline Yin
 
 Jackie worked on the following features:
@@ -153,6 +156,8 @@ Jackie worked on the following features:
   - styling
 - Refactoring & restructuring of code
 - Quality assurance and remediation of bugs
+
+Without Jackie, this README write-up would not exist. She dictated the majority of the information you’ve been reading thus far (and that you will continue to read if you continue past this point). In terms of the app, Jackie focused her efforts mainly on developing the frontend - offerings in particular. From designing the offering working flow, to the implementation of all the necessary components involved with offerings, Jackie’s code fingerprints can be found throughout the client repo. She was essential in locating and rectifying discovered bugs, which she was consistent in doing throughout the process of development.
 
 #### Zhen Peng Zhu
 
