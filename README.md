@@ -4,6 +4,16 @@ View the project at: <https://tradeforce.herokuapp.com>
 
 Tradeforce Server URL: https://github.com/Cainuse/tradeforce-server
 
+## Table of Contents
+
+- [I. Description of App](#rubric-1-description-of-app)
+- [II. Statement of Goals and Completed Items](#rubric-2-statement-of-goals-and-completed-items)
+- [III. Tech Breakdown](#rubric-3-how-tech-from-units-1-5-were-used-in-project)
+- [IV. Above and Beyond Functionality](#rubric-4-above-and-beyond-functionality)
+- [V. Next Steps](#rubric-5-next-steps)
+- [VI. List of Contributions](#rubric-6-list-of-contributions)
+- [VII. Challenges](#challenges-during-development)
+
 ## Rubric 1: Description of App
 
 Tradeforce is a webapp designed to connect community members together to facilitate the direct exchange of items in a barter-like system.
@@ -74,7 +84,7 @@ By engaging with one another in trade, Tradeforce helps two-fold: strengthening 
 
 One of the features that we are most proud of in our application is live chat. Users can communicate with each other in real-time to co-ordinate the exchange of their items in person. This was a crucial feature to include because it offered a logical end to the online transaction. We used the real-time bi-directional communication library, Socket.IO, to implement chat. On both server and client, socket event listeners were set up to respond to events emitted by the other. For the server, receiving specific events, such as `add-message`, triggered the creation of new data to be saved to the Mongo database. On the other hand, reception of server events on the client-side required specific updates to the React UI, such as rendering a new message bubble. Although we were using the Material-UI library, it did not have any pre-built chat-like components for us to use. Therefore, we had to design and build our own to make our chat interface more aesthetic.
 
-Learning how to incorporate chat into our existing app was a challenge; more details about this can be read [here](#challenges).
+Learning how to incorporate chat into our existing app was a challenge; more details about this can be read [here](#challenges-during-development).
 
 In addition to chat, we also included the following functionalities:
 
@@ -102,7 +112,58 @@ Other things we discussed:
 
 ## Rubric 6: List of Contributions
 
-## Challenges
+#### Abid Salahi
+
+Abid worked on the following features:
+
+- Authentication & Google OAuth login (frontend and backend)
+- Static offering notifications (frontend and backend)
+- Frontend deployment
+- Frontend location implementation
+- Backend live chat
+
+Despite the complexities involved with implementing authentication and with 3rd party integration, Abid did not hesitate to volunteer himself for the job. This was crucial, especially in the early development stages of our app, as the functionality of Tradeforce relied heavily on having users. Furthermore, Abid pushed strongly for the group to implement live-chat, arguing (correctly) that the transaction on Tradeforce between users felt too incomplete without it. He then went on to spearhead the backend implementation of live-chat.
+
+#### Jenessa Tan
+
+Jenessa worked on the following features:
+
+- Prototype design
+- Integration of frontend and backend
+- Frontend implementation, which includes:
+  - frontend live chat
+  - posting details & search results
+  - image drag & drop uploader
+  - styling
+- Push notifications for chat and offer notifications
+
+#### Sang Xu Jaqueline Yin
+
+Jackie worked on the following features:
+
+- Frontend implementation, which includes:
+  - making offer detail modal
+  - user profile
+  - offers received/sent previews
+  - offers received/sent details modal
+  - navigation bar
+  - styling
+- Refactoring & restructuring of code
+- Quality assurance and remediation of bugs
+
+#### Zhen Peng Zhu
+
+Peng worked on the following features:
+
+- Backend APIs & server set-up
+- MongoDB & Mongoose schemas
+- Backend deployment
+- Backend locations using Google Maps API
+- Backend pagination
+
+Peng was vital in developing the server-side of our application. He single handedly crafted the majority of the API endpoints and was quick to make adjustments as frontend needed. As an example, he made strategic changes to the offerings database schema to facilitate the joining of two collections. Peng took great initiative in building the backend location functionality using Google Maps API, volunteering to do it even while he was completing pagination and, in spite of the fact that we were in our last week of development before our internal code freeze.
+
+## Challenges During Development
 
 #### Chat
 
