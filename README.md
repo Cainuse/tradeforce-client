@@ -1,8 +1,69 @@
 # TRADEFORCE
 
-Tradeforce is a webapp designed to connect community members together to facilitate the direct exchange of items in a barter-like system. By engaging with one another in trade, Tradeforce helps two-fold: strengthening community ties as people come together to help their neighbours; and also reducing collective spending and waste, finding new homes for items that would otherwise be discarded.
+View the project at: <https://tradeforce.herokuapp.com>
 
 Tradeforce Server URL: https://github.com/Cainuse/tradeforce-server
+
+## Rubric 1: Description of App
+
+Tradeforce is a webapp designed to connect community members together to facilitate the direct exchange of items in a barter-like system. 
+
+By engaging with one another in trade, Tradeforce helps two-fold: strengthening community ties as people come together to help their neighbours; and also reducing collective spending and waste, finding new homes for items that would otherwise be discarded.
+
+## Rubric 2: Statement of Goals and Completed Items
+
+### MVP Requirements
+
+- [x] User Interface
+- [x] User sign-in & User profiles
+- [x] User search postings
+- [x] User create/edit/delete postings (edit and deletion is limited to postings that they themselves have created)
+- [x] Users can offer/respond with things on postings by other users to trade
+
+### Standard Requirements
+- [x] Archive unavailable/traded items
+- [x] User reviews for satisfaction
+- [x] Notification centre for receiving responses/offer
+- [x] User's posts/offers are displayed (user profile page)
+- [x] Third party login (ex. via Google)
+
+### Stretch Requirements
+- [x] Live-chat functionality
+- [x] Location Services with Google Maps API
+- [ ] Meeting scheduling interface
+- [ ] 2-factor authentication for login security
+- [ ] Admin Module
+
+## Rubric 3: How Tech from Units 1-5 were used in Project
+
+#### HTML/CSS/JS:
+- **HTML**: While we didn't explicitly use HTML, we used JSX to build the frontend, which allows us to write HTML in React
+  
+- **CSS**: We used CSS to enhance/customize the styling of our app in Material UI using the library's `makeStyles` and `withStyles` styling solutions
+  
+- **JS**: Our whole app was built in JS (ex. React, Node). It was a vital part of connecting different parts of app and processing data. 
+
+#### React/Redux:
+- **React**: Our frontend was built entirely upon React; it provides a component based structure, which greatly supports reusability of code as you could reuse components in different contexts. Furthermore, React uses a virtual DOM, which makes our app more secure than if we had used the traditional HTML method of building a webapp, as it makes DOM manipulation by unauthorized users much more unlikely.
+  
+- **Redux**: Redux was used to keep a single source of truth in terms of our frontend data, including information regarding postings, users, offerings, and state of app (ex. modal state). Because updates to the redux store triggers rerendering of related components, it ensured that our view was always up-to-date with our data.
+
+#### MongoDB:
+- **MongoDB**: We used mongoDB to store our postings, users, offering, chat, notification data. We utilized the Mongoose ODM to specify data schemas and to ensure consistency of document data structure.
+
+#### Node/Express:
+- **Node/Express**: Express, a Node.js framework, was used to set up our backend with REST API endpoints that were then called from the frontend (using `redux-thunk`) to obtain/create/update and delete the data from the database.
+
+#### Release Engineering:
+- **Release Engineering**:
+    - *Many Repo*: Our client (this repo) relies upon our server, which is in a separate repo (found at https://github.com/Cainuse/tradeforce-server) for a clean distinction between frontend vs backend code. 
+  
+    - *Version Control*: We used git for version control to minimize conflicts and track changes. 
+  
+    - *Deployment*: We used Heroku, a cloud-based platform, to build and run our application, taking advantage of Heroku's GitHub integration to have a more frequent cadence of deployment and release of our project with pushes to `master` branch.
+
+
+
 
 ### Project Description:
 
@@ -19,28 +80,7 @@ In summary, the app will support the following actions for users:
 
 ### Project Task Requirements
 
-#### Minimal Requirements / MVP
 
-    1. User Interface
-    2. User sign-in & User profiles
-    3. User search postings
-    4. User create/edit/delete postings (edit and deletion is limited to postings that they themselves have created)
-    5. Users can offer/respond with things on postings by other users to trade
-
-#### Standard Requirements
-
-    1. Archive unavailable/traded items
-    2. User reviews for satisfaction
-    3. Notification centre for receiving responses/offer
-    4. User posts/offers page (personal user account page)
-    5. Third party login (ex. via Google, Facebook, etc)
-
-#### Stretch Requirements
-
-    1. Live-chat functionality
-    2. Admin module
-    3. Meeting scheduling interface
-    4. 2-factor authentication for login security
 
 ### Task Breakdown
 
