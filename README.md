@@ -1,6 +1,7 @@
 # TRADEFORCE
 
 View the project at: <https://tradeforce.herokuapp.com>
+Note: May have small backend bugs due to old deployment.
 
 Tradeforce Server URL: https://github.com/Cainuse/tradeforce-server
 
